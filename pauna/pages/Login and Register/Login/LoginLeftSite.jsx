@@ -1,10 +1,12 @@
+import Image from 'next/image';
 import React from 'react';
+import Logo from '../../../public/LOGO-UNA.png';
 
 const LoginLeftSide = () => {
   return (
-    <div className="w-1/2 bg-blue-100 flex justify-center items-center">
-      <div className="w-32 h-32 rounded-full bg-white flex justify-center items-center">
-        <img src="/path-to-your-image.png" alt="Logo" className="w-24 h-24" />
+    <div className="w-2/5 flex justify-center items-center">
+      <div className="w-96 h-96 rounded-full bg-[#0E21CD] flex justify-center items-center">
+        <Image src={Logo} alt="Logo" width={220} height={220} className="w-72 h-70" />
       </div>
     </div>
   );

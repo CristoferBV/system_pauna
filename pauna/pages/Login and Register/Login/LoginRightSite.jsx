@@ -1,9 +1,8 @@
 import React from 'react';
 
-
 const LoginRightSide = () => {
   return (
-    <div className="w-1/2 flex flex-col justify-center items-center">
+    <div className="flex-grow bg-white flex flex-col justify-center items-center rounded-bl-2xl rounded-tl-2xl">
       <input
         type="text"
         placeholder="Usuario"

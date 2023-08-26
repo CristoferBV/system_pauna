@@ -13,7 +13,8 @@ export default function Home() {
       {/* <UserWindow/> */}
       {/* <UserWindow/> */}
       {/* <Login/> */}
-      <Register/>
+      {/* <Register/> */}
+      
     </>
   )
 }

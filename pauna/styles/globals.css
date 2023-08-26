@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 
-body {
-    background-color:  #4333F9;
-}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #4333F9;
+  }
 

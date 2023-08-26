@@ -5,12 +5,12 @@ import Logo from '../../../public/LOGO-UNA.png';
 const Login = () => {
   return (
     <div className="flex flex-col md:flex-row" style={{ margin: 0, padding: 0, minHeight: '100vh' }}>
-      <div className="w-full md:w-1/2 flex justify-center items-center p-6 md:mb-0 bg-[#4333F9]">
+      <div className="w-full md:w-1/3 flex justify-center items-center p-6 md:mb-0 bg-[#4333F9]">
         <div className="w-24 md:w-72 h-24 md:h-72 rounded-full bg-[#0E21CD] flex justify-center items-center">
           <Image src={Logo} alt="Logo" width={120} height={120} className="w-16 md:w-56 h-16 md:h-56" />
         </div>
       </div>
-      <div className="flex-grow bg-white flex flex-col justify-center items-center p-6 rounded-lg md:rounded-bl-2xl md:rounded-tl-2xl">
+      <div className="flex-grow bg-white flex flex-col justify-center items-center p-6 ">
          <div className="flex flex-col items-center space-y-4">
            <h1 className='font-bold text-xl md:text-2xl lg:text-3xl mb-4 md:mb-8 text-center'>Inicio de sesión</h1>
            <input

@@ -7,6 +7,7 @@ export default function Sidebar() {
     const [window, setWindow] = useState(true)
 
     return (
+        <>
         <div className={`bg-[#4333F9] h-screen fixed top-0 left-0 pt-10 rounded-r-lg duration-300 ${open ? "w-80" : "w-20"}`}>
             <div className={`w-10 h-10 bg-white border border-[#4333F9] rounded-full absolute -right-5 top-3 flex items-center 
                 justify-center
@@ -49,6 +50,8 @@ export default function Sidebar() {
                     alt="logo de inventario" className="w-10 h-10  mx-auto" />
             </div>
         </div>
+        
+        </>
 
     )
 }

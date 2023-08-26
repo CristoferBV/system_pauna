@@ -10,7 +10,9 @@ export default function Home() {
   return (
     <>
       {/* <UserWindow/> */}
-      <Login/>
+      <UserWindow/>
+      {/*<Login/>*/ }
+      
     </>
   )
 }

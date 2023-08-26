@@ -16,31 +16,31 @@ const Login = () => {
            <input
               type="text"
               placeholder="Nombre de usuario"
-              className="w-full md:w-72 p-2 border border-gray-300 rounded-xl bg-gray-100"
+              className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg"
             />
             <input
               type="email"
               placeholder="Correo electrónico"
-              className="w-full md:w-72 p-2 border border-gray-300 rounded-xl bg-gray-100"
+              className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg"
             />
             <input
               type="password"
               placeholder="Contraseña"
-              className="w-full md:w-72 p-2 border border-gray-300 rounded-xl bg-gray-100"
+              className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg"
             />
-            <select className="w-full md:w-72 p-2 border border-gray-300 rounded-xl bg-gray-100">
-              <option value="" disabled> Elige un rol </option>
+            <select className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg">
+              <option value="" disabled>Elige un rol</option>
               <option value="biblioteca">Biblioteca</option>
               <option value="administracion">Administración</option>
             </select>
-            <button className="bg-[#0E21CD] text-white px-6 md:px-12 py-2 rounded-xl hover:bg-blue-600 mt-8 md:mt-12 w-full md:w-auto" style={{marginTop: 30}}>
+            <button className="bg-[#0E21CD] text-white px-6 md:px-12 py-2 rounded-xl hover:bg-blue-600 mt-8 md:mt-12 w-full md:w-48 text-lg" style={{marginTop: 30}}>
               Entrar
             </button>
-            <p className="mt-4 text-center" style={{marginTop: 30}}>
+            <p className="mt-4 text-center text-lg" style={{marginTop: 30}}>
               ¿No tienes una cuenta? <a href="#">Regístrate</a>
             </p>
           </div>
-          <footer className="mt-12 md:mt-16 ml-2 text-gray-500 text-sm text-left flex-shrink-0">
+          <footer className="mt-12 md:mt-16 ml-2 text-gray-500 text-sm text-left flex-shrink-0 ">
             Reservado desarrolladores PAUNA 2023
           </footer>
         </div>

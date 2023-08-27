@@ -71,7 +71,7 @@ const HomeClient = () => {
                 </div>
               </div>
               <Disclosure.Panel className="md:hidden">
-                <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+                <div className="space-y-1 px-2 pb-2 pt-12 sm:px-3">
                   {navigation.map((item) => (
                     <Disclosure.Button
                       key={item.name}
@@ -91,7 +91,7 @@ const HomeClient = () => {
             </>
           )}
         </Disclosure>
-        <header className="bg-[#CD3E3E] rounded-xl text-white py-5 absolute z-50 w-full md:w-4/5 lg:w-3/4 xl:w-5/6 left-1/2 transform -translate-x-1/2 h-44 md:h-52 lg:h-58 top-32 md:top-40 lg:top-44">
+        <header className="bg-[#CD3E3E] rounded-xl text-white py-5 md:py-7 absolute z-50 w-full md:w-4/5 lg:w-3/4 xl:w-5/6 left-1/2 transform -translate-x-1/2 md:top-36 lg:top-44 xl:top-48 md:h-52 lg:h-58 md:top-[calc(50% + 4rem)] xl:top-[calc(50% + 6rem)]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <h1 className="text-3xl md:text-4xl font-bold mb-2 mt-6 md:mt-11">Bienvenido al apartado biblioteca</h1>

@@ -1,19 +1,16 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import UserWindow from "./userWindow"
 
-import Logo from '../../../public/LOGO-UNA.png';
-import User from '../../../public/usuario.png';
-import Inventory from '../../../public/Inventario.png';
-
-import Close from '../../../public/cerrarSesion.png'
+import Logo from '../../../../public/LOGO.png';
+import User from '../../../../public/usuario.png';
+import Inventory from '../../../../public/Inventario.png';
+import Close from '../../../../public/cerrarSesion.png';
 
 
 export default function Sidebar() {
     const [open, setOpen] = useState(true)
     const [window, setWindow] = useState(true)
-
     return (
         <>
             <div className={`bg-[#4333F9] fixed top-0 left-0 pt-10 rounded-r-lg duration-300 ${open ? "w-80" : "w-20"}`}>
@@ -33,21 +30,19 @@ export default function Sidebar() {
                     </div>
                 </div>
                 <div className="pt-20">
-                    <Link href='/Administracion\Components\userWindow' className="transition-opacity">
+                    <Link href='/Administracion/Components/userWindow'>
                         <div className=" hover:bg-white cursor-pointer py-10 mb-2 flex items-center" onClick={() => setWindow(!window)}>
                             <p className={`text-left text-black text-2xl font-semibold mx-5 ${!open && "hidden"}`}>Usuarios</p>
                             <Image src={User} width={30} height={30} className={`w-10 h-10 mx-auto`}></Image>
-
-
                         </div>
                     </Link>
-                    <Link href='/Administracion\Components\Invetory'>
+                    <Link href='/Administracion/Components/Inventory'>
                         <div className=" hover:bg-white cursor-pointer py-10 mb-2 flex items-center">
                             <p className={`text-left text-black text-2xl font-semibold mx-5 ${!open && "hidden"}`}>Inventario</p>
                             <Image src={Inventory} width={30} height={30} className={`w-10 h-10 mx-auto`}></Image>
                         </div>
                     </Link>
-                    <Link href='/Administracion\Components\Report'>
+                    <Link href='/Administracion/Components/MovReport'>
                         <div className=" hover:bg-white cursor-pointer py-10 mb-2 flex items-center">
                             <p className={`text-left text-black text-2xl font-semibold mx-5 ${!open && "hidden"}`}>Reportes</p>
                             <Image src={Close} width={30} height={30} className={`w-10 h-10 mx-auto`}></Image>
@@ -61,6 +56,7 @@ export default function Sidebar() {
                     <Image src={Close} width={30} height={30} className={`w-10 h-10 mx-auto`}></Image>
                 </div>
             </div>
+
 
         </>
 

@@ -5,7 +5,6 @@ export default function Annadir() {
 
     return (
         <div className="bg-[#D9D9D9] min-h-screen">
-
             <div className="sm:bg-[#D9D9D9] sm:p-40
             md:bg-[#D9D9D9] 
             lg:bg-[#D9D9D9]

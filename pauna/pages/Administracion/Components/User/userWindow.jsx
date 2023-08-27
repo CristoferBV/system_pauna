@@ -1,14 +1,12 @@
 import { useState } from "react";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar/Sidebar";
+import Link from "next/link";
 
 
 export default function UserWindow() {
     const [open, setOpen] = useState(false)
     return (
         <>
-            <Sidebar/>
-
-        
         <div className="bg-white">
             <div className="grid grid-cols-2 bg-[#D9D9D9] md:mx-40 p-20 rounded-lg">
                 <div className="sm:w-1/2 p-4">
@@ -42,11 +40,14 @@ export default function UserWindow() {
                                     <option className="text-white text-center" value="Usuario">Usuario</option>
                                 </select>
                             </div>
+                            <Link href='/Administracion/page'>
                             <div className={`bg-[#3726FD] text-center flex items-center justify-center hover:bg-[#4333F9]
                     rounded-lg p-5`}>
                                 <label className="text-white text-center absolute">Annadir</label>
+                               
                                 <input className="bg-[#989898] rounded-lg" type="button"></input>
                             </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

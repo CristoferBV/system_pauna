@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import Delete from '../../../public/basura.png';
-import Edit from '../../../public/lapiz.png';
+import Delete from '../../../../public/basura.png';
+import Edit from '../../../../public/lapiz.png';
 
 export default function Buttons() {
 
@@ -15,7 +15,6 @@ export default function Buttons() {
                         <Image src={Edit} width={30} height={30}></Image>
                     </button>
                 </div>
-
             </div>
         </>
 

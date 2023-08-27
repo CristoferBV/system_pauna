@@ -1,12 +1,10 @@
+'useclient'
 import Buttons from "./InvButtons";
-import Sidebar from "./Sidebar";
 
 
 export default function Inventary() {
-
-
     return (
-        <aside>
+        <>
             <div className="bg-white sm:bg-white md:bg-white lg:bg-white xl:bg-white">
                 <div className="grid grid-cols-3 sm:grid-cols-1 sm:text-center 
                 m:min-h-min p-10 md:flex items-center justify-center text-white text-2xl font-semibold">
@@ -16,7 +14,6 @@ export default function Inventary() {
                             Superior
                         </button>
                     </div>
-
                     <div className="sm:m-4
                     md:mr-10">
                         <button className="bg-[#3726FD] md:w-auto p-5 rounded-lg hover:bg-[#4333F9]">
@@ -39,7 +36,7 @@ export default function Inventary() {
                         </input>
                     </div>
                     <div className="xl:pt-10 xl:mr-50 lg:pt-5 lg:mr-40">
-                        <table class="table-fixed w-full">
+                        <table className="table-fixed w-full">
                             <thead className="sm:text-sm
                             md:mx-auto md:text-2xl">
                                 <tr className="
@@ -66,7 +63,7 @@ export default function Inventary() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className="sm:text-sm sm:p-4
+                            <tr className="sm:text-sm sm:p-4
                                 " >
                                     <td className="
                                     bg-[#989898] p-7">
@@ -79,7 +76,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#989898] p-7">
                                     </td>
-                                    <Buttons/>
+                                    <td><Buttons/></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#D9D9D9] p-7">
@@ -92,7 +89,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#D9D9D9] p-7">
                                     </td>
-                                    <Buttons/>
+                                    <td><Buttons/></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#989898] p-7">
@@ -105,7 +102,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#989898] p-7">
                                     </td>
-                                    <Buttons/>
+                                    <td><Buttons/></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#D9D9D9] p-7">
@@ -118,7 +115,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#D9D9D9] p-7">
                                     </td>
-                                    <Buttons/>
+                                    <td><Buttons/></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#989898] p-7">
@@ -131,7 +128,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#989898] p-7">
                                     </td>
-                                    <Buttons/>
+                                    <td><Buttons/></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#D9D9D9] p-7">
@@ -144,7 +141,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#D9D9D9] p-7">
                                     </td>
-                                    <Buttons/>
+                                    <td><Buttons/></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#989898] p-7">
@@ -157,7 +154,8 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#989898] p-7">
                                     </td>
-                                    <Buttons/>
+                                    <td><Buttons/></td>
+                                    
                                 </tr>
                                 <tr>
                                     <td className="bg-[#D9D9D9] p-7">
@@ -170,7 +168,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#D9D9D9] p-7">
                                     </td>
-                                    <Buttons/>
+                                    <td><Buttons/></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#989898] p-7">
@@ -183,7 +181,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#989898] p-7">
                                     </td>
-                                    <Buttons/>
+                                    <td><Buttons/></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -195,6 +193,6 @@ export default function Inventary() {
                     </div>
                 </div>
             </div>
-        </aside>
+            </>
     )
 }

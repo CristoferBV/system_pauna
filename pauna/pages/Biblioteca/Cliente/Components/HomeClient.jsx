@@ -27,12 +27,12 @@ const HomeClient = () => {
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
-                    <div className="flex-shrink-0 bg-[#E31919] rounded-full w-11 h-11">
+                    <div className="flex-shrink-0 bg-[#E31919] rounded-full w-14 h-14">
                       <Image
-                      className="h-8 w-8 mt-1 ml-1.5"
+                      className="h-9 w-9 mt-2.5 ml-2.5"
                       src={Logo}
-                      width={90}
-                      height = {90}
+                      width={300}
+                      height = {300}
                       alt="University"
                       />
                     </div>

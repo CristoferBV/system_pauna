@@ -5,6 +5,7 @@ import UserWindow from './Administracion/Components/userWindow'
 import Login from './Login and Register/Login/Login'
 import Register from './Login and Register/Register/Register'
 import HomeClient from './Biblioteca/Cliente/Components/HomeClient'
+import LoanClient from './Biblioteca/Cliente/Components/LoanClient'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +16,8 @@ export default function Home() {
       {/* <UserWindow/> */}
       {/* <Login/> */}
       {/* <Register/> */}
-      <HomeClient/>
+      {/* <HomeClient/> */}
+      <LoanClient/>
     </>
   )
 }

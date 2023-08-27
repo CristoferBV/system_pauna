@@ -5,7 +5,7 @@ import Logo from '../../../../public/LOGO-UNA.png';
 import Image from 'next/image';
 
 
-const HomeClient = () => {
+const LoanClient = () => {
 
   const navigation = [
     { name: 'Préstamo', href: '#', current: false },
@@ -102,4 +102,4 @@ const HomeClient = () => {
   );
 };
 
-export default HomeClient
+export default LoanClient

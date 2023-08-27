@@ -5,7 +5,7 @@ import Logo from '../../../../public/LOGO-UNA.png';
 import Image from 'next/image';
 
 
-const ProfileClient = () => {
+const HomeClient = () => {
 
   const navigation = [
     { name: 'Préstamo', href: '#', current: false },
@@ -20,7 +20,7 @@ const ProfileClient = () => {
 
   return (
     <>
-      <div className="min-h-full">
+      <div className="min-h-full relative">
         <Disclosure as="nav" className="bg-[#FF3333]">
           {({ open }) => (
             <>
@@ -70,9 +70,8 @@ const ProfileClient = () => {
                   </div>
                 </div>
               </div>
-
               <Disclosure.Panel className="md:hidden">
-                <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+                <div className="space-y-1 px-2 pb-2 pt-12 sm:px-3">
                   {navigation.map((item) => (
                     <Disclosure.Button
                       key={item.name}
@@ -92,14 +91,17 @@ const ProfileClient = () => {
             </>
           )}
         </Disclosure>
-        <main>
+        <main className="min-h-screen flex-grow relative z-0">
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             {/* El cuerpo de la Home */}
           </div>
         </main>
+        <footer className="bg-[#FF3333] text-white py-4 text-start">
+          <p>Derechos reservados: @Desarrolladores PAUNA 2023</p>
+        </footer>
       </div>
     </>
   );
 };
 
-export default ProfileClient
+export default HomeClient

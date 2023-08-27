@@ -5,9 +5,12 @@ import Sidebar from "./Sidebar";
 export default function UserWindow() {
     const [open, setOpen] = useState(false)
     return (
-        <div className="bg-white">
+        <>
+            <Sidebar/>
 
-            <div className="flex bg-[#D9D9D9] md:mx-40 p-20 rounded-lg">
+        
+        <div className="bg-white">
+            <div className="grid grid-cols-2 bg-[#D9D9D9] md:mx-40 p-20 rounded-lg">
                 <div className="sm:w-1/2 p-4">
                     <div className="md:m-20 md:w-10 h-10">
                         <div className="bg-white text-center text-2xl font-semibold w-max h-max p-10 rounded-lg ">
@@ -110,6 +113,7 @@ export default function UserWindow() {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

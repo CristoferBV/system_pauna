@@ -11,9 +11,9 @@ export default function Home() {
   return (
     <>
       {/* <UserWindow/> */}
-      <div className='bg-white h-screen'>
+      
       <Sidebar/>
-      </div>
+     
       
       {/* <Login/> */}
       

@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Logo from '../../../../public/LOGO-UNA.png';
+import LogoBombilla from '../../../../public/bombilla.png'
 import Image from 'next/image';
 
 
@@ -91,13 +92,96 @@ const HomeClient = () => {
             </>
           )}
         </Disclosure>
+        <header className="text-center py-10">
+          <div className="mx-auto w-11/12 h-28 bg-gray-400 rounded-md p-4 flex items-center justify-center">
+            <div className="mr-2">
+              <Image src={LogoBombilla} width={40} height={40} alt="Icon" />
+            </div>
+            <p className="text-xl font-bold">Llene todos los campos correspondientes</p>
+          </div>
+        </header>
+
         <main className="min-h-screen flex-grow relative z-0">
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            {/* El cuerpo de la Home */}
+        <h1 className="text-2xl font-bold mb-6 text-center">Formulario de solicitudes</h1>
+          <div className="mx-auto w-11/12 p-4 bg-[#D9D9D9] rounded-md mb-8 md:mb-0">
+            <div className="bg-[#BFBFBF] rounded-md p-6 grid md:grid-cols-3 gap-4">
+
+              {/* Columna 1 */}
+              <div className="col-span-1 md:mb-0">
+                <div className="mb-6">
+                  <label className="block font-semibold mb-1">Nombre completo</label>
+                  <input type="text" className="p-2 w-full border rounded-md" />
+                </div>
+                <div className="mb-8">
+                  <label className="block font-semibold mb-1">Cédula</label>
+                  <input type="email" className="p-2 w-full border rounded-md" />
+                </div>
+                <div className="mb-8">
+                  <label className="block font-semibold mb-1">Correo</label>
+                  <input type="tel" className="p-2 w-full border rounded-md" />
+                </div>
+              </div>
+
+              {/* Columna 2 */}
+              <div className="col-span-1 md:mb-0">
+                <div className="mb-6">
+                  <label className="block font-semibold mb-1">Carné</label>
+                  <input type="text" className="p-2 w-full border rounded-md" />
+                </div>
+                <div className="mb-8">
+                  <label className="block font-semibold mb-1">Dispositivos</label>
+                  <select className="p-2 w-full border rounded-md">
+                    <option value="">Seleccionar opción</option>
+                    <option value="opcion1">Laptop</option>
+                    <option value="opcion2">Tablet</option>
+                  </select>
+                </div>
+                <div className="mb-8">
+                  <label className="block font-semibold mb-1">Nivel de carrera</label>
+                  <select className="p-2 w-full border rounded-md">
+                    <option value="">Seleccionar opción</option>
+                    <option value="opcion1">Nivel I</option>
+                    <option value="opcion2">Nivel II</option>
+                    <option value="opcion3">Nivel III</option>
+                    <option value="opcion3">Nivel IV</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Columna 3 */}
+              <div className="col-span-1">
+                <div className="mb-8">
+                  <label className="block font-semibold mb-1">Tipo de beca</label>
+                  <select className="p-2 w-full border rounded-md">
+                    <option value="">Seleccionar opción</option>
+                    <option value="opcion1">Beca Luis Felipe Gonzáles Flores</option>
+                    <option value="opcion2">Beca Omar Dengo 'Residencia'</option>
+                    <option value="opcion3">Beca Participativa </option>
+                  </select>
+                </div>
+                <div className="mb-8">
+                  <label className="block font-semibold mb-1">Campus</label>
+                  <select className="p-2 w-full border rounded-md">
+                    <option value="">Seleccionar opción</option>
+                    <option value="opcion1">Campus Coto</option>
+                    <option value="opcion2">Campus Pérez Zeledón</option>
+                    <option value="opcion3">Campus Omar Dengo</option>
+                    <option value="opcion3">Campus Benjamín Núñez</option>
+                    <option value="opcion3">Campus Liberia</option>
+                    <option value="opcion3">Campus Sarapiquí</option>
+                    <option value="opcion3">Campus Nicoya</option>
+                  </select>
+                </div>
+                <div className="mb-8">
+                  <label className="block font-semibold mb-1">Telefono</label>
+                  <input type="input" className="p-2 w-full border rounded-md" />
+                </div>
+              </div>
+            </div>
           </div>
         </main>
         <footer className="bg-[#FF3333] text-white py-4 text-start">
-          <p>Derechos reservados: @Desarrolladores PAUNA 2023</p>
+          <p className="px-4">Derechos reservados: @Desarrolladores PAUNA 2023</p>
         </footer>
       </div>
     </>

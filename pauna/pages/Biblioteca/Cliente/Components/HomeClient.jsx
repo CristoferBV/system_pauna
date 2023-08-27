@@ -20,7 +20,7 @@ const HomeClient = () => {
 
   return (
     <>
-      <div className="min-h-full">
+      <div className="min-h-full relative">
         <Disclosure as="nav" className="bg-[#FF3333]">
           {({ open }) => (
             <>
@@ -70,7 +70,6 @@ const HomeClient = () => {
                   </div>
                 </div>
               </div>
-
               <Disclosure.Panel className="md:hidden">
                 <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
                   {navigation.map((item) => (
@@ -92,11 +91,22 @@ const HomeClient = () => {
             </>
           )}
         </Disclosure>
-        <main>
+        <header className="bg-[#CD3E3E] rounded-xl text-white py-5 absolute z-50 w-full md:w-4/5 lg:w-3/4 xl:w-5/6 left-1/2 transform -translate-x-1/2 h-44 md:h-52 lg:h-58 top-32 md:top-40 lg:top-44">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h1 className="text-3xl md:text-4xl font-bold mb-2 mt-6 md:mt-11">Bienvenido al apartado biblioteca</h1>
+              <h2 className="text-xl md:text-2xl font-bold mb-2">Elija algunos de los servicios!!</h2>
+            </div>
+          </div>
+        </header>
+        <main className="main-bg min-h-screen flex-grow relative z-0">
           <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             {/* El cuerpo de la Home */}
           </div>
         </main>
+        <footer className="bg-[#FF3333] text-white py-4 text-start">
+          <p>Derechos reservados: @Desarrolladores PAUNA 2023</p>
+        </footer>
       </div>
     </>
   );

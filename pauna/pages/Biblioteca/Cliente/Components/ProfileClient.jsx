@@ -111,7 +111,7 @@ const ProfileClient = () => {
                   alt="Profile"
                 />
               </div>
-              <div className="flex flex-col mt-4">
+              <div className="flex flex-col mt-10 font-bold">
                 <p>Nombre</p>
                 <p>Correo</p>
               </div>

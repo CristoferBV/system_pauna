@@ -6,6 +6,10 @@ import TableCitas from './Biblioteca/Cliente/Components/InterfazAdminBiblioteca/
 import TableEstudiantes from './Biblioteca/Cliente/Components/InterfazAdminBiblioteca/TableEstudiantes'
 import TableDevolucion from './Biblioteca/Cliente/Components/InterfazAdminBiblioteca/TableDevolucion'
 import TableReporte from './Biblioteca/Cliente/Components/InterfazAdminBiblioteca/TableReporte'
+import HomeClient from './Biblioteca/Cliente/Components/InterfazCliente/HomeClient'
+import LoanClient from './Biblioteca/Cliente/Components/InterfazCliente/LoanClient'
+import DevolutionClient from './Biblioteca/Cliente/Components/InterfazCliente/DevolutionClient'
+import ProfileClient from './Biblioteca/Cliente/Components/InterfazCliente/ProfileClient'
 
 
 
@@ -15,12 +19,16 @@ export default function Home() {
   return (
     <>
       {/* <UserWindow/> */}
-      <Slidebar/>
+      {/* <Slidebar/> */}
       {/* <TableDispositivos/> */}
       {/* <TableCitas/> */}
       {/* <TableEstudiantes/> */}
       {/* <TableDevolucion/> */}
       {/* <TableReporte/> */}
+      <HomeClient/>
+      {/* <LoanClient/> */}
+      {/* <DevolutionClient/> */}
+      {/* <ProfileClient/> */}
 
     </>
 

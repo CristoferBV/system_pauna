@@ -2,16 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
-
-
-
-
-.main-bg {
-  background-image: url('../public/Fondo\ biblioteca.jpg');
-  background-size: cover;
-  background-position: center;
-}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFFF;
+  }
 

@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import Logo from "../../../../public/LOGO-UNA.png";
-import LogoBombilla from "../../../../public/bombilla.png";
+import Logo from "../../../../../public/LOGO-UNA.png";
+import LogoBombilla from "../../../../../public/bombilla.png";
 import Image from "next/image";
 
 const DevolutionClient = () => {

@@ -55,7 +55,7 @@ const Slidebar = () => {
             <div className="flex-1 p-4 lg:p-8 flex flex-col bg-[#041A34]">
                 <div className="relative overflow-x-auto shadow-md bg-[#041A34]">
                     <table class="w-full text-sm text-center text-white dark:text-white">
-                        <thead class="text-xs text-[#ffffff] uppercase bg-[#132335] dark:text-[#041A34] dark:bg-[#041A34]">
+                        <thead class="text-xs text-[#ffffff] uppercase bg-[#132335]">
                             <tr>
                                 <th scope="col" class="px-6 py-3    ">
                                     Nombre

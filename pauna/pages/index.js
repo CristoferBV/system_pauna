@@ -13,19 +13,15 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-<<<<<<< Updated upstream
-    <> 
-      <UserWindow/>   
-    </>
-=======
-    <div>
+    <>
+      {/* <UserWindow/> */}
       <Slidebar/>
       {/* <TableDispositivos/> */}
       {/* <TableCitas/> */}
       {/* <TableEstudiantes/> */}
       {/* <TableDevolucion/> */}
       {/* <TableReporte/> */}
-    </div>
->>>>>>> Stashed changes
+    </>
+
   )
 }

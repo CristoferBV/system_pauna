@@ -1,5 +1,6 @@
 'useclient'
 import Buttons from "./InvButtons";
+import Link from "next/link"
 
 
 export default function Inventary() {
@@ -32,7 +33,7 @@ export default function Inventary() {
                 md:p-20 rounded-lg text-2xl font-semibold">
                     <div className="sm:mr-10 sm:text-center sm:p-2 sm:text-sm
                     md:mr-20 md:text-left md:mx-auto md:text-2xl">
-                        <input className="bg-[#3726FD] p-2 text-white placeholder-white rounded-lg" placeholder="Buscar...">
+                        <input className="bg-[#3726FD] p-5 text-white placeholder-white rounded-lg" placeholder="Buscar...">
                         </input>
                     </div>
                     <div className="xl:pt-10 xl:mr-50 lg:pt-5 lg:mr-40">
@@ -46,7 +47,7 @@ export default function Inventary() {
                                         Nombre
                                     </th>
                                     <th>
-                                        Codigo
+                                        Código
                                     </th>
                                     <th>
                                         Marca
@@ -58,12 +59,12 @@ export default function Inventary() {
                                         Observaciones
                                     </th>
                                     <th>
-                                        
+
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <tr className="sm:text-sm sm:p-4
+                                <tr className="sm:text-sm sm:p-4
                                 " >
                                     <td className="
                                     bg-[#989898] p-7">
@@ -76,7 +77,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#989898] p-7">
                                     </td>
-                                    <td><Buttons/></td>
+                                    <td><Buttons /></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#D9D9D9] p-7">
@@ -89,7 +90,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#D9D9D9] p-7">
                                     </td>
-                                    <td><Buttons/></td>
+                                    <td><Buttons /></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#989898] p-7">
@@ -102,7 +103,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#989898] p-7">
                                     </td>
-                                    <td><Buttons/></td>
+                                    <td><Buttons /></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#D9D9D9] p-7">
@@ -115,7 +116,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#D9D9D9] p-7">
                                     </td>
-                                    <td><Buttons/></td>
+                                    <td><Buttons /></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#989898] p-7">
@@ -128,7 +129,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#989898] p-7">
                                     </td>
-                                    <td><Buttons/></td>
+                                    <td><Buttons /></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#D9D9D9] p-7">
@@ -141,7 +142,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#D9D9D9] p-7">
                                     </td>
-                                    <td><Buttons/></td>
+                                    <td><Buttons /></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#989898] p-7">
@@ -154,8 +155,8 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#989898] p-7">
                                     </td>
-                                    <td><Buttons/></td>
-                                    
+                                    <td><Buttons /></td>
+
                                 </tr>
                                 <tr>
                                     <td className="bg-[#D9D9D9] p-7">
@@ -168,7 +169,7 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#D9D9D9] p-7">
                                     </td>
-                                    <td><Buttons/></td>
+                                    <td><Buttons /></td>
                                 </tr>
                                 <tr>
                                     <td className="bg-[#989898] p-7">
@@ -181,18 +182,20 @@ export default function Inventary() {
                                     </td>
                                     <td className="bg-[#989898] p-7">
                                     </td>
-                                    <td><Buttons/></td>
+                                    <td><Buttons /></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div className="pt-20 text-white text-left">
-                        <button className="bg-[#3726FD] md:w- p-5 rounded-lg hover:bg-[#4333F9]">
-                            Annadir
-                        </button>
-                    </div>
+                    <Link href="../../../../Administracion/Components/Inventary/InvAnnadir">
+                        <div className="pt-20 text-white text-left">
+                            <button className="bg-[#3726FD] md:w- p-6 rounded-lg hover:bg-[#4333F9]">
+                                Añadir
+                            </button>
+                        </div>
+                    </Link>
                 </div>
             </div>
-            </>
+        </>
     )
 }

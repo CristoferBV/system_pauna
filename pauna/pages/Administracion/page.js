@@ -1,5 +1,4 @@
-import Inventary from "./Components/Inventory/Inventory";
-import Layout from "./Layout";
+import Inventary from "./Components/Inventary/Inventory";
 
 export default function pageAdm() {
     return (

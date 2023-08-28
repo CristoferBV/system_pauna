@@ -1,8 +1,7 @@
-import Random from "../../../public/cambio.png"
+import Random from "../../../../public/cambio.png"
 import Image from 'next/image';
 
 export default function Annadir() {
-
     return (
         <div className="bg-[#D9D9D9] min-h-screen">
             <div className="sm:bg-[#D9D9D9] sm:p-40
@@ -21,7 +20,7 @@ export default function Annadir() {
                     md:p-5
                     ">
                             <label className="">
-                                Codigo
+                                Código
                             </label>
                             <input className="text-center rounded-t-lg
                         bg-white"  type="text"></input>
@@ -42,7 +41,7 @@ export default function Annadir() {
                     sm:p-5
                     md:p-5">
                             <label className="">
-                                Observacion
+                                Observación
                             </label>
                             <input className="text-center rounded p-5
                         bg-white"  type="text"></input>
@@ -59,13 +58,22 @@ export default function Annadir() {
                                     Elige una marca
                                 </option>
                                 <option>
-                                    Sebas
+                                    Bic
                                 </option>
                                 <option>
-                                    Cris
+                                    Norma
                                 </option>
                                 <option>
-                                    Andrey
+                                    Crayola
+                                </option>
+                                <option>
+                                    Sharpie
+                                </option>
+                                <option>
+                                    Post-it
+                                </option>
+                                <option>
+                                    Paper Mater
                                 </option>
                             </select >
                         </div>
@@ -74,7 +82,7 @@ export default function Annadir() {
                     sm:p-5
                     md:p-5">
                             <label className="">
-                                Ubicacion
+                                Ubicación
                             </label>
                             <select className="text-center rounded
                         bg-white">
@@ -94,7 +102,7 @@ export default function Annadir() {
                             <button className="bg-[#4333F9] rounded text-white
                         sm:m-4 sm:p-2
                         md:m-4 md:p-2">
-                                Annadir
+                                Añadir
                             </button>
                         </div>
 
@@ -114,7 +122,7 @@ export default function Annadir() {
                         bg-[#D9D9D9]
                         sm:m-4" type="text"></input>
                             <label>
-                                Descripcion
+                                Descripción
                             </label>
                             <input className="text-center rounded
                         bg-[#D9D9D9]
@@ -122,7 +130,7 @@ export default function Annadir() {
                             <button className="bg-[#4333F9] rounded text-white
                         sm:m-4 sm:p-2
                         md:m-4 md:p-2">
-                                Annadir
+                                Añadir
                             </button>
                         </div>
                         <div className="bg-white rounded grid grid-cols-1 divide-x
@@ -137,7 +145,7 @@ export default function Annadir() {
                             <button className="bg-[#4333F9] rounded text-white
                         sm:m-4 sm:p-2
                         md:m-4 md:p-2">
-                                Annadir
+                                Añadir
                             </button>
                         </div>
 
@@ -145,13 +153,13 @@ export default function Annadir() {
                         sm:m-4 
                         md:m-4">
                             <label>
-                                Ubicacion
+                                Ubicación
                             </label>
                             <input className="text-center rounded
                         bg-[#D9D9D9]
                         sm:m-4" type="text"></input>
                             <label>
-                                Descripcion
+                                Descripción
                             </label>
                             <input className="text-center rounded
                         bg-[#D9D9D9]
@@ -159,13 +167,11 @@ export default function Annadir() {
                             <button className="bg-[#4333F9] rounded text-white
                         sm:m-4 sm:p-2
                         md:m-4 md:p-2">
-                                Annadir
+                                Añadir
                             </button>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     )

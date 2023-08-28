@@ -143,7 +143,7 @@ const HomeClient = () => {
                     <option value="opcion1">Nivel I</option>
                     <option value="opcion2">Nivel II</option>
                     <option value="opcion3">Nivel III</option>
-                    <option value="opcion3">Nivel IV</option>
+                    <option value="opcion4">Nivel IV</option>
                   </select>
                 </div>
               </div>
@@ -166,10 +166,10 @@ const HomeClient = () => {
                     <option value="opcion1">Campus Coto</option>
                     <option value="opcion2">Campus Pérez Zeledón</option>
                     <option value="opcion3">Campus Omar Dengo</option>
-                    <option value="opcion3">Campus Benjamín Núñez</option>
-                    <option value="opcion3">Campus Liberia</option>
-                    <option value="opcion3">Campus Sarapiquí</option>
-                    <option value="opcion3">Campus Nicoya</option>
+                    <option value="opcion4">Campus Benjamín Núñez</option>
+                    <option value="opcion5">Campus Liberia</option>
+                    <option value="opcion6">Campus Sarapiquí</option>
+                    <option value="opcion7">Campus Nicoya</option>
                   </select>
                 </div>
                 <div className="mb-8">

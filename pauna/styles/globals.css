@@ -9,3 +9,9 @@ html, body {
     background-color: #FFFFFF;
   }
 
+  .main-bg {
+    background-image: url('../public/Fondo\ biblioteca.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+

@@ -6,7 +6,7 @@ import LogoBombilla from '../../../../public/bombilla.png'
 import Image from 'next/image';
 
 
-const HomeClient = () => {
+const LoanClient = () => {
 
   const navigation = [
     { name: 'Préstamo', href: '#', current: false },
@@ -186,6 +186,11 @@ const HomeClient = () => {
                 </div>
               </div>
             </div>
+            <div className="mt-8 flex justify-center">
+              <button className="bg-[#E31919] text-white rounded-md px-4 py-2 font-medium hover:bg-[#FF3333]">
+                Aceptar
+              </button>
+            </div>
           </div>
         </main>
         <footer className="bg-[#FF3333] text-white py-4 text-start">
@@ -196,4 +201,4 @@ const HomeClient = () => {
   );
 };
 
-export default HomeClient
+export default LoanClient

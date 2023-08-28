@@ -7,6 +7,7 @@ import Register from './Login and Register/Register/Register'
 import HomeClient from './Biblioteca/Cliente/Components/HomeClient'
 import LoanClient from './Biblioteca/Cliente/Components/LoanClient'
 import DevolutionClient from './Biblioteca/Cliente/Components/DevolutionClient'
+import ProfileClient from './Biblioteca/Cliente/Components/ProfileClient'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,6 +21,7 @@ export default function Home() {
       {/* <HomeClient/> */}
       {/* <LoanClient/> */}
       {/* <DevolutionClient/> */}
+      <ProfileClient/>
       
     </>
   )

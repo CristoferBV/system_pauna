@@ -1,5 +1,5 @@
+import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import UserWindow from './Administracion/Components/User/userWindow'
 
 import TableDispositivos from './Biblioteca/Cliente/Components/InterfazAdminBiblioteca/TableDispositivos'
 import Slidebar from './Biblioteca/Cliente/Components/InterfazAdminBiblioteca/Slidebar'
@@ -13,11 +13,6 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-<<<<<<< Updated upstream
-    <> 
-      <UserWindow/>   
-    </>
-=======
     <div>
       <Slidebar/>
       {/* <TableDispositivos/> */}
@@ -26,6 +21,5 @@ export default function Home() {
       {/* <TableDevolucion/> */}
       {/* <TableReporte/> */}
     </div>
->>>>>>> Stashed changes
   )
 }

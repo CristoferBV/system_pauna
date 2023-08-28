@@ -29,7 +29,7 @@ const Login = () => {
               className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg"
             />
             <select className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg">
-              <option value="" disabled>Elige un rol</option>
+              <option value="">-Elige un rol-</option>
               <option value="biblioteca">Biblioteca</option>
               <option value="administracion">Administración</option>
             </select>

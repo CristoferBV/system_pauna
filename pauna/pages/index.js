@@ -18,8 +18,9 @@ export default function Home() {
       {/* <Login/> */}
       {/* <Register/> */}
       {/* <HomeClient/> */}
-      <LoanClient/>
+      {/* <LoanClient/> */}
       {/* <DevolutionClient/> */}
+      
     </>
   )
 }

@@ -108,7 +108,7 @@ const HomeClient = () => {
 
               {/* Columna 1 */}
               <div className="col-span-1 md:mb-0">
-                <div className="mb-6">
+                <div className="mb-8">
                   <label className="block font-semibold mb-1">Nombre completo</label>
                   <input type="text" className="p-2 w-full border rounded-md" />
                 </div>
@@ -124,26 +124,34 @@ const HomeClient = () => {
 
               {/* Columna 2 */}
               <div className="col-span-1 md:mb-0">
-                <div className="mb-6">
-                  <label className="block font-semibold mb-1">Carné</label>
-                  <input type="text" className="p-2 w-full border rounded-md" />
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Dispositivos</label>
+              <div className="mb-8">
+                  <label className="block font-semibold mb-1">Carrera</label>
                   <select className="p-2 w-full border rounded-md">
-                    <option value="">Seleccionar opción</option>
-                    <option value="opcion1">Laptop</option>
-                    <option value="opcion2">Tablet</option>
+                    <option value="">-Seleccionar opción-</option>
+                    <option value="opcion1">
+                      Ingeniería en Sistemas de Información{" "}
+                    </option>
+                    <option value="opcion2">Administración</option>
+                    <option value="opcion3">Enseñanza del Inglés</option>
+                    <option value="opcion4">Planificación</option>
                   </select>
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Nivel de carrera</label>
                   <select className="p-2 w-full border rounded-md">
-                    <option value="">Seleccionar opción</option>
+                    <option value="">-Seleccionar opción-</option>
                     <option value="opcion1">Nivel I</option>
                     <option value="opcion2">Nivel II</option>
                     <option value="opcion3">Nivel III</option>
                     <option value="opcion4">Nivel IV</option>
+                  </select>
+                </div>
+                <div className="mb-8">
+                  <label className="block font-semibold mb-1">Dispositivos</label>
+                  <select className="p-2 w-full border rounded-md">
+                    <option value="">-Seleccionar opción-</option>
+                    <option value="opcion1">Laptop</option>
+                    <option value="opcion2">Tablet</option>
                   </select>
                 </div>
               </div>
@@ -153,7 +161,7 @@ const HomeClient = () => {
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Tipo de beca</label>
                   <select className="p-2 w-full border rounded-md">
-                    <option value="">Seleccionar opción</option>
+                    <option value="">-Seleccionar opción-</option>
                     <option value="opcion1">Beca Luis Felipe Gonzáles Flores</option>
                     <option value="opcion2">Beca Omar Dengo 'Residencia'</option>
                     <option value="opcion3">Beca Participativa </option>
@@ -162,7 +170,7 @@ const HomeClient = () => {
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Campus</label>
                   <select className="p-2 w-full border rounded-md">
-                    <option value="">Seleccionar opción</option>
+                    <option value="">-Seleccionar opción-</option>
                     <option value="opcion1">Campus Coto</option>
                     <option value="opcion2">Campus Pérez Zeledón</option>
                     <option value="opcion3">Campus Omar Dengo</option>

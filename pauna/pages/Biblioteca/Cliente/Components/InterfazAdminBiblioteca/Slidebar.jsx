@@ -5,7 +5,7 @@ const Slidebar = () => {
 
     return (
         <div className="flex flex-col lg:flex-row bg-black" >
-            <div className="lg:w-1/5 bg-[#021730] shadow-inner text-white min-h-screen">
+            <div className="lg:w-1/5  bg-[#021730] shadow-inner text-white min-h-screen overflow-y-auto">
                 <div className="text-center text-2xl font-semibold mt-6">
                     <div className="flex items-center">
                         <div className="w-20 h-20 bg-[#0E21CD] rounded-full flex items-center justify-center mx-4 mt-4">
@@ -43,7 +43,7 @@ const Slidebar = () => {
             {/*<-------------------- Tabla-------------------------> */}
 
             <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md">
-            <div className="max-w-full overflow-x-auto bg-[#041A34]">
+            <div className="relative overflow-x-auto shadow-md bg-[#041A34] overflow-y-auto">
                 <table class="w-full text-sm text-center text-[#757373]">
                     <thead class="text-xs text-[#ffffff] uppercase bg-[#132335]">
                         <tr>

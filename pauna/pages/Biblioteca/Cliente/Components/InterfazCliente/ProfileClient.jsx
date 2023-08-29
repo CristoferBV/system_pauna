@@ -64,6 +64,13 @@ const ProfileClient = () => {
                       </div>
                     </div>
                   </div>
+                  <Link href={'/LoginAndRegister/Login/Login'}>
+                    <button className='bg-[#FF3333] text-white
+                                  :text-white hover:bg-[#E31919] hover:text-white
+                                rounded-md px-3 py-2 text-sm font-medium'>
+                      Cerrar Sesión
+                    </button>
+                  </Link>
                   <div className="-mr-2 flex md:hidden">
                     {/* Mobile menu button */}
                     <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-[#E31919] p-2 text-white hover:bg-[#E31919] hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E31919]">

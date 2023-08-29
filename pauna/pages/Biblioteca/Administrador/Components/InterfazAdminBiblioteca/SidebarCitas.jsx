@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const SidebarCitas = () => {
+    const [active, setActive] = useState(0);
     return (
         <div className="flex flex-col lg:flex-row bg-black" >
             <div className="lg:w-1/5  bg-[#021730] shadow-inner text-white min-h-screen overflow-y-auto">
@@ -15,22 +16,31 @@ const SidebarCitas = () => {
                     </div>
                 </div>
                 <ul className="flex-grow mt-10 space-y-4">
-                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
+                <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar"}>
+                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200" onClick={()=>setActive(1)}>
                         <span className="font-bold font-inika">Dispositivos</span>
                     </li>
-                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
+                    </Link>
+                    <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarCitas"}>
+                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200" onClick={()=>setActive(2)}>
                         <span className=" font-bold font-inika">Citas</span>
-                        <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarCitas"}></Link>
                     </li>
-                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
+                    </Link>
+                    <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarEstudiantes"}>
+                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200" onClick={()=>setActive(3)}>
                         <span className=" font-bold font-inika">Estudiantes</span>
                     </li>
-                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
+                    </Link>
+                    <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarDevoluciones"}>
+                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200" onClick={()=>setActive(4)}>
                         <span className="font-bold font-inika">Devoluciones</span>
                     </li>
-                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
+                    </Link>
+                    <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarReporte"}>
+                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200" onClick={()=>setActive(5)}>
                         <span className="font-bold font-inika">Reporte</span>
                     </li>
+                    </Link>
                     <li className='py-4 pl-20 flex items-center justify-between'>
                         <span className='font-bold font-inika'>Modo Oscuro</span>
                         <label className="relative inline-flex items-center cursor-pointer mr-14">

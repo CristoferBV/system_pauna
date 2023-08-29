@@ -60,10 +60,7 @@ export default function Sidebar({isOpen, toggleSidebar}) {
                     <p className={`text-left text-black text-2xl font-semibold mx-5 ${!isOpen  && "hidden"}`}>Cerrar Sesion</p>
                     <Image src={Close} width={30} height={30} className={`w-10 h-10 mx-auto`}></Image>
                 </div>
-            </div>
-
-
-        </>
-
-    )
+                </div>
+    </>
+  );
 }

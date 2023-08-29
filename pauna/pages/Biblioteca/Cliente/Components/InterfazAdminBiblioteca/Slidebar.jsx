@@ -37,266 +37,269 @@ const Slidebar = () => {
                             <div className="w-16 h-8 bg-[#1B3555] peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-7 after:w-7 after:transition-all dark:border-gray-600 peer-checked:bg-[#8299EC]"></div>
                         </label>
                     </li>
+                    <li>
+                        <button className='rounded-xl ml-16 text-white border-white mt-6 w-32 h-10 bg-[#132335] hover:bg-[#c43f3f]'>Cerrar Cesion</button>
+                    </li>
                 </ul>
             </div>
 
             {/*<-------------------- Tabla-------------------------> */}
 
             <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md">
-            <div className="relative overflow-x-auto shadow-md bg-[#041A34] overflow-y-auto">
-                <table class="w-full text-sm text-center text-[#757373]">
-                    <thead class="text-xs text-[#ffffff] uppercase bg-[#132335]">
-                        <tr>
-                            <th scope="col" class="px-6 py-3    ">
-                                Id
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Tablet
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Laptop
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Perifericos
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Administrar
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                1
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Samsung A5
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i5
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Cargador
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                2
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Huawei 10S
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i7
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Audifonos
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                3
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Samsung A5
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i5
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Cargador
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                4
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Huawei AS
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i3
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Estuche
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66] group">
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                5
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Samsung A5
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i5
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Cargador
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                6
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Samsung A5
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i5
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                audifonos
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                7
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Huawei SU
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i9
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Cargador y audifonos
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                8
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Huawei SU
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i9
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Cargador y audifonos
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                9
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Huawei SU
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i9
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Cargador y audifonos
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                10
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Huawei SU
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i9
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Cargador y audifonos
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                11
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Huawei SU
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i9
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Cargador y audifonos
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                        <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                12
-                            </th>
-                            <td class="px-6 py-4 text-white">
-                                Huawei SU
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Laptop i9
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                Cargador y audifonos
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div className="relative overflow-x-auto shadow-md bg-[#041A34] overflow-y-auto">
+                    <table class="w-full text-sm text-center text-[#757373]">
+                        <thead class="text-xs text-[#ffffff] uppercase bg-[#132335]">
+                            <tr>
+                                <th scope="col" class="px-6 py-3    ">
+                                    Id
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Tablet
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Laptop
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Perifericos
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Administrar
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    1
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Samsung A5
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i5
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Cargador
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    2
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Huawei 10S
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i7
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Audifonos
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    3
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Samsung A5
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i5
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Cargador
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    4
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Huawei AS
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i3
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Estuche
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66] group">
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    5
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Samsung A5
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i5
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Cargador
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    6
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Samsung A5
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i5
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    audifonos
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    7
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Huawei SU
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i9
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Cargador y audifonos
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    8
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Huawei SU
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i9
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Cargador y audifonos
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    9
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Huawei SU
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i9
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Cargador y audifonos
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    10
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Huawei SU
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i9
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Cargador y audifonos
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    11
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Huawei SU
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i9
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Cargador y audifonos
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    12
+                                </th>
+                                <td class="px-6 py-4 text-white">
+                                    Huawei SU
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Laptop i9
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    Cargador y audifonos
+                                </td>
+                                <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
         </div>
     )

@@ -1,8 +1,11 @@
-// pages/_app.js
 import '@/styles/globals.css';
 import Layout from './Administracion/Layout';
 import { useRouter } from 'next/router';
-import Login from './LoginAndRegister/Login/Login.jsx'; // Ruta correcta hacia el componente Login
+import Login from './LoginAndRegister/Login/Login';
+import HomeClient from './Biblioteca/Cliente/Components/InterfazCliente/HomeClient';
+import AdminBiblioteca from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar';
+import UserWindow from './Administracion/Components/User/userWindow';
+import Slidebar from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar';
 
 function App({ Component, pageProps }) {
   const router = useRouter();
@@ -16,7 +19,19 @@ function App({ Component, pageProps }) {
   }
 
   if (router.pathname === '/LoginAndRegister') {
-    return <Login />;
+    return <Login />
+  }
+
+  if (router.pathname === '/Biblioteca/Cliente/Components/InterfazCliente/HomeClient') {
+    return <HomeClient />;
+  }
+
+  if (router.pathname === '/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar') {
+    return <Slidebar />;
+  }
+
+  if (router.pathname === '/Administracion/Components/User/userWindow') {
+    return <Component {...pageProps} />;
   }
 
   return <Component {...pageProps} />;

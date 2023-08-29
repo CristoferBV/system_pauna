@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
+import Link from 'next/link';
 import Logo from '../../../public/LOGO-UNA.png';
 
 const Register = () => {
@@ -28,9 +29,11 @@ const Register = () => {
                   placeholder="Contraseña"
                   className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg"
                 />
-                <button className="bg-[#E31919] text-white px-6 md:px-12 py-2 rounded-xl hover:bg-red-600 mt-8 md:mt-12 w-full md:w-48 text-lg" style={{marginTop: 30}}>
-                  Registrar
-                </button>
+                <Link href="/LoginAndRegister/Login/Login">
+                  <button className="bg-[#E31919] text-white px-6 md:px-12 py-2 rounded-xl hover:bg-red-600 mt-8 md:mt-12 w-full md:w-48 text-lg" style={{ marginTop: 30 }}>
+                    Registrar
+                  </button>
+                </Link>
               </div>
               <footer className="mt-12 md:mt-16 ml-2 text-gray-500 text-sm text-left flex-shrink-0 ">
                 Reservado desarrolladores PAUNA 2023

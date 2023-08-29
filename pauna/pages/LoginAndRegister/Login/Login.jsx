@@ -12,11 +12,11 @@ const Login = () => {
   const [selectedOption, setSelectedOption] = useState('');
 
   const handleLogin = () => {
-    if (selectedOption === 'Biblioteca') {
+    if (selectedOption === 'biblioteca') {
       router.push('/Biblioteca/Cliente/Components/InterfazCliente/HomeClient');
     } else if (selectedOption === 'biblioAdmin') {
       router.push('/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar');
-    } else if (selectedOption === 'Administracion') {
+    } else if (selectedOption === 'administracion') {
       router.push('/Administracion/Components/User/userWindow');
     }
   };

@@ -3,16 +3,21 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Logo from '../../../../../public/LOGO-UNA.png';
 import Image from 'next/image';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 
 const HomeClient = () => {
 
+
+
   const navigation = [
-    { name: 'Préstamo', href: '#', current: false },
-    { name: 'Devolución', href: '#', current: false },
-    { name: 'Perfil', href: '#', current: false },
-    { name: 'Inicio', href: '#', current: false }
-  ]
+    { name: 'Préstamo', href: '/Biblioteca/Cliente/Components/InterfazCliente/LoanClient', current: false },
+    { name: 'Devolución', href: '/Biblioteca/Cliente/Components/InterfazCliente/DevolutionClient', current: false },
+    { name: 'Perfil', href: '/Biblioteca/Cliente/Components/InterfazCliente/ProfileClient', current: false },
+    { name: 'Inicio', href: '/Biblioteca/Cliente/Components/InterfazCliente/HomeClient', current: false }
+  ];
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -39,9 +44,8 @@ const HomeClient = () => {
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => (
-                          <a
-                            key={item.name}
-                            href={item.href}
+                          <Link legacyBehavior key={item.name} href={item.href} onClick={() => setActiveNavItem(index)}>
+                            <a
                             className={classNames(
                               item.current
                                 ? 'bg-[#FF3333] text-white'
@@ -52,6 +56,7 @@ const HomeClient = () => {
                           >
                             {item.name}
                           </a>
+                          </Link>
                         ))}
                       </div>
                     </div>

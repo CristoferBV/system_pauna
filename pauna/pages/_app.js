@@ -5,6 +5,7 @@ import Login from './LoginAndRegister/Login/Login';
 import HomeClient from './Biblioteca/Cliente/Components/InterfazCliente/HomeClient';
 import AdminBiblioteca from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar';
 import UserWindow from './Administracion/Components/User/userWindow';
+import Slidebar from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar';
 
 function App({ Component, pageProps }) {
   const router = useRouter();
@@ -21,10 +22,12 @@ function App({ Component, pageProps }) {
     return <Login />
   }
 
-  // Agregar condiciones para manejar diferentes rutas según la selección en el inicio de sesión
-  if (router.pathname === '/Biblioteca/Cliente/Components/InterfazCliente/HomeClient' ||
-      router.pathname === '/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar') {
-    return <Component {...pageProps} />;
+  if (router.pathname === '/Biblioteca/Cliente/Components/InterfazCliente/HomeClient') {
+    return <HomeClient />;
+  }
+
+  if (router.pathname === '/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar') {
+    return <Slidebar />;
   }
 
   if (router.pathname === '/Administracion/Components/User/userWindow') {

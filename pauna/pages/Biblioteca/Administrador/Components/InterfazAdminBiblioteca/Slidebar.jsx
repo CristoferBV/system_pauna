@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Slidebar = () => {
 
@@ -20,6 +21,7 @@ const Slidebar = () => {
                     </li>
                     <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
                         <span className=" font-bold font-inika">Citas</span>
+                        <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarCitas"}></Link>
                     </li>
                     <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
                         <span className=" font-bold font-inika">Estudiantes</span>

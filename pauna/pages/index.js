@@ -20,12 +20,12 @@ export default function Home() {
   return (
     <>
       {/* <UserWindow/> */}
-      {/* <Slidebar/> */}
+      <Slidebar/>
       {/* <HomeClient/> */}
       {/* <LoanClient/> */}
       {/* <DevolutionClient/> */}
       {/* <ProfileClient/> */}
-      <Login/>
+      {/* <Login/> */}
       {/* <Register/> */}
 
     </>

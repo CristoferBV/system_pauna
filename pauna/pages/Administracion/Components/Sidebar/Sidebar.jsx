@@ -55,11 +55,13 @@ export default function Sidebar({isOpen, toggleSidebar}) {
                     </Link>
 
                 </div>
+                <Link href={'/LoginAndRegister/Login/Login'}>
                 <div className="text-left text-black text-2xl font-semibold mb-2 mx-4 flex items-center mt-9
                 ">
                     <p className={`text-left text-black text-2xl font-semibold mx-5 ${!isOpen  && "hidden"}`}>Cerrar Sesion</p>
                     <Image src={Close} width={30} height={30} className={`w-10 h-10 mx-auto`}></Image>
                 </div>
+                </Link>
                 </div>
     </>
   );

@@ -10,8 +10,8 @@ import HomeClient from './Biblioteca/Cliente/Components/InterfazCliente/HomeClie
 import LoanClient from './Biblioteca/Cliente/Components/InterfazCliente/LoanClient'
 import DevolutionClient from './Biblioteca/Cliente/Components/InterfazCliente/DevolutionClient'
 import ProfileClient from './Biblioteca/Cliente/Components/InterfazCliente/ProfileClient'
-import Login from './Login and Register/Login/Login'
-import Register from './Login and Register/Register/Register'
+import Login from './LoginAndRegister/Login/Login'
+import Register from './LoginAndRegister/Register/Register'
 
 
 

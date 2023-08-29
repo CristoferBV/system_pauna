@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Logo from '../../../public/LOGO-UNA.png';
 
 const Login = () => {
@@ -36,8 +37,11 @@ const Login = () => {
             <button className="bg-[#0E21CD] text-white px-6 md:px-12 py-2 rounded-xl hover:bg-blue-600 mt-8 md:mt-12 w-full md:w-48 text-lg" style={{marginTop: 30}}>
               Entrar
             </button>
-            <p className="mt-4 text-center text-lg" style={{marginTop: 30}}>
-              ¿No tienes una cuenta? <a href="#">Regístrate</a>
+            <p className="mt-4 text-center text-lg" style={{ marginTop: 30 }}>
+              ¿No tienes una cuenta?{' '}
+              <Link href="/LoginAndRegister/Register/Register">
+                Regístrate
+              </Link>
             </p>
           </div>
           <footer className="mt-12 md:mt-16 ml-2 text-gray-500 text-sm text-left flex-shrink-0 ">

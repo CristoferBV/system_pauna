@@ -1,6 +1,5 @@
 import { Inter } from 'next/font/google'
 import UserWindow from './Administracion/Components/User/userWindow'
-import TableDispositivos from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/TableDispositivos'
 import HomeClient from './Biblioteca/Cliente/Components/InterfazCliente/HomeClient'
 import LoanClient from './Biblioteca/Cliente/Components/InterfazCliente/LoanClient'
 import DevolutionClient from './Biblioteca/Cliente/Components/InterfazCliente/DevolutionClient'
@@ -8,12 +7,11 @@ import ProfileClient from './Biblioteca/Cliente/Components/InterfazCliente/Profi
 import Login from './LoginAndRegister/Login/Login'
 import Register from './LoginAndRegister/Register/Register'
 
-
-import Slidebar from './Biblioteca/Cliente/Components/InterfazAdminBiblioteca/Slidebar'
-import SidebarCitas from './Biblioteca/Cliente/Components/InterfazAdminBiblioteca/SidebarCitas'
-import SidebarDevoluciones from './Biblioteca/Cliente/Components/InterfazAdminBiblioteca/SidebarDevoluciones'
-import SidebarEstudiantes from './Biblioteca/Cliente/Components/InterfazAdminBiblioteca/SidebarEstudiantes'
-import SidebarReporte from './Biblioteca/Cliente/Components/InterfazAdminBiblioteca/SidebarReporte'
+import Slidebar from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar'
+import SidebarCitas from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarCitas'
+import SidebarDevoluciones from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarDevoluciones'
+import SidebarEstudiantes from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarEstudiantes'
+import SidebarReporte from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarReporte'
 
 
 const inter = Inter({ subsets: ['latin'] })

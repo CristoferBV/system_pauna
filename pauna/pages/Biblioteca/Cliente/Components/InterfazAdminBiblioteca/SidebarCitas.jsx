@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-const Slidebar = () => {
-
+const SidebarCitas = () => {
     return (
         <div className="flex flex-col lg:flex-row bg-black" >
             <div className="lg:w-1/5  bg-[#021730] shadow-inner text-white min-h-screen overflow-y-auto">
@@ -47,23 +46,23 @@ const Slidebar = () => {
                 <table class="w-full text-sm text-center text-[#757373]">
                     <thead class="text-xs text-[#ffffff] uppercase bg-[#132335]">
                         <tr>
-                            <th scope="col" class="px-6 py-3    ">
-                                Nombre
+                            <th scope="col" class="px-6 py-3">
+                                Hora
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Cedula
+                                Lunes
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Dispositivo
+                                Martes
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Carrera
+                                Miercoles
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Fecha entregado
+                                Jueves
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Correo
+                                Viernes
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Administrar
@@ -72,23 +71,35 @@ const Slidebar = () => {
                     </thead>
                     <tbody>
                         <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
-                            </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                10am
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
+
                             </td>
                             <td class="px-6 py-4 text-white">
-                                10-9-2023
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                Carlos Godines
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
+                            </td>
+                            <td class="px-6 py-4 text-white">
+                                David Hernadez
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                 <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -97,23 +108,35 @@ const Slidebar = () => {
                             </td>
                         </tr>
                         <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
-                            </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                10am
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
+
                             </td>
                             <td class="px-6 py-4 text-white">
-                                10-9-2023
+
                             </td>
                             <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                Carlos Godines
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
+                            </td>
+                            <td class="px-6 py-4 text-white">
+                                David Hernadez
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
                                 <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -122,23 +145,39 @@ const Slidebar = () => {
                             </td>
                         </tr>
                         <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
-                            </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                10am
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                10-9-2023
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                Carlos Godines
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
+                            </td>
+                            <td class="px-6 py-4 text-white">
+
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                 <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -147,23 +186,35 @@ const Slidebar = () => {
                             </td>
                         </tr>
                         <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
-                            </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                10am
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                10-9-2023
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+
+                            </td>
+                            <td class="px-6 py-4 text-white">
+
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66] group">
                                 <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -172,23 +223,39 @@ const Slidebar = () => {
                             </td>
                         </tr>
                         <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
-                            </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                10am
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                10-9-2023
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+
+                            </td>
+                            <td class="px-6 py-4 text-white">
+                                David Hernadez
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
                                 <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -197,23 +264,35 @@ const Slidebar = () => {
                             </td>
                         </tr>
                         <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
-                            </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                10am
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                10-9-2023
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+
+                            </td>
+                            <td class="px-6 py-4 text-white">
+                                David Hernadez
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
                                 <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -222,23 +301,35 @@ const Slidebar = () => {
                             </td>
                         </tr>
                         <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
-                            </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                10am
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
+
                             </td>
                             <td class="px-6 py-4 text-white">
-                                10-9-2023
+
                             </td>
                             <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                Carlos Godines
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
+                            </td>
+                            <td class="px-6 py-4 text-white">
+                                David Hernadez
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
                                 <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -247,23 +338,35 @@ const Slidebar = () => {
                             </td>
                         </tr>
                         <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
-                            </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                10am
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
+                                Andrey Barrios
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                10-9-2023
+
                             </td>
                             <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                Carlos Godines
+                                Cedula:118080476
+                                Carrera:Ingenieria
+                                Beca Luis Felipe
+                                Asiganda:Laptop N00NJKLS3
+                            </td>
+                            <td class="px-6 py-4 text-white">
+
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
                                 <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -273,7 +376,6 @@ const Slidebar = () => {
                         </tr>
                     </tbody>
                 </table>
-                <button className='rounded-xl text-white border-white mt-6 ml-3 w-40 h-12 bg-[#132335]'>Advertencia</button>
             </div>
         </div>
 
@@ -281,4 +383,4 @@ const Slidebar = () => {
     )
 }
 
-export default Slidebar
+export default SidebarCitas

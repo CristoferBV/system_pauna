@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-const Slidebar = () => {
-
+const SidebarDevoluciones = () => {
     return (
         <div className="flex flex-col lg:flex-row bg-black" >
             <div className="lg:w-1/5  bg-[#021730] shadow-inner text-white min-h-screen overflow-y-auto">
@@ -281,4 +280,4 @@ const Slidebar = () => {
     )
 }
 
-export default Slidebar
+export default SidebarDevoluciones

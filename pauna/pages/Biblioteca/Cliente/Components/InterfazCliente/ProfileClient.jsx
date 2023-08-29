@@ -90,7 +90,7 @@ const ProfileClient = () => {
                     <Disclosure.Button
                       key={item.name}
                       as="a"
-                      href={item.href}
+                      href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                       className={classNames(
                         item.current
                           ? "bg-gray-900 text-white"

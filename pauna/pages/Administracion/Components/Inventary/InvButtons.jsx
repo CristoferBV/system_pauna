@@ -6,9 +6,13 @@ export default function Buttons() {
 
     return (
         <>
-            <div className="md:mx-auto">
-                <div className="md:p-2.5">
-                    <button className="md:mr-5">
+            <div className="md:mx-auto
+            lg:m-auto">
+                <div className="md:p-2.5
+                lg:p-1
+                xl:p-7">
+                    <button className="md:mr-5
+                    lg:mr-auto">
                         <Image src={Delete} width={30} height={30}></Image>
                     </button>
                     <button className="md:mr-0">

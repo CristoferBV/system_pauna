@@ -4,16 +4,24 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Logo from '../../../../../public/LOGO-UNA.png';
 import LogoBombilla from '../../../../../public/bombilla.png'
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useState } from 'react'
+import Link from 'next/link';
 
 
 const LoanClient = () => {
 
+  const router = useRouter();
+  const { section } = router.query;
+
+  const [active , setActive] = useState('');
+
   const navigation = [
-    { name: 'Préstamo', href: '#', current: false },
-    { name: 'Devolución', href: '#', current: false },
-    { name: 'Perfil', href: '#', current: false },
-    { name: 'Inicio', href: '#', current: false }
-  ]
+    { name: 'Préstamo', section: 'LoanClient', current: false },
+    { name: 'Devolución', section: 'DevolutionClient', current: false },
+    { name: 'Perfil', section: 'ProfileClient', current: false },
+    { name: 'Inicio', section: 'HomeClient', current: false }
+  ];  
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -39,10 +47,11 @@ const LoanClient = () => {
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
-                        {navigation.map((item) => (
+                      {navigation.map((item) => (
+                        <Link legacyBehavior key={item.name} href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`} onClick={() => setActive(item.section)}>
                           <a
                             key={item.name}
-                            href={item.href}
+                            href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                             className={classNames(
                               item.current
                                 ? 'bg-[#FF3333] text-white'
@@ -53,7 +62,8 @@ const LoanClient = () => {
                           >
                             {item.name}
                           </a>
-                        ))}
+                        </Link>
+                      ))}
                       </div>
                     </div>
                   </div>

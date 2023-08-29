@@ -1,8 +1,10 @@
-// pages/_app.js
 import '@/styles/globals.css';
 import Layout from './Administracion/Layout';
 import { useRouter } from 'next/router';
-import Login from './LoginAndRegister/Login/Login.jsx'; // Ruta correcta hacia el componente Login
+import Login from './LoginAndRegister/Login/Login';
+import HomeClient from './Biblioteca/Cliente/Components/InterfazCliente/HomeClient';
+import AdminBiblioteca from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar';
+import UserWindow from './Administracion/Components/User/userWindow';
 
 function App({ Component, pageProps }) {
   const router = useRouter();
@@ -16,7 +18,17 @@ function App({ Component, pageProps }) {
   }
 
   if (router.pathname === '/LoginAndRegister') {
-    return <Login />;
+    return <Login />
+  }
+
+  // Agregar condiciones para manejar diferentes rutas según la selección en el inicio de sesión
+  if (router.pathname === '/Biblioteca/Cliente/Components/InterfazCliente/HomeClient' ||
+      router.pathname === '/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar') {
+    return <Component {...pageProps} />;
+  }
+
+  if (router.pathname === '/Administracion/Components/User/userWindow') {
+    return <Component {...pageProps} />;
   }
 
   return <Component {...pageProps} />;

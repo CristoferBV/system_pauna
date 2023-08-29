@@ -48,22 +48,16 @@ const Slidebar = () => {
                     <thead class="text-xs text-[#ffffff] uppercase bg-[#132335]">
                         <tr>
                             <th scope="col" class="px-6 py-3    ">
-                                Nombre
+                                Id
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Cedula
+                                Tablet
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Dispositivo
+                                Laptop
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Carrera
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Fecha entregado
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Correo
+                                Perifericos
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Administrar
@@ -73,22 +67,16 @@ const Slidebar = () => {
                     <tbody>
                         <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
                             <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
+                                1
                             </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                Samsung A5
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Laptop i5
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                10-9-2023
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                Cargador
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                 <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -98,22 +86,16 @@ const Slidebar = () => {
                         </tr>
                         <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
                             <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
+                                2
                             </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                Huawei 10S
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Laptop i7
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                10-9-2023
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                Audifonos
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
                                 <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -123,24 +105,18 @@ const Slidebar = () => {
                         </tr>
                         <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
                             <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
+                                3
                             </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                Samsung A5
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Laptop i5
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
+                                Cargador
                             </td>
-                            <td class="px-6 py-4 text-white">
-                                10-9-2023
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
-                            </td>
-                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
+                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
                                 <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
                                 <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
                                 <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
@@ -148,22 +124,16 @@ const Slidebar = () => {
                         </tr>
                         <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
                             <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
+                                4
                             </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                Huawei AS
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Laptop i3
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                10-9-2023
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                Estuche
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66] group">
                                 <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -173,22 +143,16 @@ const Slidebar = () => {
                         </tr>
                         <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
                             <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
+                                5
                             </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                Samsung A5
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Laptop i5
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                10-9-2023
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                Cargador
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
                                 <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -198,22 +162,16 @@ const Slidebar = () => {
                         </tr>
                         <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
                             <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
+                                6
                             </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                Samsung A5
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Laptop i5
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                10-9-2023
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                audifonos
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
                                 <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -223,22 +181,16 @@ const Slidebar = () => {
                         </tr>
                         <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
                             <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
+                                7
                             </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                Huawei SU
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Laptop i9
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                10-9-2023
-                            </td>
-                            <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                Cargador y audifonos
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
                                 <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -248,22 +200,92 @@ const Slidebar = () => {
                         </tr>
                         <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
                             <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                Andrey
+                                8
                             </th>
                             <td class="px-6 py-4 text-white">
-                                118080476
+                                Huawei SU
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Tablet
+                                Laptop i9
                             </td>
                             <td class="px-6 py-4 text-white">
-                                Ingenieria en Sistemas
+                                Cargador y audifonos
+                            </td>
+                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
+                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                            </td>
+                        </tr>
+                        <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
+                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                9
+                            </th>
+                            <td class="px-6 py-4 text-white">
+                                Huawei SU
                             </td>
                             <td class="px-6 py-4 text-white">
-                                10-9-2023
+                                Laptop i9
                             </td>
                             <td class="px-6 py-4 text-white">
-                                andrey@gmail.com
+                                Cargador y audifonos
+                            </td>
+                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
+                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                            </td>
+                        </tr>
+                        <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
+                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                10
+                            </th>
+                            <td class="px-6 py-4 text-white">
+                                Huawei SU
+                            </td>
+                            <td class="px-6 py-4 text-white">
+                                Laptop i9
+                            </td>
+                            <td class="px-6 py-4 text-white">
+                                Cargador y audifonos
+                            </td>
+                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
+                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                            </td>
+                        </tr>
+                        <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
+                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                11
+                            </th>
+                            <td class="px-6 py-4 text-white">
+                                Huawei SU
+                            </td>
+                            <td class="px-6 py-4 text-white">
+                                Laptop i9
+                            </td>
+                            <td class="px-6 py-4 text-white">
+                                Cargador y audifonos
+                            </td>
+                            <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
+                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
+                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
+                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                            </td>
+                        </tr>
+                        <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
+                            <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                12
+                            </th>
+                            <td class="px-6 py-4 text-white">
+                                Huawei SU
+                            </td>
+                            <td class="px-6 py-4 text-white">
+                                Laptop i9
+                            </td>
+                            <td class="px-6 py-4 text-white">
+                                Cargador y audifonos
                             </td>
                             <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
                                 <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
@@ -273,7 +295,6 @@ const Slidebar = () => {
                         </tr>
                     </tbody>
                 </table>
-                <button className='rounded-xl text-white border-white mt-6 ml-3 w-40 h-12 bg-[#132335]'>Advertencia</button>
             </div>
         </div>
 

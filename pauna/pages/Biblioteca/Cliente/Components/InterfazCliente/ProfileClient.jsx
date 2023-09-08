@@ -1,15 +1,23 @@
-import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../../../../../public/LOGO-UNA.png";
 import Image from "next/image";
+import { useRouter } from 'next/router';
+import { useState } from 'react'
+import Link from 'next/link';
 
 const ProfileClient = () => {
+
+  const router = useRouter();
+  const { section } = router.query;
+
+  const [active , setActive] = useState('');
+
   const navigation = [
-    { name: "Préstamo", href: "#", current: false },
-    { name: "Devolución", href: "#", current: false },
-    { name: "Perfil", href: "#", current: false },
-    { name: "Inicio", href: "#", current: false },
+    { name: 'Préstamo', section: 'LoanClient', current: false },
+    { name: 'Devolución', section: 'DevolutionClient', current: false },
+    { name: 'Perfil', section: 'ProfileClient', current: false },
+    { name: 'Inicio', section: 'HomeClient', current: false }
   ];
 
   function classNames(...classes) {
@@ -36,24 +44,33 @@ const ProfileClient = () => {
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
-                        {navigation.map((item) => (
+                      {navigation.map((item) => (
+                        <Link legacyBehavior key={item.name} href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`} onClick={() => setActive(item.section)}>
                           <a
                             key={item.name}
-                            href={item.href}
+                            href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                             className={classNames(
                               item.current
-                                ? "bg-[#FF3333] text-white"
-                                : "text-white hover:bg-[#E31919] hover:text-white",
-                              "rounded-md px-3 py-2 text-sm font-medium"
+                                ? 'bg-[#FF3333] text-white'
+                                : 'text-white hover:bg-[#E31919] hover:text-white',
+                              'rounded-md px-3 py-2 text-sm font-medium'
                             )}
-                            aria-current={item.current ? "page" : undefined}
+                            aria-current={item.current ? 'page' : undefined}
                           >
                             {item.name}
                           </a>
-                        ))}
+                        </Link>
+                      ))}
                       </div>
                     </div>
                   </div>
+                  <Link href={'/LoginAndRegister/Login/Login'}>
+                    <button className='bg-[#FF3333] text-white
+                                  :text-white hover:bg-[#E31919] hover:text-white
+                                rounded-md px-3 py-2 text-sm font-medium'>
+                      Cerrar Sesión
+                    </button>
+                  </Link>
                   <div className="-mr-2 flex md:hidden">
                     {/* Mobile menu button */}
                     <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-[#E31919] p-2 text-white hover:bg-[#E31919] hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E31919]">
@@ -80,7 +97,7 @@ const ProfileClient = () => {
                     <Disclosure.Button
                       key={item.name}
                       as="a"
-                      href={item.href}
+                      href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                       className={classNames(
                         item.current
                           ? "bg-gray-900 text-white"
@@ -100,8 +117,8 @@ const ProfileClient = () => {
 
         <main className="min-h-screen flex-grow relative z-0">
           <div className="flex justify-center p-7 mt-11">
-            <div className="bg-[#D9D9D9] w-10/12 h-44 p-4 flex rounded-xl">
-              <div className="bg-[#AEA7A7] rounded-full w-36 h-36 flex items-center justify-center mr-4">
+            <div className="bg-[#D9D9D9] w-10/12 h-44 shadow-sm p-4 flex rounded-xl">
+              <div className="bg-[#AEA7A7] rounded-full shadow-md w-36 h-36 flex items-center justify-center mr-4">
                 <Image
                   className="h-9 w-9 mt-2.5 ml-2.5"
                   src={""}
@@ -116,42 +133,46 @@ const ProfileClient = () => {
               </div>
             </div>
           </div>
-          <div className="mx-auto w-9/12 p-6 bg-[#BFBFBF] rounded-md mt-11">
+          <div className="mx-auto w-9/12 p-6 bg-[#BFBFBF] rounded-md mt-11 shadow-md">
             <div className="text-center font-bold mb-5">
               <h1>Datos de Perfil</h1>
             </div>
-            <div className="mx-auto w-full p-4 bg-[#F0ECEC] rounded-md mb-8 md:mb-0 grid md:grid-cols-2 gap-4">
+            <div className="mx-auto w-full p-4 bg-[#F0ECEC] rounded-md mb-8 md:mb-0 grid md:grid-cols-2 gap-4 shadow-md">
               <div className="col-span-1 md:mb-0">
+                <label className="block font-semibold mb-1"> Dispositivo:</label>
                 <input
                   type="text"
-                  className="bg-gray-300 w-full mb-2 p-2 rounded"
-                  placeholder="Input 1"
+                  className="bg-gray-300 w-full mb-6 p-2 rounded shadow-md"
+                  placeholder=""
                 />
+                 <label className="block font-semibold mb-1"> Carrera:</label>
                 <input
                   type="text"
-                  className="bg-gray-300 w-full mb-2 p-2 rounded"
-                  placeholder="Input 2"
+                  className="bg-gray-300 w-full mb-6 p-2 rounded shadow-md"
+                  placeholder=""
                 />
               </div>
               <div className="col-span-1 md:mb-0">
+              <label className="block font-semibold mb-1"> Campus:</label>
                 <input
                   type="text"
-                  className="bg-gray-300 w-full mb-2 p-2 rounded"
-                  placeholder="Input 2"
+                  className="bg-gray-300 w-full mb-6 p-2 rounded shadow-md"
+                  placeholder=""
                 />
+                 <label className="block font-semibold mb-1"> Telefono:</label>
                 <input
                   type="text"
-                  className="bg-gray-300 w-full mb-2 p-2 rounded"
-                  placeholder="Input 3"
+                  className="bg-gray-300 w-full mb-6 p-2 rounded shadow-md"
+                  placeholder=""
                 />
               </div>
             </div>
           </div>
-          <div className="flex justify-center space-x-4 mb-3 mt-4 sm:mt-8">
-            <button className="bg-[#25F63A] hover:bg-[#1EA82E] text-white px-4 py-2 rounded-md">
+          <div className="flex justify-center space-x-4 mb-3 mt-4 sm:mt-8 ">
+            <button className="bg-[#25F63A] hover:bg-[#1EA82E] text-white px-4 py-2 rounded-md shadow-md">
               Editar
             </button>
-            <button className="bg-[#F22E2E] hover:bg-[#D21C1C] text-white px-4 py-2 rounded-md">
+            <button className="bg-[#F22E2E] hover:bg-[#D21C1C] text-white px-4 py-2 rounded-md shadow-md">
               Eliminar
             </button>
           </div>

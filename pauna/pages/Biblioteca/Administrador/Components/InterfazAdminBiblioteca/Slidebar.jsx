@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Slidebar = () => {
+
 
     return (
         <div className="flex flex-col lg:flex-row bg-black" >
@@ -15,21 +17,31 @@ const Slidebar = () => {
                     </div>
                 </div>
                 <ul className="flex-grow mt-10 space-y-4">
+                    <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar"}>
                     <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
                         <span className="font-bold font-inika">Dispositivos</span>
                     </li>
+                    </Link>
+                    <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarCitas"}>
                     <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
                         <span className=" font-bold font-inika">Citas</span>
                     </li>
+                    </Link>
+                    <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarEstudiantes"}>
                     <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
                         <span className=" font-bold font-inika">Estudiantes</span>
                     </li>
-                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
+                    </Link>
+                    <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarDevoluciones"}>
+                    <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200" >
                         <span className="font-bold font-inika">Devoluciones</span>
                     </li>
+                    </Link>
+                    <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarReporte"}>
                     <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
                         <span className="font-bold font-inika">Reporte</span>
                     </li>
+                    </Link>
                     <li className='py-4 pl-20 flex items-center justify-between'>
                         <span className='font-bold font-inika'>Modo Oscuro</span>
                         <label className="relative inline-flex items-center cursor-pointer mr-14">
@@ -37,9 +49,11 @@ const Slidebar = () => {
                             <div className="w-16 h-8 bg-[#1B3555] peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-7 after:w-7 after:transition-all dark:border-gray-600 peer-checked:bg-[#8299EC]"></div>
                         </label>
                     </li>
+                    <Link href={"/LoginAndRegister/Login/Login"}>
                     <li>
                         <button className='rounded-xl ml-16 text-white border-white mt-6 w-32 h-10 bg-[#132335] hover:bg-[#c43f3f]'>Cerrar Cesion</button>
                     </li>
+                    </Link>
                 </ul>
             </div>
 
@@ -82,9 +96,12 @@ const Slidebar = () => {
                                     Cargador
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
@@ -101,9 +118,12 @@ const Slidebar = () => {
                                     Audifonos
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
@@ -120,9 +140,12 @@ const Slidebar = () => {
                                     Cargador
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
@@ -139,9 +162,12 @@ const Slidebar = () => {
                                     Estuche
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66] group">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
@@ -158,9 +184,12 @@ const Slidebar = () => {
                                     Cargador
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
@@ -177,9 +206,12 @@ const Slidebar = () => {
                                     audifonos
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
@@ -196,9 +228,12 @@ const Slidebar = () => {
                                     Cargador y audifonos
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
@@ -215,9 +250,12 @@ const Slidebar = () => {
                                     Cargador y audifonos
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
@@ -234,9 +272,12 @@ const Slidebar = () => {
                                     Cargador y audifonos
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
@@ -253,9 +294,12 @@ const Slidebar = () => {
                                     Cargador y audifonos
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
@@ -272,9 +316,12 @@ const Slidebar = () => {
                                     Cargador y audifonos
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                             <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
@@ -291,9 +338,12 @@ const Slidebar = () => {
                                     Cargador y audifonos
                                 </td>
                                 <td class="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Añadir</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Eliminar</button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66]'>Editar</button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-20'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

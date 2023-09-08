@@ -4,14 +4,23 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import Image from "next/image";
+import { useRouter } from 'next/router';
+import { useState } from 'react'
+import Link from 'next/link';
 
 const DevolutionClient = () => {
+
+  const router = useRouter();
+  const { section } = router.query;
+
+  const [active , setActive] = useState('');
+
   const navigation = [
-    { name: "Préstamo", href: "#", current: false },
-    { name: "Devolución", href: "#", current: false },
-    { name: "Perfil", href: "#", current: false },
-    { name: "Inicio", href: "#", current: false },
-  ];
+    { name: 'Préstamo', section: 'LoanClient', current: false },
+    { name: 'Devolución', section: 'DevolutionClient', current: false },
+    { name: 'Perfil', section: 'ProfileClient', current: false },
+    { name: 'Inicio', section: 'HomeClient', current: false }
+  ];  
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -37,24 +46,33 @@ const DevolutionClient = () => {
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
-                        {navigation.map((item) => (
+                      {navigation.map((item) => (
+                        <Link legacyBehavior key={item.name} href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`} onClick={() => setActive(item.section)}>
                           <a
                             key={item.name}
-                            href={item.href}
+                            href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                             className={classNames(
                               item.current
-                                ? "bg-[#FF3333] text-white"
-                                : "text-white hover:bg-[#E31919] hover:text-white",
-                              "rounded-md px-3 py-2 text-sm font-medium"
+                                ? 'bg-[#FF3333] text-white'
+                                : 'text-white hover:bg-[#E31919] hover:text-white',
+                              'rounded-md px-3 py-2 text-sm font-medium'
                             )}
-                            aria-current={item.current ? "page" : undefined}
+                            aria-current={item.current ? 'page' : undefined}
                           >
                             {item.name}
                           </a>
-                        ))}
+                        </Link>
+                      ))}
                       </div>
                     </div>
                   </div>
+                  <Link href={'/LoginAndRegister/Login/Login'}>
+                    <button className='bg-[#FF3333] text-white
+                                  :text-white hover:bg-[#E31919] hover:text-white
+                                rounded-md px-3 py-2 text-sm font-medium'>
+                      Cerrar Sesión
+                    </button>
+                  </Link>
                   <div className="-mr-2 flex md:hidden">
                     {/* Mobile menu button */}
                     <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-[#E31919] p-2 text-white hover:bg-[#E31919] hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E31919]">
@@ -81,7 +99,7 @@ const DevolutionClient = () => {
                     <Disclosure.Button
                       key={item.name}
                       as="a"
-                      href={item.href}
+                      href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                       className={classNames(
                         item.current
                           ? "bg-gray-900 text-white"

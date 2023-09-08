@@ -1,23 +1,21 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Logo from '../../../../../public/LOGO-UNA.png';
 import Image from 'next/image';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 
 const HomeClient = () => {
 
-
+  const [active , setActive] = useState('');
 
   const navigation = [
-    { name: 'Préstamo', href: '/Biblioteca/Cliente/Components/InterfazCliente/LoanClient', current: false },
-    { name: 'Devolución', href: '/Biblioteca/Cliente/Components/InterfazCliente/DevolutionClient', current: false },
-    { name: 'Perfil', href: '/Biblioteca/Cliente/Components/InterfazCliente/ProfileClient', current: false },
-    { name: 'Inicio', href: '/Biblioteca/Cliente/Components/InterfazCliente/HomeClient', current: false }
-  ];
+    { name: 'Préstamo', section: 'LoanClient', current: false },
+    { name: 'Devolución', section: 'DevolutionClient', current: false },
+    { name: 'Perfil', section: 'ProfileClient', current: false },
+    { name: 'Inicio', section: 'HomeClient', current: false }
+  ];  
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -30,6 +28,9 @@ const HomeClient = () => {
           {({ open }) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div>
+                   {/* Botón de cerrar sesión */}
+                </div>
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 bg-[#E31919] rounded-full w-14 h-14">
@@ -43,9 +44,11 @@ const HomeClient = () => {
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
-                        {navigation.map((item) => (
-                          <Link legacyBehavior key={item.name} href={item.href} onClick={() => setActiveNavItem(index)}>
-                            <a
+                      {navigation.map((item) => (
+                        <Link legacyBehavior key={item.name} href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`} onClick={() => setActive(item.section)}>
+                          <a
+                            key={item.name}
+                            href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                             className={classNames(
                               item.current
                                 ? 'bg-[#FF3333] text-white'
@@ -56,11 +59,18 @@ const HomeClient = () => {
                           >
                             {item.name}
                           </a>
-                          </Link>
-                        ))}
+                        </Link>
+                      ))}
                       </div>
                     </div>
                   </div>
+                  <Link href={'/LoginAndRegister/Login/Login'}>
+                    <button className='bg-[#FF3333] text-white
+                                  :text-white hover:bg-[#E31919] hover:text-white
+                                rounded-md px-3 py-2 text-sm font-medium'>
+                      Cerrar Sesión
+                    </button>
+                  </Link>
                   <div className="-mr-2 flex md:hidden">
                     {/* Mobile menu button */}
                     <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-[#E31919] p-2 text-white hover:bg-[#E31919] hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E31919]">
@@ -81,7 +91,7 @@ const HomeClient = () => {
                     <Disclosure.Button
                       key={item.name}
                       as="a"
-                      href={item.href}
+                      href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                       className={classNames(
                         item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'block rounded-md px-3 py-2 text-base font-medium'

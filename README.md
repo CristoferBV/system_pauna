@@ -4,7 +4,7 @@ The Next.JS, MariabDB, React, JavaScript and Tailwind tools were used.
 
 ## Instructions:
 For install: [npm install]
-Install libraries like: @headlessui/react", @heroicons/react, mysql2 and tailwindcss.
+Install libraries like: @headlessui/react", @heroicons/react, mysql2 and tailwindcss. <br />
 For execute use: [npm run dev]
 
 Enjoy de project!!

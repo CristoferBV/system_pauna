@@ -3,7 +3,7 @@ This project is exclusively for the library and administration of the Coto Campu
 The Next.JS, MariabDB, React, JavaScript and Tailwind tools were used.
 
 ## Instructions:
-For install use: npm install
+For install use: npm install  <br />
 Install libraries like: @headlessui/react, @heroicons/react, mysql2 and tailwindcss. <br />
 For execute use: npm run dev 
 

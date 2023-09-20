@@ -58,8 +58,8 @@ const SidebarCitas = () => {
 
             {/*<-------------------- Tabla-------------------------> */}
 
-            <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md ml-[20%]">
-                <div className="relative overflow-x-auto shadow-md bg-[#041A34] overflow-y-auto">
+            <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md ml-[20%] min-h-screen">
+                <div className="relative overflow-x-auto shadow-md bg-[#041A34] overflow-y-auto  min-h-[calc(100vh-64px)]">
                     <table class="w-full text-sm text-center text-[#757373]">
                         <thead class="text-xs text-[#ffffff] uppercase bg-[#132335]">
                             <tr>

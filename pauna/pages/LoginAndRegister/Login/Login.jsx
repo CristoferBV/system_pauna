@@ -38,7 +38,7 @@ const Login = () => {
         </div>
       </div>
       <div className="flex-grow bg-white flex flex-col justify-center items-center p-6 ">
-        <div class=" max-w-[800px] p-8 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <div class=" max-w-[800px] p-8 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
           <div className="flex flex-col items-center space-y-7">
             <h1 className="font-bold text-xl md:text-2xl lg:text-3xl mb-4 md:mb-8 text-center">
               Inicio de sesión

@@ -6,7 +6,7 @@ const Slidebar = () => {
 
     return (
         <div className="flex flex-col lg:flex-row bg-black" >
-            <div className="lg:w-1/4 bg-[#021730] shadow-inner text-white min-h-screen overflow-y-auto fixed left-0 top-0 bottom-0">
+            <div className="lg:w-1/5 bg-[#021730] shadow-inner text-white min-h-screen overflow-y-auto fixed left-0 top-0 bottom-0">
                 <div className="text-center text-2xl font-semibold mt-4 lg:mt-6">
                     <div className="flex items-center">
                         <div className="w-12 h-12 lg:w-20 lg:h-20 bg-[#0E21CD] rounded-full flex items-center justify-center mx-2 lg:mx-4 mt-2 lg:mt-4">

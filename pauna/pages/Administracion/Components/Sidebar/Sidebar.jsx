@@ -12,7 +12,8 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
     const [active, setActive] = useState(0);
     return (
         <>
-            {/*------------------------- Parte hecha por sebas viejo SideBar--------------------------*/}
+
+        {/*------------------------- Parte hecha por sebas viejo SideBar--------------------------*/}
 
             {/* <div className={`bg-[#4333F9] fixed top-0 left-0 pt-10 rounded-r-lg duration-400 h-screen
             lg:w-auto  lg:duration-400

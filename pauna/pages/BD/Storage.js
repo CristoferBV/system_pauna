@@ -1,5 +1,6 @@
 import {createPool} from "mysql2/promise";
 
+
 const pool= createPool({
   host: "localhost",
   user:"root",
@@ -7,5 +8,6 @@ const pool= createPool({
   port:3306,
   database:"plataformaadministrativauna"
 })
+
 
 export  {pool};

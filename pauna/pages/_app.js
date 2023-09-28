@@ -1,5 +1,7 @@
 import '@/styles/globals.css';
 import Layout from './Administracion/Layout';
+import LayoutBiblioteca from './Biblioteca/Administrador/Components/LayoutBiblioteca';
+
 import Login from './LoginAndRegister/Login/Login';
 import HomeClient from './Biblioteca/Cliente/Components/InterfazCliente/HomeClient';
 import AdminBiblioteca from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar';
@@ -15,6 +17,14 @@ function App({ Component, pageProps }) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
+    );
+  }
+
+  if (router.pathname.startsWith('/Biblioteca/Administrador/Components/')) {
+    return (
+      <LayoutBiblioteca>
+        <Component {...pageProps} />
+      </LayoutBiblioteca>
     );
   }
 

@@ -1,6 +1,6 @@
 # SYSTEM PAUNA
 This project is exclusively for the library and administration of the Coto Campus of the National University of Costa Rica.
-The Next.JS, MariabDB, React, JavaScript and Tailwind tools were used.
+The Next.JS, MariabDB, React JS, JavaScript and Tailwind tools were used.
 
 ## Instructions:
 For install use: npm install  <br />

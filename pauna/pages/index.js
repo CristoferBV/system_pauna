@@ -12,6 +12,7 @@ import SidebarCitas from './Biblioteca/Administrador/Components/InterfazAdminBib
 import SidebarDevoluciones from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarDevoluciones'
 import SidebarEstudiantes from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarEstudiantes'
 import SidebarReporte from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarReporte'
+import Sidebar from './Administracion/Components/Sidebar/Sidebar'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -27,7 +28,7 @@ export default function Home() {
       {/* <ProfileClient/> */}
       <Login/>
       {/* <Register/> */}
-
+      {/* <Sidebar/> */}
     </>
 
   )

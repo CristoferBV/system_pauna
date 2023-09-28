@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function SidebarBiblioAdmin() {
+export default function Sidebar() {
     return (
         <>
             <div className="lg:w-1/5 bg-[#021730] shadow-inner text-white min-h-screen overflow-y-auto fixed left-0 top-0 bottom-0">

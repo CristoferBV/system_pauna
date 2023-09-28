@@ -5,7 +5,6 @@ import Link from 'next/link';
 const SidebarDevoluciones = () => {
 
     return (
-       
             <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md min-h-screen">
                 <div className="relative overflow-x-auto shadow-md bg-[#041A34] overflow-y-auto  min-h-[calc(100vh-64px)]">
                     <table class="w-full text-sm text-center text-[#757373]">

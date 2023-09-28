@@ -46,20 +46,20 @@ const Login = () => {
             <input
               type="text"
               placeholder="Nombre de usuario"
-              className="w-full md:w-96 p-3 border border-gray-300 rounded-xl bg-gray-100 text-lg transition-transform transform hover:scale-105"
+              className="w-full md:w-96 p-3 border border-gray-300 rounded-xl bg-gray-100 text-lg"
             />
             <input
               type="email"
               placeholder="Correo electrónico"
-              className="w-full md:w-96 p-3 border border-gray-300 rounded-xl bg-gray-100 text-lg transition-transform transform hover:scale-105"
+              className="w-full md:w-96 p-3 border border-gray-300 rounded-xl bg-gray-100 text-lg"
             />
             <input
               type="password"
               placeholder="Contraseña"
-              className="w-full md:w-96 p-3 border border-gray-300 rounded-xl bg-gray-100 text-lg transition-transform transform hover:scale-105"
+              className="w-full md:w-96 p-3 border border-gray-300 rounded-xl bg-gray-100 text-lg"
             />
             <select
-              className="w-full md:w-96 p-3 border border-gray-300 rounded-xl bg-gray-100 text-lg transition-transform transform hover:scale-105"
+              className="w-full md:w-96 p-3 border border-gray-300 rounded-xl bg-gray-100 text-lg"
               onChange={(e) => setSelectedOption(e.target.value)}
             >
               <option value="">-Elige un rol-</option>
@@ -68,7 +68,7 @@ const Login = () => {
               <option value="administracion">Administración</option>
             </select>
             <button
-              className="bg-[#0E21CD] text-white px-6 md:px-12 py-2 rounded-xl mt-8 md:mt-12 w-full md:w-48 text-lg transition-transform transform hover:scale-105"
+              className="bg-[#0E21CD] text-white px-6 md:px-12 py-2 rounded-xl mt-8 md:mt-12 w-full md:w-48 text-lg font-bold transition-transform transform hover:scale-105"
               style={{ marginTop: 30 }}
               onClick={handleLogin}
             >
@@ -76,7 +76,7 @@ const Login = () => {
             </button>
             <p className="mt-4 text-center text-lg" style={{ marginTop: 30 }}>
               ¿No tienes una cuenta?{" "}
-              <Link href="/LoginAndRegister/Register/Register"><span className="transition-transform transform hover:scale-105">Regístrate</span></Link>
+              <Link href="/LoginAndRegister/Register/Register"><span className="hover:text-red-600 hover:font-bold">Regístrate</span></Link>
             </p>
           </div>
         </div>

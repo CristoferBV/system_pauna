@@ -21,10 +21,12 @@ export default function UserWindow() {
     UO_segundo_nombre: "",
     UO_primer_apellido: "",
     UO_segundo_apellido: "",
+    UO_identificador_rol:""
   });
 
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });
+    console.log(user.UO_identificador_rol)
   };
 
   const [open, setOpen] = useState(false);
@@ -101,17 +103,18 @@ export default function UserWindow() {
             className="p-2
                     lg:p-0"
           >
-            <select className="bg-white text-[#D9D9D9] text-center placeholder:text-[#D9D9D9] rounded">
-              <option className=" text-[#D9D9D9] text-center" disabled>
-                Elige una ubicacion
+            <select className="bg-white text-[#D9D9D9] text-center placeholder:text-[#D9D9D9] rounded"
+            value={user.UO_identificador_rol} onChange={handleChange}>
+              <option className=" text-[#D9D9D9] text-center" value="">
+                Elige una rol
               </option>
               <option
                 className=" text-[#D9D9D9] text-center"
-                value="Administrador"
+                value="R1"
               >
                 Administrador
               </option>
-              <option className="text-[#D9D9D9] text-center" value="Usuario">
+              <option className="text-[#D9D9D9] text-center" value="R2">
                 Usuario
               </option>
             </select>

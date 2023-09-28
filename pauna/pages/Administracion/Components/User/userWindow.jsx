@@ -1,9 +1,25 @@
+'use client'
 import { useState } from "react";
-import Sidebar from "../Sidebar/Sidebar";
-import Link from "next/link";
+import axios from 'axios'
 
 
 export default function UserWindow() {
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("hola")
+        const res = await axios.post('/api/config/admin',{
+            RL_identificador: 'R3',
+            RL_nombre: 'pRUEBA',
+            RL_descripcion: 'DSFASDF'
+        }).then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    };
+
     const [open, setOpen] = useState(false)
     return (
         <>
@@ -11,7 +27,7 @@ export default function UserWindow() {
             lg:w-full lg:grid lg:grid-cols-1 
             p-36 
             text-3xl font-semibold ">
-                <div className="bg-[#D9D9D9] text-center mx-10 rounded
+                <form  onSubmit={handleSubmit} className="bg-[#D9D9D9] text-center mx-10 rounded
                 lg:mb-4">
                     <h1 className="text-white p-10">Agrega un administrador</h1>
                     <div className="p-2
@@ -53,16 +69,15 @@ export default function UserWindow() {
                             <option className="text-[#D9D9D9] text-center" value="Usuario">Usuario</option>
                         </select>
                     </div>
-                    <Link href="../../../../Administracion/page">
+
                     <div className="p-2 mt-5">
-                        <button className="bg-[#3726FD] p-2 text-white rounded">
+                        <button  className="bg-[#3726FD] p-2 text-white rounded">
                             Añadir
                         </button>
                     </div>
-                    </Link>
 
 
-                </div>
+                </form>
                 <div className="bg-[#D9D9D9] rounded text-center items-center justify-center mx-10 p-2">
                     <h1 className="text-white p-5">Lista de Administradores</h1>
                     <div class="overflow-x-auto">

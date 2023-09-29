@@ -6,19 +6,6 @@ import Image from 'next/image';
 
 const Slidebar = () => {
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     console.log("hola");
-    //     const res = await axios
-    //       .post("/api/config/admin", user)
-    //       .then(function (response) {
-    //         console.log(response);
-    //       })
-    //       .catch(function (error) {
-    //         console.log(error);
-    //       });
-    //   };
-
     return (
             <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md min-h-screen">
                 <div className="relative overflow-x-auto shadow-md bg-[#041A34] overflow-y-auto  min-h-[calc(100vh-64px)]">

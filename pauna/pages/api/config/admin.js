@@ -27,12 +27,12 @@ const saveUserAdmin = async (req, res) => {
 
     const result = await pool
         .query("INSERT INTO `pau-gnl-usuario` SET ?", {
-            UO_identificador,
-            UO_primer_nombre,
-            UO_segundo_nombre,
-            UO_primer_apellido,
-            UO_segundo_apellido,
-            UO_identificador_rol: "R3"
+            UO_identificador: "3",
+            UO_primer_nombre: "Andrey",
+            UO_segundo_nombre: "David",
+            UO_primer_apellido: "Barrios",
+            UO_segundo_apellido: "Valverde",
+            UO_identificador_rol: "1"
         })
         .then(function (response) {
             console.log(response);

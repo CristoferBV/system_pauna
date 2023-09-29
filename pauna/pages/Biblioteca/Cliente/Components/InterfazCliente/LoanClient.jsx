@@ -7,9 +7,41 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react'
 import Link from 'next/link';
+import Axios from 'axios';
+
+
 
 
 const LoanClient = () => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Formulario enviado");
+
+    const res = await axios
+      .post("/api/config/client", student)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const [student, setStudent] = useState({
+    EE_identificador: "",
+    EE_campus: "",
+    EE_nivel: "",
+    EE_identificador_telefono: "",
+    EE_identificador_correo: "",
+    EE_idenficador_carrera: "",
+    EE_identificador_usuario: "1"
+  });
+
+  const handleChange = ({ target: { name, value } }) => {
+    setStudent({ ...student, [name]: value });
+    console.log(student.EE_identificador_usuario)
+  };
 
   const router = useRouter();
   const { section } = router.query;
@@ -176,12 +208,9 @@ const LoanClient = () => {
               {/* Columna 3 */}
               <div className="col-span-1">
                 <div className="mb-8">
-                  <label className="block font-semibold mb-1">Tipo de beca</label>
+                  <label className="block font-semibold mb-1">Fechas de prestamos</label>
                   <select className="p-2 w-full border rounded-md">
                     <option value="">-Seleccionar opción-</option>
-                    <option value="opcion1">Beca Luis Felipe Gonzáles Flores</option>
-                    <option value="opcion2">Beca Omar Dengo 'Residencia'</option>
-                    <option value="opcion3">Beca Participativa </option>
                   </select>
                 </div>
                 <div className="mb-8">

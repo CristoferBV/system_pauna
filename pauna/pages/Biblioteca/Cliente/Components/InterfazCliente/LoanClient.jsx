@@ -17,14 +17,13 @@ export default function LoanClient({ userStudent }) {
     e.preventDefault();
     console.log("Formulario enviado");
 
-    const res = await axios
-      .post("/api/config/client", student)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    try {
+      const res = await axios.post("/api/config/client", student);
+      console.log(res);
+      // Realizar acciones adicionales después de la inserción, si es necesario.
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const [student, setStudent] = useState({
@@ -37,9 +36,10 @@ export default function LoanClient({ userStudent }) {
     EE_identificador_usuario: "1"
   });
 
-  const handleChange = ({ target: { name, value } }) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setStudent({ ...student, [name]: value });
-    console.log(student.EE_identificador_usuario)
+    console.log(student.EE_identificador_usuario);
   };
 
   const router = useRouter();

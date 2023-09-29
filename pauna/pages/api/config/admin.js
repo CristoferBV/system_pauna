@@ -12,8 +12,8 @@ export default async function handler(req, res) {
 }
 
 const getAllAdministrador = async (req, res) => {
-    const [result] = await pool.query("SELECT * FROM `pau-gnl-rol`");
-    console.log(result);
+    const [result] = await pool.query("SELECT * FROM `pau-gnl-usuario`");
+    console.log(result)
     return res.status(200).json(result);
 };
 

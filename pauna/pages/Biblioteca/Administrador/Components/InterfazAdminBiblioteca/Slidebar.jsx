@@ -26,16 +26,16 @@ const Slidebar = () => {
                         <thead className="text-xs text-[#ffffff] uppercase bg-[#132335]">
                             <tr>
                                 <th scope="col" className="px-6 py-3    ">
-                                    Id
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Tablet
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Laptop
+                                    Dispositivo
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     Perifericos
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Descripcion
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Estado
                                 </th>
                                 <th scope="col" className="px-6 py-3 w-20">
                                     Administrar
@@ -45,7 +45,7 @@ const Slidebar = () => {
                         <tbody>
                             <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group">
                                 <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    1
+                                    Laptop
                                 </th>
                                 <td className="px-6 py-4 text-white">
                                     Samsung A5
@@ -54,7 +54,7 @@ const Slidebar = () => {
                                     Laptop i5
                                 </td>
                                 <td className="px-6 py-4 text-white">
-                                    Cargador
+                                    9
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                     <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
@@ -67,7 +67,7 @@ const Slidebar = () => {
                             </tr>
                             <tr className="bg-[#132335] border-b hover:bg-[#242d66] group">
                                 <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    2
+                                    Tablet
                                 </th>
                                 <td className="px-6 py-4 text-white">
                                     Huawei 10S
@@ -76,7 +76,7 @@ const Slidebar = () => {
                                     Laptop i7
                                 </td>
                                 <td className="px-6 py-4 text-white">
-                                    Audifonos
+                                    9
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
                                     <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
@@ -89,7 +89,7 @@ const Slidebar = () => {
                             </tr>
                             <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group">
                                 <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    3
+                                    Laptop
                                 </th>
                                 <td className="px-6 py-4 text-white">
                                     Samsung A5
@@ -98,7 +98,7 @@ const Slidebar = () => {
                                     Laptop i5
                                 </td>
                                 <td className="px-6 py-4 text-white">
-                                    Cargador
+                                    10
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                     <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
@@ -111,7 +111,7 @@ const Slidebar = () => {
                             </tr>
                             <tr className="bg-[#132335] border-b hover:bg-[#242d66] group">
                                 <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    4
+                                    Tablet
                                 </th>
                                 <td className="px-6 py-4 text-white">
                                     Huawei AS
@@ -120,95 +120,7 @@ const Slidebar = () => {
                                     Laptop i3
                                 </td>
                                 <td className="px-6 py-4 text-white">
-                                    Estuche
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    5
-                                </th>
-                                <td className="px-6 py-4 text-white">
-                                    Samsung A5
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    Laptop i5
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    Cargador
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr className="bg-[#132335] border-b hover:bg-[#242d66] group">
-                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    6
-                                </th>
-                                <td className="px-6 py-4 text-white">
-                                    Samsung A5
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    Laptop i5
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    audifonos
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    7
-                                </th>
-                                <td className="px-6 py-4 text-white">
-                                    Huawei SU
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    Laptop i9
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    Cargador y audifonos
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr className="bg-[#132335] border-b hover:bg-[#242d66] group">
-                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
                                     8
-                                </th>
-                                <td className="px-6 py-4 text-white">
-                                    Huawei SU
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    Laptop i9
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    Cargador y audifonos
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
                                     <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
@@ -221,16 +133,16 @@ const Slidebar = () => {
                             </tr>
                             <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group">
                                 <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    Laptop
+                                </th>
+                                <td className="px-6 py-4 text-white">
+                                    Samsung A5
+                                </td>
+                                <td className="px-6 py-4 text-white">
+                                    Laptop i5
+                                </td>
+                                <td className="px-6 py-4 text-white">
                                     9
-                                </th>
-                                <td className="px-6 py-4 text-white">
-                                    Huawei SU
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    Laptop i9
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    Cargador y audifonos
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                     <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
@@ -243,16 +155,16 @@ const Slidebar = () => {
                             </tr>
                             <tr className="bg-[#132335] border-b hover:bg-[#242d66] group">
                                 <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    10
+                                    Laptop
                                 </th>
                                 <td className="px-6 py-4 text-white">
-                                    Huawei SU
+                                    Samsung A5
                                 </td>
                                 <td className="px-6 py-4 text-white">
-                                    Laptop i9
+                                    Laptop i5
                                 </td>
                                 <td className="px-6 py-4 text-white">
-                                    Cargador y audifonos
+                                    10
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
                                     <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
@@ -265,7 +177,7 @@ const Slidebar = () => {
                             </tr>
                             <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group">
                                 <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    11
+                                    Laptop
                                 </th>
                                 <td className="px-6 py-4 text-white">
                                     Huawei SU
@@ -274,7 +186,7 @@ const Slidebar = () => {
                                     Laptop i9
                                 </td>
                                 <td className="px-6 py-4 text-white">
-                                    Cargador y audifonos
+                                    8
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                     <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
@@ -287,7 +199,7 @@ const Slidebar = () => {
                             </tr>
                             <tr className="bg-[#132335] border-b hover:bg-[#242d66] group">
                                 <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    12
+                                    Tablet
                                 </th>
                                 <td className="px-6 py-4 text-white">
                                     Huawei SU
@@ -296,7 +208,95 @@ const Slidebar = () => {
                                     Laptop i9
                                 </td>
                                 <td className="px-6 py-4 text-white">
-                                    Cargador y audifonos
+                                    9
+                                </td>
+                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group">
+                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    Tablet
+                                </th>
+                                <td className="px-6 py-4 text-white">
+                                    Huawei SU
+                                </td>
+                                <td className="px-6 py-4 text-white">
+                                    Laptop i9
+                                </td>
+                                <td className="px-6 py-4 text-white">
+                                    9
+                                </td>
+                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr className="bg-[#132335] border-b hover:bg-[#242d66] group">
+                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    Laptop
+                                </th>
+                                <td className="px-6 py-4 text-white">
+                                    Huawei SU
+                                </td>
+                                <td className="px-6 py-4 text-white">
+                                    Laptop i9
+                                </td>
+                                <td className="px-6 py-4 text-white">
+                                    9
+                                </td>
+                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group">
+                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    Laptop
+                                </th>
+                                <td className="px-6 py-4 text-white">
+                                    Huawei SU
+                                </td>
+                                <td className="px-6 py-4 text-white">
+                                    Laptop i9
+                                </td>
+                                <td className="px-6 py-4 text-white">
+                                    10
+                                </td>
+                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr className="bg-[#132335] border-b hover:bg-[#242d66] group">
+                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    Laptop
+                                </th>
+                                <td className="px-6 py-4 text-white">
+                                    Huawei SU
+                                </td>
+                                <td className="px-6 py-4 text-white">
+                                    Laptop i9
+                                </td>
+                                <td className="px-6 py-4 text-white">
+                                    8
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
                                     <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />

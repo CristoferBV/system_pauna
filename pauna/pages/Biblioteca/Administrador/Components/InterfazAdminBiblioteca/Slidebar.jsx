@@ -1,7 +1,23 @@
+
 import React, { useState } from 'react';
 import Image from 'next/image';
+// import { useState } from "react";
+// import axios from "axios";
 
 const Slidebar = () => {
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     console.log("hola");
+    //     const res = await axios
+    //       .post("/api/config/admin", user)
+    //       .then(function (response) {
+    //         console.log(response);
+    //       })
+    //       .catch(function (error) {
+    //         console.log(error);
+    //       });
+    //   };
 
     return (
             <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md min-h-screen">

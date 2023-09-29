@@ -1,8 +1,9 @@
-"use client";
+"user client";
 import { useState } from "react";
 import axios from "axios";
 
-export default function UserWindow() {
+export default function UserWindow({ userAdmins }) {
+  console.log(userAdmins);
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("hola");
@@ -15,18 +16,19 @@ export default function UserWindow() {
         console.log(error);
       });
   };
+
   const [user, setUser] = useState({
     UO_identificador: "",
     UO_primer_nombre: "",
     UO_segundo_nombre: "",
     UO_primer_apellido: "",
     UO_segundo_apellido: "",
-    UO_identificador_rol:"1"
+    UO_identificador_rol:""
   });
 
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });
-    console.log(user.UO_identificador_rol)
+    console.log(user.UO_identificador_rol);
   };
 
   const [open, setOpen] = useState(false);
@@ -103,15 +105,15 @@ export default function UserWindow() {
             className="p-2
                     lg:p-0"
           >
-            <select className="bg-white text-[#D9D9D9] text-center placeholder:text-[#D9D9D9] rounded"
-            value={user.UO_identificador_rol} onChange={handleChange}>
+            <select
+              className="bg-white text-[#D9D9D9] text-center placeholder:text-[#D9D9D9] rounded"
+              value={user.UO_identificador_rol}
+              onChange={handleChange}
+            >
               <option className=" text-[#D9D9D9] text-center" value="">
                 Elige una rol
               </option>
-              <option
-                className=" text-[#D9D9D9] text-center"
-                value="R1"
-              >
+              <option className=" text-[#D9D9D9] text-center" value="R1">
                 Administrador
               </option>
               <option className="text-[#D9D9D9] text-center" value="R2">
@@ -139,57 +141,26 @@ export default function UserWindow() {
                   <th class="p-4">Cédula</th>
                   <th>Nombre</th>
                   <th>Apellidos</th>
-                  <th>Rol</th>
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  className="sm:text-sm sm:p-4
-                                "
-                >
-                  <td
-                    className="
-                                    bg-[#989898] p-7"
-                  ></td>
-                  <td className="bg-[#989898] p-7"></td>
-                  <td className="bg-[#989898] p-7"></td>
-                  <td className="bg-[#989898] p-7"></td>
-                </tr>
-                <tr>
-                  <td className="bg-[#D9D9D9] p-7"></td>
-                  <td className="bg-[#D9D9D9] p-7"></td>
-                  <td className="bg-[#D9D9D9] p-7"></td>
-                </tr>
-                <tr>
-                  <td className="bg-[#989898] p-7"></td>
-                  <td className="bg-[#989898] p-7"></td>
-                  <td className="bg-[#989898] p-7"></td>
-                  <td className="bg-[#989898] p-7"></td>
-                </tr>
-                <tr>
-                  <td className="bg-[#D9D9D9] p-7"></td>
-                  <td className="bg-[#D9D9D9] p-7"></td>
-                  <td className="bg-[#D9D9D9] p-7"></td>
-                  <td className="bg-[#D9D9D9] p-7"></td>
-                </tr>
-                <tr>
-                  <td className="bg-[#989898] p-7"></td>
-                  <td className="bg-[#989898] p-7"></td>
-                  <td className="bg-[#989898] p-7"></td>
-                  <td className="bg-[#989898] p-7"></td>
-                </tr>
-                <tr>
-                  <td className="bg-[#D9D9D9] p-7"></td>
-                  <td className="bg-[#D9D9D9] p-7"></td>
-                  <td className="bg-[#D9D9D9] p-7"></td>
-                  <td className="bg-[#D9D9D9] p-7"></td>
-                </tr>
-                <tr>
-                  <td className="bg-[#989898] p-7"></td>
-                  <td className="bg-[#989898] p-7"></td>
-                  <td className="bg-[#989898] p-7"></td>
-                  <td className="bg-[#989898] p-7"></td>
-                </tr>
+                {userAdmins.map((userAdmin) => (
+                  <tr
+                    className="sm:text-sm sm:p-4
+                                " key={userAdmin.UO_identificador}
+                  >
+                    <td className="bg-[#989898] p-7">
+                      {userAdmin.UO_identificador}
+                    </td>
+                    <td className="bg-[#989898] p-7">
+                      {userAdmin.UO_primer_nombre} {userAdmin.UO_segundo_nombre}
+                    </td>
+                    <td className="bg-[#989898] p-7">
+                      {userAdmin.UO_primer_apellido}  {userAdmin.UO_segundo_apellido}
+                    </td>
+                    
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -203,3 +174,18 @@ export default function UserWindow() {
     </>
   );
 }
+
+export const getServerSideProps = async (context) => {
+  try{
+    const { data: userAdmins } = await axios.get(
+      "http://localhost:3000/api/config/admin"
+    )
+    return {
+      props: {
+        userAdmins,
+      },
+    };
+  }catch(error){
+    console.log(error)
+  }
+};

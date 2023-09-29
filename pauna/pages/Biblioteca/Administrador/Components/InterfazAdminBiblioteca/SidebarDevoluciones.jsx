@@ -26,6 +26,9 @@ const SidebarDevoluciones = () => {
                                     Fecha entregado
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Fecha devolucion
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Correo
                                 </th>
                                 <th scope="col" class="px-6 py-3 w-20">
@@ -51,6 +54,9 @@ const SidebarDevoluciones = () => {
                                     10-9-2023
                                 </td>
                                 <td class="px-6 py-4 text-white">
+                                    10-9-2023
+                                </td>
+                                <td class="px-6 py-4 text-white">
                                     andrey@gmail.com
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
@@ -74,6 +80,9 @@ const SidebarDevoluciones = () => {
                                 </td>
                                 <td class="px-6 py-4 text-white">
                                     Ingenieria en Sistemas
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    10-9-2023
                                 </td>
                                 <td class="px-6 py-4 text-white">
                                     10-9-2023
@@ -107,6 +116,9 @@ const SidebarDevoluciones = () => {
                                     10-9-2023
                                 </td>
                                 <td class="px-6 py-4 text-white">
+                                    10-9-2023
+                                </td>
+                                <td class="px-6 py-4 text-white">
                                     andrey@gmail.com
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
@@ -130,6 +142,9 @@ const SidebarDevoluciones = () => {
                                 </td>
                                 <td class="px-6 py-4 text-white">
                                     Ingenieria en Sistemas
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    10-9-2023
                                 </td>
                                 <td class="px-6 py-4 text-white">
                                     10-9-2023
@@ -163,6 +178,9 @@ const SidebarDevoluciones = () => {
                                     10-9-2023
                                 </td>
                                 <td class="px-6 py-4 text-white">
+                                    10-9-2023
+                                </td>
+                                <td class="px-6 py-4 text-white">
                                     andrey@gmail.com
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
@@ -186,6 +204,9 @@ const SidebarDevoluciones = () => {
                                 </td>
                                 <td class="px-6 py-4 text-white">
                                     Ingenieria en Sistemas
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    10-9-2023
                                 </td>
                                 <td class="px-6 py-4 text-white">
                                     10-9-2023
@@ -219,6 +240,9 @@ const SidebarDevoluciones = () => {
                                     10-9-2023
                                 </td>
                                 <td class="px-6 py-4 text-white">
+                                    10-9-2023
+                                </td>
+                                <td class="px-6 py-4 text-white">
                                     andrey@gmail.com
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
@@ -242,6 +266,9 @@ const SidebarDevoluciones = () => {
                                 </td>
                                 <td class="px-6 py-4 text-white">
                                     Ingenieria en Sistemas
+                                </td>
+                                <td class="px-6 py-4 text-white">
+                                    10-9-2023
                                 </td>
                                 <td class="px-6 py-4 text-white">
                                     10-9-2023

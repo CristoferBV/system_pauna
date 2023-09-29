@@ -147,7 +147,7 @@ export default function UserWindow({ userAdmins }) {
                 {userAdmins.map((userAdmin) => (
                   <tr
                     className="sm:text-sm sm:p-4
-                                " key={userAdmin.UO_identificador}
+                                " key={userAdmin.UO_identificador} 
                   >
                     <td className="bg-[#989898] p-7">
                       {userAdmin.UO_identificador}
@@ -158,7 +158,6 @@ export default function UserWindow({ userAdmins }) {
                     <td className="bg-[#989898] p-7">
                       {userAdmin.UO_primer_apellido}  {userAdmin.UO_segundo_apellido}
                     </td>
-                    
                   </tr>
                 ))}
               </tbody>

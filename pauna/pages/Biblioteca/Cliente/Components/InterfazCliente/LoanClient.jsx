@@ -1,3 +1,4 @@
+
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -10,10 +11,8 @@ import Link from 'next/link';
 import Axios from 'axios';
 
 
-
-
-const LoanClient = () => {
-
+export default function LoanClient({ userStudent }) {
+  console.log(userStudent);
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Formulario enviado");
@@ -159,15 +158,15 @@ const LoanClient = () => {
               <div className="col-span-1 md:mb-0">
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Nombre completo</label>
-                  <input type="text" className="p-2 w-full border rounded-md" />
+                  <input type="text" className="p-2 w-full border rounded-md" name="" onChange={handleChange} />
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Cédula</label>
-                  <input type="email" className="p-2 w-full border rounded-md" />
+                  <input type="email" className="p-2 w-full border rounded-md" name="" onChange={handleChange}/>
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Correo</label>
-                  <input type="tel" className="p-2 w-full border rounded-md" />
+                  <input type="tel" className="p-2 w-full border rounded-md" name="" onChange={handleChange}/>
                 </div>
               </div>
 
@@ -175,7 +174,7 @@ const LoanClient = () => {
               <div className="col-span-1 md:mb-0">
               <div className="mb-8">
                   <label className="block font-semibold mb-1">Carrera</label>
-                  <select className="p-2 w-full border rounded-md">
+                  <select className="p-2 w-full border rounded-md" name="" onChange={handleChange}>
                     <option value="">-Seleccionar opción-</option>
                     <option value="opcion1">
                       Ingeniería en Sistemas de Información{" "}
@@ -187,7 +186,7 @@ const LoanClient = () => {
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Nivel de carrera</label>
-                  <select className="p-2 w-full border rounded-md">
+                  <select className="p-2 w-full border rounded-md" name="" onChange={handleChange}>
                     <option value="">-Seleccionar opción-</option>
                     <option value="opcion1">Nivel I</option>
                     <option value="opcion2">Nivel II</option>
@@ -197,7 +196,7 @@ const LoanClient = () => {
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Dispositivos</label>
-                  <select className="p-2 w-full border rounded-md">
+                  <select className="p-2 w-full border rounded-md" name="" onChange={handleChange}>
                     <option value="">-Seleccionar opción-</option>
                     <option value="opcion1">Laptop</option>
                     <option value="opcion2">Tablet</option>
@@ -209,13 +208,13 @@ const LoanClient = () => {
               <div className="col-span-1">
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Fechas de prestamos</label>
-                  <select className="p-2 w-full border rounded-md">
+                  <select className="p-2 w-full border rounded-md" name="" onChange={handleChange}>
                     <option value="">-Seleccionar opción-</option>
                   </select>
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Campus</label>
-                  <select className="p-2 w-full border rounded-md">
+                  <select className="p-2 w-full border rounded-md" name="" onChange={handleChange}>
                     <option value="">-Seleccionar opción-</option>
                     <option value="opcion1">Campus Coto</option>
                     <option value="opcion2">Campus Pérez Zeledón</option>
@@ -228,12 +227,12 @@ const LoanClient = () => {
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Telefono</label>
-                  <input type="input" className="p-2 w-full border rounded-md" />
+                  <input type="input" className="p-2 w-full border rounded-md" name="" onChange={handleChange}/>
                 </div>
               </div>
             </div>
             <div className="mt-8 flex justify-center">
-              <button className="bg-[#E31919] text-white rounded-md px-4 py-2 font-medium hover:bg-[#FF3333]">
+              <button className="bg-[#E31919] text-white rounded-md px-4 py-2 font-medium hover:bg-[#FF3333]" onSubmit={handleSubmit}>
                 Aceptar
               </button>
             </div>
@@ -245,6 +244,20 @@ const LoanClient = () => {
       </div>
     </>
   );
+}
+
+export const getServerSideProps = async (context) => {
+  try{
+    const { data: userStudent } = await axios.get(
+      "http://localhost:3000/api/config/client"
+    )
+    return {
+      props: {
+        userStudent,
+      },
+    };
+  }catch(error){
+    console.log(error)
+  }
 };
 
-export default LoanClient

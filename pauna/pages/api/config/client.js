@@ -4,14 +4,22 @@ import { pool } from "../../BD/Storage";
 export default async function handler(req, res) {
     console.log(req.method);
     switch (req.method) {
+        case "GET":
+            return await getAllStudent(req, res);
         case "POST":
-            return await saveClientData(req, res);
+            console.log(req.body);
+            return await saveLoan(req, res);
     }
 }
 
-const saveClientData = async (req, res) => {
-    console.log(req.body);
+const getAllStudent = async (req, res) => {
+    const [result] = await pool.query("SELECT * FROM `pau-btc-tbl_estudiante`");
+    console.log(result)
+    return res.status(200).json(result);
+};
 
+const saveLoan = async (req, res) => {
+    console.log(req.body);
     const {
         EE_identificador,
         EE_campus,

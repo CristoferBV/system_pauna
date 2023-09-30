@@ -13,3 +13,4 @@ const getAllCitas = async (req, res) => {
     console.log(result)
     return res.status(200).json(result);
 };
+

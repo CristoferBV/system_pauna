@@ -6,6 +6,7 @@ import Image from 'next/image';
 export default function Slidebar ({ Dispositivos }) {
 
     const [] = useState({
+        LP_identificador:"",
         TP_nombre: "",
         AO_descripcion: "",
         AO_estado: "",
@@ -37,7 +38,8 @@ export default function Slidebar ({ Dispositivos }) {
                         </thead>
                         <tbody>
                             {Dispositivos.map((Dispositivos) => (
-                            <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group" key={Dispositivos.TP_nombre}>
+
+                            <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group" key={Dispositivos.LP_identificador}>
                                 <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
                                     {Dispositivos.TP_nombre}
                                 </th>
@@ -70,7 +72,7 @@ export default function Slidebar ({ Dispositivos }) {
     export const getServerSideProps = async (context) => {
         try{
           const { data: Dispositivos } = await axios.get(
-            "http://localhost:3000/api/config/admin"
+            "http://localhost:3000/api/config/BibliotecaDispositivos"
           )
           return {
             props: {

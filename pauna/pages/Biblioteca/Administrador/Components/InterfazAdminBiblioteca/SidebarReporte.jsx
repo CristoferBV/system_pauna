@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
+import axios from "axios";
 import Image from 'next/image';
-import Link from 'next/link';
 
-const SidebarReporte = () => {
+export default function SidebarReporte ({ Reporte }) {
+
+    const [] = useState({
+        EE_idenficador:"",
+        UO_primer_nombre: "",
+        UO_identificador: "",
+        TP_nombre: "",
+        EA_nombre: "",
+        CA_nombre: "",
+        HO_fecha: "",
+        LP_fechaDevolucion: "",
+        CE_correoElectronico: "",
+      });
 
     return (
             <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md min-h-screen">
@@ -33,10 +45,16 @@ const SidebarReporte = () => {
                                     Dispositivo
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Periferico
+                                </th>
+                                <th scope="col" class="px-6 py-3">
                                     Carrera
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Fecha entregado
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Fecha devolucion
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Correo
@@ -47,24 +65,32 @@ const SidebarReporte = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                    Andrey
+                            {Reporte.map((Reporte) => (
+
+                            <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group" key={Reporte.EE_idenficador}>
+                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    {Reporte.UO_primer_nombre}
                                 </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
+                                <td className="px-6 py-4 text-white">
+                                    {Reporte.UO_identificador}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    Tablet
+                                <td className="px-6 py-4 text-white">
+                                    {Reporte.TP_nombre}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
+                                <td className="px-6 py-4 text-white">
+                                    {Reporte.EA_nombre}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    10-9-2023
+                                <td className="px-6 py-4 text-white">
+                                    {Reporte.CA_nombre}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    andrey@gmail.com
+                                <td className="px-6 py-4 text-white">
+                                    {Reporte.HO_fecha}
+                                </td>
+                                <td className="px-6 py-4 text-white">
+                                    {Reporte.LP_fechaDevolucion}
+                                </td>
+                                <td className="px-6 py-4 text-white">
+                                    {Reporte.CE_correoElectronico}
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                     <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
@@ -75,293 +101,27 @@ const SidebarReporte = () => {
                                     </button>
                                 </td>
                             </tr>
-                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    Andrey
-                                </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Tablet
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10-9-2023
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    andrey@gmail.com
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    Andrey
-                                </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Tablet
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10-9-2023
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    andrey@gmail.com
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    Andrey
-                                </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Tablet
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10-9-2023
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    andrey@gmail.com
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    Andrey
-                                </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Tablet
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10-9-2023
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    andrey@gmail.com
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    Andrey
-                                </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Tablet
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10-9-2023
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    andrey@gmail.com
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    Andrey
-                                </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Tablet
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10-9-2023
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    andrey@gmail.com
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    Andrey
-                                </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Tablet
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10-9-2023
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    andrey@gmail.com
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    Andrey
-                                </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Tablet
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10-9-2023
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    andrey@gmail.com
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    Andrey
-                                </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Tablet
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10-9-2023
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    andrey@gmail.com
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    Andrey
-                                </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Tablet
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10-9-2023
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    andrey@gmail.com
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
+                            ))}
                         </tbody>
                     </table>
                     <button className='rounded-xl text-white border-white mt-6 ml-3 w-40 h-10 bg-[#132335] hover:bg-[#242d66]'>Reporte Individual</button>
                     <button className='rounded-xl text-white border-white mt-6 ml-3 w-40 h-10 bg-[#132335] hover:bg-[#242d66]'>Reporte General</button>
                 </div>
             </div>
-    )
-}
+        );
+    }
 
-export default SidebarReporte
+    export const getServerSideProps = async (context) => {
+        try{
+        const { data: Reporte } = await axios.get(
+            "http://localhost:3000/api/config/BibliotecaReportes"
+        )
+        return {
+            props: {
+                Reporte,
+            },
+        };
+        }catch(error){
+        console.log(error)
+        }
+    };

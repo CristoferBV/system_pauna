@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
+import axios from "axios";
 import Image from 'next/image';
-import Link from 'next/link';
 
-const SidebarCitas = () => {
+export default function SidebarCitas ({ Citas }) {
+
+    const [] = useState({
+        LP_identificador:"",
+        HO_fecha:"",
+        HO_hora: "",
+        UO_primer_nombre: "",
+        UO_identificador: "",
+        CA_nombre: "",
+        TP_nombre: "",
+      });
 
     return (
             <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md min-h-screen">
@@ -34,80 +44,26 @@ const SidebarCitas = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <td class="px-6 py-4 text-white">
-                                    10-09-23
+                            {Citas.map((Citas) => (
+
+                            <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group" key={Citas.LP_identificador}>
+                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    {Citas.HO_fecha}
+                                </th>
+                                <td className="px-6 py-4 text-white">
+                                    {Citas.HO_hora}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    10am
+                                <td className="px-6 py-4 text-white">
+                                    {Citas.UO_primer_nombre}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    Andrey
+                                <td className="px-6 py-4 text-white">
+                                    {Citas.UO_identificador}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
+                                <td className="px-6 py-4 text-white">
+                                    {Citas.CA_nombre}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Laptop
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                                <td class="px-6 py-4 text-white">
-                                    10-09-23
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10am
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Andrey
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Laptop
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <td class="px-6 py-4 text-white">
-                                    10-09-23
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10am
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Andrey
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Laptop
+                                <td className="px-6 py-4 text-white">
+                                    {Citas.TP_nombre}
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                     <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
@@ -118,151 +74,25 @@ const SidebarCitas = () => {
                                     </button>
                                 </td>
                             </tr>
-                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <td class="px-6 py-4 text-white">
-                                    10-09-23
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10am
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Andrey
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Laptop
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <td class="px-6 py-4 text-white">
-                                    10-09-23
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10am
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Andrey
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Laptop
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <td class="px-6 py-4 text-white">
-                                    10-09-23
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10am
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Andrey
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Laptop
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                            <td class="px-6 py-4 text-white">
-                                    10-09-23
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10am
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Andrey
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Laptop
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr class="bg-[#132335] border-b hover:bg-[#242d66] group">
-                            <td class="px-6 py-4 text-white">
-                                    10-09-23
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    10am
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Andrey
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Ingenieria en Sistemas
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Laptop
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#132335] group-hover:bg-[#242d66]">
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#132335] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
             </div>
-    )
-}
+        );
+    }
 
-export default SidebarCitas
+    export const getServerSideProps = async (context) => {
+        try{
+        const { data: Citas } = await axios.get(
+            "http://localhost:3000/api/config/BibliotecaCitas"
+        )
+        return {
+            props: {
+                Citas,
+            },
+        };
+        }catch(error){
+        console.log(error)
+        }
+    };

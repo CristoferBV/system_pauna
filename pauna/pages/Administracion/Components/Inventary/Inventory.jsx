@@ -1,8 +1,7 @@
-"useclient";
+"use client";
 import Buttons from "./InvButtons";
 import Link from "next/link";
 import axios from "axios";
-import { Martel } from "next/font/google";
 
 export default function Inventary({ materials }) {
   console.log(materials);
@@ -107,7 +106,7 @@ export default function Inventary({ materials }) {
                     <td className="bg-[#989898] ">{material.CD_cantidad}</td>
                     <td className="bg-[#989898] ">{material.ML_observacion}</td>
                     <td>
-                      <Buttons />
+                      <Buttons material={material}/>
                     </td>
                   </tr>
                 ))}
@@ -129,7 +128,7 @@ export default function Inventary({ materials }) {
 export const getServerSideProps = async (context) => {
   try {
     const { data: materials } = await axios.get(
-      "http://localhost:3000/api/addMaterial/admin"
+      "http://localhost:3000/api/material/view"
     );
     return {
       props: {

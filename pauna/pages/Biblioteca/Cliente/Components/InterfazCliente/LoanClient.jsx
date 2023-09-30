@@ -13,6 +13,7 @@ import Axios from 'axios';
 
 export default function LoanClient({ userStudent }) {
   console.log(userStudent);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Formulario enviado");
@@ -20,7 +21,6 @@ export default function LoanClient({ userStudent }) {
     try {
       const res = await axios.post("/api/config/client", student);
       console.log(res);
-      // Realizar acciones adicionales después de la inserción, si es necesario.
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +52,7 @@ export default function LoanClient({ userStudent }) {
     { name: 'Devolución', section: 'DevolutionClient', current: false },
     { name: 'Perfil', section: 'ProfileClient', current: false },
     { name: 'Inicio', section: 'HomeClient', current: false }
-  ];  
+  ]; 
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -166,7 +166,7 @@ export default function LoanClient({ userStudent }) {
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Correo</label>
-                  <input type="tel" className="p-2 w-full border rounded-md" name="" onChange={handleChange}/>
+                  <input type="tel" className="p-2 w-full border rounded-md" name="EE_identificador_correo" onChange={handleChange}/>
                 </div>
               </div>
 
@@ -174,7 +174,7 @@ export default function LoanClient({ userStudent }) {
               <div className="col-span-1 md:mb-0">
               <div className="mb-8">
                   <label className="block font-semibold mb-1">Carrera</label>
-                  <select className="p-2 w-full border rounded-md" name="" onChange={handleChange}>
+                  <select className="p-2 w-full border rounded-md" name="EE_idenficador_carrera" onChange={handleChange}>
                     <option value="">-Seleccionar opción-</option>
                     <option value="opcion1">
                       Ingeniería en Sistemas de Información{" "}
@@ -186,7 +186,7 @@ export default function LoanClient({ userStudent }) {
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Nivel de carrera</label>
-                  <select className="p-2 w-full border rounded-md" name="" onChange={handleChange}>
+                  <select className="p-2 w-full border rounded-md" name="EE_nivel" onChange={handleChange}>
                     <option value="">-Seleccionar opción-</option>
                     <option value="opcion1">Nivel I</option>
                     <option value="opcion2">Nivel II</option>
@@ -214,7 +214,7 @@ export default function LoanClient({ userStudent }) {
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Campus</label>
-                  <select className="p-2 w-full border rounded-md" name="" onChange={handleChange}>
+                  <select className="p-2 w-full border rounded-md" name="EE_campus" onChange={handleChange}>
                     <option value="">-Seleccionar opción-</option>
                     <option value="opcion1">Campus Coto</option>
                     <option value="opcion2">Campus Pérez Zeledón</option>
@@ -227,7 +227,7 @@ export default function LoanClient({ userStudent }) {
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Telefono</label>
-                  <input type="input" className="p-2 w-full border rounded-md" name="" onChange={handleChange}/>
+                  <input type="input" className="p-2 w-full border rounded-md" name="EE_identificador_telefono" onChange={handleChange}/>
                 </div>
               </div>
             </div>
@@ -258,6 +258,9 @@ export const getServerSideProps = async (context) => {
     };
   }catch(error){
     console.log(error)
+
+    return {
+      props: {},
+    };
   }
 };
-

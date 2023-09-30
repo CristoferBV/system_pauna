@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     console.log(req.method);
     switch (req.method) {
         case "GET":
-            return await getAllStudent(req, res);
+            return await getLoan(req, res);
         case "POST":
             console.log(req.body);
             return await saveLoan(req, res);
@@ -17,67 +17,8 @@ const getAllStudent = async (req, res) => {
     return res.status(200).json(result);
 };
 
-const getTelefonoId = async (numero) => {
-    // Consulta SQL para obtener el ID del teléfono según el número
-    const [result] = await pool.query("SELECT TO-idenficador FROM `pau-gnl-tbl_telefono` WHERE TO-numero = ?", [numero]);
-    return result[0].TO-idenficador;
-};
-
-const getCorreoId = async (correo) => {
-    // Consulta SQL para obtener el ID del correo electrónico según la dirección de correo
-    const [result] = await pool.query("SELECT CE-idCorreo FROM `pau-btc-tbl_correoelectronico` WHERE CE-correoElectronico = ?", [correo]);
-    return result[0].CE-idCorreo;
-};
-
-const getCarreraId = async (nombre) => {
-    // Consulta SQL para obtener el ID de la carrera según el nombre
-    const [result] = await pool.query("SELECT CA_identificador FROM `pau-btc-tbl_carrera` WHERE CA_nombre = ?", [nombre]);
-    return result[0].CA_identificador;
-};
-
-const getUsuarioId = async (identificador) => {
-    // Consulta SQL para obtener el ID del usuario según el identificador
-    const [result] = await pool.query("SELECT UO_identificador FROM `pau-gnl_usuario` WHERE UO_identificador = ?", [identificador]);
-    return result[0].UO_identificador;
-};
-
-const saveLoan = async (req, res) => {
-    console.log(req.body);
-    const {
-        EE_identificador,
-        EE_campus,
-        EE_nivel,
-        EE_identificador_telefono,
-        EE_identificador_correo,
-        EE_idenficador_carrera,
-        EE_identificador_usuario
-    } = req.body;
-
-    // Obtener los identificadores correspondientes
-    const telefonoId = await getTelefonoId(EE_identificador_telefono);
-    const correoId = await getCorreoId(EE_identificador_correo);
-    const carreraId = await getCarreraId(EE_idenficador_carrera);
-    const usuarioId = await getUsuarioId(EE_identificador_usuario);
-
-    // Construir el objeto para la inserción
-    const studentData = {
-        EE_identificador,
-        EE_campus,
-        EE_nivel,
-        EE_identificador_telefono: telefonoId,
-        EE_identificador_correo: correoId,
-        EE_idenficador_carrera: carreraId,
-        EE_identificador_usuario: usuarioId
-    };
-
-    const result = await pool
-        .query("INSERT INTO `pau-btc-tbl_estudiante` SET ?", studentData)
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-
+const getLoan = async (req, res) => {
+    const [result] = await pool.query("SELECT CONCAT(UO.UO_primer_nombre, ' ', UO.UO_segundo_nombre, ' ', UO.UO_primer_apellido, ' ', UO.UO_segundo_apellido) AS NombreCompleto, EE.EE_idenficador AS Cédula, CE.`CE-correoElectronico` AS Correo, CA.CA_nombre AS Carrera, EE.EE_nivel AS NivelCarrera, COUNT(DISTINCT EA.EA_identificador) AS Dispositivos, LP.LP_fechaDevolucion AS FechaDevolución, EE.EE_campus AS Campus, `TO`.`TO-numero` AS Telefono FROM `pau-gnl-usuario` AS UO INNER JOIN `pau-btc-tbl_estudiante` AS EE ON UO.UO_identificador = EE.EE_identificador_usuario INNER JOIN `pau-gnl-tbl_correoelectronico` AS CE ON EE.EE_identificador_correo = CE.`CE-idCorreo` INNER JOIN `pau-btc-tbl_carrera` AS CA ON EE.EE_idenficador_carrera = CA.CA_identificador LEFT JOIN `pau-btc-tbl_listaprestamo` AS LP ON UO.UO_identificador = LP.LP_identificador_usuario LEFT JOIN `pau-btc-tbl_listaprestamo-x-tbl_periferico` AS EA_LP ON LP.LP_identificador = EA_LP.LP_identificador LEFT JOIN `pau-btc-tbl_periferico` AS EA ON EA_LP.EA_identificador = EA.EA_identificador LEFT JOIN `pau-gnl-tbl_telefono` AS `TO` ON EE.EE_identifacador_telefono = `TO`.`TO-idenficador` GROUP BY UO.UO_identificador, EE.EE_idenficador, CE.`CE-correoElectronico`, CA.CA_nombre, EE.EE_nivel, LP.LP_fechaDevolucion, EE.EE_campus, `TO`.`TO-numero`");
+    console.log(result);
     return res.status(200).json(result);
-};
+}

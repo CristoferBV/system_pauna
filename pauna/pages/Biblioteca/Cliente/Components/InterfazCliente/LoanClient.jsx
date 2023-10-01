@@ -13,7 +13,7 @@ import Axios from "axios";
 export default function LoanClient() {
   const [carreras, setCarreras] = useState([]);
   const [dispositivos, setdispositivos] = useState([]);
-  
+
   //Carreras
   useEffect(() => {
     // Realiza una solicitud GET a tu API para obtener las opciones de carrera
@@ -176,18 +176,19 @@ export default function LoanClient() {
                   <label className="block font-semibold mb-1">
                     Nombre completo
                   </label>
-                  <input type="text" className="p-2 w-full border rounded-md" />
+                  <input type="text" className="p-2 w-full border rounded-md" placeholder="Ejem: Pepito Bryan Gomez Arguedas"/>
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Cédula</label>
                   <input
-                    type="email"
+                    type="input"
                     className="p-2 w-full border rounded-md"
+                    placeholder="Ejem: 018080472"
                   />
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Correo</label>
-                  <input type="tel" className="p-2 w-full border rounded-md" />
+                  <input type="tel" className="p-2 w-full border rounded-md" placeholder="Ejem: correo@gmail.com"/>
                 </div>
               </div>
 
@@ -208,13 +209,11 @@ export default function LoanClient() {
                   <label className="block font-semibold mb-1">
                     Nivel de carrera
                   </label>
-                  <select className="p-2 w-full border rounded-md">
-                    <option value="">-Seleccionar opción-</option>
-                    <option value="">Nivel I</option>
-                    <option value="">Nivel II</option>
-                    <option value="">Nivel III</option>
-                    <option value="">Nivel IV</option>
-                  </select>
+                  <input
+                    type="input"
+                    className="p-2 w-full border rounded-md"
+                    placeholder="Ejem: Nivel I"
+                  />
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">
@@ -243,22 +242,18 @@ export default function LoanClient() {
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Campus</label>
-                  <select className="p-2 w-full border rounded-md">
-                    <option value="">-Seleccionar opción-</option>
-                    <option value="opcion1">Campus Coto</option>
-                    <option value="opcion2">Campus Pérez Zeledón</option>
-                    <option value="opcion3">Campus Omar Dengo</option>
-                    <option value="opcion4">Campus Benjamín Núñez</option>
-                    <option value="opcion5">Campus Liberia</option>
-                    <option value="opcion6">Campus Sarapiquí</option>
-                    <option value="opcion7">Campus Nicoya</option>
-                  </select>
+                  <input
+                    type="input"
+                    className="p-2 w-full border rounded-md"
+                    placeholder="Ejem: Campus Coto"
+                  />
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Telefono</label>
                   <input
                     type="input"
                     className="p-2 w-full border rounded-md"
+                    placeholder="Ejem: 85893501"
                   />
                 </div>
               </div>

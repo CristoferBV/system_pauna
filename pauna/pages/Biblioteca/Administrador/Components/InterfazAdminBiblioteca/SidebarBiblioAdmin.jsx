@@ -40,9 +40,14 @@ export default function Sidebar() {
                             <span className="font-bold font-inika text-sm lg:text-base">Reporte</span>
                         </li>
                     </Link>
+                    <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarReporte"}>
+                        <li className="py-2 lg:py-4 pl-4 lg:pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
+                            <span className="font-bold font-inika text-sm lg:text-base">Horario</span>
+                        </li>
+                    </Link>
                     <Link href={"/LoginAndRegister/Login/Login"}>
                         <li>
-                            <button className='rounded-xl ml-2 lg:ml-16 text-white border-white mt-2 lg:mt-32 w-24 lg:w-32 h-8 lg:h-10 bg-[#132335] hover:bg-[#c43f3f]'>Cerrar Sesión</button>
+                            <button className='rounded-xl ml-2 lg:ml-16 text-white border-white lg:mt-20 w-24 lg:w-32 h-8 lg:h-10 bg-[#132335] hover:bg-[#c43f3f]'>Cerrar Sesión</button>
                         </li>
                     </Link>
                 </ul>

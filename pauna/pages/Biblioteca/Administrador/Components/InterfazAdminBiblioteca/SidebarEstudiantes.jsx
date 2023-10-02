@@ -1,8 +1,25 @@
 import React, { useState } from 'react';
+import axios from "axios";
 import Image from 'next/image';
-import Link from 'next/link';
 
-const SidebarEstudiantes = () => {
+export default function SidebarEstudiantes ({ Estudiantes }) {
+
+    const [] = useState({
+        EE_idenficador:"",
+        UO_primer_nombre: "",
+        UO_identificador: "",
+        EE_nivel: "",
+        TP_nombre: "",
+        TP_identificador: "",
+        AO_descripcion: "",
+        DO_nombre: "",
+        EE_campus: "",
+        HO_fecha: "",
+        LP_fechaDevolucion: "",
+        RE_observacion: "",
+        CE_correoElectronico: "",
+        TO_numero: "",
+      });
 
     return (
             <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md min-h-screen">
@@ -41,12 +58,6 @@ const SidebarEstudiantes = () => {
                                     Fecha Devolucion
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Fecha devuelto
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Beca
-                                </th>
-                                <th scope="col" class="px-6 py-3">
                                     Observacion
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -55,64 +66,53 @@ const SidebarEstudiantes = () => {
                                 <th scope="col" class="px-6 py-3">
                                     Telefono
                                 </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Ubicacion
-                                </th>
                                 <th scope="col" class="px-6 py-3 w-20">
                                     Administrar
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-[#212C39] border-b hover:bg-[#242d66] group">
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    Andrey Barrios Valverde
+                            {Estudiantes.map((Estudiantes) => (
+
+                            <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group" key={Estudiantes.EE_idenficador}>
+                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                                    {Estudiantes.UO_primer_nombre}
                                 </th>
-                                <td class="px-6 py-4 text-white">
-                                    118080476
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.UO_identificador}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    II
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.EE_nivel}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    Laptop
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.TP_nombre}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    N0WER1
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.TP_identificador}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    i5 decima generacion
-                                    hp 2022
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.AO_descripcion}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    Direccion Academica
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.DO_nombre}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    PZ
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.EE_campus}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    5-5-2023
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.HO_fecha}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    5-8-2023
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.LP_fechaDevolucion}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    9-7-2023
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.RE_observacion} 
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    Luis Felipe
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.CE_correoElectronico}
                                 </td>
-                                <td class="px-6 py-4 text-white">
-                                    Devuelta
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Andrey@gmail.com
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    85151254
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    Caja 1 lote direccion academica
+                                <td className="px-6 py-4 text-white">
+                                    {Estudiantes.TO_numero}
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                     <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
@@ -123,11 +123,25 @@ const SidebarEstudiantes = () => {
                                     </button>
                                 </td>
                             </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
             </div>
-    )
-}
+        )
+    }
 
-export default SidebarEstudiantes
+    export const getServerSideProps = async (context) => {
+        try{
+        const { data: Estudiantes } = await axios.get(
+            "http://localhost:3000/api/config/BibliotecaEstudiantes"
+        )
+        return {
+            props: {
+                Estudiantes,
+            },
+        };
+        }catch(error){
+        console.log(error)
+        }
+    };

@@ -11,6 +11,45 @@ import Link from "next/link";
 import Axios from "axios";
 
 export default function LoanClient() {
+
+  //Estados para lnsertar
+  const [nombreCompleto, setNombreCompleto] = useState("");
+  const [cedula, setCedula] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [carrera, setCarrera] = useState("");
+  const [nivelCarrera, setNivelCarrera] = useState("");
+  const [dispositivo, setDispositivo] = useState("");
+  const [fechaPrestamo, setFechaPrestamo] = useState("");
+  const [campus, setCampus] = useState("");
+  const [telefono, setTelefono] = useState("");
+
+  //Metodo de envio de datos
+  const handleSubmit = () => {
+    const data = {
+      UO_primer_nombre: nombreCompleto,
+      EE_idenficador: cedula,
+      CE_correpElectronico: correo,
+      CA_nombre: carrera,
+      EE_nivel: nivelCarrera,
+      TP_nombre: dispositivo,
+      LP_fechaDevolucion: fechaPrestamo,
+      EE_campus: campus,
+      TO_numero: telefono,
+    };
+
+    // Realizar la solicitud POST a la API
+    Axios.post("/api/loan", data)
+      .then((response) => {
+        // Manejar la respuesta de la API (éxito)
+        console.log("Éxito:", response.data);
+      })
+      .catch((error) => {
+        // Manejar errores de la API
+        console.error("Error:", error);
+      });
+  };
+
+  //Estados para llenar selects
   const [carreras, setCarreras] = useState([]);
   const [dispositivos, setdispositivos] = useState([]);
 
@@ -176,7 +215,7 @@ export default function LoanClient() {
                   <label className="block font-semibold mb-1">
                     Nombre completo
                   </label>
-                  <input type="text" className="p-2 w-full border rounded-md" placeholder="Ejem: Pepito Bryan Gomez Arguedas"/>
+                  <input type="text" className="p-2 w-full border rounded-md" placeholder="Ejem: Pepito Bryan Gomez Arguedas" value={nombreCompleto} onChange={(e) => setNombreCompleto(e.target.value)}/>
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Cédula</label>
@@ -184,6 +223,7 @@ export default function LoanClient() {
                     type="input"
                     className="p-2 w-full border rounded-md"
                     placeholder="Ejem: 018080472"
+                    
                   />
                 </div>
                 <div className="mb-8">
@@ -259,7 +299,8 @@ export default function LoanClient() {
               </div>
             </div>
             <div className="mt-8 flex justify-center">
-              <button className="bg-[#E31919] text-white rounded-md px-4 py-2 font-medium hover:bg-[#FF3333]">
+              <button className="bg-[#E31919] text-white rounded-md px-4 py-2 font-medium hover:bg-[#FF3333]"
+              onClick={handleSubmit}>
                 Aceptar
               </button>
             </div>

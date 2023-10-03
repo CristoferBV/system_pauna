@@ -5,11 +5,24 @@ import Link from 'next/link';
 
 export default function Horario({ Horarios }) {
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("hola");
+        const res = await axios
+          .post("/api/config/admin", user)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      };
+
     const [] = useState({
-        HO_identificador: "",
-        HO_fecha: "",
-        HO_hora: "",
-        HO_estado: "",
+            HO_identificador: "",
+            HO_fecha: "",
+            HO_hora: "",
+            HO_estado: "",
     });
 
     return (

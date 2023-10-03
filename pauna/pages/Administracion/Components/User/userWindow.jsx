@@ -8,7 +8,7 @@ export default function UserWindow({ userAdmins }) {
     e.preventDefault();
     console.log("hola");
     const res = await axios
-      .post("/api/config/admin", user)
+      .post("/api/config/BibliotecaHorario", user)
       .then(function (response) {
         console.log(response);
       })

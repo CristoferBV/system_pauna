@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Horario({ Horarios }) {
 
@@ -55,7 +56,9 @@ export default function Horario({ Horarios }) {
                     ))}
                 </tbody>
             </table>
-            <button className=' text-white border-white text-sm mt-6 ml-3 w-36 h-10 bg-[#132335] hover:bg-[#808394]'>Crear Horario</button>
+             <Link href={"/LoginAndRegister/Login/Login/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/CreateHorario"}>
+             <button className=' text-white border-white text-sm mt-6 ml-3 w-36 h-10 bg-[#132335] hover:bg-[#242d66]'>Crear Horario</button>
+             </Link>
         </div>
     )
 }

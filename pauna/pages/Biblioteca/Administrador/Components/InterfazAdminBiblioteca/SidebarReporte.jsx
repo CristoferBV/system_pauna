@@ -31,7 +31,7 @@ export default function SidebarReporte ({ Reporte }) {
                     </div>
                 </form>
 
-                <div className="relative overflow-x-auto shadow-md bg-[#041A34] overflow-y-auto min-h-[calc(100vh-64px)]">
+                <div className="relative overflow-x-auto bg-[#041A34] overflow-y-auto min-h-[calc(100vh-64px)]">
                     <table class="w-full text-sm text-center text-[#757373]">
                         <thead class="text-xs text-[#ffffff] uppercase bg-[#132335]">
                             <tr>
@@ -101,7 +101,6 @@ export default function SidebarReporte ({ Reporte }) {
                                     </button>
                                 </td>
                             </tr>
-                            
                             ))}
                         </tbody>
                     </table>

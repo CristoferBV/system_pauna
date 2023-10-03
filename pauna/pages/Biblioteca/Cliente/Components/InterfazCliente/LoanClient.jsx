@@ -38,7 +38,7 @@ export default function LoanClient() {
     };
 
     // Realizar la solicitud POST a la API
-    Axios.post("/api/loan", data)
+    Axios.post("/api/library_client/loan", data)
       .then((response) => {
         // Manejar la respuesta de la API (éxito)
         console.log("Éxito:", response.data);
@@ -215,7 +215,7 @@ export default function LoanClient() {
                   <label className="block font-semibold mb-1">
                     Nombre completo
                   </label>
-                  <input type="text" className="p-2 w-full border rounded-md" placeholder="Ejem: Pepito Bryan Gomez Arguedas" value={nombreCompleto} onChange={(e) => }/>
+                  <input type="text" className="p-2 w-full border rounded-md" placeholder="Ejem: Pepito Bryan Gomez Arguedas" value={nombreCompleto} onChange={(e) => setNombreCompleto(e.target.value)}/>
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Cédula</label>
@@ -223,11 +223,13 @@ export default function LoanClient() {
                     type="input"
                     className="p-2 w-full border rounded-md"
                     placeholder="Ejem: 018080472"
+                    value={cedula}
+                    onChange={(e) => setCedula(e.target.value)}
                   />
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Correo</label>
-                  <input type="tel" className="p-2 w-full border rounded-md" placeholder="Ejem: correo@gmail.com"/>
+                  <input type="tel" className="p-2 w-full border rounded-md" placeholder="Ejem: correo@gmail.com" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
                 </div>
               </div>
 
@@ -235,7 +237,7 @@ export default function LoanClient() {
               <div className="col-span-1 md:mb-0">
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Carrera</label>
-                  <select className="p-2 w-full border rounded-md">
+                  <select className="p-2 w-full border rounded-md" value={carrera} onChange={(e) => setCarrera(e.target.value)}>
                     <option value="">-Seleccionar opción-</option>
                     {carreras.map((carrera) => (
                       <option key={carrera.value} value={carrera.value}>
@@ -252,13 +254,15 @@ export default function LoanClient() {
                     type="input"
                     className="p-2 w-full border rounded-md"
                     placeholder="Ejem: Nivel I"
+                    value={nivelCarrera}
+                    onChange={(e) => setNivelCarrera(e.target.value)}
                   />
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">
                     Dispositivos
                   </label>
-                  <select className="p-2 w-full border rounded-md">
+                  <select className="p-2 w-full border rounded-md" value={dispositivo} onChange={(e) => setDispositivo(e.target.value)}>
                     <option value="">-Seleccionar opción-</option>
                     {dispositivos.map((dispositivo) => (
                       <option key={dispositivo.value} value={dispositivo.value}>
@@ -275,8 +279,10 @@ export default function LoanClient() {
                   <label className="block font-semibold mb-1">
                     Fechas de prestamos
                   </label>
-                  <select className="p-2 w-full border rounded-md">
+                  <select className="p-2 w-full border rounded-md" value={fechaPrestamo} onChange={(e) => setFechaPrestamo(e.target.value)}>
                     <option value="">-Seleccionar opción-</option>
+                    <option value="">2/10/2023</option>
+                    <option value="">10/40/2022</option>
                   </select>
                 </div>
                 <div className="mb-8">
@@ -285,6 +291,8 @@ export default function LoanClient() {
                     type="input"
                     className="p-2 w-full border rounded-md"
                     placeholder="Ejem: Campus Coto"
+                    value={campus}
+                    onChange={(e) => setCampus(e.target.value)}
                   />
                 </div>
                 <div className="mb-8">
@@ -293,6 +301,8 @@ export default function LoanClient() {
                     type="input"
                     className="p-2 w-full border rounded-md"
                     placeholder="Ejem: 85893501"
+                    value={telefono}
+                    onChange={(e) => setTelefono(e.target.value)}
                   />
                 </div>
               </div>

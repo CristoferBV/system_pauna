@@ -281,8 +281,8 @@ export default function LoanClient() {
                   </label>
                   <select className="p-2 w-full border rounded-md" value={fechaPrestamo} onChange={(e) => setFechaPrestamo(e.target.value)}>
                     <option value="">-Seleccionar opción-</option>
-                    <option value="">2/10/2023</option>
-                    <option value="">10/40/2022</option>
+                    <option value="">2023/10/2</option>
+                    <option value="">2022/4/10</option>
                   </select>
                 </div>
                 <div className="mb-8">

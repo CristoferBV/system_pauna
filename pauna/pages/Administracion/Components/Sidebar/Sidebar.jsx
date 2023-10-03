@@ -73,12 +73,12 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
                 <div className="text-center text-2xl font-semibold mt-6">
                     <div className="flex items-center">
                         <div className="w-20 h-20 bg-[#0E21CD] rounded-full flex items-center justify-center mx-4 mt-4">
-                            <Image src="/LOGO-UNA1-Blanco 2.png" alt="logo universidad nacional de costa rica" width={80} height={80} />
+                            <Image src="/LOGO-UNA1-Blanco 2.png" alt="logo universidad nacional de costa rica" width={70} height={70} />
                         </div>
                         <div className="text-white ml-2 mt-4">PAUNA</div>
                     </div>
                 </div>
-                <ul className="flex-grow mt-10 space-y-4">
+                <ul className="flex-grow mt-10 space-y-4 items-center">
                     <Link href={"/Administracion/Components/User/userWindow"}>
                         <li className="py-4 pl-20 transition ease-in-out delay-140 bg-[#021730] hover:bg-[#132335] hover:-translate-y-1 hover:scale-105 duration-200">
                             <span className="font-bold font-inika">Usuarios</span>
@@ -97,7 +97,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
                     </Link>
                     <Link href={"/LoginAndRegister/Login/Login"}>
                         <li>
-                            <button className='rounded-xl ml-16 text-white border-white mt-32 w-32 h-10 bg-[#132335] hover:bg-[#c43f3f]'>Cerrar Cesion</button>
+                            <button className=' ml-16 text-white border-white mt-32 w-32 h-10 bg-[#132335] hover:bg-[#c43f3f]'>Cerrar Cesion</button>
                         </li>
                     </Link>
                 </ul>

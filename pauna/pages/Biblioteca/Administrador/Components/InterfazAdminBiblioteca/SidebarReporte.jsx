@@ -101,11 +101,12 @@ export default function SidebarReporte ({ Reporte }) {
                                     </button>
                                 </td>
                             </tr>
+                            
                             ))}
                         </tbody>
                     </table>
-                    <button className='rounded-xl text-white border-white mt-6 ml-3 w-40 h-10 bg-[#132335] hover:bg-[#242d66]'>Reporte Individual</button>
-                    <button className='rounded-xl text-white border-white mt-6 ml-3 w-40 h-10 bg-[#132335] hover:bg-[#242d66]'>Reporte General</button>
+                    <button className=' text-white border-white text-sm mt-6 ml-3 w-40 h-10 bg-[#132335] hover:bg-[#242d66]'>Reporte Individual</button>
+                    <button className=' text-white border-white text-sm  mt-6 ml-3 w-40 h-10 bg-[#132335] hover:bg-[#242d66]'>Reporte General</button>
                 </div>
             </div>
         );

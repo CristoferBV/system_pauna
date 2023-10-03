@@ -29,23 +29,31 @@ export default function Horario({ Horarios }) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="bg-white border-b border-b-slate-900 h-36">
-                        <th scope="row" className=" px-6 py-4 font-medium text-white whitespace-nowrap">
+                    <tr className="bg-white h-36">
+                        <th scope="row" className=" px-6 py-4 font-normal text-white whitespace-nowrap">
                             <input
                                 type="text"
                                 placeholder="Ejemplo: 10am"
-                                className=" text-black w-full md:w-40 p-3 rounded-sm h-12 border-gray-300 bg-white text-base text-center"
+                                className=" text-black w-full md:w-40 p-3 rounded-md h-12 bg-white text-base text-center placeholder-black border-2 border-[#132335]"
                             />
                         </th>
                         <td className="px-6 py-4 text-black text-base">
-                            <input type="date" className="p-2 w-full border rounded-md" />
+                            <input type="date" className="p-2 w-full rounded-md border-2 border-[#132335] h-12" />
                         </td>
                         <td className="px-6 py-4 text-black text-center">
-                            <select className="p-2 w-full border rounded-md text-center text-base h-12">
+                            <select className="p-2 w-full rounded-md text-center text-base h-12 border-2 border-[#132335]">
                                 <option className="text-center" value="">-Seleccionar opción-</option>
                                 <option value="opcion1">Disponible</option>
                                 <option value="opcion2">No disponible</option>
                             </select>
+                        </td>
+                    </tr>
+                    <tr className="bg-[#132335] border-b border-b-slate-900 h-12">
+                        <th scope="row" className=" px-6 py-4 font-medium text-white whitespace-nowrap">
+                        </th>
+                        <td className="px-6 py-4 text-black text-base">
+                        </td>
+                        <td className="px-6 py-4 text-black text-center">
                         </td>
                     </tr>
                 </tbody>

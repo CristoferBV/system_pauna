@@ -215,7 +215,7 @@ export default function LoanClient() {
                   <label className="block font-semibold mb-1">
                     Nombre completo
                   </label>
-                  <input type="text" className="p-2 w-full border rounded-md" placeholder="Ejem: Pepito Bryan Gomez Arguedas" value={nombreCompleto} onChange={(e) => setNombreCompleto(e.target.value)}/>
+                  <input type="text" className="p-2 w-full border rounded-md" placeholder="Ejem: Pepito Bryan Gomez Arguedas" value={nombreCompleto} onChange={(e) => }/>
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Cédula</label>
@@ -223,7 +223,6 @@ export default function LoanClient() {
                     type="input"
                     className="p-2 w-full border rounded-md"
                     placeholder="Ejem: 018080472"
-                    
                   />
                 </div>
                 <div className="mb-8">

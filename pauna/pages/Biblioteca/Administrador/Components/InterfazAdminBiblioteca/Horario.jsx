@@ -56,7 +56,7 @@ export default function Horario({ Horarios }) {
                     ))}
                 </tbody>
             </table>
-             <Link href={"/LoginAndRegister/Login/Login/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/CreateHorario"}>
+             <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/CreateHorario"}>
              <button className=' text-white border-white text-sm mt-6 ml-3 w-36 h-10 bg-[#132335] hover:bg-[#242d66]'>Crear Horario</button>
              </Link>
         </div>

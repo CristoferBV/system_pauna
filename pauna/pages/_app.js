@@ -40,6 +40,10 @@ function App({ Component, pageProps }) {
     return <Slidebar />;
   }
 
+  if (router.pathname === '/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/CreateHorario') {
+    return <Slidebar />;
+  }
+
   if (router.pathname === '/Administracion/Components/User/userWindow') {
     return <Component {...pageProps} />;
   }

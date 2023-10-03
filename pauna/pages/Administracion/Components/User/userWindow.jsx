@@ -25,7 +25,7 @@ export default function UserWindow({ userAdmins }) {
     UO_segundo_nombre: "",
     UO_primer_apellido: "",
     UO_segundo_apellido: "",
-    UO_identificador_rol: "",
+    UO_identificador_rol:""
   });
 
   const handleChange = ({ target: { name, value } }) => {

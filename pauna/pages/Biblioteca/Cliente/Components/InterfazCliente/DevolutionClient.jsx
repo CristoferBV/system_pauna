@@ -4,23 +4,22 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import Image from "next/image";
-import { useRouter } from 'next/router';
-import { useState } from 'react'
-import Link from 'next/link';
+import { useRouter } from "next/router";
+import { useState } from "react";
+import Link from "next/link";
 
 const DevolutionClient = () => {
-
   const router = useRouter();
   const { section } = router.query;
 
-  const [active , setActive] = useState('');
+  const [active, setActive] = useState("");
 
   const navigation = [
-    { name: 'Préstamo', section: 'LoanClient', current: false },
-    { name: 'Devolución', section: 'DevolutionClient', current: false },
-    { name: 'Perfil', section: 'ProfileClient', current: false },
-    { name: 'Inicio', section: 'HomeClient', current: false }
-  ];  
+    { name: "Préstamo", section: "LoanClient", current: false },
+    { name: "Devolución", section: "DevolutionClient", current: false },
+    { name: "Perfil", section: "ProfileClient", current: false },
+    { name: "Inicio", section: "HomeClient", current: false },
+  ];
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -46,30 +45,37 @@ const DevolutionClient = () => {
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
-                      {navigation.map((item) => (
-                        <Link legacyBehavior key={item.name} href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`} onClick={() => setActive(item.section)}>
-                          <a
+                        {navigation.map((item) => (
+                          <Link
+                            legacyBehavior
                             key={item.name}
                             href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                            className={classNames(
-                              item.current
-                                ? 'bg-[#FF3333] text-white'
-                                : 'text-white hover:bg-[#E31919] hover:text-white',
-                              'rounded-md px-3 py-2 text-sm font-medium'
-                            )}
-                            aria-current={item.current ? 'page' : undefined}
+                            onClick={() => setActive(item.section)}
                           >
-                            {item.name}
-                          </a>
-                        </Link>
-                      ))}
+                            <a
+                              key={item.name}
+                              href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
+                              className={classNames(
+                                item.current
+                                  ? "bg-[#FF3333] text-white"
+                                  : "text-white hover:bg-[#E31919] hover:text-white",
+                                "rounded-md px-3 py-2 text-sm font-medium"
+                              )}
+                              aria-current={item.current ? "page" : undefined}
+                            >
+                              {item.name}
+                            </a>
+                          </Link>
+                        ))}
                       </div>
                     </div>
                   </div>
-                  <Link href={'/LoginAndRegister/Login/Login'}>
-                    <button className='bg-[#FF3333] text-white
+                  <Link href={"/LoginAndRegister/Login/Login"}>
+                    <button
+                      className="bg-[#FF3333] text-white
                                   :text-white hover:bg-[#E31919] hover:text-white
-                                rounded-md px-3 py-2 text-sm font-medium'>
+                                rounded-md px-3 py-2 text-sm font-medium"
+                    >
                       Cerrar Sesión
                     </button>
                   </Link>

@@ -32,7 +32,9 @@ const saveUserAdmin = async (req, res) => {
             UO_segundo_nombre,
             UO_primer_apellido,
             UO_segundo_apellido,
-            UO_identificador_rol: "R1"
+
+            UO_identificador_rol:"1"
+
         })
         .then(function (response) {
             console.log(response);

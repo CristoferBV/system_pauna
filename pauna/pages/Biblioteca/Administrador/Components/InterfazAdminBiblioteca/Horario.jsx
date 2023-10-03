@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import Image from 'next/image';
+import Link from 'next/link';
 
-export default function SidebarCitas({ Citas }) {
+export default function Horario({ Horarios }) {
 
     const [] = useState({
-        LP_identificador: "",
+        HO_identificador: "",
         HO_fecha: "",
         HO_hora: "",
-        UO_primer_nombre: "",
-        UO_identificador: "",
-        CA_nombre: "",
-        TP_nombre: "",
+        HO_estado: "",
     });
 
     return (
@@ -19,23 +17,14 @@ export default function SidebarCitas({ Citas }) {
             <table class="w-full text-sm text-center text-[#757373]">
                 <thead class="text-xs text-[#ffffff] uppercase bg-[#132335]">
                     <tr>
-                        <th scope="col" class="px-10 py-3">
-                            Fecha
-                        </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3    ">
                             Hora
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Nombre
+                            Fecha
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Cedula
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Carrera
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Dispositivo
+                            Estado
                         </th>
                         <th scope="col" class="px-6 py-3 w-20">
                             Administrar
@@ -43,26 +32,17 @@ export default function SidebarCitas({ Citas }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {Citas.map((Citas) => (
+                    {Horarios.map((Horarios) => (
 
-                        <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group" key={Citas.LP_identificador}>
+                        <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group" key={Horarios.HO_identificador}>
                             <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                {Citas.HO_fecha}
+                                {Horarios.HO_fecha}
                             </th>
                             <td className="px-6 py-4 text-white">
-                                {Citas.HO_hora}
+                                {Horarios.HO_hora}
                             </td>
                             <td className="px-6 py-4 text-white">
-                                {Citas.UO_primer_nombre}
-                            </td>
-                            <td className="px-6 py-4 text-white">
-                                {Citas.UO_identificador}
-                            </td>
-                            <td className="px-6 py-4 text-white">
-                                {Citas.CA_nombre}
-                            </td>
-                            <td className="px-6 py-4 text-white">
-                                {Citas.TP_nombre}
+                                {Horarios.HO_estado}
                             </td>
                             <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                 <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
@@ -76,18 +56,21 @@ export default function SidebarCitas({ Citas }) {
                     ))}
                 </tbody>
             </table>
+             <Link href={"/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/CreateHorario"}>
+             <button className=' text-white border-white text-sm mt-6 ml-3 w-36 h-10 bg-[#132335] hover:bg-[#242d66]'>Crear Horario</button>
+             </Link>
         </div>
-    );
+    )
 }
 
 export const getServerSideProps = async (context) => {
     try {
-        const { data: Citas } = await axios.get(
-            "http://localhost:3000/api/config/BibliotecaCitas"
+        const { data: Horarios } = await axios.get(
+            "http://localhost:3000/api/config/BibliotecaHorario"
         )
         return {
             props: {
-                Citas,
+                Horarios,
             },
         };
     } catch (error) {

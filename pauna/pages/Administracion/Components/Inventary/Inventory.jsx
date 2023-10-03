@@ -18,7 +18,7 @@ export default function Inventary({ materials }) {
                     sm:m-4
                     md:mr-10"
           >
-            <button className="bg-[#3726FD] md:w-auto p-5 rounded-lg hover:bg-[#4333F9]">
+            <button className="bg-[#3726FD] md:w-auto p-5 hover:bg-[#4333F9]">
               Superior
             </button>
           </div>
@@ -26,7 +26,7 @@ export default function Inventary({ materials }) {
             className="sm:m-4
                     md:mr-10"
           >
-            <button className="bg-[#3726FD] md:w-auto p-5 rounded-lg hover:bg-[#4333F9]">
+            <button className="bg-[#3726FD] md:w-auto p-5 hover:bg-[#4333F9]">
               Inferior
             </button>
           </div>
@@ -34,15 +34,15 @@ export default function Inventary({ materials }) {
             className="sm:m-4
                     md:mr-10"
           >
-            <button className="bg-[#3726FD] md:w-auto p-5 rounded-lg hover:bg-[#4333F9]">
+            <button className="bg-[#3726FD] md:w-auto p-5  hover:bg-[#4333F9]">
               Auditorio
             </button>
           </div>
         </div>
 
         <div
-          className="bg-[#D9D9D9] w-3/4 mx-40 text-center
-                md:p-20 rounded-lg text-2xl font-semibold
+          className="bg-[#021730] w-3/4 mx-40 text-center
+                md:p-20 text-2xl font-semibold
                 lg:text-lg"
         >
           <div
@@ -51,7 +51,7 @@ export default function Inventary({ materials }) {
                     lg:text-xl"
           >
             <input
-              className="bg-[#3726FD] p-5 text-white placeholder-white rounded-lg"
+              className="bg-[#3726FD] p-5 text-white placeholder-white"
               placeholder="Buscar..."
             ></input>
           </div>
@@ -60,11 +60,11 @@ export default function Inventary({ materials }) {
                     lg:pt-5 lg:mx-auto lg:text-xs"
           >
             <table
-              className="table-fixed 
+              className="table-fixed text-white
                         lg:w-full"
             >
               <thead
-                className="sm:text-sm
+                className="bg-[#132335] sm:text-sm
                             md:mx-auto md:text-xs
                             lg:text-base
                             xl:text-2xl
@@ -115,7 +115,7 @@ export default function Inventary({ materials }) {
           </div>
           <Link href="../../../../Administracion/Components/Inventary/InvAnnadir">
             <div className="pt-20 text-white text-left">
-              <button className="bg-[#3726FD] md:w- p-6 rounded-lg hover:bg-[#4333F9]">
+              <button className="bg-[#3726FD] md:w- p-6  hover:bg-[#4333F9]">
                 Añadir
               </button>
             </div>

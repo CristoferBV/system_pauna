@@ -1,30 +1,98 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import Logo from '../../../../../public/LOGO-UNA.png';
-import LogoBombilla from '../../../../../public/bombilla.png'
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { useState } from 'react'
-import Link from 'next/link';
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import Logo from "../../../../../public/LOGO-UNA.png";
+import LogoBombilla from "../../../../../public/bombilla.png";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useEffect } from "react";
+import Link from "next/link";
+import Axios from "axios";
 
+export default function LoanClient() {
 
-const LoanClient = () => {
+  //Estados para lnsertar
+  const [nombreCompleto, setNombreCompleto] = useState("");
+  const [cedula, setCedula] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [carrera, setCarrera] = useState("");
+  const [nivelCarrera, setNivelCarrera] = useState("");
+  const [dispositivo, setDispositivo] = useState("");
+  const [fechaPrestamo, setFechaPrestamo] = useState("");
+  const [campus, setCampus] = useState("");
+  const [telefono, setTelefono] = useState("");
+
+  //Metodo de envio de datos
+  const handleSubmit = () => {
+    const data = {
+      UO_primer_nombre: nombreCompleto,
+      EE_idenficador: cedula,
+      CE_correpElectronico: correo,
+      CA_nombre: carrera,
+      EE_nivel: nivelCarrera,
+      TP_nombre: dispositivo,
+      LP_fechaDevolucion: fechaPrestamo,
+      EE_campus: campus,
+      TO_numero: telefono,
+    };
+
+    // Realizar la solicitud POST a la API
+    Axios.post("/api/library_client/loan", data)
+      .then((response) => {
+        // Manejar la respuesta de la API (éxito)
+        console.log("Éxito:", response.data);
+      })
+      .catch((error) => {
+        // Manejar errores de la API
+        console.error("Error:", error);
+      });
+  };
+
+  //Estados para llenar selects
+  const [carreras, setCarreras] = useState([]);
+  const [dispositivos, setdispositivos] = useState([]);
+
+  //Carreras
+  useEffect(() => {
+    // Realiza una solicitud GET a tu API para obtener las opciones de carrera
+    Axios.get("/api/fillSelectsLoan/career")
+      .then((response) => {
+        // Al recibir la respuesta, actualiza el estado con los datos de carrera
+        setCarreras(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las opciones de carrera", error);
+      });
+  }, []);
+
+  //Dispositivos
+  useEffect(() => {
+    // Realiza una solicitud GET a tu API para obtener las opciones de carrera
+    Axios.get("/api/fillSelectsLoan/device")
+      .then((response) => {
+        // Al recibir la respuesta, actualiza el estado con los datos de carrera
+        setdispositivos(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las opciones de carrera", error);
+      });
+  }, []);
 
   const router = useRouter();
   const { section } = router.query;
 
-  const [active , setActive] = useState('');
+  const [active, setActive] = useState("");
 
   const navigation = [
-    { name: 'Préstamo', section: 'LoanClient', current: false },
-    { name: 'Devolución', section: 'DevolutionClient', current: false },
-    { name: 'Perfil', section: 'ProfileClient', current: false },
-    { name: 'Inicio', section: 'HomeClient', current: false }
-  ];  
+    { name: "Préstamo", section: "LoanClient", current: false },
+    { name: "Devolución", section: "DevolutionClient", current: false },
+    { name: "Perfil", section: "ProfileClient", current: false },
+    { name: "Inicio", section: "HomeClient", current: false },
+  ];
 
   function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
+    return classes.filter(Boolean).join(" ");
   }
 
   return (
@@ -38,39 +106,46 @@ const LoanClient = () => {
                   <div className="flex items-center">
                     <div className="flex-shrink-0 bg-[#E31919] rounded-full w-14 h-14">
                       <Image
-                      className="h-9 w-9 mt-2.5 ml-2.5"
-                      src={Logo}
-                      width={300}
-                      height = {300}
-                      alt="University"
+                        className="h-9 w-9 mt-2.5 ml-2.5"
+                        src={Logo}
+                        width={300}
+                        height={300}
+                        alt="University"
                       />
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
-                      {navigation.map((item) => (
-                        <Link legacyBehavior key={item.name} href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`} onClick={() => setActive(item.section)}>
-                          <a
+                        {navigation.map((item) => (
+                          <Link
+                            legacyBehavior
                             key={item.name}
                             href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                            className={classNames(
-                              item.current
-                                ? 'bg-[#FF3333] text-white'
-                                : 'text-white hover:bg-[#E31919] hover:text-white',
-                              'rounded-md px-3 py-2 text-sm font-medium'
-                            )}
-                            aria-current={item.current ? 'page' : undefined}
+                            onClick={() => setActive(item.section)}
                           >
-                            {item.name}
-                          </a>
-                        </Link>
-                      ))}
+                            <a
+                              key={item.name}
+                              href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
+                              className={classNames(
+                                item.current
+                                  ? "bg-[#FF3333] text-white"
+                                  : "text-white hover:bg-[#E31919] hover:text-white",
+                                "rounded-md px-3 py-2 text-sm font-medium"
+                              )}
+                              aria-current={item.current ? "page" : undefined}
+                            >
+                              {item.name}
+                            </a>
+                          </Link>
+                        ))}
                       </div>
                     </div>
                   </div>
-                  <Link href={'/LoginAndRegister/Login/Login'}>
-                    <button className='bg-[#FF3333] text-white
+                  <Link href={"/LoginAndRegister/Login/Login"}>
+                    <button
+                      className="bg-[#FF3333] text-white
                                   :text-white hover:bg-[#E31919] hover:text-white
-                                rounded-md px-3 py-2 text-sm font-medium'>
+                                rounded-md px-3 py-2 text-sm font-medium"
+                    >
                       Cerrar Sesión
                     </button>
                   </Link>
@@ -80,9 +155,15 @@ const LoanClient = () => {
                       <span className="absolute -inset-0.5" />
                       <span className="sr-only">Open main menu</span>
                       {open ? (
-                        <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                        <XMarkIcon
+                          className="block h-6 w-6"
+                          aria-hidden="true"
+                        />
                       ) : (
-                        <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                        <Bars3Icon
+                          className="block h-6 w-6"
+                          aria-hidden="true"
+                        />
                       )}
                     </Disclosure.Button>
                   </div>
@@ -96,10 +177,12 @@ const LoanClient = () => {
                       as="a"
                       href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                       className={classNames(
-                        item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                        'block rounded-md px-3 py-2 text-base font-medium'
+                        item.current
+                          ? "bg-gray-900 text-white"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                        "block rounded-md px-3 py-2 text-base font-medium"
                       )}
-                      aria-current={item.current ? 'page' : undefined}
+                      aria-current={item.current ? "page" : undefined}
                     >
                       {item.name}
                     </Disclosure.Button>
@@ -114,61 +197,78 @@ const LoanClient = () => {
             <div className="mr-2">
               <Image src={LogoBombilla} width={40} height={40} alt="Icon" />
             </div>
-            <p className="text-xl font-bold">Llene todos los campos correspondientes</p>
+            <p className="text-xl font-bold">
+              Llene todos los campos correspondientes
+            </p>
           </div>
         </header>
 
         <main className="min-h-screen flex-grow relative z-0">
-        <h1 className="text-2xl font-bold mb-6 text-center">Formulario de solicitudes</h1>
+          <h1 className="text-2xl font-bold mb-6 text-center">
+            Formulario de solicitudes
+          </h1>
           <div className="mx-auto w-11/12 p-4 bg-[#D9D9D9] rounded-md mb-8 md:mb-0">
             <div className="bg-[#BFBFBF] rounded-md p-6 grid md:grid-cols-3 gap-4">
-
               {/* Columna 1 */}
               <div className="col-span-1 md:mb-0">
                 <div className="mb-8">
-                  <label className="block font-semibold mb-1">Nombre completo</label>
-                  <input type="text" className="p-2 w-full border rounded-md" />
+                  <label className="block font-semibold mb-1">
+                    Nombre completo
+                  </label>
+                  <input type="text" className="p-2 w-full border rounded-md" placeholder="Ejem: Pepito Bryan Gomez Arguedas" value={nombreCompleto} onChange={(e) => setNombreCompleto(e.target.value)}/>
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Cédula</label>
-                  <input type="email" className="p-2 w-full border rounded-md" />
+                  <input
+                    type="input"
+                    className="p-2 w-full border rounded-md"
+                    placeholder="Ejem: 018080472"
+                    value={cedula}
+                    onChange={(e) => setCedula(e.target.value)}
+                  />
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Correo</label>
-                  <input type="tel" className="p-2 w-full border rounded-md" />
+                  <input type="tel" className="p-2 w-full border rounded-md" placeholder="Ejem: correo@gmail.com" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
                 </div>
               </div>
 
               {/* Columna 2 */}
               <div className="col-span-1 md:mb-0">
-              <div className="mb-8">
+                <div className="mb-8">
                   <label className="block font-semibold mb-1">Carrera</label>
-                  <select className="p-2 w-full border rounded-md">
+                  <select className="p-2 w-full border rounded-md" value={carrera} onChange={(e) => setCarrera(e.target.value)}>
                     <option value="">-Seleccionar opción-</option>
-                    <option value="opcion1">
-                      Ingeniería en Sistemas de Información{" "}
-                    </option>
-                    <option value="opcion2">Administración</option>
-                    <option value="opcion3">Enseñanza del Inglés</option>
-                    <option value="opcion4">Planificación</option>
+                    {carreras.map((carrera) => (
+                      <option key={carrera.value} value={carrera.value}>
+                        {carrera.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="mb-8">
-                  <label className="block font-semibold mb-1">Nivel de carrera</label>
-                  <select className="p-2 w-full border rounded-md">
-                    <option value="">-Seleccionar opción-</option>
-                    <option value="opcion1">Nivel I</option>
-                    <option value="opcion2">Nivel II</option>
-                    <option value="opcion3">Nivel III</option>
-                    <option value="opcion4">Nivel IV</option>
-                  </select>
+                  <label className="block font-semibold mb-1">
+                    Nivel de carrera
+                  </label>
+                  <input
+                    type="input"
+                    className="p-2 w-full border rounded-md"
+                    placeholder="Ejem: Nivel I"
+                    value={nivelCarrera}
+                    onChange={(e) => setNivelCarrera(e.target.value)}
+                  />
                 </div>
                 <div className="mb-8">
-                  <label className="block font-semibold mb-1">Dispositivos</label>
-                  <select className="p-2 w-full border rounded-md">
+                  <label className="block font-semibold mb-1">
+                    Dispositivos
+                  </label>
+                  <select className="p-2 w-full border rounded-md" value={dispositivo} onChange={(e) => setDispositivo(e.target.value)}>
                     <option value="">-Seleccionar opción-</option>
-                    <option value="opcion1">Laptop</option>
-                    <option value="opcion2">Tablet</option>
+                    {dispositivos.map((dispositivo) => (
+                      <option key={dispositivo.value} value={dispositivo.value}>
+                        {dispositivo.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -176,46 +276,51 @@ const LoanClient = () => {
               {/* Columna 3 */}
               <div className="col-span-1">
                 <div className="mb-8">
-                  <label className="block font-semibold mb-1">Tipo de beca</label>
-                  <select className="p-2 w-full border rounded-md">
+                  <label className="block font-semibold mb-1">
+                    Fechas de prestamos
+                  </label>
+                  <select className="p-2 w-full border rounded-md" value={fechaPrestamo} onChange={(e) => setFechaPrestamo(e.target.value)}>
                     <option value="">-Seleccionar opción-</option>
-                    <option value="opcion1">Beca Luis Felipe Gonzáles Flores</option>
-                    <option value="opcion2">Beca Omar Dengo 'Residencia'</option>
-                    <option value="opcion3">Beca Participativa </option>
+                    <option value="">2023/10/2</option>
+                    <option value="">2022/4/10</option>
                   </select>
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Campus</label>
-                  <select className="p-2 w-full border rounded-md">
-                    <option value="">-Seleccionar opción-</option>
-                    <option value="opcion1">Campus Coto</option>
-                    <option value="opcion2">Campus Pérez Zeledón</option>
-                    <option value="opcion3">Campus Omar Dengo</option>
-                    <option value="opcion4">Campus Benjamín Núñez</option>
-                    <option value="opcion5">Campus Liberia</option>
-                    <option value="opcion6">Campus Sarapiquí</option>
-                    <option value="opcion7">Campus Nicoya</option>
-                  </select>
+                  <input
+                    type="input"
+                    className="p-2 w-full border rounded-md"
+                    placeholder="Ejem: Campus Coto"
+                    value={campus}
+                    onChange={(e) => setCampus(e.target.value)}
+                  />
                 </div>
                 <div className="mb-8">
                   <label className="block font-semibold mb-1">Telefono</label>
-                  <input type="input" className="p-2 w-full border rounded-md" />
+                  <input
+                    type="input"
+                    className="p-2 w-full border rounded-md"
+                    placeholder="Ejem: 85893501"
+                    value={telefono}
+                    onChange={(e) => setTelefono(e.target.value)}
+                  />
                 </div>
               </div>
             </div>
             <div className="mt-8 flex justify-center">
-              <button className="bg-[#E31919] text-white rounded-md px-4 py-2 font-medium hover:bg-[#FF3333]">
+              <button className="bg-[#E31919] text-white rounded-md px-4 py-2 font-medium hover:bg-[#FF3333]"
+              onClick={handleSubmit}>
                 Aceptar
               </button>
             </div>
           </div>
         </main>
         <footer className="bg-[#FF3333] text-white py-4 text-start">
-          <p className="px-4">Derechos reservados: @Desarrolladores PAUNA 2023</p>
+          <p className="px-4">
+            Derechos reservados: @Desarrolladores PAUNA 2023
+          </p>
         </footer>
       </div>
     </>
   );
-};
-
-export default LoanClient
+}

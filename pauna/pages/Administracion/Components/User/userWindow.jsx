@@ -1,9 +1,11 @@
 "user client";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from 'next/router';
 
 export default function UserWindow({ userAdmins }) {
   console.log(userAdmins);
+  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("hola");
@@ -23,13 +25,17 @@ export default function UserWindow({ userAdmins }) {
     UO_segundo_nombre: "",
     UO_primer_apellido: "",
     UO_segundo_apellido: "",
-    UO_identificador_rol: "",
+    UO_identificador_rol:""
   });
 
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });
     console.log(user.UO_identificador_rol);
   };
+
+  const reloadPage=()=>{
+    router.push("/Administracion/Components/User/userWindow");
+  }
 
   const [open, setOpen] = useState(false);
   return (
@@ -42,7 +48,7 @@ export default function UserWindow({ userAdmins }) {
       >
         <form
           onSubmit={handleSubmit}
-          className="bg-[#D9D9D9] text-center mx-10 rounded
+          className="bg-[#021730] text-center mx-10 
                 lg:mb-4"
         >
           <h1 className="text-white p-10">Agrega un administrador</h1>
@@ -123,18 +129,18 @@ export default function UserWindow({ userAdmins }) {
           </div>
 
           <div className="p-2 mt-5">
-            <button className="bg-[#3726FD] p-2 text-white rounded">
+            <button className="bg-[#3726FD] p-5 text-white " onClick={reloadPage}>
               Añadir
             </button>
           </div>
         </form>
-        <div className="bg-[#D9D9D9] rounded text-center items-center justify-center mx-10 p-2">
+        <div className="bg-[#021730] text-center items-center justify-center mx-10 p-2">
           <h1 className="text-white p-5">Lista de Administradores</h1>
           <div class="overflow-x-auto">
             <table class="table-fixed w-full mt-4">
-              <thead class="text-sm md:text-2xl">
+              <thead class="text-sm md:text-2xl bg-[#132335]">
                 <tr
-                  class="bg-white text-black md:pr-40 md:pl-40
+                  class=" text-white md:pr-40 md:pl-40
                             lg:text-xs
                             xl:text-2xl"
                 >
@@ -143,29 +149,28 @@ export default function UserWindow({ userAdmins }) {
                   <th>Apellidos</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-[#212C39]">
                 {userAdmins.map((userAdmin) => (
                   <tr
                     className="sm:text-sm sm:p-4
-                                " key={userAdmin.UO_identificador}
+                    " key={userAdmin.UO_identificador} 
                   >
-                    <td className="bg-[#989898] p-7">
+                    <td className=" p-7 text-white hover:bg-[#021730]">
                       {userAdmin.UO_identificador}
                     </td>
-                    <td className="bg-[#989898] p-7">
+                    <td className=" p-7 text-white hover:bg-[#021730]">
                       {userAdmin.UO_primer_nombre} {userAdmin.UO_segundo_nombre}
                     </td>
-                    <td className="bg-[#989898] p-7">
+                    <td className=" p-7 text-white hover:bg-[#021730]">
                       {userAdmin.UO_primer_apellido}  {userAdmin.UO_segundo_apellido}
                     </td>
-                    
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <div className="p-2">
-            <button className="bg-[#3726FD] p-2 text-white rounded">
+            <button className="bg-[#3726FD] p-5 text-white">
               Eliminar
             </button>
           </div>

@@ -88,7 +88,7 @@ export default function Inventary({ materials }) {
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-[#212C39]">
                 {materials.map((material) => (
                   <tr
                     className="
@@ -99,12 +99,12 @@ export default function Inventary({ materials }) {
                   >
                     <td
                       className="
-                                    bg-[#989898]"
+                                    "
                     >{material.ML_descripcion}</td>
-                    <td className="bg-[#989898] ">{material.ML_identificador}</td>
-                    <td className="bg-[#989898] ">{material.MC_nombre}</td>
-                    <td className="bg-[#989898] ">{material.CD_cantidad}</td>
-                    <td className="bg-[#989898] ">{material.ML_observacion}</td>
+                    <td className=" ">{material.ML_identificador}</td>
+                    <td className=" ">{material.MC_nombre}</td>
+                    <td className=" ">{material.CD_cantidad}</td>
+                    <td className="">{material.ML_observacion}</td>
                     <td>
                       <Buttons material={material}/>
                     </td>

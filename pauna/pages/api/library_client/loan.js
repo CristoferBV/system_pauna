@@ -72,7 +72,7 @@ const saveLoan = async (req, res) => {
                 idTelefono = TO_idenficador,
                 TO_numero
             ]);
-            
+
             if (resultTelefono.affectedRows === 1) {
                 // La inserción fue exitosa
                 idTelefono = resultTelefono.insertId;

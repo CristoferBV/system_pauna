@@ -29,17 +29,17 @@ const Register = () => {
             <input
               type="text"
               placeholder="Nombre de usuario"
-              className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg transition-transform transform hover:scale-105"
+              className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg transition-transform transform "
             />
             <input
               type="email"
               placeholder="Correo electrónico"
-              className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg transition-transform transform hover:scale-105"
+              className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg transition-transform transform"
             />
             <input
               type="password"
               placeholder="Contraseña"
-              className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg transition-transform transform hover:scale-105"
+              className="w-full md:w-96 p-2 border border-gray-300 rounded-xl bg-gray-100 text-lg transition-transform transform"
             />
             <Link href="/LoginAndRegister/Login/Login">
               <button

@@ -47,15 +47,15 @@ export default function Horario({ Horarios }) {
                             <input
                                 type="text"
                                 placeholder="Ejemplo: 10am"
-                                className=" text-black w-full md:w-40 p-3 rounded-md h-12 bg-white text-base text-center placeholder-black border-2 border-[#132335]"
+                                className=" text-white w-full md:w-40 p-3 rounded-md h-12 bg-[#132335] text-base text-center placeholder-white border-2 border-[#132335]"
                             />
                         </th>
-                        <td className="px-6 py-4 text-black text-base">
-                            <input type="date" className="p-2 w-full rounded-md border-2 border-[#132335] h-12" />
+                        <td className="px-6 py-4 text-base text-white">
+                            <input type="date" className="p-2 w-full rounded-md border-2 border-[#132335] bg-[#132335] h-12" />
                         </td>
-                        <td className="px-6 py-4 text-black text-center">
-                            <select className="p-2 w-full rounded-md text-center text-base h-12 border-2 border-[#132335]">
-                                <option className="text-center" value="">-Seleccionar opción-</option>
+                        <td className="px-6 py-4 text-white text-center">
+                            <select className="p-2 w-full rounded-md text-center text-base h-12 border-2 border-[#132335] bg-[#132335]">
+                                <option className="text-center " value="">-Seleccionar opción-</option>
                                 <option value="opcion1">Disponible</option>
                                 <option value="opcion2">No disponible</option>
                             </select>

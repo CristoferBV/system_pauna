@@ -104,6 +104,7 @@ const saveLoan = async (req, res) => {
                 } else {
                     console.log("Inserción exitosa en tabla2:", result2);
                     // Continuar con otras inserciones si es necesario
+                    
                 }
             });
         }

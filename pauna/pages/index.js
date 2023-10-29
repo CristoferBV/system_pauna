@@ -29,9 +29,6 @@ export default function Home() {
       {/* <ProfileClient/> */}
       {/* <PaginaCirculo/> */}
       <Login/>
-      {/* <RegisterV2/> */}
-      {/* <Login/> */}
-      {/* <Register/> */}
       {/* <Sidebar/> */}
       {/* <NavbarAdminBiblioteca/> */}
     </>

@@ -1,68 +1,328 @@
-
 import React, { useState } from 'react';
-import axios from "axios";
-import Image from 'next/image';
+import axios from 'axios';
+import { Table, Button, Modal, Form, Card, InputGroup, FormControl } from 'react-bootstrap';
 
 export default function Slidebar({ Dispositivos }) {
+    const [selectedDevice, setSelectedDevice] = useState(null);
+    const [editedValues, setEditedValues] = useState({});
+    const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+    const [searchText, setSearchText] = useState('');
+    const [showCreateForm, setShowCreateForm] = useState(false);
 
-    const [] = useState({
-        LP_identificador: "",
-        TP_nombre: "",
-        AO_descripcion: "",
-        AO_estado: "",
-        EA_nombre: "",
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setEditedValues({
+            ...editedValues,
+            [name]: value,
+        });
+    };
+
+    const handleEditDevice = (device) => {
+        setSelectedDevice(device);
+        setEditedValues(device);
+    };
+
+    const confirmDeleteDevice = () => {
+        // Realizar la acción para confirmar la eliminación aquí
+        setDeleteConfirmation(false);
+    };
+
+    const cancelDeleteDevice = () => {
+        setDeleteConfirmation(false);
+    };
+
+    const filteredDevices = Dispositivos.filter((device) => {
+        return (
+            device.TP_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
+            device.EA_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
+            device.AO_descripcion.toLowerCase().includes(searchText.toLowerCase()) ||
+            device.AO_estado.toLowerCase().includes(searchText.toLowerCase())
+        );
     });
 
-    return (
-        <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md min-h-screen">
-            <table className="w-full text-sm text-center text-[#757373]">
-                <thead className="text-xs text-[#ffffff] uppercase bg-[#132335]">
-                    <tr>
-                        <th scope="col" className="px-6 py-3    ">
-                            Dispositivo
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Perifericos
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Descripcion
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Estado
-                        </th>
-                        <th scope="col" className="px-6 py-3 w-20">
-                            Administrar
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Dispositivos.map((Dispositivos) => (
+    const handleCreateDevice = () => {
+        setShowCreateForm(true);
+        setEditedValues({});
+    };
 
-                        <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group" key={Dispositivos.LP_identificador}>
-                            <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                {Dispositivos.TP_nombre}
-                            </th>
-                            <td className="px-6 py-4 text-white">
-                                {Dispositivos.EA_nombre}
-                            </td>
-                            <td className="px-6 py-4 text-white">
-                                {Dispositivos.AO_descripcion}
-                            </td>
-                            <td className="px-6 py-4 text-white">
-                                {Dispositivos.AO_estado}
-                            </td>
-                            <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                </button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                </button>
-                                <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+    // Define los estilos CSS para los botones y sus efectos de hover
+    const buttonStyle = {
+        backgroundColor: '#021730',
+        color: 'white',
+        border: 'none',
+        transition: 'background-color 0.3s',
+    };
+
+    const buttonHoverStyle = {
+        backgroundColor: '#132335', // Color ligeramente más claro al pasar el cursor
+        color: 'white',
+        border: 'none',
+    };
+
+    return (
+        <div className="p-4">
+            <Card bg="dark" text="white">
+                <Card.Header>
+                    <div className="d-flex justify-content-between">
+                        <span>Lista de Dispositivos</span>
+                        <Button
+                            variant="success"
+                            onClick={handleCreateDevice}
+                            style={buttonStyle}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                            }}
+                        >
+                            Crear Dispositivo
+                        </Button>
+                    </div>
+                </Card.Header>
+                <Card.Body>
+                    <InputGroup className="mb-3">
+                        <FormControl
+                            placeholder="Buscar dispositivo..."
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                        />
+                    </InputGroup>
+                    <Table striped bordered hover variant="dark">
+                        <thead>
+                            <tr>
+                                <th className="text-center">Dispositivo</th>
+                                <th className="text-center">Periféricos</th>
+                                <th className="text-center">Descripción</th>
+                                <th className="text-center">Estado</th>
+                                <th className="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredDevices.map((device) => (
+                                <tr key={device.LP_identificador}>
+                                    <td className="text-center">{device.TP_nombre}</td>
+                                    <td className="text-center">{device.EA_nombre}</td>
+                                    <td className="text-center">{device.AO_descripcion}</td>
+                                    <td className="text-center">{device.AO_estado}</td>
+                                    <td className="text-center">
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => handleEditDevice(device)}
+                                            style={buttonStyle}
+                                            onMouseEnter={(e) => {
+                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                            }}
+                                        >
+                                            Editar
+                                        </Button>
+                                        {' '}
+                                        <Button
+                                            variant="danger"
+                                            onClick={() => setDeleteConfirmation(true)}
+                                            style={buttonStyle}
+                                            onMouseEnter={(e) => {
+                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                            }}
+                                        >
+                                            Eliminar
+                                        </Button>
+
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </Card.Body>
+            </Card>
+            <Modal show={showCreateForm} onHide={() => setShowCreateForm(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Crear Dispositivo</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Dispositivo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="TP_nombre"
+                                value={editedValues.TP_nombre || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Periféricos</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="EA_nombre"
+                                value={editedValues.EA_nombre || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Descripción</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="AO_descripcion"
+                                value={editedValues.AO_descripcion || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Estado</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="AO_estado"
+                                value={editedValues.AO_estado || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setShowCreateForm(false)}
+                        style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
+                    >
+                        Cancelar
+                    </Button>
+                    <Button
+                        variant="primary"
+                        onClick={handleCreateDevice}
+                        style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
+                    >
+                        Crear
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal show={selectedDevice !== null} onHide={() => setSelectedDevice(null)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Editar Dispositivo</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Dispositivo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="TP_nombre"
+                                value={editedValues.TP_nombre || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Periféricos</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="EA_nombre"
+                                value={editedValues.EA_nombre || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Descripción</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="AO_descripcion"
+                                value={editedValues.AO_descripcion || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Estado</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="AO_estado"
+                                value={editedValues.AO_estado || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setSelectedDevice(null)}
+                        style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
+                    >
+                        Cancelar
+                    </Button>
+                    <Button
+                        variant="primary"
+                        onClick={() => setSelectedDevice(null)}
+                        style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
+                    >
+                        Guardar Cambios
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal show={deleteConfirmation} onHide={cancelDeleteDevice}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirmar eliminación</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    ¿Estás seguro de que deseas eliminar este dispositivo?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant="secondary"
+                        onClick={cancelDeleteDevice}
+                        style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
+                    >
+                        Cancelar
+                    </Button>
+                    <Button
+                        variant="danger"
+                        onClick={confirmDeleteDevice}
+                        style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
+                    >
+                        Eliminar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }
@@ -71,13 +331,13 @@ export const getServerSideProps = async (context) => {
     try {
         const { data: Dispositivos } = await axios.get(
             "http://localhost:3000/api/config/BibliotecaDispositivos"
-        )
+        );
         return {
             props: {
                 Dispositivos,
             },
         };
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 };

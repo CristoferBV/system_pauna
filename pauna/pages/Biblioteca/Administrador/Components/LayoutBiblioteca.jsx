@@ -1,17 +1,20 @@
 import { useState } from "react";
-import SidebarBiblioAdmin from "./InterfazAdminBiblioteca/SidebarBiblioAdmin";
-
+import NavbarAdminBiblioteca from "./InterfazAdminBiblioteca/NavbarAdminBiblioteca";
 
 export default function Layout({ children }) {
-    const [sideOpen,setSideOpen] = useState(true)
-    return (
-        <>
-        <div className="flex bg-[#041A34]">
-            <SidebarBiblioAdmin isOpen={sideOpen} toggleSidebar={()=> setSideOpen(!sideOpen)}/>
-            <div className={`flex-grow ${sideOpen ? "w-3/4 ml-72 duration-300 mx-auto": "w-full duration-300 ml-12"}`}>
-            {children}
-            </div>
-        </div>
-        </>
-    )
+  const [sideOpen, setSideOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setSideOpen(!sideOpen);
+  };
+
+  return (
+    <div className="bg-[#FFFFFF]">
+      {/* Barra de navegación */}
+      <NavbarAdminBiblioteca isOpen={sideOpen} toggleSidebar={toggleSidebar} />
+
+      {/* Contenido principal */}
+      <div className="flex-grow p-4">{children}</div>
+    </div>
+  );
 }

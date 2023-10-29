@@ -1,7 +1,8 @@
-"user client";
-import { useState } from "react";
+"use client";
 import axios from "axios";
 import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { Form, Row, Col, Button, Table, Container, Alert } from 'react-bootstrap';
 
 export default function UserWindow({ userAdmins }) {
   console.log(userAdmins);
@@ -25,7 +26,7 @@ export default function UserWindow({ userAdmins }) {
     UO_segundo_nombre: "",
     UO_primer_apellido: "",
     UO_segundo_apellido: "",
-    UO_identificador_rol:""
+    UO_identificador_rol: ""
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -33,155 +34,126 @@ export default function UserWindow({ userAdmins }) {
     console.log(user.UO_identificador_rol);
   };
 
-  const reloadPage=()=>{
+  const reloadPage = () => {
     router.push("/Administracion/Components/User/userWindow");
   }
+  const [showAlert, setShowAlert] = useState(false);
+  const handleSave = () => {
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 4000);
+  };
+  const handleAlertClose = () => {
+    setShowAlert(false);
+  };
+
 
   const [open, setOpen] = useState(false);
   return (
     <>
-      <div
-        className="xl:w-full xl:grid xl:grid-cols-2
-            lg:w-full lg:grid lg:grid-cols-1 
-            p-36 
-            text-3xl font-semibold "
-      >
-        <form
-          onSubmit={handleSubmit}
-          className="bg-[#021730] text-center mx-10 
-                lg:mb-4"
-        >
-          <h1 className="text-white p-10">Agrega un administrador</h1>
-          <div
-            className="p-2
-                    lg:p-0"
-          >
-            <input
-              className="bg-white text-black text-center placeholder:text-[#D9D9D9] rounded mb-5"
-              placeholder="Código"
-              name="UO_identificador"
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div
-            className="p-2
-                    lg:p-0"
-          >
-            <input
-              className="bg-white text-black text-center placeholder:text-[#D9D9D9] rounded mb-5"
-              placeholder="Primer Nombre"
-              name="UO_primer_nombre"
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div
-            className="p-2
-                    lg:p-0"
-          >
-            <input
-              className="bg-white text-black text-center placeholder:text-[#D9D9D9] rounded mb-5"
-              placeholder="Segundo Nombre*"
-              name="UO_segundo_nombre"
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div
-            className="p-2
-                    lg:p-0"
-          >
-            <input
-              className="bg-white text-black text-center placeholder:text-[#D9D9D9] rounded mb-5"
-              placeholder="Primer Apellido"
-              name="UO_primer_apellido"
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div
-            className="p-2
-                    lg:p-0"
-          >
-            <input
-              className="bg-white text-black text-center placeholder:text-[#D9D9D9] rounded mb-5"
-              placeholder="Segundo Apellido"
-              name="UO_segundo_apellido"
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div
-            className="p-2
-                    lg:p-0"
-          >
-            <select
-              className="bg-white text-[#D9D9D9] text-center placeholder:text-[#D9D9D9] rounded"
-              value={user.UO_identificador_rol}
-              onChange={handleChange}
-            >
-              <option className=" text-[#D9D9D9] text-center" value="">
-                Elige una rol
-              </option>
-              <option className=" text-[#D9D9D9] text-center" value="R1">
-                Administrador
-              </option>
-              <option className="text-[#D9D9D9] text-center" value="R2">
-                Usuario
-              </option>
-            </select>
-          </div>
+      <Alert show={showAlert} variant="success" onClose={handleAlertClose} dismissible>
+        ¡Guardado con éxito!
+      </Alert>
+      <div className="rounded" style={{ backgroundColor: '#212529', color: 'white', height: '100%', width: '100%', marginTop: '8rem', marginBottom: '8rem' }}>
 
-          <div className="p-2 mt-5">
-            <button className="bg-[#3726FD] p-5 text-white " onClick={reloadPage}>
-              Añadir
-            </button>
-          </div>
-        </form>
-        <div className="bg-[#021730] text-center items-center justify-center mx-10 p-2">
-          <h1 className="text-white p-5">Lista de Administradores</h1>
-          <div class="overflow-x-auto">
-            <table class="table-fixed w-full mt-4">
-              <thead class="text-sm md:text-2xl bg-[#132335]">
-                <tr
-                  class=" text-white md:pr-40 md:pl-40
-                            lg:text-xs
-                            xl:text-2xl"
-                >
-                  <th class="p-4">Cédula</th>
-                  <th>Nombre</th>
-                  <th>Apellidos</th>
-                </tr>
-              </thead>
-              <tbody className="bg-[#212C39]">
-                {userAdmins.map((userAdmin) => (
-                  <tr
-                    className="sm:text-sm sm:p-4
-                    " key={userAdmin.UO_identificador} 
-                  >
-                    <td className=" p-7 text-white hover:bg-[#021730]">
-                      {userAdmin.UO_identificador}
-                    </td>
-                    <td className=" p-7 text-white hover:bg-[#021730]">
-                      {userAdmin.UO_primer_nombre} {userAdmin.UO_segundo_nombre}
-                    </td>
-                    <td className=" p-7 text-white hover:bg-[#021730]">
-                      {userAdmin.UO_primer_apellido}  {userAdmin.UO_segundo_apellido}
-                    </td>
+
+        <Container style={{ padding: '2rem', marginRight: '0.8rem' }}>
+          <h1 className="text-center">Usuarios</h1>
+        </Container>
+        <Row>
+          <Col >
+            <Container className="m-auto p-4">
+              <Form className='p-2'>
+                <Row className="mb-3">
+                  <Form.Group as={Col} controlId="formGridEmail">
+                    <Form.Label>Identificador</Form.Label>
+                    <Form.Control type="email" placeholder="Ingrese el identificador" />
+                  </Form.Group>
+                </Row>
+                <Row>
+                  <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                    <Form.Label>Primer Nombre</Form.Label>
+                    <Form.Control placeholder="Ingrese el primer nombre" />
+                  </Form.Group>
+                  <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                    <Form.Label>Segundo Nombre</Form.Label>
+                    <Form.Control placeholder="Ingrese el segundo nombre" />
+                  </Form.Group>
+                </Row>
+                <Row>
+                  <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                    <Form.Label>Primer Apellido</Form.Label>
+                    <Form.Control placeholder="Ingrese el primer apellido" />
+                  </Form.Group>
+                  <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                    <Form.Label>Segundo Apellido</Form.Label>
+                    <Form.Control placeholder="Ingrese el segundo apellido" />
+                  </Form.Group>
+                </Row>
+
+
+                <Form.Group className="mb-3" controlId="formGridAddress2">
+                  <Form.Label>Elija el rol a desempeñar</Form.Label>
+                  <Form.Select>
+                    <option>Opcion 1</option>
+                    <option>Opcion 2</option>
+                    <option>Opcion 3</option>
+                    <option>Opcion 4</option>
+                  </Form.Select>
+                </Form.Group>
+                <Button variant="primary" type="submit" onClick={handleSave}>
+                  Añadir
+                </Button>
+              </Form>
+            </Container>
+
+          </Col>
+          <Col>
+            <Container className='p-4'>
+              <Container className='text-center'>
+                <p>Administradores</p>
+              </Container>
+
+              <Table striped bordered hover variant='dark'>
+                <thead>
+                  <tr>
+                    <th>Identificador</th>
+                    <th>Nombre Completo</th>
+                    <th>Apellidos</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="p-2">
-            <button className="bg-[#3726FD] p-5 text-white">
-              Eliminar
-            </button>
-          </div>
-        </div>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Larry the Bird</td>
+                    <td>The Bird</td>
+                  </tr>
+                </tbody>
+              </Table>
+              <Button variant="primary" type="submit">
+                Eliminar
+              </Button>
+            </Container>
+          </Col>
+        </Row>
       </div>
     </>
-  );
+  )
 }
 
-export const getServerSideProps = async (context) => {
-  try{
+{/*export const getServerSideProps = async (context) => {
+  try {
     const { data: userAdmins } = await axios.get(
       "http://localhost:3000/api/config/admin"
     )
@@ -190,7 +162,7 @@ export const getServerSideProps = async (context) => {
         userAdmins,
       },
     };
-  }catch(error){
+  } catch (error) {
     console.log(error)
   }
-};
+};*/}

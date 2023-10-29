@@ -122,6 +122,11 @@ export default function SidebarReporte ({ Reporte }) {
             },
         };
         }catch(error){
-        console.log(error)
+            console.log(error)
+            return {
+                props: {
+                    Reporte: [], // Puedes proporcionar un valor predeterminado en caso de error.
+                },
+            };
         }
     };

@@ -141,5 +141,10 @@ export const getServerSideProps = async (context) => {
         };
     } catch (error) {
         console.log(error)
+        return {
+            props: {
+                Estudiantes: [], // Puedes proporcionar un valor predeterminado en caso de error.
+            },
+        };
     }
 };

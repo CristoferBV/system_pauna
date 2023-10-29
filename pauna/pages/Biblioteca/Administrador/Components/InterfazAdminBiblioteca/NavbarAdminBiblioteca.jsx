@@ -15,8 +15,16 @@ function NavbarAdminBiblioteca() {
     color: '#FFFFFF', // Cambia el color del texto a blanco (#FFFFFF)
   };
 
+  const customTogglerStyle = {
+    borderColor: '#FFFFFF', // Cambia el color del borde del botón a blanco
+  };
+
+  const customDropdownStyle = {
+    borderColor: '#FFFFFF', // Cambia el color de las líneas del menú desplegable a blanco
+  };
+
   const customDropdownTitleStyle = {
-    color: '#FFFFFF', // Cambia el color del texto a blanco (#FFFFFF)
+    color: '#FFFFFF', // Cambia el color del texto del título del menú desplegable a blanco
   };
 
   const router = useRouter();
@@ -25,20 +33,20 @@ function NavbarAdminBiblioteca() {
     <Navbar collapseOnSelect expand="lg" style={customNavbarStyle}>
       <Container>
         <Navbar.Brand href="/" style={customTextStyle}>Pauna</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" style={customTogglerStyle} />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarCitas" style={customTextStyle}>
               Citas
             </Nav.Link>
             <NavDropdown title={<span style={customDropdownTitleStyle}>Activos</span>} id="collapsible-nav-dropdown" style={customDropdownTitleStyle}>
-              <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar">
+              <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar" style={customDropdownStyle}>
                 Dispositivos
               </NavDropdown.Item>
-              <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarEstudiantes">
+              <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarEstudiantes" style={customDropdownStyle}>
                 Estudiantes
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.4" style={customDropdownStyle}>Separated link</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarDevoluciones" style={customTextStyle}>
               Devoluciones

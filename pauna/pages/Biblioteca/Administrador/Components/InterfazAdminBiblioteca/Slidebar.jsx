@@ -57,7 +57,6 @@ export default function Slidebar({ Dispositivos }) {
         backgroundColor: '#132335', // Color ligeramente más claro al pasar el cursor
         color: 'white',
         border: 'none',
-        transition: 'background-color 0.3s',
     };
 
     return (
@@ -70,6 +69,12 @@ export default function Slidebar({ Dispositivos }) {
                             variant="success"
                             onClick={handleCreateDevice}
                             style={buttonStyle}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                            }}
                         >
                             Crear Dispositivo
                         </Button>
@@ -104,7 +109,13 @@ export default function Slidebar({ Dispositivos }) {
                                         <Button
                                             variant="primary"
                                             onClick={() => handleEditDevice(device)}
-                                            style={{ backgroundColor: '#021730', color: 'white', border: 'none', transition: 'background-color 0.3s' }}
+                                            style={buttonStyle}
+                                            onMouseEnter={(e) => {
+                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                            }}
                                         >
                                             Editar
                                         </Button>
@@ -112,7 +123,13 @@ export default function Slidebar({ Dispositivos }) {
                                         <Button
                                             variant="danger"
                                             onClick={() => setDeleteConfirmation(true)}
-                                            style={{ backgroundColor: '#021730', color: 'white', border: 'none', transition: 'background-color 0.3s' }}
+                                            style={buttonStyle}
+                                            onMouseEnter={(e) => {
+                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                            }}
                                         >
                                             Eliminar
                                         </Button>
@@ -173,6 +190,12 @@ export default function Slidebar({ Dispositivos }) {
                         variant="secondary"
                         onClick={() => setShowCreateForm(false)}
                         style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
                     >
                         Cancelar
                     </Button>
@@ -180,6 +203,12 @@ export default function Slidebar({ Dispositivos }) {
                         variant="primary"
                         onClick={handleCreateDevice}
                         style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
                     >
                         Crear
                     </Button>
@@ -234,6 +263,12 @@ export default function Slidebar({ Dispositivos }) {
                         variant="secondary"
                         onClick={() => setSelectedDevice(null)}
                         style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
                     >
                         Cancelar
                     </Button>
@@ -241,6 +276,12 @@ export default function Slidebar({ Dispositivos }) {
                         variant="primary"
                         onClick={() => setSelectedDevice(null)}
                         style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
                     >
                         Guardar Cambios
                     </Button>
@@ -258,6 +299,12 @@ export default function Slidebar({ Dispositivos }) {
                         variant="secondary"
                         onClick={cancelDeleteDevice}
                         style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
                     >
                         Cancelar
                     </Button>
@@ -265,6 +312,12 @@ export default function Slidebar({ Dispositivos }) {
                         variant="danger"
                         onClick={confirmDeleteDevice}
                         style={buttonStyle}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}
                     >
                         Eliminar
                     </Button>

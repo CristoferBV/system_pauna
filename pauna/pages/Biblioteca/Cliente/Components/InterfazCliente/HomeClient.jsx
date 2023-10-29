@@ -11,7 +11,7 @@ const HomeClient = () => {
   const [active , setActive] = useState('');
 
   const navigation = [
-    { name: 'Préstamo', section: 'LoanClient', current: false },
+    { name: 'Préstamo', section: 'LoanV2', current: false },
     { name: 'Devolución', section: 'DevolutionClient', current: false },
     { name: 'Perfil', section: 'ProfileClient', current: false },
     { name: 'Inicio', section: 'HomeClient', current: false }

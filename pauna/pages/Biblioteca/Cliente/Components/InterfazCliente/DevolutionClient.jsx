@@ -61,7 +61,9 @@ function DevolutionClient() {
               </Nav.Link>
             </Link>
           ))}
-          <Button variant="danger" size="ms">Cerrar</Button>
+          <Link href={'/LoginAndRegister/Login/Login'}>
+            <Button Button variant="danger" size="ms">Cerrar Sesión</Button>
+          </Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
@@ -166,11 +168,10 @@ function DevolutionClient() {
                 Enviar
               </Button>
           </Tab>
-
         </Tabs>
-
       </div>
     </main>
+
     <footer>
         <Card className="w-11/12 bg-danger text-white" style={{ margin: '20px auto', padding: '20px' }}>
           <Container>

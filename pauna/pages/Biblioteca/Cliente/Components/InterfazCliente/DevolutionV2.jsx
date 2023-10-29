@@ -126,8 +126,9 @@ function DevolutionClient() {
                 </Button>
             </Form>
           </Tab>
-          <Tab eventKey="profile" title="Datos">
+          <Tab eventKey="Datos" title="Datos">
           <Form>
+            {/* TERMINAR ESTA PARTE */}
                 <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridCarrera">
                     <Form.Label>Carrera</Form.Label>

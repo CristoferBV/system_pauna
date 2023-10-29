@@ -1,7 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Fragment } from "react";
-import { Navbar, Nav, Form, Button, Card } from "react-bootstrap";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Navbar, Nav, Form, Button, Card, Table } from "react-bootstrap";
 import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import Image from "next/image";
@@ -15,7 +13,6 @@ import Container from "react-bootstrap/Container"
 
 function DevolutionClient() {
   const router = useRouter();
-  const { section } = router.query;
 
   const [active, setActive] = useState("");
 
@@ -29,49 +26,46 @@ function DevolutionClient() {
   const [key, setKey] = useState("Estudiantes");
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar bg="danger" expand="lg">
-        <Navbar.Brand href="#home">
-          <Image
-            className="h-9 w-9 mt-2.5 ml-2.5"
-            src={Logo}
-            width={300}
-            height={300}
-            alt="University"
-          />
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            {navigation.map((item) => (
-              <Link
-                legacyBehavior
+      <Navbar.Brand href="#home">
+        <Image
+          className="h-9 w-9 mt-2.5 ml-2.5"
+          src={Logo}
+          width={300}
+          height={300}
+          alt="University"
+        />
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          {navigation.map((item) => (
+            <Button
+              variant="danger"
+              size="sm"
+              key={item.name}
+              href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
+              onClick={() => setActive(item.section)}
+            >
+              <Nav.Link
                 key={item.name}
                 href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                onClick={() => setActive(item.section)}
+                className={
+                  active === item.section ? "bg-danger text-white" : "text-white"
+                }
               >
-                <Nav.Link
-                  key={item.name}
-                  href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                  className={
-                    active === item.section
-                      ? "bg-danger text-white"
-                      : "text-white"
-                  }
-                >
-                  {item.name}
-                </Nav.Link>
-              </Link>
-            ))}
-          </Nav>
-          <Form inline>
-            <Link href={"/LoginAndRegister/Login/Login"}>
-              <Button variant="danger">Cerrar Sesión</Button>
-            </Link>
-          </Form>
-        </Navbar.Collapse>
-      </Navbar>
+                {item.name}
+              </Nav.Link>
+            </Button>
+          ))}
+          <Button variant="danger" size="sm">Cerrar</Button>
+        </Nav>
+        {/* <Button variant="danger" size="ms">Cerrar</Button> */}
+      </Navbar.Collapse>
+    </Navbar>
 
+      <main className="flex-1">
       <header className="header-container d-flex align-items-center justify-content-center">
         <Container>
           <Row>
@@ -92,72 +86,108 @@ function DevolutionClient() {
           onSelect={(k) => setKey(k)}
           className="mb-3"
         >
-        <Tab eventKey="Estudiantes" title="Estudiantes">
-          <Form>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formGridName">
-                <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" placeholder="Escriba su nombre" />
+          <Tab eventKey="Estudiantes" title="Estudiantes">
+            <Form>
+              <Form.Group className="mb-3" controlId="formGridCedula">
+                <Form.Label>Cédula o Identificación</Form.Label>
+                <Form.Control type="text" placeholder="Escriba su cédula o identificación" />
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridApellido1">
-                <Form.Label>Apellido #1</Form.Label>
-                <Form.Control type="text" placeholder="Escriba su primer apellido" />
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="formGridName">
+                  <Form.Label>Nombre</Form.Label>
+                  <Form.Control type="text" placeholder="Escriba su nombre" />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridApellido1">
+                  <Form.Label>Apellido #1</Form.Label>
+                  <Form.Control type="text" placeholder="Escriba su primer apellido" />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridApellido2">
+                  <Form.Label>Apellido #2</Form.Label>
+                  <Form.Control type="text" placeholder="Escriba su segundo apellido" />
+                </Form.Group>
+              </Row>
+
+              <Form.Group className="mb-3" controlId="formGridCorreo">
+                <Form.Label>Correo Electrónico</Form.Label>
+                <Form.Control type="email" placeholder="Escriba su correo electrónico" />
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridApellido2">
-                <Form.Label>Apellido #2</Form.Label>
-                <Form.Control type="text" placeholder="Escriba su segundo apellido" />
-              </Form.Group>
-            </Row>
-
-            <Form.Group className="mb-3" controlId="formGridCorreo">
-              <Form.Label>Correo Electrónico</Form.Label>
-              <Form.Control type="email" placeholder="Escriba su correo electrónico" />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGridCedula">
-              <Form.Label>Cédula o Identificación</Form.Label>
-              <Form.Control type="text" placeholder="Escriba su cédula o identificación" />
-            </Form.Group>
-
-            <Button variant="danger" type="submit">
-              Submit
-            </Button>
-          </Form>
-        </Tab>
-        <Tab eventKey="Datos" title="Datos">
-          <Form>
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formGridCarrera">
-                <Form.Label>Carrera</Form.Label>
-                <Form.Control type="text" placeholder="Escriba su nombre" />
+              <Form.Group className="mb-3" controlId="formGridCorreo">
+                <Form.Label>Fecha de Entrega</Form.Label>
+                <Form.Control type="date" placeholder="Elija la fecha de Entrega" />
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridNivelCarrera">
-                <Form.Label>Nivel de carrera</Form.Label>
-                <Form.Control type="text" placeholder="Escriba su primer apellido" />
-              </Form.Group>
-            </Row>
-
-            <Form.Group className="mb-3" controlId="formGridCorreoDatos">
-              <Form.Label>Correo Electrónico</Form.Label>
-              <Form.Control type="email" placeholder="Escriba su correo electrónico" />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formGridCedulaDatos">
-              <Form.Label>Cédula o Identificación</Form.Label>
-              <Form.Control type="text" placeholder="Escriba su cédula o identificación" />
-            </Form.Group>
-
-            <Button variant="danger" type="submit">
-              Submit
-            </Button>
-          </Form>
+              <Button variant="danger" type="submit">
+                Buscar Estudiante
+              </Button>
+            </Form>
           </Tab>
+
+          <Tab eventKey="Datos" title="Datos">
+            <Table striped bordered hover responsive>
+              <thead>
+                <tr>
+                  <th>Estudiante</th>
+                  <th>Identifición</th>
+                  <th>Carrera</th>
+                  <th>Dispositivo</th>
+                  <th>Fecha de Entrega</th>
+                </tr>
+              </thead>
+                <tbody>
+                  <tr>
+                    <td>John</td>
+                    <td>12679535</td>
+                    <td>Ingeniería en Sistemas de Información</td>
+                    <td>Laptop</td>
+                    <td>21/5/2023</td>
+                  </tr>
+                  <tr>
+                    <td>Jane</td>
+                    <td>16979742</td>
+                    <td>Enseñanza del Inglés</td>
+                    <td>Tablet</td>
+                    <td>13/3/2023</td>
+                  </tr>
+                  <tr>
+                    <td>Robert</td>
+                    <td>03242213</td>
+                    <td>Administración</td>
+                    <td>Tablet</td>
+                    <td>29/10/2023</td>
+                  </tr>
+                </tbody>
+            </Table>
+              <Button variant="danger" type="submit">
+                Enviar
+              </Button>
+          </Tab>
+
         </Tabs>
+
       </div>
-    </>
+    </main>
+    <footer>
+        {/* Footer en la parte inferior con color de fondo personalizado */}
+        <Card className="w-11/12 bg-danger text-white" style={{ margin: '20px auto', padding: '20px' }}>
+          <Container>
+            <Row>
+              <Col xs={12} md={6}>
+                <p>Contacto: ivannia.conejo.chinchilla@una.ac.cr</p>
+                <p>Teléfono: +506 2562-6316</p>
+              </Col>
+              <Col xs={12} md={6}>
+                <p>Derechos de autor &copy; 2023 PAUNA</p>
+                <p>Universidad Nacional Campus Coto</p>
+              </Col>
+            </Row>
+          </Container>
+        </Card>
+      </footer>
+    </div>
   );
 }
 

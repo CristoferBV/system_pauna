@@ -1,16 +1,18 @@
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Navbar, Nav, Form, Button, Card, Table } from "react-bootstrap";
 import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Link from "next/link";
+import { Row, Col } from "react-bootstrap";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
+import Container from "react-bootstrap/Container"
 
-const DevolutionClient = () => {
+function DevolutionClient() {
   const router = useRouter();
-  const { section } = router.query;
 
   const [active, setActive] = useState("");
 
@@ -21,190 +23,171 @@ const DevolutionClient = () => {
     { name: "Inicio", section: "HomeClient", current: false },
   ];
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
+  const [key, setKey] = useState("Estudiantes");
 
   return (
-    <>
-      <div className="min-h-full relative">
-        <Disclosure as="nav" className="bg-[#FF3333]">
-          {({ open }) => (
-            <>
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 bg-[#E31919] rounded-full w-14 h-14">
-                      <Image
-                        className="h-9 w-9 mt-2.5 ml-2.5"
-                        src={Logo}
-                        width={300}
-                        height={300}
-                        alt="University"
-                      />
-                    </div>
-                    <div className="hidden md:block">
-                      <div className="ml-10 flex items-baseline space-x-4">
-                        {navigation.map((item) => (
-                          <Link
-                            legacyBehavior
-                            key={item.name}
-                            href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                            onClick={() => setActive(item.section)}
-                          >
-                            <a
-                              key={item.name}
-                              href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                              className={classNames(
-                                item.current
-                                  ? "bg-[#FF3333] text-white"
-                                  : "text-white hover:bg-[#E31919] hover:text-white",
-                                "rounded-md px-3 py-2 text-sm font-medium"
-                              )}
-                              aria-current={item.current ? "page" : undefined}
-                            >
-                              {item.name}
-                            </a>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <Link href={"/LoginAndRegister/Login/Login"}>
-                    <button
-                      className="bg-[#FF3333] text-white
-                                  :text-white hover:bg-[#E31919] hover:text-white
-                                rounded-md px-3 py-2 text-sm font-medium"
-                    >
-                      Cerrar Sesión
-                    </button>
-                  </Link>
-                  <div className="-mr-2 flex md:hidden">
-                    {/* Mobile menu button */}
-                    <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-[#E31919] p-2 text-white hover:bg-[#E31919] hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E31919]">
-                      <span className="absolute -inset-0.5" />
-                      <span className="sr-only">Open main menu</span>
-                      {open ? (
-                        <XMarkIcon
-                          className="block h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <Bars3Icon
-                          className="block h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      )}
-                    </Disclosure.Button>
-                  </div>
-                </div>
-              </div>
-              <Disclosure.Panel className="md:hidden">
-                <div className="space-y-1 px-2 pb-2 pt-12 sm:px-3">
-                  {navigation.map((item) => (
-                    <Disclosure.Button
-                      key={item.name}
-                      as="a"
-                      href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                      className={classNames(
-                        item.current
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                        "block rounded-md px-3 py-2 text-base font-medium"
-                      )}
-                      aria-current={item.current ? "page" : undefined}
-                    >
-                      {item.name}
-                    </Disclosure.Button>
-                  ))}
-                </div>
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-        <header className="text-center py-10">
-          <div className="mx-auto w-11/12 h-28 bg-gray-400 rounded-md p-4 flex items-center justify-center">
-            <div className="mr-2">
-              <Image src={LogoBombilla} width={40} height={40} alt="Icon" />
-            </div>
-            <p className="text-xl font-bold">
-              Llene todos los campos correspondientes
-            </p>
-          </div>
-        </header>
+    <div className="flex flex-col min-h-screen">
+      <Navbar bg="danger" expand="lg">
+      <Navbar.Brand href="#home">
+        <Image
+          className="h-9 w-9 mt-2.5 ml-2.5"
+          src={Logo}
+          width={300}
+          height={300}
+          alt="University"
+        />
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          {navigation.map((item) => (
+            <Button
+              variant="danger"
+              size="sm"
+              key={item.name}
+              href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
+              onClick={() => setActive(item.section)}
+            >
+              <Nav.Link
+                key={item.name}
+                href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
+                className={
+                  active === item.section ? "bg-danger text-white" : "text-white"
+                }
+              >
+                {item.name}
+              </Nav.Link>
+            </Button>
+          ))}
+          <Button variant="danger" size="sm">Cerrar</Button>
+        </Nav>
+        {/* <Button variant="danger" size="ms">Cerrar</Button> */}
+      </Navbar.Collapse>
+    </Navbar>
 
-        <main className="min-h-screen flex-grow relative z-0">
-          <h1 className="text-2xl font-bold mb-6 text-center">
-            Formulario de devoluciones
-          </h1>
-          <div className="mx-auto w-11/12 p-6 bg-[#BFBFBF] rounded-md mb-8 md:mb-0">
-            <div className="mx-auto w-full p-4 bg-[#D9D9D9] rounded-md mb-8 md:mb-0 grid md:grid-cols-2 gap-4">
-              {/* Columna 1 */}
-              <div>
-                <div className="mb-6">
-                  <label className="block font-semibold mb-1">
-                    Nombre completo
-                  </label>
-                  <input type="text" className="p-2 w-full border rounded-md" />
-                </div>
-                <div className="mb-6">
-                  <label className="block font-semibold mb-1">Cédula</label>
-                  <input type="text" className="p-2 w-full border rounded-md" />
-                </div>
-                <div className="mb-6">
-                  <label className="block font-semibold mb-1">
-                    Dispositivos
-                  </label>
-                  <select className="p-2 w-full border rounded-md">
-                    <option value="">-Seleccionar opción-</option>
-                    <option value="opcion1">Laptop</option>
-                    <option value="opcion2">Tablet</option>
-                  </select>
-                </div>
+      <main className="flex-1">
+      <header className="header-container d-flex align-items-center justify-content-center">
+        <Container>
+          <Row>
+            <Col>
+              <div className="d-flex align-items-center justify-content-center">
+                <Image src={LogoBombilla} alt="Logo" />
+                <h1 className="ml-3">Realice la Devolución</h1>
               </div>
+            </Col>
+          </Row>
+        </Container>
+      </header>
 
-              {/* Columna 2 */}
-              <div className="md:col-start-2 md:col-end-3">
-                <div className="mb-6">
-                  <label className="block font-semibold mb-1">Carrera</label>
-                  <select className="p-2 w-full border rounded-md">
-                    <option value="">-Seleccionar opción-</option>
-                    <option value="opcion1">
-                      Ingeniería en Sistemas de Información{" "}
-                    </option>
-                    <option value="opcion2">Administración</option>
-                    <option value="opcion3">Enseñanza del Inglés</option>
-                    <option value="opcion4">Planificación</option>
-                  </select>
-                </div>
-                <div className="mb-6">
-                  <label className="block font-semibold mb-1">
-                    Fecha de Entrega
-                  </label>
-                  <input type="date" className="p-2 w-full border rounded-md" />
-                </div>
-                <div className="mb-6">
-                  <label className="block font-semibold mb-1">Correo</label>
-                  <input type="text" className="p-2 w-full border rounded-md" />
-                </div>
-              </div>
-            </div>
-            <div className="mt-8 flex justify-center">
-              <button className="bg-[#E31919] text-white rounded-md px-4 py-2 font-medium hover:bg-[#FF3333]">
-                Aceptar
-              </button>
-            </div>
-          </div>
-        </main>
+      <div className="mx-auto w-11/12 p-6 bg-white mb-8 md:mb-0" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' , borderRadius:"3px"}}>
+        <Tabs
+          id="controlled-tab-example"
+          activeKey={key}
+          onSelect={(k) => setKey(k)}
+          className="mb-3"
+        >
+          <Tab eventKey="Estudiantes" title="Estudiantes">
+            <Form>
+              <Form.Group className="mb-3" controlId="formGridCedula">
+                <Form.Label>Cédula o Identificación</Form.Label>
+                <Form.Control type="text" placeholder="Escriba su cédula o identificación" />
+              </Form.Group>
 
-        <footer className="bg-[#FF3333] text-white py-4 text-start">
-          <p className="px-4">
-            Derechos reservados: @Desarrolladores PAUNA 2023
-          </p>
-        </footer>
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="formGridName">
+                  <Form.Label>Nombre</Form.Label>
+                  <Form.Control type="text" placeholder="Escriba su nombre" />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridApellido1">
+                  <Form.Label>Apellido #1</Form.Label>
+                  <Form.Control type="text" placeholder="Escriba su primer apellido" />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridApellido2">
+                  <Form.Label>Apellido #2</Form.Label>
+                  <Form.Control type="text" placeholder="Escriba su segundo apellido" />
+                </Form.Group>
+              </Row>
+
+              <Form.Group className="mb-3" controlId="formGridCorreo">
+                <Form.Label>Correo Electrónico</Form.Label>
+                <Form.Control type="email" placeholder="Escriba su correo electrónico" />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formGridCorreo">
+                <Form.Label>Fecha de Entrega</Form.Label>
+                <Form.Control type="date" placeholder="Elija la fecha de Entrega" />
+              </Form.Group>
+
+              <Button variant="danger" type="submit">
+                Buscar Estudiante
+              </Button>
+            </Form>
+          </Tab>
+
+          <Tab eventKey="Datos" title="Datos">
+            <Table striped bordered hover responsive>
+              <thead>
+                <tr>
+                  <th>Estudiante</th>
+                  <th>Identifición</th>
+                  <th>Carrera</th>
+                  <th>Dispositivo</th>
+                  <th>Fecha de Entrega</th>
+                </tr>
+              </thead>
+                <tbody>
+                  <tr>
+                    <td>John</td>
+                    <td>12679535</td>
+                    <td>Ingeniería en Sistemas de Información</td>
+                    <td>Laptop</td>
+                    <td>21/5/2023</td>
+                  </tr>
+                  <tr>
+                    <td>Jane</td>
+                    <td>16979742</td>
+                    <td>Enseñanza del Inglés</td>
+                    <td>Tablet</td>
+                    <td>13/3/2023</td>
+                  </tr>
+                  <tr>
+                    <td>Robert</td>
+                    <td>03242213</td>
+                    <td>Administración</td>
+                    <td>Tablet</td>
+                    <td>29/10/2023</td>
+                  </tr>
+                </tbody>
+            </Table>
+              <Button variant="danger" type="submit">
+                Enviar
+              </Button>
+          </Tab>
+
+        </Tabs>
+
       </div>
-    </>
+    </main>
+    <footer>
+        <Card className="w-11/12 bg-danger text-white" style={{ margin: '20px auto', padding: '20px' }}>
+          <Container>
+            <Row>
+              <Col xs={12} md={6}>
+                <p>Contacto: ivannia.conejo.chinchilla@una.ac.cr</p>
+                <p>Teléfono: +506 2562-6316</p>
+              </Col>
+              <Col xs={12} md={6}>
+                <p>Derechos de autor &copy; 2023 PAUNA</p>
+                <p>Universidad Nacional Campus Coto</p>
+              </Col>
+            </Row>
+          </Container>
+        </Card>
+      </footer>
+    </div>
   );
-};
+}
 
 export default DevolutionClient;

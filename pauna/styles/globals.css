@@ -45,6 +45,21 @@ html, body {
   transition: all 0.3s ease;
   margin: 20px auto; /* Ajusta el margen superior e inferior y centra horizontalmente */
 }
+.header-container {
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 30px 0; /* Relleno superior e inferior de 20px, sin relleno a los lados */
+  width: 91.444%;
+  margin: 40px auto; /* Centra el header en el contenedor */
+}
+
+.header-container img {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+}
+
 
 @media (max-width: 768px) {
   .circle {

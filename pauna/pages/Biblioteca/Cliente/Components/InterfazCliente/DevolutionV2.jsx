@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Row, Col } from "react-bootstrap";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import Container from "react-bootstrap/Container"
 
 function DevolutionClient() {
   const router = useRouter();
@@ -70,99 +71,92 @@ function DevolutionClient() {
           </Form>
         </Navbar.Collapse>
       </Navbar>
-      <header className="text-center py-10">
-        <div className="mx-auto w-11/12 h-28 bg-gray-400 rounded-md p-4 flex items-center justify-center">
-          <div className="mr-2">
-            <Image src={LogoBombilla} width={40} height={40} alt="Icon" />
-          </div>
-          <p className="text-xl font-bold">
-            Llene todos los campos correspondientes
-          </p>
-        </div>
+
+      <header className="header-container d-flex align-items-center justify-content-center">
+        <Container>
+          <Row>
+            <Col>
+              <div className="d-flex align-items-center justify-content-center">
+                <Image src={LogoBombilla} alt="Logo" />
+                <h1 className="ml-3">Realice la Devolución</h1>
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </header>
 
-      <main className="min-h-screen flex-grow relative z-0">
-        <h1 className="text-2xl font-bold mb-6 text-center">
-          Formulario de devoluciones
-        </h1>
-        <div className="mx-auto w-11/12 p-6 bg-[#BFBFBF] rounded-md mb-8 md:mb-0">
+      <div className="mx-auto w-11/12 p-6 bg-white mb-8 md:mb-0" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' , borderRadius:"3px"}}>
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
           onSelect={(k) => setKey(k)}
           className="mb-3"
         >
-          <Tab eventKey="Estudiantes" title="Estudiantes">
-            <Form>
-                <Row className="mb-3">
-                <Form.Group as={Col} controlId="formGridName">
-                    <Form.Label>Nombre</Form.Label>
-                    <Form.Control type="text" placeholder="Escriba su nombre" />
-                </Form.Group>
-
-                <Form.Group as={Col} controlId="formGridApellido1">
-                    <Form.Label>Primer Apellido</Form.Label>
-                    <Form.Control type="text" placeholder="Escriba su primer apellido" />
-                </Form.Group>
-
-                <Form.Group as={Col} controlId="formGridApellido2">
-                    <Form.Label>Segundo Apellido</Form.Label>
-                    <Form.Control type="text" placeholder="Escriba su segundo apellido" />
-                </Form.Group>
-                </Row>
-
-                <Form.Group className="mb-3" controlId="formGridCorreo">
-                <Form.Label>Correo Electrónico</Form.Label>
-                <Form.Control type="gmail" placeholder="Escriba su correo electrónico" />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formGridCedula">
-                <Form.Label>Cédula o Identificación</Form.Label>
-                <Form.Control type="text" placeholder="Escriba su cédula o identificación" />
-                </Form.Group>
-
-                <Button variant="danger" type="submit">
-                Submit
-                </Button>
-            </Form>
-          </Tab>
-          <Tab eventKey="Datos" title="Datos">
+        <Tab eventKey="Estudiantes" title="Estudiantes">
           <Form>
-            {/* TERMINAR ESTA PARTE */}
-                <Row className="mb-3">
-                <Form.Group as={Col} controlId="formGridCarrera">
-                    <Form.Label>Carrera</Form.Label>
-                    <Form.Control type="text" placeholder="Escriba su nombre" />
-                </Form.Group>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridName">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control type="text" placeholder="Escriba su nombre" />
+              </Form.Group>
 
-                <Form.Group as={Col} controlId="formGridApellido1">
-                    <Form.Label>Nivel de carrera</Form.Label>
-                    <Form.Control type="text" placeholder="Escriba su primer apellido" />
-                </Form.Group>
-                </Row>
+              <Form.Group as={Col} controlId="formGridApellido1">
+                <Form.Label>Apellido #1</Form.Label>
+                <Form.Control type="text" placeholder="Escriba su primer apellido" />
+              </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formGridCorreo">
-                <Form.Label>Correo Electrónico</Form.Label>
-                <Form.Control type="gmail" placeholder="Escriba su correo electrónico" />
-                </Form.Group>
+              <Form.Group as={Col} controlId="formGridApellido2">
+                <Form.Label>Apellido #2</Form.Label>
+                <Form.Control type="text" placeholder="Escriba su segundo apellido" />
+              </Form.Group>
+            </Row>
 
-                <Form.Group className="mb-3" controlId="formGridCedula">
-                <Form.Label>Cédula o Identificación</Form.Label>
-                <Form.Control type="text" placeholder="Escriba su cédula o identificación" />
-                </Form.Group>
+            <Form.Group className="mb-3" controlId="formGridCorreo">
+              <Form.Label>Correo Electrónico</Form.Label>
+              <Form.Control type="email" placeholder="Escriba su correo electrónico" />
+            </Form.Group>
 
-                <Button variant="danger" type="submit">
-                Submit
-                </Button>
-            </Form>
+            <Form.Group className="mb-3" controlId="formGridCedula">
+              <Form.Label>Cédula o Identificación</Form.Label>
+              <Form.Control type="text" placeholder="Escriba su cédula o identificación" />
+            </Form.Group>
+
+            <Button variant="danger" type="submit">
+              Submit
+            </Button>
+          </Form>
+        </Tab>
+        <Tab eventKey="Datos" title="Datos">
+          <Form>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridCarrera">
+                <Form.Label>Carrera</Form.Label>
+                <Form.Control type="text" placeholder="Escriba su nombre" />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridNivelCarrera">
+                <Form.Label>Nivel de carrera</Form.Label>
+                <Form.Control type="text" placeholder="Escriba su primer apellido" />
+              </Form.Group>
+            </Row>
+
+            <Form.Group className="mb-3" controlId="formGridCorreoDatos">
+              <Form.Label>Correo Electrónico</Form.Label>
+              <Form.Control type="email" placeholder="Escriba su correo electrónico" />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formGridCedulaDatos">
+              <Form.Label>Cédula o Identificación</Form.Label>
+              <Form.Control type="text" placeholder="Escriba su cédula o identificación" />
+            </Form.Group>
+
+            <Button variant="danger" type="submit">
+              Submit
+            </Button>
+          </Form>
           </Tab>
         </Tabs>
-            </div>
-      </main>
-
-      <footer className="bg-[#FF3333] text-white py-4 text-start">
-        <p className="px-4">Derechos reservados: @Desarrolladores PAUNA 2023</p>
-      </footer>
+      </div>
     </>
   );
 }

@@ -13,6 +13,8 @@ import SidebarDevoluciones from './Biblioteca/Administrador/Components/InterfazA
 import SidebarEstudiantes from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarEstudiantes'
 import SidebarReporte from './Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarReporte'
 import Sidebar from './Administracion/Components/Sidebar/Sidebar'
+import LoginV2 from './LoginAndRegister/Login/LoginV2'
+import RegisterV2 from './LoginAndRegister/Register/RegisterV2'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -26,7 +28,10 @@ export default function Home() {
       {/* <LoanClient/> */}
       {/* <DevolutionClient/> */}
       {/* <ProfileClient/> */}
-      <Login/>
+      {/* <PaginaCirculo/> */}
+      <LoginV2/>
+      {/* <RegisterV2/> */}
+      {/* <Login/> */}
       {/* <Register/> */}
       {/* <Sidebar/> */}
     </>

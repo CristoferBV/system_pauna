@@ -53,6 +53,7 @@ export default function UserWindow({ userAdmins, rols }) {
     RL_identificador: "",
     RL_nombre: ""
   });
+  
 
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });

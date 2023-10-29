@@ -54,6 +54,15 @@ export default function Inventary({ materials }) {
               </Form.Select>
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
+              <Form.Label>Tipo</Form.Label>
+              <Form.Select>
+                <option>Opcion 1</option>
+                <option>Opcion 2</option>
+                <option>Opcion 3</option>
+                <option>Opcion 4</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
               <Form.Label>Cantidad</Form.Label>
               <Form.Control type="email" placeholder="Ingrese la cantidad" />
             </Form.Group>
@@ -125,53 +134,82 @@ export default function Inventary({ materials }) {
           </Container>
           <Container style={{ marginTop: '0.6rem', padding: '2rem' }}>
             <p>Lista de materiales</p>
-            <Container style={{ maxHeight: '400px', overflowY: 'auto' }}>
-              <Table className="text-center" variant='dark' striped bordered hover style={{ fontSize: '1.1rem' }}>
-                <thead>
-                  <tr>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Marca</th>
-                    <th>Cantidad</th>
-                    <th>Observaciones</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>
-                      <Container>
-                        <Row>
-                          <Col>
-                            <Button onClick={handleShowForm}>
-                              Editar
-                            </Button>
-                          </Col>
-                          <Col>
-                            <Button>
-                              Eliminar
-                            </Button>
-                          </Col>
-                        </Row>
-                      </Container>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Container>
+            <Row>
+              <Col xs={12} md={8}>
+                <Container style={{ maxHeight: '400px', overflowY: 'auto' }}>
 
-            <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
-              onClick={handleShowForm}>
-              Añadir
-            </Button>
+                  <Table className="text-center" variant='dark' striped bordered hover style={{ fontSize: '1.1rem' }}>
+                    <thead>
+                      <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Cantidad</th>
+                        <th>Observaciones</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>Otto</td>
+                        <td>Otto</td>
+                        <td>
+                          <Container>
+                            <Row>
+                              <Col>
+                                <Button onClick={handleShowForm}>
+                                  Editar
+                                </Button>
+                              </Col>
+                              <Col>
+                                <Button>
+                                  Eliminar
+                                </Button>
+                              </Col>
+                            </Row>
+                          </Container>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </Container>
+              </Col>
+              <Col>
+                <Row>
+                  <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem' }}
+                    onClick={handleShowForm}>
+                    Añadir Material
+                  </Button>
+                </Row>
+                <Row>
+                  <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
+                  >
+                    Añadir Colores
+                  </Button>
+                </Row>
+                <Row>
+                  <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
+                  >
+                    Añadir Tipo(bolsas, cajas, etc...)
+                  </Button>
+                </Row>
+                <Row>
+                  <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
+                  >
+                    Añadir ubicación
+                  </Button>
+                </Row>
+              </Col>
+            </Row>
+
+
+
           </Container>
         </Container>
-      </div>
+      </div >
     </>
   )
 }

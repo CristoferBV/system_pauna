@@ -41,12 +41,14 @@ function DevolutionClient() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           {navigation.map((item) => (
-            <Button
+            <Link
               variant="danger"
               size="sm"
               key={item.name}
               href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
               onClick={() => setActive(item.section)}
+              style={{ textDecoration: "none" }}
+              className="d-flex align-items-center justify-content-center"
             >
               <Nav.Link
                 key={item.name}
@@ -57,11 +59,10 @@ function DevolutionClient() {
               >
                 {item.name}
               </Nav.Link>
-            </Button>
+            </Link>
           ))}
-          <Button variant="danger" size="sm">Cerrar</Button>
+          <Button variant="danger" size="ms">Cerrar</Button>
         </Nav>
-        {/* <Button variant="danger" size="ms">Cerrar</Button> */}
       </Navbar.Collapse>
     </Navbar>
 
@@ -120,7 +121,7 @@ function DevolutionClient() {
                 <Form.Control type="date" placeholder="Elija la fecha de Entrega" />
               </Form.Group>
 
-              <Button variant="danger" type="submit">
+              <Button variant="danger" type="button">
                 Buscar Estudiante
               </Button>
             </Form>
@@ -161,7 +162,7 @@ function DevolutionClient() {
                   </tr>
                 </tbody>
             </Table>
-              <Button variant="danger" type="submit">
+              <Button variant="danger" type="button">
                 Enviar
               </Button>
           </Tab>

@@ -50,6 +50,11 @@ function NavbarAdminBiblioteca() {
               Reporte
             </Nav.Link>
           </Nav>
+          <Nav>
+            <Nav.Link eventKey={2} href="/LoginAndRegister/Login/Login" style={customTextStyle}>
+              Cerrar Sesión
+            </Nav.Link>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -31,7 +31,7 @@ function NavbarAdminBiblioteca() {
             <Nav.Link href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarCitas" style={customTextStyle}>
               Citas
             </Nav.Link>
-            <NavDropdown title="Activos" id="collapsible-nav-dropdown" style={customDropdownTitleStyle}>
+            <NavDropdown title={<span style={customDropdownTitleStyle}>Activos</span>} id="collapsible-nav-dropdown" style={customDropdownTitleStyle}>
               <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar">
                 Dispositivos
               </NavDropdown.Item>

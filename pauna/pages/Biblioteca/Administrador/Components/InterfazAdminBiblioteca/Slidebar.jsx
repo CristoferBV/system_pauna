@@ -6,7 +6,8 @@ export default function Slidebar({ Dispositivos }) {
     const [selectedDevice, setSelectedDevice] = useState(null);
     const [editedValues, setEditedValues] = useState({});
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);
-    const [searchText, setSearchText] = useState(''); // Estado para almacenar el texto de búsqueda
+    const [searchText, setSearchText] = useState('');
+    const [showCreateForm, setShowCreateForm] = useState(false);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -17,26 +18,20 @@ export default function Slidebar({ Dispositivos }) {
     };
 
     const handleEditDevice = (device) => {
-        // Muestra el formulario de edición solo para el dispositivo seleccionado
         setSelectedDevice(device);
-        // Inicializa los valores editables con los datos actuales del dispositivo
         setEditedValues(device);
     };
 
     const confirmDeleteDevice = () => {
-        // Realizar la acción para confirmar la eliminación
-        // Cerrar el modal de eliminación
+        // Realizar la acción para confirmar la eliminación aquí
         setDeleteConfirmation(false);
     };
 
     const cancelDeleteDevice = () => {
-        // Cancelar la eliminación
-        // Cerrar el modal de eliminación
         setDeleteConfirmation(false);
     };
 
     const filteredDevices = Dispositivos.filter((device) => {
-        // Filtrar los dispositivos que coinciden con el texto de búsqueda
         return (
             device.TP_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
             device.EA_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -45,11 +40,41 @@ export default function Slidebar({ Dispositivos }) {
         );
     });
 
+    const handleCreateDevice = () => {
+        setShowCreateForm(true);
+        setEditedValues({});
+    };
+
+    // Define los estilos CSS para los botones y sus efectos de hover
+    const buttonStyle = {
+        backgroundColor: '#021730',
+        color: 'white',
+        border: 'none',
+        transition: 'background-color 0.3s',
+    };
+
+    const buttonHoverStyle = {
+        backgroundColor: '#132335', // Color ligeramente más claro al pasar el cursor
+        color: 'white',
+        border: 'none',
+        transition: 'background-color 0.3s',
+    };
 
     return (
         <div className="p-4">
             <Card bg="dark" text="white">
-                <Card.Header>Lista de Dispositivos</Card.Header>
+                <Card.Header>
+                    <div className="d-flex justify-content-between">
+                        <span>Lista de Dispositivos</span>
+                        <Button
+                            variant="success"
+                            onClick={handleCreateDevice}
+                            style={buttonStyle}
+                        >
+                            Crear Dispositivo
+                        </Button>
+                    </div>
+                </Card.Header>
                 <Card.Body>
                     <InputGroup className="mb-3">
                         <FormControl
@@ -76,9 +101,22 @@ export default function Slidebar({ Dispositivos }) {
                                     <td className="text-center">{device.AO_descripcion}</td>
                                     <td className="text-center">{device.AO_estado}</td>
                                     <td className="text-center">
-                                        <Button variant="primary" onClick={() => handleEditDevice(device)}>Editar</Button>
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => handleEditDevice(device)}
+                                            style={{ backgroundColor: '#021730', color: 'white', border: 'none', transition: 'background-color 0.3s' }}
+                                        >
+                                            Editar
+                                        </Button>
                                         {' '}
-                                        <Button variant="danger" onClick={() => setDeleteConfirmation(true)}>Eliminar</Button>
+                                        <Button
+                                            variant="danger"
+                                            onClick={() => setDeleteConfirmation(true)}
+                                            style={{ backgroundColor: '#021730', color: 'white', border: 'none', transition: 'background-color 0.3s' }}
+                                        >
+                                            Eliminar
+                                        </Button>
+
                                     </td>
                                 </tr>
                             ))}
@@ -86,55 +124,126 @@ export default function Slidebar({ Dispositivos }) {
                     </Table>
                 </Card.Body>
             </Card>
+            <Modal show={showCreateForm} onHide={() => setShowCreateForm(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Crear Dispositivo</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Dispositivo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="TP_nombre"
+                                value={editedValues.TP_nombre || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Periféricos</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="EA_nombre"
+                                value={editedValues.EA_nombre || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Descripción</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="AO_descripcion"
+                                value={editedValues.AO_descripcion || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Estado</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="AO_estado"
+                                value={editedValues.AO_estado || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setShowCreateForm(false)}
+                        style={buttonStyle}
+                    >
+                        Cancelar
+                    </Button>
+                    <Button
+                        variant="primary"
+                        onClick={handleCreateDevice}
+                        style={buttonStyle}
+                    >
+                        Crear
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <Modal show={selectedDevice !== null} onHide={() => setSelectedDevice(null)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Editar Dispositivo</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {selectedDevice && (
-                        <Form>
-                            <Form.Group>
-                                <Form.Label>Dispositivo</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="TP_nombre"
-                                    value={editedValues.TP_nombre}
-                                    onChange={handleInputChange}
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Periféricos</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="EA_nombre"
-                                    value={editedValues.EA_nombre}
-                                    onChange={handleInputChange}
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Descripción</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="AO_descripcion"
-                                    value={editedValues.AO_descripcion}
-                                    onChange={handleInputChange}
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Estado</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="AO_estado"
-                                    value={editedValues.AO_estado}
-                                    onChange={handleInputChange}
-                                />
-                            </Form.Group>
-                        </Form>
-                    )}
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Dispositivo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="TP_nombre"
+                                value={editedValues.TP_nombre || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Periféricos</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="EA_nombre"
+                                value={editedValues.EA_nombre || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Descripción</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="AO_descripcion"
+                                value={editedValues.AO_descripcion || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Estado</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="AO_estado"
+                                value={editedValues.AO_estado || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                    </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setSelectedDevice(null)}>Cancelar</Button>
-                    <Button variant="primary" onClick={handleEditDevice}>Guardar Cambios</Button>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setSelectedDevice(null)}
+                        style={buttonStyle}
+                    >
+                        Cancelar
+                    </Button>
+                    <Button
+                        variant="primary"
+                        onClick={() => setSelectedDevice(null)}
+                        style={buttonStyle}
+                    >
+                        Guardar Cambios
+                    </Button>
                 </Modal.Footer>
             </Modal>
             <Modal show={deleteConfirmation} onHide={cancelDeleteDevice}>
@@ -145,8 +254,20 @@ export default function Slidebar({ Dispositivos }) {
                     ¿Estás seguro de que deseas eliminar este dispositivo?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={cancelDeleteDevice}>Cancelar</Button>
-                    <Button variant="danger" onClick={confirmDeleteDevice}>Eliminar</Button>
+                    <Button
+                        variant="secondary"
+                        onClick={cancelDeleteDevice}
+                        style={buttonStyle}
+                    >
+                        Cancelar
+                    </Button>
+                    <Button
+                        variant="danger"
+                        onClick={confirmDeleteDevice}
+                        style={buttonStyle}
+                    >
+                        Eliminar
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </div>

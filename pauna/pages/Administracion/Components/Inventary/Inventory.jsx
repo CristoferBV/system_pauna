@@ -2,130 +2,180 @@
 import Buttons from "./InvButtons";
 import Link from "next/link";
 import axios from "axios";
+import React, { useState } from 'react';
+import { Row, Col, Container, Button, Form, Table, Modal, Alert } from "react-bootstrap"
 
 export default function Inventary({ materials }) {
   console.log(materials);
+  const [showForm, setShowForm] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
+
+  const handleShowForm = () => {
+    setShowForm(true);
+  };
+
+  const handleCloseForm = () => {
+    setShowForm(false);
+  };
+  const handleSave = () => {
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    setShowForm(false);
+  };
+  const handleAlertClose = () => {
+    setShowAlert(false);
+  };
   return (
     <>
-      <div className="bg-white sm:bg-white md:bg-white lg:bg-white xl:bg-white">
-        <div
-          className="grid grid-cols-3 sm:grid-cols-1 sm:text-center 
-                m:min-h-min p-10 md:flex items-center justify-center text-white text-2xl font-semibold
-                lg:p-2 "
-        >
-          <div
-            className="
-                    sm:m-4
-                    md:mr-10"
-          >
-            <button className="bg-[#3726FD] md:w-auto p-5 hover:bg-[#4333F9]">
-              Superior
-            </button>
-          </div>
-          <div
-            className="sm:m-4
-                    md:mr-10"
-          >
-            <button className="bg-[#3726FD] md:w-auto p-5 hover:bg-[#4333F9]">
-              Inferior
-            </button>
-          </div>
-          <div
-            className="sm:m-4
-                    md:mr-10"
-          >
-            <button className="bg-[#3726FD] md:w-auto p-5  hover:bg-[#4333F9]">
-              Auditorio
-            </button>
-          </div>
-        </div>
+      <Modal show={showForm} onHide={handleCloseForm}>
+        <Modal.Header closeButton>
+          <Modal.Title>Materiales</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Codigo</Form.Label>
+              <Form.Control type="email" placeholder="Ingrese su codigo" />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control type="password" placeholder="Ingrese el nombre" />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Marca</Form.Label>
+              <Form.Select>
+                <option>Opcion 1</option>
+                <option>Opcion 2</option>
+                <option>Opcion 3</option>
+                <option>Opcion 4</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Cantidad</Form.Label>
+              <Form.Control type="email" placeholder="Ingrese la cantidad" />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Color</Form.Label>
+              <Form.Select>
+                <option>Opcion 1</option>
+                <option>Opcion 2</option>
+                <option>Opcion 3</option>
+                <option>Opcion 4</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Ubicacion</Form.Label>
+              <Form.Select>
+                <option>Opcion 1</option>
+                <option>Opcion 2</option>
+                <option>Opcion 3</option>
+                <option>Opcion 4</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Observaciones</Form.Label>
+              <Form.Control as="textarea" placeholder="Ingrese sus observaciones" />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseForm}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={handleSave}>
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-        <div
-          className="bg-[#021730] w-3/4 mx-40 text-center
-                md:p-20 text-2xl font-semibold
-                lg:text-lg"
-        >
-          <div
-            className="sm:mr-10 sm:text-center sm:p-2 sm:text-sm
-                    md:mr-20 md:text-left md:mx-auto md:text-xs
-                    lg:text-xl"
-          >
-            <input
-              className="bg-[#3726FD] p-5 text-white placeholder-white"
-              placeholder="Buscar..."
-            ></input>
-          </div>
-          <div
-            className="xl:pt-10 xl:mr-50 
-                    lg:pt-5 lg:mx-auto lg:text-xs"
-          >
-            <table
-              className="table-fixed text-white
-                        lg:w-full"
-            >
-              <thead
-                className="bg-[#132335] sm:text-sm
-                            md:mx-auto md:text-xs
-                            lg:text-base
-                            xl:text-2xl
-                            "
-              >
-                <tr
-                  className="xl-text-2xl 
-                                md:pr-40 md:pl-40 md:text-md
-                                "
-                >
-                  <th
-                    className="
-                                    "
-                  >
-                    Nombre
-                  </th>
-                  <th>Código</th>
-                  <th>Marca</th>
-                  <th>Cantidad</th>
-                  <th>Observaciones</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody className="bg-[#212C39]">
-                {materials.map((material) => (
-                  <tr
-                    className="
-                                md:text-xs md:text-white
-                                lg:text-xs lg:m-auto lg:p-auto
-                                xl:p-2 xl:text-xl
-                                2xl:p-4 2xl:text-2xl"
-                  >
-                    <td
-                      className="
-                                    "
-                    >{material.ML_descripcion}</td>
-                    <td className=" ">{material.ML_identificador}</td>
-                    <td className=" ">{material.MC_nombre}</td>
-                    <td className=" ">{material.CD_cantidad}</td>
-                    <td className="">{material.ML_observacion}</td>
+      <Alert show={showAlert} variant="success" onClose={handleAlertClose} dismissible>
+        ¡Guardado con éxito!
+      </Alert>
+      <div style={{ marginTop: '8rem', marginBottom: '8rem' }}>
+        <Container className="text-center" style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+          <Row style={{}}>
+            <Col >
+              <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.5rem' }}>
+                SUPERIOR
+              </Button>
+            </Col>
+            <Col>
+              <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.5rem' }}>
+                INFERIOR
+              </Button>
+            </Col>
+            <Col>
+              <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.5rem' }}>
+                AUDITORIO
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+        <Container className="rounded" style={{ backgroundColor: '#212529' }}>
+          <Container>
+            <Form style={{ fontSize: '1.1rem', padding: '1.1rem' }}>
+              <Form.Control type="text" placeholder="Buscar..." style={{
+                backgroundColor: '#041a34', fontSize: '1.1rem', color: 'white', padding: '1rem', WebkitTextFillColor: 'white',
+              }}>
+              </Form.Control>
+            </Form>
+          </Container>
+          <Container style={{ marginTop: '0.6rem', padding: '2rem' }}>
+            <p>Lista de materiales</p>
+            <Container style={{ maxHeight: '400px', overflowY: 'auto' }}>
+              <Table className="text-center" variant='dark' striped bordered hover style={{ fontSize: '1.1rem' }}>
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Marca</th>
+                    <th>Cantidad</th>
+                    <th>Observaciones</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>Otto</td>
+                    <td>Otto</td>
                     <td>
-                      <Buttons material={material}/>
+                      <Container>
+                        <Row>
+                          <Col>
+                            <Button onClick={handleShowForm}>
+                              Editar
+                            </Button>
+                          </Col>
+                          <Col>
+                            <Button>
+                              Eliminar
+                            </Button>
+                          </Col>
+                        </Row>
+                      </Container>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <Link href="../../../../Administracion/Components/Inventary/InvAnnadir">
-            <div className="pt-20 text-white text-left">
-              <button className="bg-[#3726FD] md:w- p-6  hover:bg-[#4333F9]">
-                Añadir
-              </button>
-            </div>
-          </Link>
-        </div>
+                </tbody>
+              </Table>
+            </Container>
+
+            <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
+              onClick={handleShowForm}>
+              Añadir
+            </Button>
+          </Container>
+        </Container>
       </div>
     </>
-  );
+  )
 }
-export const getServerSideProps = async (context) => {
+{/*export const getServerSideProps = async (context) => {
   try {
     const { data: materials } = await axios.get(
       "http://localhost:3000/api/material/view"
@@ -138,4 +188,4 @@ export const getServerSideProps = async (context) => {
   } catch (error) {
     console.log(error);
   }
-};
+};*/}

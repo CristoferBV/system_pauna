@@ -1,17 +1,17 @@
 import { useState } from "react";
-import Sidebar from "./Components/Sidebar/Sidebar";
+import NavBar from "./Components/Sidebar/Sidebar";
+import Footer from "./Components/Sidebar/Footer";
+import { Container, Navbar } from "react-bootstrap";
 
 
 export default function Layout({ children }) {
-    const [sideOpen,setSideOpen] = useState(true)
     return (
         <>
-        <div className="flex ">
-            <Sidebar isOpen={sideOpen} toggleSidebar={()=> setSideOpen(!sideOpen)}/>
-            <div className={`flex-grow ${sideOpen ? "w-3/4 ml-72 duration-300 mx-auto": "w-full duration-300 ml-12"}`}>
-            {children}
-            </div>
-        </div>
+                <NavBar />
+                <Container>
+                    {children}
+                </Container>
+                <Footer/>
         </>
     )
 }

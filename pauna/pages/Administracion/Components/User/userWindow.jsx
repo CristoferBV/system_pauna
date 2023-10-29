@@ -20,6 +20,24 @@ export default function UserWindow({ userAdmins, rols }) {
       });
     console.log(res)
   };
+  const handleUpdate = async (e) => {
+    const res = await axios
+      .put("/api/config/admin", selectedUser)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log(res)
+  };
+
+
+  const handleRowClick= (userAdmin)=>{
+    setSelectedUser(userAdmin)
+  }
+
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const [user, setUser] = useState({
     UO_identificador: "",
@@ -131,7 +149,7 @@ export default function UserWindow({ userAdmins, rols }) {
                 </thead>
                 <tbody>
                   {userAdmins.map((userAdmin)=>(
-                     <tr key={userAdmin.UO_identificador}>
+                     <tr key={userAdmin.UO_identificador} onClick={() => handleRowClick(userAdmin)}>
                      <td>{userAdmin.UO_identificador}</td>
                      <td>{userAdmin.UO_primer_nombre}<span> </span>{userAdmin.UO_segundo_nombre}</td>
                      <td>{userAdmin.UO_primer_apellido}<span> </span>{userAdmin.UO_segundo_apellido}</td>
@@ -140,7 +158,7 @@ export default function UserWindow({ userAdmins, rols }) {
                  
                 </tbody>
               </Table>
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="submit" onClick={handleUpdate}>
                 Eliminar
               </Button>
             </Container>

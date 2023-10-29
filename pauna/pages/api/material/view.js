@@ -42,23 +42,3 @@ const getAllMaterial = async (req, res) => {
     console.log(result)
     return res.status(200).json(result);
 };
-
-const modifyFields = async (req, res) => {
-    await pool.query("ALTER TABLE `pau-adm-tbl_material` DROP FOREIGN KEY Relationship36;");
-    await pool.query("ALTER TABLE `pau-adm-tbl_material` DROP FOREIGN KEY Relationship35;");
-    await pool.query("ALTER TABLE `pau-adm-tbl_material-x-tbl_marca` DROP FOREIGN KEY Relationship28;");
-    await pool.query("ALTER TABLE `pau-adm-tbl_material-x-tbl_marca` DROP FOREIGN KEY Relationship29;");
-    await pool.query("ALTER TABLE `pau-adm-tbl_cantidad` DROP FOREIGN KEY Relationship25;");
-    await pool.query("ALTER TABLE `pau-adm-tbl_cantidad` DROP FOREIGN KEY Relationship26;");
-    return res.status(200).json("Update fields")
-}
-
-const upToDateFields = async (req, res) => {
-    await pool.query("ALTER TABLE `pau-adm-tbl_material` ADD CONSTRAINT Relationship36 FOREIGN KEY (`ML_identificador_cantidad`) REFERENCES `pau-adm-tbl_cantidad`(CD_identificador);");
-    await pool.query("ALTER TABLE `pau-adm-tbl_material` ADD CONSTRAINT Relationship35 FOREIGN KEY (`ML_identificador_ubicacion`) REFERENCES `pau-adm-tbl_ubicacion`(UN_identificador);");
-    await pool.query("ALTER TABLE `pau-adm-tbl_material-x-tbl_marca` ADD CONSTRAINT Relationship28 FOREIGN KEY (`ML_identificador`) REFERENCES `pau-adm-tbl_material`(ML_identificador);");
-    await pool.query("ALTER TABLE `pau-adm-tbl_material-x-tbl_marca`ADD CONSTRAINT Relationship29 FOREIGN KEY (`MC_identificador`) REFERENCES `pau-adm-tbl_marca`(MC_identificador);");
-    await pool.query("ALTER TABLE `pau-adm-tbl_cantidad` ADD CONSTRAINT Relationship25 FOREIGN KEY (`CD_identificador_unidad`) REFERENCES `pau_adm-tbl_unidad`(UD_identificador);");
-    await pool.query("ALTER TABLE `pau-adm-tbl_cantidad` ADD CONSTRAINT Relationship26 FOREIGN KEY (`CD_identificador_unidad`) REFERENCES `pau_adm-tbl_unidad`(UD_identificador);");
-    return res.status(200).json("Update fields")
-}

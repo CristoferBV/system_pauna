@@ -11,15 +11,14 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div className="bg-[#FFFFFF]">
-      {/* Barra de navegación */}
+    <div className="d-flex flex-column" style={{ minHeight: "100vh" }}>
       <NavbarAdminBiblioteca isOpen={sideOpen} toggleSidebar={toggleSidebar} />
-
-      {/* Contenido principal */}
       <div className="flex-grow p-4">{children}</div>
-      <div className="mt-36"> {/* Utiliza la clase 'mt-2' para reducir la altura del footer */}
-        <Footer />
+      <div className="mt-10">
+        <FooterBibliotecaAdmin/>
       </div>
     </div>
+
+
   );
 }

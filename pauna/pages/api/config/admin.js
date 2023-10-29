@@ -12,10 +12,11 @@ export default async function handler(req, res) {
 }
 
 const getAllAdministrador = async (req, res) => {
-    const [result] = await pool.query("SELECT * FROM `pau-gnl-usuario`");
-    console.log(result)
-    return res.status(200).json(result);
+    const [users] = await pool.query("SELECT * FROM `pau_gnl_usuario` u inner join `pau_gnl_rol` r on u.UO_identificador_rol = r.RL_identificador");
+    const [rol] = await pool.query("SELECT * FROM `pau_gnl_rol`");
+    return res.status(200).json({userAdmins:users, rols:rol});
 };
+
 
 const saveUserAdmin = async (req, res) => {
     console.log(req.body);
@@ -23,16 +24,19 @@ const saveUserAdmin = async (req, res) => {
         UO_primer_nombre,
         UO_segundo_nombre,
         UO_primer_apellido,
-        UO_segundo_apellido } = req.body;
+        UO_segundo_apellido,
+        UO_identificador_rol,
+        UO_contrasena } = req.body;
 
     const result = await pool
-        .query("INSERT INTO `pau-gnl-usuario` SET ?", {
+        .query("INSERT INTO `pau_gnl_usuario` SET ?", {
             UO_identificador,
             UO_primer_nombre,
             UO_segundo_nombre,
             UO_primer_apellido,
             UO_segundo_apellido,
-            UO_identificador_rol: "R3"
+            UO_identificador_rol,
+            UO_contrasena
         })
         .then(function (response) {
             console.log(response);
@@ -40,6 +44,5 @@ const saveUserAdmin = async (req, res) => {
         .catch(function (error) {
             console.log(error);
         });
-
     return res.status(200).json(result);
 };

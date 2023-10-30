@@ -60,8 +60,8 @@ function DevolutionClient() {
               </Nav.Link>
             </Link>
           ))}
-          <Link href={'/LoginAndRegister/Login/Login'}>
-            <Button Button variant="danger" size="ms">Cerrar Sesión</Button>
+           <Link href={'/LoginAndRegister/Login/Login'} className="d-flex justify-content-center" style={{ textDecoration: "none" }}>
+              <Button Button variant="danger" size="ms">Cerrar Sesión</Button>
           </Link>
         </Nav>
       </Navbar.Collapse>

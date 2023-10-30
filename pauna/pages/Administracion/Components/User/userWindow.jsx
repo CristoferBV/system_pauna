@@ -4,21 +4,40 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Form, Row, Col, Button, Table, Container, Alert } from 'react-bootstrap';
 
-export default function UserWindow({ userAdmins }) {
-  console.log(userAdmins);
+export default function UserWindow({ userAdmins, rols }) {
   const router = useRouter();
   const handleSubmit = async (e) => {
+    console.log({user});
     e.preventDefault();
     console.log("hola");
     const res = await axios
-      .post("/api/config/BibliotecaHorario", user)
+      .post("/api/config/admin", user)
       .then(function (response) {
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
+    console.log(res)
   };
+  const handleUpdate = async (e) => {
+    const res = await axios
+      .put("/api/config/admin", selectedUser)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log(res)
+  };
+
+
+  const handleRowClick= (userAdmin)=>{
+    setSelectedUser(userAdmin)
+  }
+
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const [user, setUser] = useState({
     UO_identificador: "",
@@ -26,12 +45,18 @@ export default function UserWindow({ userAdmins }) {
     UO_segundo_nombre: "",
     UO_primer_apellido: "",
     UO_segundo_apellido: "",
-    UO_identificador_rol: ""
+    UO_identificador_rol: 0,
+    UO_contrasena: ""
   });
+
+  const [rol, setRol] = useState({
+    RL_identificador: "",
+    RL_nombre: ""
+  });
+  
 
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });
-    console.log(user.UO_identificador_rol);
   };
 
   const reloadPage = () => {
@@ -48,8 +73,6 @@ export default function UserWindow({ userAdmins }) {
     setShowAlert(false);
   };
 
-
-  const [open, setOpen] = useState(false);
   return (
     <>
       <Alert show={showAlert} variant="success" onClose={handleAlertClose} dismissible>
@@ -64,45 +87,47 @@ export default function UserWindow({ userAdmins }) {
         <Row>
           <Col >
             <Container className="m-auto p-4">
-              <Form className='p-2'>
+              <Form className='p-2' onSubmit={handleSubmit}>
                 <Row className="mb-3">
                   <Form.Group as={Col} controlId="formGridEmail">
                     <Form.Label>Identificador</Form.Label>
-                    <Form.Control type="email" placeholder="Ingrese el identificador" />
+                    <Form.Control name="UO_identificador" type="text" placeholder="Ingrese el identificador" value={user.UO_identificador} onChange={handleChange}  />
                   </Form.Group>
                 </Row>
                 <Row>
                   <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Primer Nombre</Form.Label>
-                    <Form.Control placeholder="Ingrese el primer nombre" />
+                    <Form.Control name="UO_primer_nombre" value={user.UO_primer_nombre} onChange={handleChange} placeholder="Ingrese el primer nombre" />
                   </Form.Group>
                   <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Segundo Nombre</Form.Label>
-                    <Form.Control placeholder="Ingrese el segundo nombre" />
+                    <Form.Control name="UO_segundo_nombre" value={user.UO_segundo_nombre} onChange={handleChange} placeholder="Ingrese el segundo nombre" />
                   </Form.Group>
                 </Row>
                 <Row>
                   <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Primer Apellido</Form.Label>
-                    <Form.Control placeholder="Ingrese el primer apellido" />
+                    <Form.Control name="UO_primer_apellido" value={user.UO_primer_apellido} onChange={handleChange} placeholder="Ingrese el primer apellido" />
                   </Form.Group>
                   <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                     <Form.Label>Segundo Apellido</Form.Label>
-                    <Form.Control placeholder="Ingrese el segundo apellido" />
+                    <Form.Control name="UO_segundo_apellido" value={user.UO_segundo_apellido} onChange={handleChange} placeholder="Ingrese el segundo apellido" />
                   </Form.Group>
                 </Row>
-
-
                 <Form.Group className="mb-3" controlId="formGridAddress2">
                   <Form.Label>Elija el rol a desempeñar</Form.Label>
-                  <Form.Select>
-                    <option>Opcion 1</option>
-                    <option>Opcion 2</option>
-                    <option>Opcion 3</option>
-                    <option>Opcion 4</option>
+                  <Form.Select name="UO_identificador_rol" value={parseInt(user.UO_identificador_rol)} onChange={handleChange}>
+                    {rols.map((rol)=>(
+                      <option key={rol.RL_identificador} value={rol.RL_identificador}>{rol.RL_nombre}</option>
+                    ))}
+                    
                   </Form.Select>
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={handleSave}>
+                <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                  <Form.Label>Contraseña</Form.Label>
+                  <Form.Control name="UO_contrasena" value={user.UO_contrasena} onChange={handleChange} type="password" placeholder="Ingrese su contraseña" />
+                </Form.Group>
+                <Button variant="primary" type="submit" onClick={handleSave} >
                   Añadir
                 </Button>
               </Form>
@@ -124,24 +149,17 @@ export default function UserWindow({ userAdmins }) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Larry the Bird</td>
-                    <td>The Bird</td>
-                  </tr>
+                  {userAdmins.map((userAdmin)=>(
+                     <tr key={userAdmin.UO_identificador} onClick={() => handleRowClick(userAdmin)}>
+                     <td>{userAdmin.UO_identificador}</td>
+                     <td>{userAdmin.UO_primer_nombre}<span> </span>{userAdmin.UO_segundo_nombre}</td>
+                     <td>{userAdmin.UO_primer_apellido}<span> </span>{userAdmin.UO_segundo_apellido}</td>
+                   </tr>
+                  ))}
+                 
                 </tbody>
               </Table>
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="submit" onClick={handleUpdate}>
                 Eliminar
               </Button>
             </Container>
@@ -152,17 +170,19 @@ export default function UserWindow({ userAdmins }) {
   )
 }
 
-{/*export const getServerSideProps = async (context) => {
+export const getServerSideProps = async (context) => {
   try {
-    const { data: userAdmins } = await axios.get(
+    const { data } = await axios.get(
       "http://localhost:3000/api/config/admin"
     )
+    const {userAdmins, rols} = data;
     return {
       props: {
         userAdmins,
+        rols,
       },
     };
   } catch (error) {
     console.log(error)
   }
-};*/}
+};

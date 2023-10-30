@@ -5,11 +5,38 @@ import axios from "axios";
 import React, { useState } from 'react';
 import { Row, Col, Container, Button, Form, Table, Modal, Alert } from "react-bootstrap"
 
-export default function Inventary({ materials }) {
-  console.log(materials);
+export default function Inventary({ colors, brands, ubications, types }) {
   const [showForm, setShowForm] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
+  const [color, setColor] = useState({
+    CR_identificador: "",
+    CR_nombre: ""
+  });
+  const [brand, setBrand] = useState({
+    MC_identificador: "",
+    MC_nombre: ""
+  });
+  const [ubication, setUbication] = useState({
+    UN_identificador: "",
+    UN_lugar: ""
+  });
+  const [type, setTypes] = useState({
+    TP_identificador: "",
+    TP_nombre: ""
+  });
+
+  const handleChange = ({ target: { name, value } }) => {
+    if (name in color) {
+      setColor({ ...color, [name]: value });
+    } else if (name in brand) {
+      setBrand({ ...brand, [name]: value });
+    } else if (name in ubication) {
+      setUbication({ ...ubication, [name]: value });
+    } else if (name in type){
+      setTypes({ ...type, [name]: value });
+    }
+  };
 
   const handleShowForm = () => {
     setShowForm(true);
@@ -46,11 +73,18 @@ export default function Inventary({ materials }) {
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Marca</Form.Label>
-              <Form.Select>
-                <option>Opcion 1</option>
-                <option>Opcion 2</option>
-                <option>Opcion 3</option>
-                <option>Opcion 4</option>
+              <Form.Select name="MC_identificador" value={parseInt(brand.MC_identificador)} onChange={handleChange}>
+                {brands.map((brand) => (
+                  <option key={brand.MC_identificador} value={brand.MC_identificador}>{brand.MC_nombre}</option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Tipo</Form.Label>
+              <Form.Select name="TP_identificador" value={parseInt(type.TP_identificador)} onChange={handleChange}>
+                {types.map((type) => (
+                  <option key={type.TP_identificador} value={type.TP_identificador}>{type.TP_nombre}</option>
+                ))}
               </Form.Select>
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
@@ -59,20 +93,18 @@ export default function Inventary({ materials }) {
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Color</Form.Label>
-              <Form.Select>
-                <option>Opcion 1</option>
-                <option>Opcion 2</option>
-                <option>Opcion 3</option>
-                <option>Opcion 4</option>
+              <Form.Select name="CR_identificador" value={color.CR_identificador} onChange={handleChange}>
+                {colors.map((color) => (
+                  <option key={color.CR_identificador} value={color.CR_identificador}>{color.CR_nombre}</option>
+                ))}
               </Form.Select>
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Ubicacion</Form.Label>
-              <Form.Select>
-                <option>Opcion 1</option>
-                <option>Opcion 2</option>
-                <option>Opcion 3</option>
-                <option>Opcion 4</option>
+              <Form.Select name="UN_identificador" value={parseInt(ubication.UN_identificador)} onChange={handleChange}>
+                {ubications.map((ubication) => (
+                  <option key={ubication.UN_identificador} value={ubication.UN_identificador}>{ubication.UN_lugar}</option>
+                ))}
               </Form.Select>
             </Form.Group>
             <Form.Group controlId="formBasicPassword">
@@ -125,67 +157,106 @@ export default function Inventary({ materials }) {
           </Container>
           <Container style={{ marginTop: '0.6rem', padding: '2rem' }}>
             <p>Lista de materiales</p>
-            <Container style={{ maxHeight: '400px', overflowY: 'auto' }}>
-              <Table className="text-center" variant='dark' striped bordered hover style={{ fontSize: '1.1rem' }}>
-                <thead>
-                  <tr>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Marca</th>
-                    <th>Cantidad</th>
-                    <th>Observaciones</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
-                    <td>
-                      <Container>
-                        <Row>
-                          <Col>
-                            <Button onClick={handleShowForm}>
-                              Editar
-                            </Button>
-                          </Col>
-                          <Col>
-                            <Button>
-                              Eliminar
-                            </Button>
-                          </Col>
-                        </Row>
-                      </Container>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Container>
+            <Row>
+              <Col xs={12} md={8}>
+                <Container style={{ maxHeight: '400px', overflowY: 'auto' }}>
 
-            <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
-              onClick={handleShowForm}>
-              Añadir
-            </Button>
+                  <Table className="text-center" variant='dark' striped bordered hover style={{ fontSize: '1.1rem' }}>
+                    <thead>
+                      <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Cantidad</th>
+                        <th>Observaciones</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>Otto</td>
+                        <td>Otto</td>
+                        <td>
+                          <Container>
+                            <Row>
+                              <Col>
+                                <Button onClick={handleShowForm}>
+                                  Editar
+                                </Button>
+                              </Col>
+                              <Col>
+                                <Button>
+                                  Eliminar
+                                </Button>
+                              </Col>
+                            </Row>
+                          </Container>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </Container>
+              </Col>
+              <Col>
+                <Row>
+                  <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem' }}
+                    onClick={handleShowForm}>
+                    Añadir Material
+                  </Button>
+                </Row>
+                <Row>
+                  <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
+                  >
+                    Añadir Colores
+                  </Button>
+                </Row>
+                <Row>
+                  <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
+                  >
+                    Añadir Tipo(bolsas, cajas, etc...)
+                  </Button>
+                </Row>
+                <Row>
+                  <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
+                  >
+                    Añadir ubicación
+                  </Button>
+                </Row>
+                <Row>
+                  <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
+                  >
+                    Añadir Marca
+                  </Button>
+                </Row>
+              </Col>
+            </Row>
+
+
+
           </Container>
         </Container>
-      </div>
+      </div >
     </>
   )
 }
-{/*export const getServerSideProps = async (context) => {
+export const getServerSideProps = async (context) => {
   try {
-    const { data: materials } = await axios.get(
+    const { data } = await axios.get(
       "http://localhost:3000/api/material/view"
     );
+    const { colors, brands, ubications, types } = data;
     return {
       props: {
-        materials,
+        colors,
+        brands,
+        ubications,
+        types
       },
     };
   } catch (error) {
     console.log(error);
   }
-};*/}
+}

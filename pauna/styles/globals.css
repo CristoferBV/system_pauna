@@ -29,7 +29,7 @@ html, body {
   font-size: 30px;
   color: white;
   transition: all 0.3s ease;
-  margin: 20px auto; /* Ajusta el margen superior e inferior y centra horizontalmente */
+  margin: 20px auto;
 }
 
 .circle_register {
@@ -43,15 +43,15 @@ html, body {
   font-size: 30px;
   color: white;
   transition: all 0.3s ease;
-  margin: 20px auto; /* Ajusta el margen superior e inferior y centra horizontalmente */
+  margin: 20px auto;
 }
 .header-container {
   border-radius: 3px;
-  background-color: white;
+  background-color: #e9e0e0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 30px 0; /* Relleno superior e inferior de 20px, sin relleno a los lados */
+  padding: 30px 0;
   width: 91.444%;
-  margin: 40px auto; /* Centra el header en el contenedor */
+  margin: 40px auto;
 }
 
 .header-container img {
@@ -60,6 +60,33 @@ html, body {
   margin-right: 10px;
 }
 
+.header-container-home {
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 70px 0;
+  width: 91.444%;
+  margin: 40px auto;
+  color: white;
+}
+
+.custom-container {
+  background-color: #e9e0e0;
+  padding: 20px;
+  border: 1px solid #ccc; 
+  border-radius: 3px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.custom-tabs {
+  background-color: #e9e0e0;
+  border-radius: 3px;
+}
+
+.custom-tab-title {
+  color: black;
+  font-weight: 600;
+}
 
 @media (max-width: 768px) {
   .circle {

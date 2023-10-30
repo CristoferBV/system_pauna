@@ -81,44 +81,44 @@ function DevolutionClient() {
         </Container>
       </header>
 
-      <div className="mx-auto w-11/12 p-6 bg-white mb-8 md:mb-0" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' , borderRadius:"3px"}}>
+      <div className="custom-container mx-auto w-11/12 p-6 mb-8 md:mb-0" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' , borderRadius:"3px"}}>
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
           onSelect={(k) => setKey(k)}
-          className="mb-3"
+          className="mb-3 custom-tabs"
         >
-          <Tab eventKey="Estudiantes" title="Estudiantes">
+          <Tab eventKey="Estudiantes" title={<span className="custom-tab-title">Estudiantes</span>}>
             <Form>
               <Form.Group className="mb-3" controlId="formGridCedula">
-                <Form.Label>Cédula o Identificación</Form.Label>
+                <Form.Label className="font-semibold">Cédula o Identificación</Form.Label>
                 <Form.Control type="text" placeholder="Escriba su cédula o identificación" />
               </Form.Group>
 
               <Row className="mb-3">
-                <Form.Group as={Col} controlId="formGridName">
-                  <Form.Label>Nombre</Form.Label>
+                <Form.Group as={Col} controlId="formGridName" >
+                  <Form.Label className="font-semibold">Nombre</Form.Label>
                   <Form.Control type="text" placeholder="Escriba su nombre" />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridApellido1">
-                  <Form.Label>Apellido #1</Form.Label>
+                  <Form.Label className="font-semibold">Apellido #1</Form.Label>
                   <Form.Control type="text" placeholder="Escriba su primer apellido" />
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridApellido2">
-                  <Form.Label>Apellido #2</Form.Label>
+                  <Form.Label className="font-semibold">Apellido #2</Form.Label>
                   <Form.Control type="text" placeholder="Escriba su segundo apellido" />
                 </Form.Group>
               </Row>
 
               <Form.Group className="mb-3" controlId="formGridCorreo">
-                <Form.Label>Correo Electrónico</Form.Label>
+                <Form.Label className="font-semibold">Correo Electrónico</Form.Label>
                 <Form.Control type="email" placeholder="Escriba su correo electrónico" />
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formGridCorreo">
-                <Form.Label>Fecha de Entrega</Form.Label>
+                <Form.Label className="font-semibold">Fecha de Entrega</Form.Label>
                 <Form.Control type="date" placeholder="Elija la fecha de Entrega" />
               </Form.Group>
 
@@ -128,7 +128,7 @@ function DevolutionClient() {
             </Form>
           </Tab>
 
-          <Tab eventKey="Datos" title="Datos">
+          <Tab eventKey="Datos" title={<span className="custom-tab-title">Datos</span>}>
             <Table striped bordered hover responsive>
               <thead>
                 <tr>

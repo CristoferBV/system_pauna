@@ -31,8 +31,8 @@ function DevolutionClient() {
         <Image
           className="h-9 w-9 mt-2.5 ml-2.5"
           src={Logo}
-          width={300}
-          height={300}
+          width={1000}
+          height={1000}
           alt="University"
         />
       </Navbar.Brand>

@@ -49,14 +49,14 @@ export default function Slidebar({ Dispositivos }) {
     const buttonStyle = {
         backgroundColor: '#021730',
         color: 'white',
-        border: 'none',
-        transition: 'background-color 0.3s',
+        border: 'none', // Agregar un borde blanco
+        transition: 'background-color 0.3s, border 0.3s', // También añadir la transición para el borde
     };
 
     const buttonHoverStyle = {
-        backgroundColor: '#132335', // Color ligeramente más claro al pasar el cursor
-        color: 'white',
-        border: 'none',
+        backgroundColor: '#010E1F',  // Nuevo color de fondo al pasar el cursor
+        color: 'black',  // Texto de color oscuro
+        border: '1px solid white',
     };
 
     return (
@@ -88,7 +88,7 @@ export default function Slidebar({ Dispositivos }) {
                             onChange={(e) => setSearchText(e.target.value)}
                         />
                     </InputGroup>
-                    <Table striped bordered hover variant="dark">
+                    <Table striped bordered hover variant="dark" responsive>
                         <thead>
                             <tr>
                                 <th className="text-center">Dispositivo</th>

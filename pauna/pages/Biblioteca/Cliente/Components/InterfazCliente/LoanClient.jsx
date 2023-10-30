@@ -1,18 +1,25 @@
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import Logo from "../../../../../public/LOGO-UNA.png";
-import LogoBombilla from "../../../../../public/bombilla.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { useEffect } from "react";
 import Link from "next/link";
 import Axios from "axios";
+import Logo from "../../../../../public/LOGO-UNA.png";
+import LogoBombilla from "../../../../../public/bombilla.png";
+import { Navbar, Nav, Form, Button, Card, Table, Container, Row, Col } from "react-bootstrap";
+import { useRouter } from "next/router";
 
 export default function LoanClient() {
 
-  //Estados para lnsertar
+  const router = useRouter();
+  const [active, setActive] = useState("");
+
+  const navigation = [
+    { name: "Préstamo", section: "LoanClient", current: false },
+    { name: "Devolución", section: "DevolutionClient", current: false },
+    { name: "Inicio", section: "HomeClient", current: false },
+  ];
+
+  // Estados para insertar
   const [nombreCompleto, setNombreCompleto] = useState("");
   const [cedula, setCedula] = useState("");
   const [correo, setCorreo] = useState("");
@@ -23,7 +30,7 @@ export default function LoanClient() {
   const [campus, setCampus] = useState("");
   const [telefono, setTelefono] = useState("");
 
-  //Metodo de envio de datos
+  // Método de envío de datos
   const handleSubmit = () => {
     const data = {
       UO_primer_nombre: nombreCompleto,
@@ -49,11 +56,11 @@ export default function LoanClient() {
       });
   };
 
-  //Estados para llenar selects
+  // Estados para llenar selects
   const [carreras, setCarreras] = useState([]);
-  const [dispositivos, setdispositivos] = useState([]);
+  const [dispositivos, setDispositivos] = useState([]);
 
-  //Carreras
+  // Carreras
   useEffect(() => {
     // Realiza una solicitud GET a tu API para obtener las opciones de carrera
     Axios.get("/api/fillSelectsLoan/career")
@@ -66,261 +73,219 @@ export default function LoanClient() {
       });
   }, []);
 
-  //Dispositivos
+  // Dispositivos
   useEffect(() => {
     // Realiza una solicitud GET a tu API para obtener las opciones de carrera
     Axios.get("/api/fillSelectsLoan/device")
       .then((response) => {
         // Al recibir la respuesta, actualiza el estado con los datos de carrera
-        setdispositivos(response.data);
+        setDispositivos(response.data);
       })
       .catch((error) => {
         console.error("Error al obtener las opciones de carrera", error);
       });
   }, []);
 
-  const router = useRouter();
-  const { section } = router.query;
-
-  const [active, setActive] = useState("");
-
-  const navigation = [
-    { name: "Préstamo", section: "LoanClient", current: false },
-    { name: "Devolución", section: "DevolutionClient", current: false },
-    { name: "Perfil", section: "ProfileClient", current: false },
-    { name: "Inicio", section: "HomeClient", current: false },
-  ];
-
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
-
   return (
-    <>
-      <div className="min-h-full relative">
-        <Disclosure as="nav" className="bg-[#FF3333]">
-          {({ open }) => (
-            <>
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 bg-[#E31919] rounded-full w-14 h-14">
-                      <Image
-                        className="h-9 w-9 mt-2.5 ml-2.5"
-                        src={Logo}
-                        width={300}
-                        height={300}
-                        alt="University"
-                      />
-                    </div>
-                    <div className="hidden md:block">
-                      <div className="ml-10 flex items-baseline space-x-4">
-                        {navigation.map((item) => (
-                          <Link
-                            legacyBehavior
-                            key={item.name}
-                            href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                            onClick={() => setActive(item.section)}
-                          >
-                            <a
-                              key={item.name}
-                              href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                              className={classNames(
-                                item.current
-                                  ? "bg-[#FF3333] text-white"
-                                  : "text-white hover:bg-[#E31919] hover:text-white",
-                                "rounded-md px-3 py-2 text-sm font-medium"
-                              )}
-                              aria-current={item.current ? "page" : undefined}
-                            >
-                              {item.name}
-                            </a>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <Link href={"/LoginAndRegister/Login/Login"}>
-                    <button
-                      className="bg-[#FF3333] text-white
-                                  :text-white hover:bg-[#E31919] hover:text-white
-                                rounded-md px-3 py-2 text-sm font-medium"
-                    >
-                      Cerrar Sesión
-                    </button>
-                  </Link>
-                  <div className="-mr-2 flex md:hidden">
-                    {/* Mobile menu button */}
-                    <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-[#E31919] p-2 text-white hover:bg-[#E31919] hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#E31919]">
-                      <span className="absolute -inset-0.5" />
-                      <span className="sr-only">Open main menu</span>
-                      {open ? (
-                        <XMarkIcon
-                          className="block h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <Bars3Icon
-                          className="block h-6 w-6"
-                          aria-hidden="true"
-                        />
-                      )}
-                    </Disclosure.Button>
-                  </div>
-                </div>
-              </div>
-              <Disclosure.Panel className="md:hidden">
-                <div className="space-y-1 px-2 pb-2 pt-12 sm:px-3">
-                  {navigation.map((item) => (
-                    <Disclosure.Button
-                      key={item.name}
-                      as="a"
-                      href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                      className={classNames(
-                        item.current
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                        "block rounded-md px-3 py-2 text-base font-medium"
-                      )}
-                      aria-current={item.current ? "page" : undefined}
-                    >
-                      {item.name}
-                    </Disclosure.Button>
-                  ))}
-                </div>
-              </Disclosure.Panel>
-            </>
-          )}
-        </Disclosure>
-        <header className="text-center py-10">
-          <div className="mx-auto w-11/12 h-28 bg-gray-400 rounded-md p-4 flex items-center justify-center">
-            <div className="mr-2">
-              <Image src={LogoBombilla} width={40} height={40} alt="Icon" />
-            </div>
-            <p className="text-xl font-bold">
-              Llene todos los campos correspondientes
-            </p>
-          </div>
-        </header>
+    <div className=" flex flex-col min-h-screen">
+      <Navbar bg="danger" expand="lg">
+      <Navbar.Brand href="#home">
+        <Image
+          className="h-9 w-9 mt-2.5 ml-2.5"
+          src={Logo}
+          width={1000}
+          height={1000}
+          alt="University"
+        />
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          {navigation.map((item) => (
+            <Link
+              variant="danger"
+              size="sm"
+              key={item.name}
+              href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
+              onClick={() => setActive(item.section)}
+              style={{ textDecoration: "none" }}
+              className="d-flex align-items-center justify-content-center"
+            >
+              <Nav.Link
+                key={item.name}
+                href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
+                className={
+                  active === item.section ? "bg-danger text-white" : "text-white"
+                }
+              >
+                {item.name}
+              </Nav.Link>
+            </Link>
+          ))}
+           <Link href={'/LoginAndRegister/Login/Login'} className="d-flex justify-content-center" style={{ textDecoration: "none" }}>
+              <Button Button variant="danger" size="ms">Cerrar Sesión</Button>
+            </Link>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
 
-        <main className="min-h-screen flex-grow relative z-0">
-          <h1 className="text-2xl font-bold mb-6 text-center">
+      <main className="flex-1">
+      <header className="header-container d-flex align-items-center justify-content-center">
+        <Container>
+          <Row>
+            <Col>
+              <div className="d-flex align-items-center justify-content-center">
+                <Image src={LogoBombilla} alt="Logo" />
+                <h1 className="ml-3">Realice el Préstamo</h1>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </header>
+
+        <div className="mx-auto w-11/12 p-6 bg-[#e9e0e0] mb-8 md:mb-0" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' , borderRadius:"3px"}}> 
+        <h1 className="text-2xl font-bold mb-6 text-center">
             Formulario de solicitudes
           </h1>
-          <div className="mx-auto w-11/12 p-4 bg-[#D9D9D9] rounded-md mb-8 md:mb-0">
-            <div className="bg-[#BFBFBF] rounded-md p-6 grid md:grid-cols-3 gap-4">
-              {/* Columna 1 */}
-              <div className="col-span-1 md:mb-0">
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">
-                    Nombre completo
-                  </label>
-                  <input type="text" className="p-2 w-full border rounded-md" placeholder="Ejem: Pepito Bryan Gomez Arguedas" value={nombreCompleto} onChange={(e) => setNombreCompleto(e.target.value)}/>
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Cédula</label>
-                  <input
+          <div className="rounded p-6">
+            <Row>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Nombre completo</label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ejemplo: Pepito Bryan Gomez Arguedas"
+                    value={nombreCompleto}
+                    onChange={(e) => setNombreCompleto(e.target.value)}
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Cédula</label>
+                  <Form.Control
                     type="input"
-                    className="p-2 w-full border rounded-md"
-                    placeholder="Ejem: 018080472"
+                    placeholder="Ejemplo: 018080472"
                     value={cedula}
                     onChange={(e) => setCedula(e.target.value)}
                   />
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Correo</label>
-                  <input type="tel" className="p-2 w-full border rounded-md" placeholder="Ejem: correo@gmail.com" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
-                </div>
-              </div>
+                </Form.Group>
 
-              {/* Columna 2 */}
-              <div className="col-span-1 md:mb-0">
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Carrera</label>
-                  <select className="p-2 w-full border rounded-md" value={carrera} onChange={(e) => setCarrera(e.target.value)}>
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Correo</label>
+                  <Form.Control
+                    type="tel"
+                    placeholder="Ejemplo: correo@gmail.com"
+                    value={correo}
+                    onChange={(e) => setCorreo(e.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Carrera</label>
+                  <Form.Control
+                    as="select"
+                    value={carrera}
+                    onChange={(e) => setCarrera(e.target.value)}
+                  >
                     <option value="">-Seleccionar opción-</option>
                     {carreras.map((carrera) => (
                       <option key={carrera.value} value={carrera.value}>
                         {carrera.label}
                       </option>
                     ))}
-                  </select>
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">
-                    Nivel de carrera
-                  </label>
-                  <input
+                  </Form.Control>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Nivel de carrera</label>
+                  <Form.Control
                     type="input"
-                    className="p-2 w-full border rounded-md"
-                    placeholder="Ejem: Nivel I"
+                    placeholder="Ejemplo: Nivel I"
                     value={nivelCarrera}
                     onChange={(e) => setNivelCarrera(e.target.value)}
                   />
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">
-                    Dispositivos
-                  </label>
-                  <select className="p-2 w-full border rounded-md" value={dispositivo} onChange={(e) => setDispositivo(e.target.value)}>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Dispositivos</label>
+                  <Form.Control
+                    as="select"
+                    value={dispositivo}
+                    onChange={(e) => setDispositivo(e.target.value)}
+                  >
                     <option value="">-Seleccionar opción-</option>
                     {dispositivos.map((dispositivo) => (
                       <option key={dispositivo.value} value={dispositivo.value}>
                         {dispositivo.label}
                       </option>
                     ))}
-                  </select>
-                </div>
-              </div>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
 
-              {/* Columna 3 */}
-              <div className="col-span-1">
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">
-                    Fechas de prestamos
-                  </label>
-                  <select className="p-2 w-full border rounded-md" value={fechaPrestamo} onChange={(e) => setFechaPrestamo(e.target.value)}>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Fechas de prestamos</label>
+                  <Form.Control
+                    as="select"
+                    value={fechaPrestamo}
+                    onChange={(e) => setFechaPrestamo(e.target.value)}
+                  >
                     <option value="">-Seleccionar opción-</option>
                     <option value="">2023/10/2</option>
                     <option value="">2022/4/10</option>
-                  </select>
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Campus</label>
-                  <input
+                  </Form.Control>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Campus</label>
+                  <Form.Control
                     type="input"
-                    className="p-2 w-full border rounded-md"
-                    placeholder="Ejem: Campus Coto"
+                    placeholder="Ejemplo: Campus Coto"
                     value={campus}
                     onChange={(e) => setCampus(e.target.value)}
                   />
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Telefono</label>
-                  <input
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Teléfono</label>
+                  <Form.Control
                     type="input"
-                    className="p-2 w-full border rounded-md"
-                    placeholder="Ejem: 85893501"
+                    placeholder="Ejemplo: 85893501"
                     value={telefono}
                     onChange={(e) => setTelefono(e.target.value)}
                   />
-                </div>
-              </div>
-            </div>
-            <div className="mt-8 flex justify-center">
-              <button className="bg-[#E31919] text-white rounded-md px-4 py-2 font-medium hover:bg-[#FF3333]"
-              onClick={handleSubmit}>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <div className="text-center mt-4">
+              <Button variant="danger" onClick={handleSubmit}>
                 Aceptar
-              </button>
+              </Button>
             </div>
           </div>
-        </main>
-        <footer className="bg-[#FF3333] text-white py-4 text-start">
-          <p className="px-4">
-            Derechos reservados: @Desarrolladores PAUNA 2023
-          </p>
-        </footer>
-      </div>
-    </>
+        </div>
+      </main>
+
+      <footer>
+        <Card className="w-11/12 bg-danger text-white" style={{ margin: '20px auto', padding: '20px' }}>
+          <Container>
+            <Row>
+              <Col xs={12} md={6}>
+                <p>Contacto: ivannia.conejo.chinchilla@una.ac.cr</p>
+                <p>Teléfono: +506 2562-6316</p>
+              </Col>
+              <Col xs={12} md={6}>
+                <p>Derechos de autor &copy; 2023 PAUNA</p>
+                <p>Universidad Nacional Campus Coto</p>
+              </Col>
+            </Row>
+          </Container>
+        </Card>
+      </footer>
+    </div>
   );
 }

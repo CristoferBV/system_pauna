@@ -281,6 +281,12 @@ export const getServerSideProps = async (context) => {
             },
         };
     } catch (error) {
-        console.log(error);
+        console.log(error)
+        return {
+            props: {
+                Citas: [], // Puedes proporcionar un valor predeterminado en caso de error.
+            },
+        };
+        
     }
 };

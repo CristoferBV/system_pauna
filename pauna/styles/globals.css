@@ -8,9 +8,112 @@ html, body {
     padding: 0;
     background-color: #FFFFFF;
   }
-  .main-bg {
-    background-image: url('../public/Fondo\ biblioteca.jpg');
-    background-size: cover;
-    background-position: center;
-  }
+.main-bg {
+  background-image: url('../public/Fondo\ biblioteca.jpg');
+  background-size: cover;
+  background-position: center;
+}
 
+.circle-container {
+  text-align: center;
+}
+
+.circle {
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background-color: #0E21CD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: white;
+  transition: all 0.3s ease;
+  margin: 20px auto;
+}
+
+.circle_register {
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background-color: #E31919;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: white;
+  transition: all 0.3s ease;
+  margin: 20px auto;
+}
+.header-container {
+  border-radius: 3px;
+  background-color: #e9e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 30px 0;
+  width: 91.444%;
+  margin: 40px auto;
+}
+
+.header-container img {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.header-container-home {
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 70px 0;
+  width: 91.444%;
+  margin: 40px auto;
+  color: white;
+}
+
+.custom-container {
+  background-color: #e9e0e0;
+  padding: 20px;
+  border: 1px solid #ccc; 
+  border-radius: 3px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.custom-tabs {
+  background-color: #e9e0e0;
+  border-radius: 3px;
+}
+
+.custom-tab-title {
+  color: black;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .circle {
+    width: 200px;
+    height: 200px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .circle_register {
+    width: 200px;
+    height: 200px;
+    font-size: 20px;
+  }
+}
+
+/* Estilo predeterminado para pantallas grandes */
+@media (min-width: 768px) {
+  .min-height-100vh {
+    min-height: 100vh;
+  }
+}
+
+/* Estilo para pantallas más pequeñas (ajusta el valor a tu necesidad) */
+@media (max-width: 767px) {
+  .min-height-100vh {
+    min-height: 40vh; /* Cambia el valor según tus preferencias */
+  }
+}

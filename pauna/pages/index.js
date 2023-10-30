@@ -3,7 +3,6 @@ import UserWindow from './Administracion/Components/User/userWindow'
 import HomeClient from './Biblioteca/Cliente/Components/InterfazCliente/HomeClient'
 import LoanClient from './Biblioteca/Cliente/Components/InterfazCliente/LoanClient'
 import DevolutionClient from './Biblioteca/Cliente/Components/InterfazCliente/DevolutionClient'
-import ProfileClient from './Biblioteca/Cliente/Components/InterfazCliente/ProfileClient'
 import Login from './LoginAndRegister/Login/Login'
 import Register from './LoginAndRegister/Register/Register'
 
@@ -27,8 +26,8 @@ export default function Home() {
       {/* <LoanClient/> */}
       {/* <DevolutionClient/> */}
       {/* <ProfileClient/> */}
+      {/* <PaginaCirculo/> */}
       <Login/>
-      {/* <Register/> */}
       {/* <Sidebar/> */}
       {/* <NavbarAdminBiblioteca/> */}
     </>

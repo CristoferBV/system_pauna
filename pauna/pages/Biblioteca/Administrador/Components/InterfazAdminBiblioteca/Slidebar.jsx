@@ -61,7 +61,7 @@ export default function Slidebar({ Dispositivos }) {
 
     return (
         <div className="p-4">
-            <Card bg="dark" text="white">
+            <Card bg="secondary" text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
                         <span>Lista de Dispositivos</span>
@@ -88,7 +88,7 @@ export default function Slidebar({ Dispositivos }) {
                             onChange={(e) => setSearchText(e.target.value)}
                         />
                     </InputGroup>
-                    <Table striped bordered hover variant="dark" responsive>
+                    <Table variant='secondary' striped bordered hover responsive>
                         <thead>
                             <tr>
                                 <th className="text-center">Dispositivo</th>

@@ -17,7 +17,6 @@ export default function LoanV2() {
     const navigation = [
       { name: "Préstamo", section: "LoanClient", current: false },
       { name: "Devolución", section: "DevolutionClient", current: false },
-      { name: "Perfil", section: "ProfileClient", current: false },
       { name: "Inicio", section: "HomeClient", current: false },
     ];
 
@@ -149,44 +148,43 @@ export default function LoanV2() {
         <h1 className="text-2xl font-bold mb-6 text-center">
             Formulario de solicitudes
           </h1>
-          <div className="rounded p-6 grid md:grid-cols-3 gap-4">
-              {/* Columna 1 */}
+          <div className="rounded p-6">
+            <Row>
               <Col md={4}>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">
-                    Nombre completo
-                  </label>
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Nombre completo</label>
                   <Form.Control
                     type="text"
-                    placeholder="Ejem: Pepito Bryan Gomez Arguedas"
+                    placeholder="Ejemplo: Pepito Bryan Gomez Arguedas"
                     value={nombreCompleto}
                     onChange={(e) => setNombreCompleto(e.target.value)}
                   />
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Cédula</label>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Cédula</label>
                   <Form.Control
                     type="input"
-                    placeholder="Ejem: 018080472"
+                    placeholder="Ejemplo: 018080472"
                     value={cedula}
                     onChange={(e) => setCedula(e.target.value)}
                   />
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Correo</label>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Correo</label>
                   <Form.Control
                     type="tel"
-                    placeholder="Ejem: correo@gmail.com"
+                    placeholder="Ejemplo: correo@gmail.com"
                     value={correo}
                     onChange={(e) => setCorreo(e.target.value)}
                   />
-                </div>
+                </Form.Group>
               </Col>
 
-              {/* Columna 2 */}
               <Col md={4}>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Carrera</label>
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Carrera</label>
                   <Form.Control
                     as="select"
                     value={carrera}
@@ -199,20 +197,20 @@ export default function LoanV2() {
                       </option>
                     ))}
                   </Form.Control>
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">
-                    Nivel de carrera
-                  </label>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Nivel de carrera</label>
                   <Form.Control
                     type="input"
-                    placeholder="Ejem: Nivel I"
+                    placeholder="Ejemplo: Nivel I"
                     value={nivelCarrera}
                     onChange={(e) => setNivelCarrera(e.target.value)}
                   />
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Dispositivos</label>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Dispositivos</label>
                   <Form.Control
                     as="select"
                     value={dispositivo}
@@ -225,14 +223,12 @@ export default function LoanV2() {
                       </option>
                     ))}
                   </Form.Control>
-                </div>
+                </Form.Group>
               </Col>
 
               <Col md={4}>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">
-                    Fechas de prestamos
-                  </label>
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Fechas de prestamos</label>
                   <Form.Control
                     as="select"
                     value={fechaPrestamo}
@@ -242,35 +238,36 @@ export default function LoanV2() {
                     <option value="">2023/10/2</option>
                     <option value="">2022/4/10</option>
                   </Form.Control>
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Campus</label>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Campus</label>
                   <Form.Control
                     type="input"
-                    placeholder="Ejem: Campus Coto"
+                    placeholder="Ejemplo: Campus Coto"
                     value={campus}
                     onChange={(e) => setCampus(e.target.value)}
                   />
-                </div>
-                <div className="mb-8">
-                  <label className="block font-semibold mb-1">Telefono</label>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Teléfono</label>
                   <Form.Control
                     type="input"
-                    placeholder="Ejem: 85893501"
+                    placeholder="Ejemplo: 85893501"
                     value={telefono}
                     onChange={(e) => setTelefono(e.target.value)}
                   />
-                </div>
+                </Form.Group>
               </Col>
-            </div>
-            <div className="mt-8 d-flex justify-content-center">
-              <Button
-                variant="primary"
-                onClick={handleSubmit}
-              >
+            </Row>
+
+            <div className="text-center mt-4">
+              <Button variant="danger" onClick={handleSubmit}>
                 Aceptar
               </Button>
             </div>
+          </div>
         </div>
       </main>
 

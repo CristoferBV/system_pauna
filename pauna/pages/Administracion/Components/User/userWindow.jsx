@@ -68,6 +68,7 @@ export default function UserWindow({ userAdmins, rols }) {
     setTimeout(() => {
       setShowAlert(false);
     }, 4000);
+    reloadPage();
   };
   const handleAlertClose = () => {
     setShowAlert(false);

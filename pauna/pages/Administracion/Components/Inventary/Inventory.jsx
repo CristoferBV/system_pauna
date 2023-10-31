@@ -1,11 +1,12 @@
 "use client";
-import Buttons from "./InvButtons";
-import Link from "next/link";
+
 import axios from "axios";
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Row, Col, Container, Button, Form, Table, Modal, Alert } from "react-bootstrap"
 
 export default function Inventary({ materials, colors, brands, ubications, types }) {
+  const router = useRouter();
   console.log({ materials })
   const [showAlert, setShowAlert] = useState(false);
   const [showFormState, setShowFormState] = useState({
@@ -41,6 +42,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
         console.log(error);
       });
     console.log(res)
+    reloadPage();
   };
 
   const handleDeleteMaterial = async (materialID) => {
@@ -53,6 +55,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
         console.log(error);
       });
     console.log(res)
+    reloadPage();
   };
 
   const [material, setMaterial] = useState({
@@ -117,6 +120,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
     setTimeout(() => {
       setShowAlert(false);
     }, 2000);
+    reloadPage();
   };
   const handleAlertClose = () => {
     setShowAlert(false);
@@ -140,6 +144,10 @@ export default function Inventary({ materials, colors, brands, ubications, types
     handleToggleForm('edit')
 
   };
+
+  const reloadPage = () => {
+    router.push("/Administracion/Components/Inventary/Inventory");
+  }
 
   return (
     <>

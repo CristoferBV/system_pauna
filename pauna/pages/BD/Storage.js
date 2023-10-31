@@ -5,7 +5,7 @@ const pool= createPool({
   host: "localhost",
   user:"root",
   password:"",
-  port:3308,
+  port:3306,
   database:"plataformaadministrativauna"
 })
 

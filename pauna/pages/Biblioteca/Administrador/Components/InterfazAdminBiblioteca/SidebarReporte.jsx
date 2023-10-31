@@ -90,7 +90,7 @@ export default function SidebarReporte ({ Reporte }) {
                                     {Reporte.LP_fechaDevolucion}
                                 </td>
                                 <td className="px-6 py-4 text-white">
-                                    {Reporte.CE_correoElectronico}
+                                    {Reporte["CE-correoElectronico"]}
                                 </td>
                                 <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
                                     <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />

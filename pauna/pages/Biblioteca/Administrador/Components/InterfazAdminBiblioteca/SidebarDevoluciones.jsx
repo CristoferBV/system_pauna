@@ -128,7 +128,7 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                                         <td>{devolucion.CA_nombre}</td>
                                         <td>{devolucion.HO_fecha}</td>
                                         <td>{devolucion.LP_fechaDevolucion}</td>
-                                        <td>{devolucion.CE_correoElectronico}</td>
+                                        <td>{devolucion['CE-correoElectronico']}</td>
                                         <td>
                                             <Button variant="light" className="ml-2" onClick={() => handleEdit(devolucion)}>
                                                 Editar

@@ -34,6 +34,7 @@ export default function Slidebar({ Dispositivos }) {
     const filteredDevices = Dispositivos.filter((device) => {
         return (
             device.TP_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
+            device.TP_cantidad.toLowerCase().includes(searchText.toLowerCase()) ||
             device.EA_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
             device.AO_descripcion.toLowerCase().includes(searchText.toLowerCase()) ||
             device.AO_estado.toLowerCase().includes(searchText.toLowerCase())
@@ -43,6 +44,22 @@ export default function Slidebar({ Dispositivos }) {
     const handleCreateDevice = () => {
         setShowCreateForm(true);
         setEditedValues({});
+    };
+
+    const handleSaveDevice = async () => {
+        // Aquí debes enviar los datos al servidor para ser guardados en la base de datos
+        try {
+            const response = await axios.post("http://localhost:3000/api/config/BibliotecaDispositivos", editedValues);
+            console.log('Dispositivo creado:', response.data);
+            // Vuelve a cargar la lista de dispositivos
+            loadDevices();
+        } catch (error) {
+            console.error('Error al crear el dispositivo:', error);
+            // Muestra un mensaje de error al usuario
+            alert('Error al crear el dispositivo');
+        }
+
+        setShowCreateForm(false);
     };
 
     // Define los estilos CSS para los botones y sus efectos de hover
@@ -92,6 +109,7 @@ export default function Slidebar({ Dispositivos }) {
                         <thead>
                             <tr>
                                 <th className="text-center">Dispositivo</th>
+                                <th className="text-center">Cantidad</th>
                                 <th className="text-center">Periféricos</th>
                                 <th className="text-center">Descripción</th>
                                 <th className="text-center">Estado</th>
@@ -102,6 +120,7 @@ export default function Slidebar({ Dispositivos }) {
                             {filteredDevices.map((device) => (
                                 <tr key={device.LP_identificador}>
                                     <td className="text-center">{device.TP_nombre}</td>
+                                    <td className="text-center">{device.TP_cantidad}</td>
                                     <td className="text-center">{device.EA_nombre}</td>
                                     <td className="text-center">{device.AO_descripcion}</td>
                                     <td className="text-center">{device.AO_estado}</td>
@@ -133,7 +152,6 @@ export default function Slidebar({ Dispositivos }) {
                                         >
                                             Eliminar
                                         </Button>
-
                                     </td>
                                 </tr>
                             ))}
@@ -153,6 +171,15 @@ export default function Slidebar({ Dispositivos }) {
                                 type="text"
                                 name="TP_nombre"
                                 value={editedValues.TP_nombre || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Cantidad</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="TP_cantidad"
+                                value={editedValues.TP_cantidad || ''}
                                 onChange={handleInputChange}
                             />
                         </Form.Group>
@@ -201,7 +228,7 @@ export default function Slidebar({ Dispositivos }) {
                     </Button>
                     <Button
                         variant="primary"
-                        onClick={handleCreateDevice}
+                        onClick={handleSaveDevice}
                         style={buttonStyle}
                         onMouseEnter={(e) => {
                             e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
@@ -226,6 +253,15 @@ export default function Slidebar({ Dispositivos }) {
                                 type="text"
                                 name="TP_nombre"
                                 value={editedValues.TP_nombre || ''}
+                                onChange={handleInputChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Cantidad</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="TP_cantidad"
+                                value={editedValues.TP_cantidad || ''}
                                 onChange={handleInputChange}
                             />
                         </Form.Group>

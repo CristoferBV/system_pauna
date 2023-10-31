@@ -14,6 +14,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
     types: false,
     ubi: false,
     brand: false,
+    edit: false
   });
 
   const handleSubmit = async (data) => {
@@ -27,6 +28,24 @@ export default function Inventary({ materials, colors, brands, ubications, types
         console.log(error);
       });
     console.log(res)
+  };
+
+  const handleUpdate = async (data) => {
+    console.log("hola");
+    const res = await axios
+      .put("/api/material/view", data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log(res)
+  };
+
+  const handleDelete = async (data) => {
+    const updatedMaterials = materials.filter((item) => item.ML_identificador !== data.ML_identificador);
+    setMaterial(updatedMaterials);
   };
 
   const [material, setMaterial] = useState({
@@ -95,6 +114,26 @@ export default function Inventary({ materials, colors, brands, ubications, types
   const handleAlertClose = () => {
     setShowAlert(false);
   };
+
+  const [filterValue, setFilterValue] = useState('');
+  const handleFilterChange = (event) => {
+    setFilterValue(event.target.value);
+  };
+  const filteredMaterials = materials.filter((material) => {
+    const description = material.ML_descripcion.toLowerCase();
+    const name = material.MC_nombre.toLowerCase();
+    const id = material.ML_identificador;
+    const filterValueLowerCase = filterValue.toLowerCase();
+
+    return description.includes(filterValueLowerCase) || name.includes(filterValueLowerCase) || id == filterValue;
+  });
+
+  const handleEditMaterial = (material) => {
+    setMaterial(material);
+    handleToggleForm('edit')
+
+  };
+
   return (
     <>
       <Modal show={showFormState.material} onHide={() => handleCloseForm('material')}>
@@ -276,6 +315,41 @@ export default function Inventary({ materials, colors, brands, ubications, types
         </Modal.Footer>
       </Modal>
 
+      <Modal show={showFormState.edit} onHide={() => handleCloseForm('edit')}>
+        <Modal.Header closeButton>
+          <Modal.Title>Editar cantidades</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Codigo</Form.Label>
+              <Form.Control disabled={true} name="ML_identificador" value={material.ML_identificador} onChange={handleChange} type="text" placeholder="Ingrese el color" />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control disabled={true} name="ML_descripcion" value={material.ML_descripcion} onChange={handleChange} type="text" placeholder="Ingrese el color" />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Cantidad</Form.Label>
+              <Form.Control name="ML_cantidad" value={material.ML_cantidad} onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Observaciones</Form.Label>
+              <Form.Control name="ML_observacion" value={material.ML_observacion} onChange={handleChange} as="textarea" placeholder="Ingrese la nueva observacion observaciones" />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => handleCloseForm('edit')}>
+            Cerrar
+          </Button>
+          <Button type="submit" variant="primary" onClick={() => handleUpdate(material)}>
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
       <Alert show={showAlert} variant="success" onClose={handleAlertClose} dismissible>
         ¡Guardado con éxito!
       </Alert>
@@ -302,9 +376,10 @@ export default function Inventary({ materials, colors, brands, ubications, types
         <Container className="rounded" style={{ backgroundColor: '#212529' }}>
           <Container>
             <Form style={{ fontSize: '1.1rem', padding: '1.1rem' }}>
-              <Form.Control type="text" placeholder="Buscar..." style={{
-                backgroundColor: '#041a34', fontSize: '1.1rem', color: 'white', padding: '1rem', WebkitTextFillColor: 'white',
-              }}>
+              <Form.Control type="text" placeholder="Buscar..." value={filterValue}
+                onChange={handleFilterChange} style={{
+                  backgroundColor: '#041a34', fontSize: '1.1rem', color: 'white', padding: '1rem', WebkitTextFillColor: 'white',
+                }}>
               </Form.Control>
             </Form>
           </Container>
@@ -326,7 +401,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
                       </tr>
                     </thead>
                     <tbody>
-                      {materials.map((material) => (
+                      {filteredMaterials.map((material) => (
                         <tr key={material.ML_identificador}>
                           <td>{material.ML_identificador}</td>
                           <td>{material.ML_descripcion}</td>
@@ -337,12 +412,12 @@ export default function Inventary({ materials, colors, brands, ubications, types
                             <Container>
                               <Row>
                                 <Col>
-                                  <Button onClick={() => handleToggleForm('material')}>
+                                  <Button onClick={() => handleEditMaterial(material)}>
                                     Editar
                                   </Button>
                                 </Col>
                                 <Col>
-                                  <Button>
+                                  <Button onClick={() => handleDelete(material.ML_identificador)}>
                                     Eliminar
                                   </Button>
                                 </Col>

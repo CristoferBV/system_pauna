@@ -9,27 +9,38 @@ export default async function handler(req, res) {
             const type = req.body.tipo
             switch (type) {
                 case "Color":
-                    return await saveColor(req, res)
+                    return await saveColor(req, res);
                 case "Brand":
-                    return await saveBrand(req, res)
+                    return await saveBrand(req, res);
                 case "Ubication":
-                    return await saveUbication(req, res)
-
+                    return await saveUbication(req, res);
                 case "Type":
-                    return await saveType(req, res)
+                    return await saveType(req, res);
                 case "Material":
-                    await saveMaterial(req, res)
-                    await saveMaterialXBrand(req, res)
-                    await saveMaterialXColor(req, res)
+                    await saveMaterial(req, res);
+                    await saveMaterialXBrand(req, res);
+                    await saveMaterialXColor(req, res);
                     break
             }
         case "PUT":
+            return await updateMaterial(req, res);
 
         case "DELETE":
     }
 }
 
+const updateMaterial = async (req, res) => {
+    const {ML_identificador, ML_cantidad, ML_observacion}= req.body;
+    const data= {ML_cantidad, ML_observacion}
+    const result = await pool.query("UPDATE `pau_adm_tbl_material` SET ? WHERE ML_identificador = ?",
+        [data, ML_identificador]
+    )
+    return res.status(200).json(result)
+};
 
+const deleteMaterial = async(req, {paramns})=>{
+
+}
 
 const getAllMaterial = async (req, res) => {
     const sqlMaterial = "SELECT pm.ML_identificador, pm.ML_descripcion, pm.ML_observacion, pma.MC_nombre, pm.ML_cantidad" +
@@ -52,10 +63,8 @@ const getAllMaterial = async (req, res) => {
 const saveData = async (table, data, res) => {
     try {
         console.log(data);
-
         const result = await pool.query(`INSERT INTO ${table} SET ?`, data);
         console.log(result);
-
         return res.status(200).json(result);
     } catch (error) {
         console.log(error);

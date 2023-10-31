@@ -234,8 +234,7 @@ export default function LoanClient() {
                     onChange={(e) => setFechaPrestamo(e.target.value)}
                   >
                     <option value="">-Seleccionar opción-</option>
-                    <option value="">2023/10/2</option>
-                    <option value="">2022/4/10</option>
+
                   </Form.Control>
                 </Form.Group>
 

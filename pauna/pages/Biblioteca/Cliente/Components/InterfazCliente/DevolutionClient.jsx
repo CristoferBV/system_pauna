@@ -10,8 +10,10 @@ import { Row, Col } from "react-bootstrap";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Container from "react-bootstrap/Container"
+import axios from 'axios';
 
-function DevolutionClient() {
+
+export default function DevolutionClient({Devolution}) {
   const router = useRouter();
 
   const [active, setActive] = useState("");
@@ -23,6 +25,50 @@ function DevolutionClient() {
   ];
 
   const [key, setKey] = useState("Estudiantes");
+
+  //Datos que se envían a la base de datos
+  const [] = useState({
+    PrimerNombreUsuario: '',
+    IdentificadorUsuario: '',
+    NombreCarrera: '',
+    NombreTipo: '',
+    FechaDevolucion: '',
+  });
+
+  const [identificacion, setIdentificacion] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [apellido1, setApellido1] = useState('');
+  const [apellido2, setApellido2] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [fechaEntrega, setFechaEntrega] = useState('YYYY-MM-DD');
+
+  const buscarEstudiante = async () => {
+    try {
+      const response = await axios.get(`/api/devolution/students?identificacion=${identificacion}`);
+      if (response.status === 200) {
+        const data = response.data;
+        if (data.length > 0) {
+          const estudiante = data[0];
+          setNombre(estudiante.Nombre);
+          setApellido1(estudiante.PrimerApellido);
+          setApellido2(estudiante.SegundoApellido);
+          setCorreo(estudiante.Correo);
+  
+          // Formatea la fecha en "YYYY-MM-DD" antes de establecerla en el estado
+          const fechaEntrega = new Date(estudiante.FechaEntrega);
+          const formattedFechaEntrega = fechaEntrega.toISOString().split('T')[0];
+          setFechaEntrega(formattedFechaEntrega);
+        } else {
+          // No se encontró ningún estudiante con la identificación proporcionada
+          // Puedes mostrar un mensaje de error o realizar alguna acción apropiada aquí.
+        }
+      } else {
+        // Manejar errores de la solicitud a la API
+      }
+    } catch (error) {
+      // Manejar errores de la solicitud
+    }
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -92,37 +138,37 @@ function DevolutionClient() {
             <Form>
               <Form.Group className="mb-3" controlId="formGridCedula">
                 <Form.Label className="font-semibold">Cédula o Identificación</Form.Label>
-                <Form.Control type="text" placeholder="Escriba su cédula o identificación" />
+                <Form.Control type="text" placeholder="Escriba su cédula o identificación" value={identificacion} onChange={(e) => setIdentificacion(e.target.value)}/>
               </Form.Group>
 
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridName" >
                   <Form.Label className="font-semibold">Nombre</Form.Label>
-                  <Form.Control type="text" placeholder="Escriba su nombre" />
+                  <Form.Control type="text" placeholder="Escriba su nombre" value={nombre} onChange={(e) => setNombre(e.target.value)}/>
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridApellido1">
                   <Form.Label className="font-semibold">Apellido #1</Form.Label>
-                  <Form.Control type="text" placeholder="Escriba su primer apellido" />
+                  <Form.Control type="text" placeholder="Escriba su primer apellido" value={apellido1} onChange={(e) => setApellido1(e.target.value)}/>
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridApellido2">
                   <Form.Label className="font-semibold">Apellido #2</Form.Label>
-                  <Form.Control type="text" placeholder="Escriba su segundo apellido" />
+                  <Form.Control type="text" placeholder="Escriba su segundo apellido" value={apellido2} onChange={(e) => setApellido2(e.target.value)}/>
                 </Form.Group>
               </Row>
 
               <Form.Group className="mb-3" controlId="formGridCorreo">
                 <Form.Label className="font-semibold">Correo Electrónico</Form.Label>
-                <Form.Control type="email" placeholder="Escriba su correo electrónico" />
+                <Form.Control type="email" placeholder="Escriba su correo electrónico" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formGridCorreo">
                 <Form.Label className="font-semibold">Fecha de Entrega</Form.Label>
-                <Form.Control type="date" placeholder="Elija la fecha de Entrega" />
+                <Form.Control type="date" placeholder="Elija la fecha de Entrega" value={fechaEntrega} onChange={(e) => setFechaEntrega(e.target.value)}/>
               </Form.Group>
 
-              <Button variant="danger" type="button">
+              <Button variant="danger" type="button" onClick={buscarEstudiante}>
                 Buscar Estudiante
               </Button>
             </Form>
@@ -140,27 +186,16 @@ function DevolutionClient() {
                 </tr>
               </thead>
                 <tbody>
-                  <tr>
-                    <td>John</td>
-                    <td>12679535</td>
-                    <td>Ingeniería en Sistemas de Información</td>
-                    <td>Laptop</td>
-                    <td>21/5/2023</td>
+                  {Devolution.map((Devolution) => (
+
+                  <tr key={Devolution.IdentificadorUsuario}>
+                    <td>{Devolution.PrimerNombreUsuario}</td>
+                    <td>{Devolution.IdentificadorUsuario}</td>
+                    <td> {Devolution.NombreCarrera}</td>
+                    <td>{Devolution.NombreTipo}</td>
+                    <td>{new Date(Devolution.FechaDevolucion).toISOString().slice(0, 10)}</td>
                   </tr>
-                  <tr>
-                    <td>Jane</td>
-                    <td>16979742</td>
-                    <td>Enseñanza del Inglés</td>
-                    <td>Tablet</td>
-                    <td>13/3/2023</td>
-                  </tr>
-                  <tr>
-                    <td>Robert</td>
-                    <td>03242213</td>
-                    <td>Administración</td>
-                    <td>Tablet</td>
-                    <td>29/10/2023</td>
-                  </tr>
+                  ))}
                 </tbody>
             </Table>
               <Button variant="danger" type="button">
@@ -191,4 +226,24 @@ function DevolutionClient() {
   );
 }
 
-export default DevolutionClient;
+export const getServerSideProps = async (context) => {
+  try {
+      const { data: Devolution } = await axios.get(
+          "http://localhost:3000/api/devolution/data"
+      );
+      return {
+          props: {
+            Devolution,
+          },
+      };
+  } catch (error) {
+      console.log(error);
+      return {
+          props: {
+            Devolution: [], // Puedes proporcionar un valor predeterminado en caso de error.
+          },
+      };
+  }
+};
+
+

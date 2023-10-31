@@ -19,9 +19,9 @@ export default function DevolutionClient({Devolution}) {
   const [active, setActive] = useState("");
 
   const navigation = [
+    { name: "Inicio", section: "HomeClient", current: false },
     { name: "Préstamo", section: "LoanClient", current: false },
     { name: "Devolución", section: "DevolutionClient", current: false },
-    { name: "Inicio", section: "HomeClient", current: false },
   ];
 
   const [key, setKey] = useState("Estudiantes");
@@ -144,28 +144,28 @@ export default function DevolutionClient({Devolution}) {
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridName" >
                   <Form.Label className="font-semibold">Nombre</Form.Label>
-                  <Form.Control type="text" placeholder="Escriba su nombre" value={nombre} onChange={(e) => setNombre(e.target.value)}/>
+                  <Form.Control type="text" readOnly={true} placeholder="Escriba su nombre" value={nombre} onChange={(e) => setNombre(e.target.value)}/>
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridApellido1">
                   <Form.Label className="font-semibold">Apellido #1</Form.Label>
-                  <Form.Control type="text" placeholder="Escriba su primer apellido" value={apellido1} onChange={(e) => setApellido1(e.target.value)}/>
+                  <Form.Control type="text" readOnly={true} placeholder="Escriba su primer apellido" value={apellido1} onChange={(e) => setApellido1(e.target.value)}/>
                 </Form.Group>
 
                 <Form.Group as={Col} controlId="formGridApellido2">
                   <Form.Label className="font-semibold">Apellido #2</Form.Label>
-                  <Form.Control type="text" placeholder="Escriba su segundo apellido" value={apellido2} onChange={(e) => setApellido2(e.target.value)}/>
+                  <Form.Control type="text" readOnly={true} placeholder="Escriba su segundo apellido" value={apellido2} onChange={(e) => setApellido2(e.target.value)}/>
                 </Form.Group>
               </Row>
 
               <Form.Group className="mb-3" controlId="formGridCorreo">
                 <Form.Label className="font-semibold">Correo Electrónico</Form.Label>
-                <Form.Control type="email" placeholder="Escriba su correo electrónico" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
+                <Form.Control type="email" readOnly={true} placeholder="Escriba su correo electrónico" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formGridCorreo">
                 <Form.Label className="font-semibold">Fecha de Entrega</Form.Label>
-                <Form.Control type="date" placeholder="Elija la fecha de Entrega" value={fechaEntrega} onChange={(e) => setFechaEntrega(e.target.value)}/>
+                <Form.Control type="date" readOnly={true} placeholder="Elija la fecha de Entrega" value={fechaEntrega} onChange={(e) => setFechaEntrega(e.target.value)}/>
               </Form.Group>
 
               <Button variant="danger" type="button" onClick={buscarEstudiante}>

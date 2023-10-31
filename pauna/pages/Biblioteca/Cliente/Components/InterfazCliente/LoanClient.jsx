@@ -14,9 +14,9 @@ export default function LoanClient() {
   const [active, setActive] = useState("");
 
   const navigation = [
+    { name: "Inicio", section: "HomeClient", current: false },
     { name: "Préstamo", section: "LoanClient", current: false },
     { name: "Devolución", section: "DevolutionClient", current: false },
-    { name: "Inicio", section: "HomeClient", current: false },
   ];
 
   // Estados para llenar selects

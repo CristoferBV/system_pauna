@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
 const getDevice = async (req, res) => {
     try {
-        const [result] = await pool.query("SELECT TP_identificador, TP_nombre FROM `pau-btc-tbl_tipo`");
+        const [result] = await pool.query("SELECT TP_identificador, TP_nombre FROM pau_btc_tbl_tipo");
 
         const options = result.map((row) => ({
             value: row['TP_identificador'], // Valor a enviar cuando se seleccione la opción

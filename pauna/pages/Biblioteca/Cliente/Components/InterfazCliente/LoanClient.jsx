@@ -59,6 +59,7 @@ export default function LoanClient() {
   // Estados para llenar selects
   const [carreras, setCarreras] = useState([]);
   const [dispositivos, setDispositivos] = useState([]);
+  const [horarios, setHorarios] = useState([]);
 
   // Carreras
   useEffect(() => {
@@ -80,6 +81,19 @@ export default function LoanClient() {
       .then((response) => {
         // Al recibir la respuesta, actualiza el estado con los datos de carrera
         setDispositivos(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las opciones de carrera", error);
+      });
+  }, []);
+
+  // Horarios
+  useEffect(() => {
+    // Realiza una solicitud GET a tu API para obtener las opciones de carrera
+    Axios.get("/api/fillSelectsLoan/deadline")
+      .then((response) => {
+        // Al recibir la respuesta, actualiza el estado con los datos de carrera
+        setHorarios(response.data);
       })
       .catch((error) => {
         console.error("Error al obtener las opciones de carrera", error);
@@ -234,7 +248,11 @@ export default function LoanClient() {
                     onChange={(e) => setFechaPrestamo(e.target.value)}
                   >
                     <option value="">-Seleccionar opción-</option>
-
+                    {horarios.map((horario) => (
+                      <option key={horario.value} value={horario.value}>
+                        {new Date(horario.label).toLocaleDateString()}
+                      </option>
+                    ))}
                   </Form.Control>
                 </Form.Group>
 

@@ -4,17 +4,17 @@ export default async function handler(req, res) {
     console.log(req.method);
     switch (req.method) {
         case "GET":
-            return await getCareer(req, res);
+            return await getDeadLine(req, res);
     }
 }
 
-const getCareer = async (req, res) => {
+const getDeadLine = async (req, res) => {
     try {
-        const [result] = await pool.query("SELECT CA_identificador, CA_nombre FROM pau_btc_tbl_carrera");
+        const [result] = await pool.query("SELECT HO_identificador, HO_fecha FROM pau_btc_tbl_horario");
 
         const options = result.map((row) => ({
-            value: row['CA_identificador'], // Valor a enviar cuando se seleccione la opción
-            label: row['CA_nombre'] // Texto que se mostrará en la opción
+            value: row['HO_identificador'], // Valor a enviar cuando se seleccione la opción
+            label: row['HO_fecha'] // Texto que se mostrará en la opción
         }));
 
         return res.status(200).json(options);

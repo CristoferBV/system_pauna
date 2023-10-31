@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     switch (req.method) {
         case "GET":
             return await getAllActivos(req, res);
-        case "PUT":
+        case "POST":
             return await AddAllActivos(req, res);
     }
 }
@@ -16,42 +16,30 @@ const getAllActivos = async (req, res) => {
     return res.status(200).json(result);
 };
 
-const AddAllActivos = async (req, res) => {
-    const { TP_nombre, TP_cantidad, EA_nombre, AO_descripcion, AO_estado } = req.body;
-
-    // Iniciar una transacción
-    await pool.query('START TRANSACTION');
-
+const saveData = async (table, data, res) => {
     try {
-        // Insertar en la tabla pau_btc_tbl_tipo
-        await pool.query('INSERT INTO pau_btc_tbl_tipo (TP_nombre, TP_cantidad) VALUES (?, ?)', [TP_nombre, TP_cantidad]);
-
-        // Obtener el último identificador generado
-        const [lastTpResult] = await pool.query('SELECT LAST_INSERT_ID() AS lastId');
-        const lastTpIdentificador = lastTpResult[0].lastId;
-
-        // Insertar en la tabla pau_btc_tbl_periferico
-        await pool.query('INSERT INTO pau_btc_tbl_periferico (EA_nombre) VALUES (?)', [EA_nombre]);
-
-        // Obtener el último identificador generado
-        const [lastEaResult] = await pool.query('SELECT LAST_INSERT_ID() AS lastId');
-        const lastEaIdentificador = lastEaResult[0].lastId;
-
-        // Insertar en la tabla pau_btc_tbl_activo
-        await pool.query('INSERT INTO pau_btc_tbl_activo (AO_descripcion, AO_estado, AO_identificador_tipo, AO_identificador_periferico) VALUES (?, ?, ?, ?)',
-            [AO_descripcion, AO_estado, lastTpIdentificador, lastEaIdentificador]);
-
-        // Hacer commit de la transacción
-        await pool.query('COMMIT');
-
-        // Envía una respuesta exitosa
-        return res.status(200).json({ message: "Datos insertados correctamente" });
+        console.log(data);
+        const result = await pool.query(`INSERT INTO ${table} SET ?`, data);
+        console.log(result);
+        return res.status(200).json({ result }); // Devuelve un objeto con la propiedad "result"
     } catch (error) {
-        // Si ocurre un error, hacer un rollback y devolver un error
-        await pool.query('ROLLBACK');
-        console.error("Error al insertar datos:", error);
-        return res.status(500).json({ error: "Error al insertar datos" });
+        console.log(error);
+        return res.status(500).json({ error: 'Error al guardar los datos.' });
     }
+};
+
+
+
+const AddAllActivos = async (req, res) => {
+    const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
+    await pool.query(disableForeignKeyCheckQuery);
+    console.log(req.body);
+    const { TP_nombre, TP_cantidad, EA_nombre, AO_descripcion, AO_estado } = req.body;
+    const data = { TP_nombre, TP_cantidad, EA_nombre, AO_descripcion, AO_estado }
+    const { result } = saveData('pau_btc_tbl_listaprestamo', data, res);
+    console.log(result)
+    const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
+    await pool.query(enableForeignKeyCheckQuery);
 };
 
 

@@ -126,8 +126,8 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                                         <td>{devolucion.UO_identificador}</td>
                                         <td>{devolucion.TP_nombre}</td>
                                         <td>{devolucion.CA_nombre}</td>
-                                        <td>{devolucion.HO_fecha}</td>
-                                        <td>{devolucion.LP_fechaDevolucion}</td>
+                                        <td>{new Date (devolucion.HO_fecha).toISOString().slice(0, 10)}</td>
+                                        <td>{new Date (devolucion.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
                                         <td>{devolucion['CE-correoElectronico']}</td>
                                         <td>
                                             <Button variant="light" className="ml-2" onClick={() => handleEdit(devolucion)}>

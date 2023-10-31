@@ -8,7 +8,7 @@ export default function SidebarCitas({ Citas }) {
     const [editedCita, setEditedCita] = useState({});
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
-    const [newCita, setNewCita] = useState({}); // Almacena los datos de la nueva cita
+    const [newCita, setNewCita] = useState({});
     const [alertVisible, setAlertVisible] = useState(false);
 
     const handleEdit = (cita) => {
@@ -41,16 +41,42 @@ export default function SidebarCitas({ Citas }) {
 
     const submitNewCita = () => {
         // Implementa la lógica para guardar la nueva cita
-        setAlertVisible(true); // Muestra una alerta para confirmar la creación
+        setAlertVisible(true);
+    };
+
+    const buttonStyle = {
+        backgroundColor: '#021730',
+        color: 'white',
+        border: 'none', // Agregar un borde blanco
+        transition: 'background-color 0.3s, border 0.3s', // También añadir la transición para el borde
+    };
+
+    const buttonHoverStyle = {
+        backgroundColor: '#010E1F', // Nuevo color de fondo al pasar el cursor
+        color: 'black', // Texto de color oscuro
+        border: '1px solid white',
+    };
+
+    const tableButtonStyle = {
+        backgroundColor: '#021730',
+        color: 'white',
+        border: 'none',
+        transition: 'background-color 0.3s, border 0.3s',
+    };
+
+    const tableButtonHoverStyle = {
+        backgroundColor: '#010E1F',
+        color: 'black',
+        border: '1px solid white',
     };
 
     return (
         <div className="flex-1 p-8">
-            <Card bg="dark" text="white">
+            <Card bg="secondary" text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
                         <span>Citas</span>
-                        <Button variant="success" onClick={createCita}>
+                        <Button variant="success" onClick={createCita} style={buttonStyle}>
                             Nueva Cita
                         </Button>
                     </div>
@@ -68,7 +94,7 @@ export default function SidebarCitas({ Citas }) {
                             </Form.Group>
                         </Form>
                     </div>
-                    <Table striped bordered hover variant="dark" responsive>
+                    <Table striped bordered hover variant="secondary" responsive>
                         {/* Encabezado de la tabla */}
                         <thead>
                             <tr>
@@ -82,7 +108,6 @@ export default function SidebarCitas({ Citas }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* Filas de la tabla */}
                             {Citas
                                 .filter((cita) =>
                                     cita.HO_fecha.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -94,17 +119,27 @@ export default function SidebarCitas({ Citas }) {
                                 )
                                 .map((cita) => (
                                     <tr key={cita.LP_identificador}>
-                                        <td className="text-center">{cita.HO_fecha}</td>
+                                        <td className="text-center">{new Date(cita.HO_fecha).toISOString().slice(0, 10)}</td>
                                         <td className="text-center">{cita.HO_hora}</td>
                                         <td className="text-center">{cita.UO_primer_nombre}</td>
                                         <td className="text-center">{cita.UO_identificador}</td>
                                         <td className="text-center">{cita.CA_nombre}</td>
                                         <td className="text-center">{cita.TP_nombre}</td>
                                         <td className="text-center">
-                                            <Button variant="light" className="ml-2" onClick={() => handleEdit(cita)}>
+                                            <Button
+                                                variant="light"
+                                                className="ml-2"
+                                                onClick={() => handleEdit(cita)}
+                                                style={tableButtonStyle}
+                                            >
                                                 Editar
                                             </Button>
-                                            <Button variant="light" className="ml-2" onClick={() => handleDelete(cita)}>
+                                            <Button
+                                                variant="light"
+                                                className="ml-2"
+                                                onClick={() => handleDelete(cita)}
+                                                style={tableButtonStyle}
+                                            >
                                                 Eliminar
                                             </Button>
                                         </td>
@@ -123,7 +158,6 @@ export default function SidebarCitas({ Citas }) {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        {/* Campos de edición */}
                         <Form.Group>
                             <Form.Label>Fecha</Form.Label>
                             <Form.Control
@@ -175,10 +209,18 @@ export default function SidebarCitas({ Citas }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setEditMode(false)}>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setEditMode(false)}
+                        style={buttonStyle}
+                    >
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={saveChanges}>
+                    <Button
+                        variant="primary"
+                        onClick={saveChanges}
+                        style={buttonStyle}
+                    >
                         Guardar Cambios
                     </Button>
                 </Modal.Footer>
@@ -193,10 +235,18 @@ export default function SidebarCitas({ Citas }) {
                     ¿Estás seguro de que deseas eliminar esta cita?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setDeleteConfirmation(false)}>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setDeleteConfirmation(false)}
+                        style={buttonStyle}
+                    >
                         Cancelar
                     </Button>
-                    <Button variant="danger" onClick={confirmDelete}>
+                    <Button
+                        variant="danger"
+                        onClick={confirmDelete}
+                        style={buttonStyle}
+                    >
                         Eliminar
                     </Button>
                 </Modal.Footer>
@@ -255,10 +305,18 @@ export default function SidebarCitas({ Citas }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowCreateForm(false)}>
+                    <Button
+                        variant="secondary"
+                        onClick={() => setShowCreateForm(false)}
+                        style={buttonStyle}
+                    >
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={submitNewCita}>
+                    <Button
+                        variant="primary"
+                        onClick={submitNewCita}
+                        style={buttonStyle}
+                    >
                         Crear
                     </Button>
                 </Modal.Footer>
@@ -271,6 +329,7 @@ export default function SidebarCitas({ Citas }) {
         </div>
     );
 }
+
 
 export const getServerSideProps = async (context) => {
     try {

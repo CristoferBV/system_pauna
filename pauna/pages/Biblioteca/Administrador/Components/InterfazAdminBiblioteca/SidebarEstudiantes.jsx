@@ -129,8 +129,8 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                                     <td className="text-nowrap">{estudiante.AO_descripcion}</td>
                                     <td className="text-nowrap">{estudiante['DO-nombre']}</td>
                                     <td className="text-nowrap">{estudiante.EE_campus}</td>
-                                    <td className="text-nowrap">{estudiante.HO_fecha}</td>
-                                    <td className="text-nowrap">{estudiante.LP_fechaDevolucion}</td>
+                                    <td className="text-nowrap">{new Date (estudiante.HO_fecha).toISOString().slice(0, 10)}</td>
+                                    <td className="text-nowrap">{new Date (estudiante.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
                                     <td className="text-nowrap">{estudiante.RE_observacion}</td>
                                     <td className="text-nowrap">{estudiante["CE-correoElectronico"]}</td>
                                     <td className="text-nowrap">{estudiante["TO-numero"]}</td>

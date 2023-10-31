@@ -43,9 +43,16 @@ export default function Inventary({ materials, colors, brands, ubications, types
     console.log(res)
   };
 
-  const handleDelete = async (data) => {
-    const updatedMaterials = materials.filter((item) => item.ML_identificador !== data.ML_identificador);
-    setMaterial(updatedMaterials);
+  const handleDeleteMaterial = async (materialID) => {
+    const res = await axios
+      .delete("/api/material/view", {data: {tipo:"Material", ML_identificador:materialID}})
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log(res)
   };
 
   const [material, setMaterial] = useState({
@@ -417,7 +424,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
                                   </Button>
                                 </Col>
                                 <Col>
-                                  <Button onClick={() => handleDelete(material.ML_identificador)}>
+                                  <Button onClick={() => handleDeleteMaterial(material.ML_identificador)}>
                                     Eliminar
                                   </Button>
                                 </Col>

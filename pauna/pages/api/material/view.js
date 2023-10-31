@@ -26,6 +26,7 @@ export default async function handler(req, res) {
             return await updateMaterial(req, res);
 
         case "DELETE":
+            return deleteMaterial(req, res);
     }
 }
 
@@ -38,8 +39,24 @@ const updateMaterial = async (req, res) => {
     return res.status(200).json(result)
 };
 
-const deleteMaterial = async(req, {paramns})=>{
+const deleteMaterial = async(req, res)=>{
+    const ML_identificador = req.body.ML_identificador;
 
+    const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
+    await pool.query(disableForeignKeyCheckQuery);
+
+    const deleteMaterialXBrandQuery = "DELETE FROM `pau_adm_tbl_material_x_tbl_marca` WHERE ML_identificador = ?";
+    const resultBrand = await pool.query(deleteMaterialXBrandQuery, [ML_identificador]);
+
+    const deleteMaterialXColorQuery = "DELETE FROM `pau_adm_tbl_material_x_tbl_color` WHERE ML_identificador = ?";
+    const resultColor = await pool.query(deleteMaterialXColorQuery, [ML_identificador]);
+
+    const deleteMaterialQuery = "DELETE FROM `pau_adm_tbl_material` WHERE ML_identificador = ?";
+    const result = await pool.query(deleteMaterialQuery, [ML_identificador]);
+    const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
+    await pool.query(enableForeignKeyCheckQuery);
+
+    return res.status(200).json({resultBrand, resultColor, result});
 }
 
 const getAllMaterial = async (req, res) => {

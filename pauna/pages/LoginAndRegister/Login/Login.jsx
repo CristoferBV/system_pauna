@@ -20,7 +20,7 @@ const Login = () => {
         "/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar"
       );
     } else if (selectedOption === "administracion") {
-      router.push("/Administracion/Components/User/userWindow");
+      router.push("/Administracion/Components/User/landing");
     }
   };
 

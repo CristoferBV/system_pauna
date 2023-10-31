@@ -2,7 +2,7 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar, Row, Col } from 'react-bootstrap';
 export default function NavBar() {
     return (
         <Navbar expand="lg" className='' style={{ backgroundColor: '#041a34', color: 'white', fontSize: '20px', padding: '3rem' }}>
@@ -16,7 +16,7 @@ export default function NavBar() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Container >
-                            <Nav.Link href="#home" style={{ color: 'white' }}>Inicio</Nav.Link>
+                            <Nav.Link href="/Administracion/Components/User/landing" style={{ color: 'white' }}>Inicio</Nav.Link>
                         </Container>
                         <Container>
                             <Nav.Link href="/Administracion/Components/User/userWindow" style={{ color: 'white' }}>Usuarios</Nav.Link>

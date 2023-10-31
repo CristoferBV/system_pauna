@@ -5,25 +5,59 @@ import axios from "axios";
 import React, { useState } from 'react';
 import { Row, Col, Container, Button, Form, Table, Modal, Alert } from "react-bootstrap"
 
-export default function Inventary({ colors, brands, ubications, types }) {
-  const [showForm, setShowForm] = useState(false);
+export default function Inventary({ materials, colors, brands, ubications, types }) {
+  console.log({ materials })
   const [showAlert, setShowAlert] = useState(false);
+  const [showFormState, setShowFormState] = useState({
+    material: false,
+    colors: false,
+    types: false,
+    ubi: false,
+    brand: false,
+  });
+
+  const handleSubmit = async (data) => {
+    console.log("hola");
+    const res = await axios
+      .post("/api/material/view", data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log(res)
+  };
+
+  const [material, setMaterial] = useState({
+    ML_identificador: "",
+    ML_descripcion: "",
+    ML_observacion: "",
+    ML_cantidad: "",
+  })
 
   const [color, setColor] = useState({
+    tipo: "Color",
     CR_identificador: "",
     CR_nombre: ""
   });
   const [brand, setBrand] = useState({
+    tipo: "Brand",
     MC_identificador: "",
-    MC_nombre: ""
+    MC_nombre: "",
+    MC_descripcion: ""
   });
   const [ubication, setUbication] = useState({
+    tipo: "Ubication",
     UN_identificador: "",
-    UN_lugar: ""
+    UN_lugar: "",
+    UN_descripcion: ""
   });
   const [type, setTypes] = useState({
+    tipo: "Type",
     TP_identificador: "",
-    TP_nombre: ""
+    TP_nombre: "",
+    TP_descripcion: ""
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -33,43 +67,49 @@ export default function Inventary({ colors, brands, ubications, types }) {
       setBrand({ ...brand, [name]: value });
     } else if (name in ubication) {
       setUbication({ ...ubication, [name]: value });
-    } else if (name in type){
+    } else if (name in type) {
       setTypes({ ...type, [name]: value });
+    } else if (name in material) {
+      setMaterial({ ...material, [name]: value });
     }
   };
 
-  const handleShowForm = () => {
-    setShowForm(true);
+  const handleToggleForm = (key) => {
+    setShowFormState((prevState) => ({
+      ...prevState,
+      [key]: !prevState[key],
+    }));
   };
 
-  const handleCloseForm = () => {
-    setShowForm(false);
+  const handleCloseForm = (key) => {
+    handleToggleForm(key);
   };
-  const handleSave = () => {
+
+  const handleSave = (object) => {
+    handleSubmit(object)
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
     }, 2000);
-    setShowForm(false);
   };
   const handleAlertClose = () => {
     setShowAlert(false);
   };
   return (
     <>
-      <Modal show={showForm} onHide={handleCloseForm}>
+      <Modal show={showFormState.material} onHide={() => handleCloseForm('material')}>
         <Modal.Header closeButton>
           <Modal.Title>Materiales</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form >
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Codigo</Form.Label>
-              <Form.Control type="email" placeholder="Ingrese su codigo" />
+              <Form.Control name="ML_identificador" value={material.ML_identificador} onChange={handleChange} type="text" placeholder="Ingrese su codigo" />
             </Form.Group>
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Nombre</Form.Label>
-              <Form.Control type="password" placeholder="Ingrese el nombre" />
+              <Form.Control name="ML_descripcion" value={material.ML_descripcion} onChange={handleChange} type="text" placeholder="Ingrese el nombre" />
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Marca</Form.Label>
@@ -89,7 +129,7 @@ export default function Inventary({ colors, brands, ubications, types }) {
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Cantidad</Form.Label>
-              <Form.Control type="email" placeholder="Ingrese la cantidad" />
+              <Form.Control name="ML_cantidad" value={material.ML_cantidad} onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Color</Form.Label>
@@ -109,15 +149,128 @@ export default function Inventary({ colors, brands, ubications, types }) {
             </Form.Group>
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Observaciones</Form.Label>
-              <Form.Control as="textarea" placeholder="Ingrese sus observaciones" />
+              <Form.Control name="ML_observacion" value={material.ML_observacion} onChange={handleChange} as="textarea" placeholder="Ingrese sus observaciones" />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseForm}>
+          <Button variant="secondary" onClick={() => handleCloseForm('material')}>
             Cerrar
           </Button>
-          <Button variant="primary" onClick={handleSave}>
+          <Button variant="primary" onClick={() => handleSave({
+            tipo: "Material",
+            ML_identificador: material.ML_identificador,
+            ML_descripcion: material.ML_descripcion,
+            ML_observacion: material.ML_observacion,
+            ML_cantidad: material.ML_cantidad,
+            MC_identificador: brand.MC_identificador,
+            MO_identificador_tipo: type.TP_identificador,
+            CR_identificador: color.CR_identificador,
+            ML_identificador_ubicacion: ubication.UN_identificador,
+
+          })}>
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showFormState.colors} onHide={() => handleCloseForm('colors')}>
+        <Modal.Header closeButton>
+          <Modal.Title>Añadir colores</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control name="CR_nombre" value={color.CR_nombre} onChange={handleChange} type="text" placeholder="Ingrese el color" />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => handleCloseForm('colors')}>
+            Cerrar
+          </Button>
+          <Button type="submit" variant="primary" onClick={() => handleSave(color)}>
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showFormState.types} onHide={() => handleCloseForm('types')}>
+        <Modal.Header closeButton>
+          <Modal.Title>Añadir tipo</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control name="TP_nombre" value={type.TP_nombre} onChange={handleChange} type="text" placeholder="Ingrese el nombre" />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Descripción</Form.Label>
+              <Form.Control name="TP_descripcion" value={type.TP_descripcion} onChange={handleChange} type="text" placeholder="Ingrese la descripción si desea" />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => handleCloseForm('types')}>
+            Cerrar
+          </Button>
+          <Button type="submit" variant="primary" onClick={() => handleSave(type)}>
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
+      <Modal show={showFormState.ubi} onHide={() => handleCloseForm('ubi')}>
+        <Modal.Header closeButton>
+          <Modal.Title>Añadir ubicacion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control name="UN_lugar" value={ubication.UN_lugar} onChange={handleChange} type="text" placeholder="Ingrese el nombre de la ubicación" />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Descripción</Form.Label>
+              <Form.Control name="UN_descripcion" value={ubication.UN_descripcion} onChange={handleChange} type="text" placeholder="Ingrese la descripción si desea" />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => handleCloseForm('ubi')}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={() => handleSave(ubication)}>
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
+      <Modal show={showFormState.brand} onHide={() => handleCloseForm('brand')}>
+        <Modal.Header closeButton>
+          <Modal.Title>Añadir nueva marca</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control name="MC_nombre" value={brand.MC_nombre} onChange={handleChange} type="text" placeholder="Ingrese el nombre de la marca" />
+            </Form.Group>.
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Descripción</Form.Label>
+              <Form.Control name="MC_descripcion" value={brand.MC_descripcion} onChange={handleChange} type="text" placeholder="Ingrese la descripción si desea" />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => handleCloseForm('brand')}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={() => handleSave(brand)}>
             Guardar
           </Button>
         </Modal.Footer>
@@ -173,29 +326,32 @@ export default function Inventary({ colors, brands, ubications, types }) {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>Otto</td>
-                        <td>Otto</td>
-                        <td>
-                          <Container>
-                            <Row>
-                              <Col>
-                                <Button onClick={handleShowForm}>
-                                  Editar
-                                </Button>
-                              </Col>
-                              <Col>
-                                <Button>
-                                  Eliminar
-                                </Button>
-                              </Col>
-                            </Row>
-                          </Container>
-                        </td>
-                      </tr>
+                      {materials.map((material) => (
+                        <tr key={material.ML_identificador}>
+                          <td>{material.ML_identificador}</td>
+                          <td>{material.ML_descripcion}</td>
+                          <td>{material.MC_nombre}</td>
+                          <td>{material.ML_cantidad}</td>
+                          <td>{material.ML_observacion}</td>
+                          <td>
+                            <Container>
+                              <Row>
+                                <Col>
+                                  <Button onClick={() => handleToggleForm('material')}>
+                                    Editar
+                                  </Button>
+                                </Col>
+                                <Col>
+                                  <Button>
+                                    Eliminar
+                                  </Button>
+                                </Col>
+                              </Row>
+                            </Container>
+                          </td>
+                        </tr>
+                      ))}
+
                     </tbody>
                   </Table>
                 </Container>
@@ -203,39 +359,36 @@ export default function Inventary({ colors, brands, ubications, types }) {
               <Col>
                 <Row>
                   <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem' }}
-                    onClick={handleShowForm}>
+                    onClick={() => handleToggleForm('material')}>
                     Añadir Material
                   </Button>
                 </Row>
                 <Row>
                   <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
-                  >
+                    onClick={() => handleToggleForm('colors')}>
                     Añadir Colores
                   </Button>
                 </Row>
                 <Row>
                   <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
-                  >
+                    onClick={() => handleToggleForm('types')}>
                     Añadir Tipo(bolsas, cajas, etc...)
                   </Button>
                 </Row>
                 <Row>
                   <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
-                  >
+                    onClick={() => handleToggleForm('ubi')}>
                     Añadir ubicación
                   </Button>
                 </Row>
                 <Row>
                   <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
-                  >
+                    onClick={() => handleToggleForm('brand')}>
                     Añadir Marca
                   </Button>
                 </Row>
               </Col>
             </Row>
-
-
-
           </Container>
         </Container>
       </div >
@@ -247,9 +400,10 @@ export const getServerSideProps = async (context) => {
     const { data } = await axios.get(
       "http://localhost:3000/api/material/view"
     );
-    const { colors, brands, ubications, types } = data;
+    const { materials, colors, brands, ubications, types } = data;
     return {
       props: {
+        materials,
         colors,
         brands,
         ubications,

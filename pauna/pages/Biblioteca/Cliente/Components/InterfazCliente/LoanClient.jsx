@@ -19,43 +19,6 @@ export default function LoanClient() {
     { name: "Inicio", section: "HomeClient", current: false },
   ];
 
-  // Estados para insertar
-  const [nombreCompleto, setNombreCompleto] = useState("");
-  const [cedula, setCedula] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [carrera, setCarrera] = useState("");
-  const [nivelCarrera, setNivelCarrera] = useState("");
-  const [dispositivo, setDispositivo] = useState("");
-  const [fechaPrestamo, setFechaPrestamo] = useState("");
-  const [campus, setCampus] = useState("");
-  const [telefono, setTelefono] = useState("");
-
-  // Método de envío de datos
-  const handleSubmit = () => {
-    const data = {
-      UO_primer_nombre: nombreCompleto,
-      EE_idenficador: cedula,
-      CE_correpElectronico: correo,
-      CA_nombre: carrera,
-      EE_nivel: nivelCarrera,
-      TP_nombre: dispositivo,
-      LP_fechaDevolucion: fechaPrestamo,
-      EE_campus: campus,
-      TO_numero: telefono,
-    };
-
-    // Realizar la solicitud POST a la API
-    Axios.post("/api/library_client/loan", data)
-      .then((response) => {
-        // Manejar la respuesta de la API (éxito)
-        console.log("Éxito:", response.data);
-      })
-      .catch((error) => {
-        // Manejar errores de la API
-        console.error("Error:", error);
-      });
-  };
-
   // Estados para llenar selects
   const [carreras, setCarreras] = useState([]);
   const [dispositivos, setDispositivos] = useState([]);
@@ -169,8 +132,6 @@ export default function LoanClient() {
                   <Form.Control
                     type="text"
                     placeholder="Ejemplo: Pepito Bryan Gomez Arguedas"
-                    value={nombreCompleto}
-                    onChange={(e) => setNombreCompleto(e.target.value)}
                   />
                 </Form.Group>
 
@@ -179,8 +140,6 @@ export default function LoanClient() {
                   <Form.Control
                     type="input"
                     placeholder="Ejemplo: 018080472"
-                    value={cedula}
-                    onChange={(e) => setCedula(e.target.value)}
                   />
                 </Form.Group>
 
@@ -189,8 +148,6 @@ export default function LoanClient() {
                   <Form.Control
                     type="tel"
                     placeholder="Ejemplo: correo@gmail.com"
-                    value={correo}
-                    onChange={(e) => setCorreo(e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -200,8 +157,6 @@ export default function LoanClient() {
                   <label className="font-semibold">Carrera</label>
                   <Form.Control
                     as="select"
-                    value={carrera}
-                    onChange={(e) => setCarrera(e.target.value)}
                   >
                     <option value="">-Seleccionar opción-</option>
                     {carreras.map((carrera) => (
@@ -217,8 +172,6 @@ export default function LoanClient() {
                   <Form.Control
                     type="input"
                     placeholder="Ejemplo: Nivel I"
-                    value={nivelCarrera}
-                    onChange={(e) => setNivelCarrera(e.target.value)}
                   />
                 </Form.Group>
 
@@ -226,8 +179,6 @@ export default function LoanClient() {
                   <label className="font-semibold">Dispositivos</label>
                   <Form.Control
                     as="select"
-                    value={dispositivo}
-                    onChange={(e) => setDispositivo(e.target.value)}
                   >
                     <option value="">-Seleccionar opción-</option>
                     {dispositivos.map((dispositivo) => (
@@ -244,8 +195,6 @@ export default function LoanClient() {
                   <label className="font-semibold">Fechas de prestamos</label>
                   <Form.Control
                     as="select"
-                    value={fechaPrestamo}
-                    onChange={(e) => setFechaPrestamo(e.target.value)}
                   >
                     <option value="">-Seleccionar opción-</option>
                     {horarios.map((horario) => (
@@ -261,8 +210,6 @@ export default function LoanClient() {
                   <Form.Control
                     type="input"
                     placeholder="Ejemplo: Campus Coto"
-                    value={campus}
-                    onChange={(e) => setCampus(e.target.value)}
                   />
                 </Form.Group>
 
@@ -271,15 +218,13 @@ export default function LoanClient() {
                   <Form.Control
                     type="input"
                     placeholder="Ejemplo: 85893501"
-                    value={telefono}
-                    onChange={(e) => setTelefono(e.target.value)}
                   />
                 </Form.Group>
               </Col>
             </Row>
 
             <div className="text-center mt-4">
-              <Button variant="danger" onClick={handleSubmit}>
+              <Button variant="danger">
                 Aceptar
               </Button>
             </div>

@@ -46,7 +46,7 @@ export default function Horario({ Horarios }) {
 
     return (
         <div className="flex-1 p-8">
-            <Card bg="dark" text="white">
+            <Card bg="secondary" text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
                         <span>Horario</span>
@@ -63,11 +63,11 @@ export default function Horario({ Horarios }) {
                             onChange={(e) => setSearchText(e.target.value)}
                         />
                     </InputGroup>
-                    <Table striped bordered hover variant="dark" responsive>
+                    <Table striped bordered hover variant="secondary" responsive>
                         <thead>
                             <tr>
-                                <th className="text-center">Hora</th>
                                 <th className="text-center">Fecha</th>
+                                <th className="text-center">Hora</th>
                                 <th className="text-center">Estado</th>
                                 <th className="text-center">Administrar</th>
                             </tr>

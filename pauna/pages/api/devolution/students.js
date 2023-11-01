@@ -7,17 +7,24 @@ export default async function handler(req, res) {
 
       // Consulta SQL para obtener los datos del estudiante por identificación
       const query = `
-        SELECT
-          UO.UO_primer_nombre AS Nombre,
-          UO.UO_primer_apellido AS PrimerApellido,
-          UO.UO_segundo_apellido AS SegundoApellido,
-          LP.LP_fechaDevolucion AS FechaEntrega,
-          CE.\`CE-correoElectronico\` AS Correo
-        FROM PAU_GNL_USUARIO UO
+      SELECT UO.UO_primer_nombre AS Nombre,
+      UO.UO_primer_apellido AS PrimerApellido,
+      UO.UO_segundo_apellido AS SegundoApellido,
+      CE.\`CE-correoElectronico\` AS Correo,
+      LP.LP_fechaDevolucion AS FechaEntrega
+
+      FROM PAU_GNL_USUARIO UO
+
         LEFT JOIN PAU_BTC_TBL_ESTUDIANTE EE ON UO.UO_identificador = EE.EE_identificador_usuario
         LEFT JOIN PAU_BTC_TBL_LISTAPRESTAMO LP ON EE.EE_idenficador = LP.LP_identificador_usuario
         LEFT JOIN PAU_GNL_TBL_CORREOELECTRONICO CE ON EE.EE_identificador_correo = CE.\`CE-idCorreo\`
-        WHERE UO.UO_identificador = ?;
+
+      WHERE UO.UO_identificador IN (
+        SELECT EE.EE_identificador_usuario
+        FROM PAU_BTC_TBL_ESTUDIANTE EE
+        INNER JOIN PAU_BTC_TBL_LISTAPRESTAMO LP ON EE.EE_idenficador = LP.LP_identificador_usuario
+        INNER JOIN PAU_GNL_USUARIO UO ON EE.EE_identificador_usuario = ?
+      );
       `;
 
       // Ejecuta la consulta con la identificación proporcionada

@@ -43,7 +43,6 @@ const deleteData = async (req, res) => {
         console.log('Datos recibidos en req.body:', req.body);
         // Asegúrate de recibir el identificador de usuario en la solicitud.
         const { UO_identificador } = req.body;
-
         // Consulta SQL para eliminar registros en la tabla de relación entre listaprestamo y periferico
         const deleteRelationQuery = `
         DELETE FROM pau_btc_tbl_listaprestamo_x_tbl_periferico
@@ -55,7 +54,6 @@ const deleteData = async (req, res) => {
             WHERE U.UO_identificador = ?
         );
         `;
-
         // Consulta SQL para eliminar registros en la tabla de listaprestamo
         const deleteListaprestamoQuery = `
         DELETE FROM pau_btc_tbl_listaprestamo
@@ -67,13 +65,11 @@ const deleteData = async (req, res) => {
             WHERE U.UO_identificador = ?
         );
         `;
-
         // Ejecuta las consultas de eliminación en transacción
         await pool.query('START TRANSACTION');
         await pool.query(deleteRelationQuery, [UO_identificador]);
         await pool.query(deleteListaprestamoQuery, [UO_identificador]);
         await pool.query('COMMIT');
-
         return res.status(200).json({ message: "Datos eliminados con éxito" });
     } catch (error) {
         console.error("Error:", error);
@@ -81,4 +77,3 @@ const deleteData = async (req, res) => {
         return res.status(500).json({ message: "Error interno del servidor" });
     }
 };
-

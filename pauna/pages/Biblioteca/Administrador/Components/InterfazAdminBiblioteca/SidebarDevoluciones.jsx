@@ -69,7 +69,7 @@ export default function SidebarDevoluciones({ Devoluciones }) {
 
     return (
         <div className="flex-1 p-8">
-            <Card bg="dark" text="white">
+            <Card bg="secondary" text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
                         <span>Devoluciones</span>
@@ -96,7 +96,7 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                             </Form.Group>
                         </Form>
                     </div>
-                    <Table striped bordered hover variant="dark" responsive>
+                    <Table striped bordered hover variant="secondary" responsive>
                         <thead>
                             <tr>
                                 <th>Nombre</th>
@@ -118,7 +118,7 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                                     devolucion.CA_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
                                     devolucion.HO_fecha.toLowerCase().includes(searchText.toLowerCase()) ||
                                     devolucion.LP_fechaDevolucion.toLowerCase().includes(searchText.toLowerCase()) ||
-                                    devolucion.CE_correoElectronico.toLowerCase().includes(searchText.toLowerCase())
+                                    devolucion['CE-correoElectronico'].toLowerCase().includes(searchText.toLowerCase())
                                 )
                                 .map((devolucion) => (
                                     <tr key={devolucion.EE_idenficador}>

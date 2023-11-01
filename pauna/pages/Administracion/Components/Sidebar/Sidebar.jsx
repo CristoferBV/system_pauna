@@ -28,7 +28,7 @@ export default function NavBar() {
                             <Nav.Link href="/Administracion/Components/Reports/Report" style={{ color: 'white' }}>Reportes y Movimientos</Nav.Link>
                         </Container>
                         <Container>
-                            <Nav.Link href="#reportes" style={{ color: 'white' }}>Cerrar Sesión</Nav.Link>
+                            <Nav.Link href="/" style={{ color: 'white' }}>Cerrar Sesión</Nav.Link>
                         </Container>
                     </Nav>
                 </Navbar.Collapse>

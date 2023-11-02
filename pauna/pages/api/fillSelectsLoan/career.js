@@ -23,5 +23,3 @@ const getCareer = async (req, res) => {
         return res.status(500).json({ error: 'Error al cargar los datos' });
     }
 };
-
-

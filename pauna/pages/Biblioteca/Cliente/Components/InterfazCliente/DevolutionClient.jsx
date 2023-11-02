@@ -4,27 +4,28 @@ import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Row, Col } from "react-bootstrap";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Container from "react-bootstrap/Container"
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 
 export default function DevolutionClient({Devolution}) {
+  const [selectedRow, setSelectedRow] = useState(null);
   const router = useRouter();
-
   const [active, setActive] = useState("");
+  const [key, setKey] = useState("Estudiantes");
+  const [data, setData] = useState(Devolution);
 
   const navigation = [
     { name: "Inicio", section: "HomeClient", current: false },
     { name: "Préstamo", section: "LoanClient", current: false },
     { name: "Devolución", section: "DevolutionClient", current: false },
   ];
-
-  const [key, setKey] = useState("Estudiantes");
 
   //Datos que se envían a la base de datos
   const [] = useState({
@@ -53,7 +54,7 @@ export default function DevolutionClient({Devolution}) {
           setApellido1(estudiante.PrimerApellido);
           setApellido2(estudiante.SegundoApellido);
           setCorreo(estudiante.Correo);
-  
+
           // Formatea la fecha en "YYYY-MM-DD" antes de establecerla en el estado
           const fechaEntrega = new Date(estudiante.FechaEntrega);
           const formattedFechaEntrega = fechaEntrega.toISOString().split('T')[0];
@@ -69,6 +70,84 @@ export default function DevolutionClient({Devolution}) {
       // Manejar errores de la solicitud
     }
   }
+
+  function sendData() {
+    
+  }
+
+  const handleTabSelect = (key) => {
+    if (key === "Datos") {
+      Swal.fire("Seleccionese y presione enviar.");
+    }
+    setKey(key);
+  };
+
+  // Función para manejar el clic en el botón "Enviar"
+  const handleButtonDelete = () => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (selectedRow !== null) {
+          // Obtén el identificador de la fila seleccionada
+          const identificacion = Devolution[selectedRow].IdentificadorUsuario;
+  
+          // Define los datos a enviar a la API
+          const dataToSend = {
+            UO_identificador: identificacion,
+          };
+  
+          // Realiza una solicitud DELETE a la API para eliminar los datos en función del identificador
+          axios
+            .delete('/api/devolution/data', { data: dataToSend })
+            .then((response) => {
+              if (response.status === 200) {
+                // Los datos se eliminaron con éxito, puedes realizar alguna acción apropiada aquí.
+                console.log('Datos eliminados con éxito');
+  
+                // Actualiza los datos después de la eliminación
+                axios
+                  .get('/api/devolution/data')
+                  .then((response) => {
+                    if (response.status === 200) {
+                      console.log('Datos actualizados:', response.data);
+                      const newData = response.data;
+                      setData(newData); // Actualiza los datos en el estado
+  
+                      // Muestra una notificación de éxito
+                      Swal.fire('Devolución realizada!', 'Su devolución ha sido realizada.', 'success');
+  
+                      // Recarga la página para reflejar los cambios en la tabla
+                     //window.location.href = '/Biblioteca/Cliente/Components/InterfazCliente/DevolutionClient';
+                    } else {
+                      console.log('Error al actualizar datos');
+                    }
+                  })
+                  .catch((error) => {
+                    console.error('Error al obtener datos actualizados:', error);
+                  });
+              } else {
+                // Manejar otros códigos de estado de respuesta si es necesario.
+                console.log('Error al eliminar datos');
+              }
+            })
+            .catch((error) => {
+              // Manejar errores de la solicitud
+              console.error('Error:', error);
+            });
+        } else {
+          // Muestra un mensaje de error o realiza alguna acción si no se ha seleccionado ninguna fila.
+          console.log('Selecciona una fila antes de enviar los datos.');
+        }
+      }
+    });
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -131,7 +210,7 @@ export default function DevolutionClient({Devolution}) {
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
-          onSelect={(k) => setKey(k)}
+          onSelect={handleTabSelect}
           className="mb-3 custom-tabs"
         >
           <Tab eventKey="Estudiantes" title={<span className="custom-tab-title">Estudiantes</span>}>
@@ -174,7 +253,7 @@ export default function DevolutionClient({Devolution}) {
             </Form>
           </Tab>
 
-          <Tab eventKey="Datos" title={<span className="custom-tab-title">Datos</span>}>
+          <Tab eventKey="Datos" title={<span className="custom-tab-title">Devolución</span>}>
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
@@ -186,9 +265,13 @@ export default function DevolutionClient({Devolution}) {
                 </tr>
               </thead>
                 <tbody>
-                  {Devolution.map((Devolution) => (
+                  {Devolution.map((Devolution, index) => (
 
-                  <tr key={Devolution.IdentificadorUsuario}>
+                  <tr
+                    key={Devolution.IdentificadorUsuario}
+                    className={selectedRow === index ? 'selected-row' : ''}
+                    onClick={() => setSelectedRow(index)}>
+
                     <td>{Devolution.PrimerNombreUsuario}</td>
                     <td>{Devolution.IdentificadorUsuario}</td>
                     <td> {Devolution.NombreCarrera}</td>
@@ -198,7 +281,7 @@ export default function DevolutionClient({Devolution}) {
                   ))}
                 </tbody>
             </Table>
-              <Button variant="danger" type="button">
+              <Button variant="danger" type="button" onClick={handleButtonDelete}>
                 Enviar
               </Button>
           </Tab>

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { Button, Container, Form } from "react-bootstrap";
 import { Row, Col } from "react-bootstrap";
 import Logo from "../../../public/LOGO-UNA.png";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const router = useRouter();
@@ -14,15 +15,42 @@ const Login = () => {
 
   const handleLogin = () => {
     if (selectedOption === "biblioteca") {
+      handleEnterLogin();
       router.push("/Biblioteca/Cliente/Components/InterfazCliente/HomeClient");
     } else if (selectedOption === "biblioAdmin") {
-      router.push(
-        "/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar"
-      );
+      handleEnterLogin();
+      router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar");
     } else if (selectedOption === "administracion") {
+      handleEnterLogin();
+      router.push("/Administracion/Components/User/userWindow");
       router.push("/Administracion/Components/User/landing");
     }
   };
+
+  const handleEnterLogin = () => {
+    let timerInterval
+    Swal.fire({
+      title: 'Ingresando a PAUNA!',
+      html: 'Esto tardará unos <b></b> milisegundos.',
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading()
+        const b = Swal.getHtmlContainer().querySelector('b')
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft()
+        }, 100)
+      },
+      willClose: () => {
+        clearInterval(timerInterval)
+      }
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer')
+      }
+    })
+  }
 
   return (
     <div className="d-flex flex-column flex-md-row" style={{ minHeight: "50vh" }}>

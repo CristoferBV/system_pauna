@@ -21,8 +21,9 @@ export default function LoanClient() {
 
   // Estados para llenar selects
   const [carreras, setCarreras] = useState([]);
-  const [dispositivos, setDispositivos] = useState([]);
   const [horarios, setHorarios] = useState([]);
+  const [deviceData, setDeviceData] = useState([]);
+
 
   // Carreras
   useEffect(() => {
@@ -37,18 +38,18 @@ export default function LoanClient() {
       });
   }, []);
 
-  // Dispositivos
+  ///Dispositivos
   useEffect(() => {
-    // Realiza una solicitud GET a tu API para obtener las opciones de carrera
     Axios.get("/api/fillSelectsLoan/device")
       .then((response) => {
-        // Al recibir la respuesta, actualiza el estado con los datos de carrera
-        setDispositivos(response.data);
+        // Al recibir la respuesta, actualiza el estado con los datos de dispositivos
+        setDeviceData(response.data);
       })
       .catch((error) => {
-        console.error("Error al obtener las opciones de carrera", error);
+        console.error("Error al obtener las opciones de dispositivos", error);
       });
   }, []);
+  
 
   // Horarios
   useEffect(() => {
@@ -127,11 +128,42 @@ export default function LoanClient() {
           <div className="rounded p-6">
             <Row>
               <Col md={4}>
-                <Form.Group className="mb-3">
-                  <label className="font-semibold">Nombre completo</label>
+              <Form.Group className="mb-3">
+                  <label className="font-semibold">Nombre</label>
                   <Form.Control
                     type="text"
-                    placeholder="Ejemplo: Pepito Bryan Gomez Arguedas"
+                    placeholder="Ejemplo: Pepito"
+                  />
+                </Form.Group>
+                
+              </Col>
+              <Col>
+              <Form.Group className="mb-3">
+                  <label className="font-semibold">Segundo Nombre (Solo si tiene)</label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ejemplo: Bryan"
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+              <Form.Group className="mb-3">
+                  <label className="font-semibold">Primer apellido</label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ejemplo: Gomez"
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            
+            <Row>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Segundo apellido</label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ejemplo: Arguedas"
                   />
                 </Form.Group>
 
@@ -176,18 +208,16 @@ export default function LoanClient() {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <label className="font-semibold">Dispositivos</label>
-                  <Form.Control
-                    as="select"
-                  >
-                    <option value="">-Seleccionar opción-</option>
-                    {dispositivos.map((dispositivo) => (
-                      <option key={dispositivo.value} value={dispositivo.value}>
-                        {dispositivo.label}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
+                <label className="font-semibold">Dispositivos</label>
+                <Form.Control as="select">
+                  <option value="">-Seleccionar opción-</option>
+                  {deviceData.map((device, index) => (
+                    <option key={index} value={device.value}>
+                      {device.label}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
               </Col>
 
               <Col md={4}>

@@ -21,8 +21,9 @@ export default function LoanClient() {
 
   // Estados para llenar selects
   const [carreras, setCarreras] = useState([]);
-  const [dispositivos, setDispositivos] = useState([]);
   const [horarios, setHorarios] = useState([]);
+  const [deviceData, setDeviceData] = useState([]);
+
 
   // Carreras
   useEffect(() => {
@@ -37,18 +38,18 @@ export default function LoanClient() {
       });
   }, []);
 
-  // Dispositivos
+  ///Dispositivos
   useEffect(() => {
-    // Realiza una solicitud GET a tu API para obtener las opciones de carrera
     Axios.get("/api/fillSelectsLoan/device")
       .then((response) => {
-        // Al recibir la respuesta, actualiza el estado con los datos de carrera
-        setDispositivos(response.data);
+        // Al recibir la respuesta, actualiza el estado con los datos de dispositivos
+        setDeviceData(response.data);
       })
       .catch((error) => {
-        console.error("Error al obtener las opciones de carrera", error);
+        console.error("Error al obtener las opciones de dispositivos", error);
       });
   }, []);
+  
 
   // Horarios
   useEffect(() => {
@@ -176,18 +177,16 @@ export default function LoanClient() {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                  <label className="font-semibold">Dispositivos</label>
-                  <Form.Control
-                    as="select"
-                  >
-                    <option value="">-Seleccionar opción-</option>
-                    {dispositivos.map((dispositivo) => (
-                      <option key={dispositivo.value} value={dispositivo.value}>
-                        {dispositivo.label}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
+                <label className="font-semibold">Dispositivos</label>
+                <Form.Control as="select">
+                  <option value="">-Seleccionar opción-</option>
+                  {deviceData.map((device, index) => (
+                    <option key={index} value={device.value}>
+                      {device.label}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
               </Col>
 
               <Col md={4}>

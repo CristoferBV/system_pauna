@@ -4,27 +4,27 @@ import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Row, Col } from "react-bootstrap";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Container from "react-bootstrap/Container"
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 
 export default function DevolutionClient({Devolution}) {
   const [selectedRow, setSelectedRow] = useState(null);
   const router = useRouter();
   const [active, setActive] = useState("");
+  const [key, setKey] = useState("Estudiantes");
 
   const navigation = [
     { name: "Inicio", section: "HomeClient", current: false },
     { name: "Préstamo", section: "LoanClient", current: false },
     { name: "Devolución", section: "DevolutionClient", current: false },
   ];
-
-  const [key, setKey] = useState("Estudiantes");
 
   //Datos que se envían a la base de datos
   const [] = useState({
@@ -102,6 +102,31 @@ export default function DevolutionClient({Devolution}) {
     }
   }
 
+  const handleTabSelect = (key) => {
+    if (key === "Datos") {
+      Swal.fire("Seleccionese y presione enviar.");
+    }
+    setKey(key);
+  };
+
+  // Función para manejar el clic en el botón "Enviar"
+  const handleButtonDelete = () => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        sendData();
+        Swal.fire("Devolución realizada!", "Su devolución ha sido realizada.", "success");
+      }
+    });
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar bg="danger" expand="lg">
@@ -163,7 +188,7 @@ export default function DevolutionClient({Devolution}) {
         <Tabs
           id="controlled-tab-example"
           activeKey={key}
-          onSelect={(k) => setKey(k)}
+          onSelect={handleTabSelect}
           className="mb-3 custom-tabs"
         >
           <Tab eventKey="Estudiantes" title={<span className="custom-tab-title">Estudiantes</span>}>
@@ -234,7 +259,7 @@ export default function DevolutionClient({Devolution}) {
                   ))}
                 </tbody>
             </Table>
-              <Button variant="danger" type="button" onClick={sendData}>
+              <Button variant="danger" type="button" onClick={handleButtonDelete}>
                 Enviar
               </Button>
           </Tab>

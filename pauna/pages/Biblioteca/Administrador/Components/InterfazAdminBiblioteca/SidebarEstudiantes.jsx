@@ -76,6 +76,19 @@ export default function SidebarEstudiantes({ Estudiantes }) {
         setShowEditForm(false);
     };
 
+    const buttonStyle = {
+        backgroundColor: '#021730',
+        color: 'white',
+        border: 'none', // Agregar un borde blanco
+        transition: 'background-color 0.3s, border 0.3s', // También añadir la transición para el borde
+    };
+
+    const buttonHoverStyle = {
+        backgroundColor: '#010E1F',  // Nuevo color de fondo al pasar el cursor
+        color: 'black',  // Texto de color oscuro
+        border: '1px solid white',
+    };
+
 
     return (
         <div className="p-8">
@@ -84,8 +97,8 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                     <div className="d-flex justify-content-between">
                         <span>Lista de Estudiantes</span>
                         <Button
-                            variant="success"
                             onClick={handleCreateEstudiante}
+                            style={buttonStyle}
                         >
                             Crear Estudiante
                         </Button>
@@ -135,12 +148,13 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                                     <td className="text-nowrap">{estudiante["CE-correoElectronico"]}</td>
                                     <td className="text-nowrap">{estudiante["TO-numero"]}</td>
                                     <td className="d-flex align-items-center">
-                                        <Button variant="primary"
+                                        <Button
                                             onClick={handleEditEstudiante}
+                                            style={buttonStyle}
 
                                         > Editar
                                         </Button>
-                                        <Button variant="danger" className='ml-2' onClick={() => confirmDeleteEstudiante(estudiante)}>
+                                        <Button className='ml-2' onClick={() => confirmDeleteEstudiante(estudiante)} style={buttonStyle}>
                                             Eliminar
                                         </Button>
                                     </td>
@@ -276,10 +290,10 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowCreateForm(false)}>
+                    <Button onClick={() => setShowCreateForm(false)} style={buttonStyle}>
                         Cerrar
                     </Button>
-                    <Button variant="primary" onClick={() => createEstudiante(editedValues)}> {/* Reemplaza 'createEstudiante' con la función adecuada */}
+                    <Button  onClick={() => createEstudiante(editedValues)} style={buttonStyle}> {/* Reemplaza 'createEstudiante' con la función adecuada */}
                         Guardar
                     </Button>
                 </Modal.Footer>
@@ -410,10 +424,10 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowEditForm(false)}>
+                    <Button  onClick={() => setShowEditForm(false)} style={buttonStyle}>
                         Cerrar
                     </Button>
-                    <Button variant="primary" onClick={handleSaveEditEstudiante}>
+                    <Button  onClick={handleSaveEditEstudiante} style={buttonStyle}>
                         Guardar
                     </Button>
                 </Modal.Footer>
@@ -426,10 +440,10 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                     ¿Estás seguro de que deseas eliminar a este estudiante?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowDeleteConfirmation(false)}>
+                    <Button onClick={() => setShowDeleteConfirmation(false)} style={buttonStyle}>
                         Cancelar
                     </Button>
-                    <Button variant="danger" onClick={confirmDeleteEstudiante}>
+                    <Button onClick={confirmDeleteEstudiante} style={buttonStyle}>
                         Eliminar
                     </Button>
                 </Modal.Footer>

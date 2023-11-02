@@ -6,14 +6,24 @@ export default async function handler(req, res) {
         case "GET":
             return await getAllActivos(req, res);
         case "POST":
-            return await AddAllActivos(req, res);
+            const type = req.body.tipo
+            switch (type) {
+                case "Tipo":
+                    return await saveType(req, res);
+                case "Activo":
+                        await saveActivo(req, res);
+                        break
+            }
     }
 }
 
 const getAllActivos = async (req, res) => {
-    const [result] = await pool.query("SELECT t.TP_nombre, t.TP_cantidad, a.AO_descripcion, a.AO_estado, p.EA_nombre FROM`pau_btc_tbl_listaprestamo` lp INNER JOIN `pau_btc_tbl_activo` a ON lp.LP_identificador = a.AO_identificador INNER JOIN `pau_btc_tbl_tipo` t ON a.AO_identificador_tipo = t.TP_identificador INNER JOIN `pau_btc_tbl_listaprestamo_x_tbl_periferico`lpxp ON lp.LP_identificador = lpxp.LP_identificador INNER JOIN `pau_btc_tbl_periferico` p ON lpxp.EA_identificador = p.EA_identificador");
+    const [result] = await pool.query("SELECT t.TP_nombre, a.AO_descripcion, a.AO_estado FROM `pau_btc_tbl_listaprestamo` lp INNER JOIN `pau_btc_tbl_activo` a ON lp.LP_identificador_activo = a.AO_identificador INNER JOIN `pau_btc_tbl_tipo` t ON a.AO_identificador_tipo = t.TP_identificador");
+    const [typeResult] = await pool.query("SELECT TP_nombre FROM pau_btc_tbl_tipo");
     console.log(result)
-    return res.status(200).json(result);
+    console.log(typeResult)
+    return res.status(200).json({ Dispositivos: result, types: typeResult });
+
 };
 
 const saveData = async (table, data, res) => {
@@ -21,25 +31,26 @@ const saveData = async (table, data, res) => {
         console.log(data);
         const result = await pool.query(`INSERT INTO ${table} SET ?`, data);
         console.log(result);
-        return res.status(200).json({ result }); // Devuelve un objeto con la propiedad "result"
+        return res.status(200).json(result);
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: 'Error al guardar los datos.' });
     }
 };
 
-
-
-const AddAllActivos = async (req, res) => {
-    const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
-    await pool.query(disableForeignKeyCheckQuery);
+const saveActivo = async (req, res) => {
     console.log(req.body);
-    const { TP_nombre, TP_cantidad, EA_nombre, AO_descripcion, AO_estado } = req.body;
-    const data = { TP_nombre, TP_cantidad, EA_nombre, AO_descripcion, AO_estado }
-    const { result } = saveData('pau_btc_tbl_listaprestamo', data, res);
-    console.log(result)
-    const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
-    await pool.query(enableForeignKeyCheckQuery);
+    const { AO_descripcion, AO_estado, AO_identificador_tipo } = req.body;
+    const data = { AO_descripcion, AO_estado, AO_identificador_tipo }
+    console.log(data)
+    const { result } = saveData('pau_btc_tbl_activo', data, res);
+    return result;
 };
 
+const saveType = async (req, res) => {
+    console.log(req.body);
+    const { tipo, TP_nombre, TP_descripcion } = req.body;
+    const data = { TP_nombre, TP_descripcion }
 
+    return saveData('pau_btc_tbl_tipo', data, res);
+}

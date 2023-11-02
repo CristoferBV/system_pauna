@@ -46,7 +46,7 @@ function NavbarAdminBiblioteca() {
               <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarEstudiantes" style={customDropdownStyle}>
                 Estudiantes
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.4" style={customDropdownStyle}>Separated link</NavDropdown.Item>
+              <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarPerifericos" style={customDropdownStyle}>Perifericos</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarDevoluciones" style={customTextStyle}>
               Devoluciones

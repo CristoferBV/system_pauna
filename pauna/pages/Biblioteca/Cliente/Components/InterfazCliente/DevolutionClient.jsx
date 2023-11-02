@@ -19,6 +19,7 @@ export default function DevolutionClient({Devolution}) {
   const router = useRouter();
   const [active, setActive] = useState("");
   const [key, setKey] = useState("Estudiantes");
+  const [data, setData] = useState(Devolution);
 
   const navigation = [
     { name: "Inicio", section: "HomeClient", current: false },
@@ -71,35 +72,7 @@ export default function DevolutionClient({Devolution}) {
   }
 
   function sendData() {
-    if (selectedRow !== null) {
-      // Obtén el identificador de la fila seleccionada
-      const identificacion = Devolution[selectedRow].IdentificadorUsuario;
-
-      // Define los datos a enviar a la API
-      const dataToSend = {
-        UO_identificador: identificacion,
-      };
-
-      // Realiza una solicitud DELETE a la API para eliminar los datos en función del identificador
-      axios
-        .delete('/api/devolution/data', { data: dataToSend })
-        .then((response) => {
-          if (response.status === 200) {
-            // Los datos se eliminaron con éxito, puedes realizar alguna acción apropiada aquí.
-            console.log('Datos eliminados con éxito');
-          } else {
-            // Manejar otros códigos de estado de respuesta si es necesario.
-            console.log('Error al eliminar datos');
-          }
-        })
-        .catch((error) => {
-          // Manejar errores de la solicitud
-          console.error('Error:', error);
-        });
-    } else {
-      // Muestra un mensaje de error o realiza alguna acción si no se ha seleccionado ninguna fila.
-      console.log('Selecciona una fila antes de enviar los datos.');
-    }
+    
   }
 
   const handleTabSelect = (key) => {
@@ -121,8 +94,57 @@ export default function DevolutionClient({Devolution}) {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        sendData();
-        Swal.fire("Devolución realizada!", "Su devolución ha sido realizada.", "success");
+        if (selectedRow !== null) {
+          // Obtén el identificador de la fila seleccionada
+          const identificacion = Devolution[selectedRow].IdentificadorUsuario;
+  
+          // Define los datos a enviar a la API
+          const dataToSend = {
+            UO_identificador: identificacion,
+          };
+  
+          // Realiza una solicitud DELETE a la API para eliminar los datos en función del identificador
+          axios
+            .delete('/api/devolution/data', { data: dataToSend })
+            .then((response) => {
+              if (response.status === 200) {
+                // Los datos se eliminaron con éxito, puedes realizar alguna acción apropiada aquí.
+                console.log('Datos eliminados con éxito');
+  
+                // Actualiza los datos después de la eliminación
+                axios
+                  .get('/api/devolution/data')
+                  .then((response) => {
+                    if (response.status === 200) {
+                      console.log('Datos actualizados:', response.data);
+                      const newData = response.data;
+                      setData(newData); // Actualiza los datos en el estado
+  
+                      // Muestra una notificación de éxito
+                      Swal.fire('Devolución realizada!', 'Su devolución ha sido realizada.', 'success');
+  
+                      // Recarga la página para reflejar los cambios en la tabla
+                     //window.location.href = '/Biblioteca/Cliente/Components/InterfazCliente/DevolutionClient';
+                    } else {
+                      console.log('Error al actualizar datos');
+                    }
+                  })
+                  .catch((error) => {
+                    console.error('Error al obtener datos actualizados:', error);
+                  });
+              } else {
+                // Manejar otros códigos de estado de respuesta si es necesario.
+                console.log('Error al eliminar datos');
+              }
+            })
+            .catch((error) => {
+              // Manejar errores de la solicitud
+              console.error('Error:', error);
+            });
+        } else {
+          // Muestra un mensaje de error o realiza alguna acción si no se ha seleccionado ninguna fila.
+          console.log('Selecciona una fila antes de enviar los datos.');
+        }
       }
     });
   };

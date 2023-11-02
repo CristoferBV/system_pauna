@@ -128,11 +128,42 @@ export default function LoanClient() {
           <div className="rounded p-6">
             <Row>
               <Col md={4}>
-                <Form.Group className="mb-3">
-                  <label className="font-semibold">Nombre completo</label>
+              <Form.Group className="mb-3">
+                  <label className="font-semibold">Nombre</label>
                   <Form.Control
                     type="text"
-                    placeholder="Ejemplo: Pepito Bryan Gomez Arguedas"
+                    placeholder="Ejemplo: Pepito"
+                  />
+                </Form.Group>
+                
+              </Col>
+              <Col>
+              <Form.Group className="mb-3">
+                  <label className="font-semibold">Segundo Nombre (Solo si tiene)</label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ejemplo: Bryan"
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+              <Form.Group className="mb-3">
+                  <label className="font-semibold">Primer apellido</label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ejemplo: Gomez"
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            
+            <Row>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <label className="font-semibold">Segundo apellido</label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ejemplo: Arguedas"
                   />
                 </Form.Group>
 

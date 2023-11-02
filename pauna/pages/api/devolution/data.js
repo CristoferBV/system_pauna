@@ -54,7 +54,7 @@ const deleteData = async (req, res) => {
             WHERE U.UO_identificador = ?
         );
         `;
-        // Consulta SQL para eliminar registros en la tabla de listaprestamo
+
         const deleteListaprestamoQuery = `
         DELETE FROM pau_btc_tbl_listaprestamo
         WHERE LP_identificador_usuario IN (

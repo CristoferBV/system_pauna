@@ -23,6 +23,7 @@ const Login = () => {
     } else if (selectedOption === "administracion") {
       handleEnterLogin();
       router.push("/Administracion/Components/User/userWindow");
+      router.push("/Administracion/Components/User/landing");
     }
   };
 

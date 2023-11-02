@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Row, Col, Container, Button, Form, Table, Modal, Alert } from "react-bootstrap"
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 export default function Inventary({ materials, colors, brands, ubications, types }) {
   const router = useRouter();
@@ -427,13 +428,13 @@ export default function Inventary({ materials, colors, brands, ubications, types
                             <Container>
                               <Row>
                                 <Col>
-                                  <Button onClick={() => handleEditMaterial(material)}>
-                                    Editar
+                                  <Button variant="warning"onClick={() => handleEditMaterial(material)}>
+                                    <FaEdit></FaEdit>
                                   </Button>
                                 </Col>
                                 <Col>
-                                  <Button onClick={() => handleDeleteMaterial(material.ML_identificador)}>
-                                    Eliminar
+                                  <Button variant="danger" onClick={() => handleDeleteMaterial(material.ML_identificador)}>
+                                    <FaTrash/>
                                   </Button>
                                 </Col>
                               </Row>

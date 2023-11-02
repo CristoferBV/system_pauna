@@ -81,7 +81,7 @@ export default function Horario({ Horarios }) {
                                 )
                                 .map((horario) => (
                                     <tr key={horario.HO_identificador}>
-                                        <td className="text-center">{horario.HO_fecha}</td>
+                                        <td className="text-center">{new Date (horario.HO_fecha).toISOString().slice(0, 10)}</td>
                                         <td className="text-center">{horario.HO_hora}</td>
                                         <td className="text-center">{horario.HO_estado}</td>
                                         <td className="text-center">

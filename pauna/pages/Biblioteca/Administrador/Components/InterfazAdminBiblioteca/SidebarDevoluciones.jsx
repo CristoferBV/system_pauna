@@ -69,7 +69,7 @@ export default function SidebarDevoluciones({ Devoluciones }) {
 
     return (
         <div className="flex-1 p-8">
-            <Card bg="dark" text="white">
+            <Card bg="secondary" text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
                         <span>Devoluciones</span>
@@ -96,7 +96,7 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                             </Form.Group>
                         </Form>
                     </div>
-                    <Table striped bordered hover variant="dark" responsive>
+                    <Table striped bordered hover variant="secondary" responsive>
                         <thead>
                             <tr>
                                 <th>Nombre</th>
@@ -118,7 +118,7 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                                     devolucion.CA_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
                                     devolucion.HO_fecha.toLowerCase().includes(searchText.toLowerCase()) ||
                                     devolucion.LP_fechaDevolucion.toLowerCase().includes(searchText.toLowerCase()) ||
-                                    devolucion.CE_correoElectronico.toLowerCase().includes(searchText.toLowerCase())
+                                    devolucion['CE-correoElectronico'].toLowerCase().includes(searchText.toLowerCase())
                                 )
                                 .map((devolucion) => (
                                     <tr key={devolucion.EE_idenficador}>
@@ -126,8 +126,8 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                                         <td>{devolucion.UO_identificador}</td>
                                         <td>{devolucion.TP_nombre}</td>
                                         <td>{devolucion.CA_nombre}</td>
-                                        <td>{devolucion.HO_fecha}</td>
-                                        <td>{devolucion.LP_fechaDevolucion}</td>
+                                        <td>{new Date (devolucion.HO_fecha).toISOString().slice(0, 10)}</td>
+                                        <td>{new Date (devolucion.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
                                         <td>{devolucion['CE-correoElectronico']}</td>
                                         <td>
                                             <Button variant="light" className="ml-2" onClick={() => handleEdit(devolucion)}>

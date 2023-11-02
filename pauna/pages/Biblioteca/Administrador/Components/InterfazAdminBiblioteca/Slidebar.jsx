@@ -1,13 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button, Modal, Form, Card, InputGroup, FormControl } from 'react-bootstrap';
 
-export default function Slidebar({ Dispositivos }) {
+export default function Slidebar() {
+    const [Dispositivos, setDispositivos] = useState([]); // Define el estado Dispositivos y su función setter
     const [selectedDevice, setSelectedDevice] = useState(null);
-    const [editedValues, setEditedValues] = useState({});
+    const [editedValues, setEditedValues] = useState({
+        TP_nombre: "",
+        TP_cantidad: "",
+        EA_nombre: "",
+        AO_descripcion: "",
+        AO_estado: "",
+    });
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [showCreateForm, setShowCreateForm] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+
+    useEffect(() => {
+        loadDevices();
+    }, []);
+
+    const handleSubmit = async (data) => {
+        console.log("hola");
+        const res = await axios
+            .post("/api/config/BibliotecaDispositivos", data)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        console.log(res)
+    };
+
+    const handleSave = (object) => {
+        handleSubmit(object);
+        setShowAlert(true);
+        setTimeout(() => {
+            setShowAlert(false);
+        }, 2000);
+    };
+
+    const handleAlertClose = () => {
+        setShowAlert(false);
+    };
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -19,7 +56,7 @@ export default function Slidebar({ Dispositivos }) {
 
     const handleEditDevice = (device) => {
         setSelectedDevice(device);
-        setEditedValues(device);
+        setEditedDevice(device);
     };
 
     const confirmDeleteDevice = () => {
@@ -33,36 +70,44 @@ export default function Slidebar({ Dispositivos }) {
 
     const filteredDevices = Dispositivos.filter((device) => {
         return (
-            device.TP_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
-            device.TP_cantidad.toLowerCase().includes(searchText.toLowerCase()) ||
-            device.EA_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
-            device.AO_descripcion.toLowerCase().includes(searchText.toLowerCase()) ||
-            device.AO_estado.toLowerCase().includes(searchText.toLowerCase())
+            (device.TP_nombre && device.TP_nombre.toLowerCase().includes(searchText.toLowerCase())) ||
+            (
+                device.TP_cantidad &&
+                ((typeof device.TP_cantidad === 'string' && /^\d+$/.test(device.TP_cantidad)) || (typeof device.TP_cantidad === 'number')) &&
+                device.TP_cantidad.toString().toLowerCase().includes(searchText.toLowerCase())
+            ) ||
+            (device.EA_nombre && device.EA_nombre.toLowerCase().includes(searchText.toLowerCase())) ||
+            (device.AO_descripcion && device.AO_descripcion.toLowerCase().includes(searchText.toLowerCase())) ||
+            (device.AO_estado && device.AO_estado.toLowerCase().includes(searchText.toLowerCase()))
         );
     });
+
 
     const handleCreateDevice = () => {
         setShowCreateForm(true);
         setEditedValues({});
+        setSelectedDevice(null);
     };
 
-    const handleSaveDevice = async () => {
-        // Aquí debes enviar los datos al servidor para ser guardados en la base de datos
+
+
+    const loadDevices = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/api/config/BibliotecaDispositivos", editedValues);
-            console.log('Dispositivo creado:', response.data);
-            // Vuelve a cargar la lista de dispositivos
-            loadDevices();
+            const response = await axios.get("http://localhost:3000/api/config/BibliotecaDispositivos");
+            const devices = response.data;
+            setDispositivos(devices); // Actualiza el estado Dispositivos con los datos cargados
         } catch (error) {
-            console.error('Error al crear el dispositivo:', error);
-            // Muestra un mensaje de error al usuario
-            alert('Error al crear el dispositivo');
+            console.error('Error al cargar dispositivos:', error);
         }
+    }
 
-        setShowCreateForm(false);
+    const handleDeleteDevice = () => {
+        // Realizar la acción para eliminar el dispositivo aquí
+        setDeleteConfirmation(false);
+        loadDevices(); // Actualiza la lista después de eliminar
     };
 
-    // Define los estilos CSS para los botones y sus efectos de hover
+    
     const buttonStyle = {
         backgroundColor: '#021730',
         color: 'white',
@@ -75,6 +120,8 @@ export default function Slidebar({ Dispositivos }) {
         color: 'black',  // Texto de color oscuro
         border: '1px solid white',
     };
+
+
 
     return (
         <div className="p-4">
@@ -228,7 +275,13 @@ export default function Slidebar({ Dispositivos }) {
                     </Button>
                     <Button
                         variant="primary"
-                        onClick={handleSaveDevice}
+                        onClick={() => handleSave ({
+                            TP_nombre: editedValues.TP_nombre,
+                            TP_cantidad: editedValues.TP_cantidad,
+                            EA_nombre: editedValues.EA_nombre,
+                            AO_descripcion: editedValues.AO_descripcion,
+                            AO_estado: editedValues.AO_estado,
+                        })}
                         style={buttonStyle}
                         onMouseEnter={(e) => {
                             e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
@@ -359,7 +412,7 @@ export default function Slidebar({ Dispositivos }) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </div >
     );
 }
 

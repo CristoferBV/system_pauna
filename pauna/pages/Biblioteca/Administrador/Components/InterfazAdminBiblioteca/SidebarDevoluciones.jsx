@@ -67,6 +67,19 @@ export default function SidebarDevoluciones({ Devoluciones }) {
         setShowForm(false); // Oculta el formulario después de enviar
     };
 
+    const buttonStyle = {
+        backgroundColor: '#021730',
+        color: 'white',
+        border: 'none', // Agregar un borde blanco
+        transition: 'background-color 0.3s, border 0.3s', // También añadir la transición para el borde
+    };
+
+    const buttonHoverStyle = {
+        backgroundColor: '#010E1F',  // Nuevo color de fondo al pasar el cursor
+        color: 'black',  // Texto de color oscuro
+        border: '1px solid white',
+    };
+
     return (
         <div className="flex-1 p-8">
             <Card bg="secondary" text="white">
@@ -74,10 +87,22 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                     <div className="d-flex justify-content-between">
                         <span>Devoluciones</span>
                         <div>
-                            <Button variant="primary" onClick={createDevolucion} className="mr-2">
+                            <Button variant="primary" onClick={createDevolucion} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                }} className="mr-2">
                                 Crear Devolución
                             </Button>
-                            <Button variant="danger" onClick={showAlert}>
+                            <Button variant="danger" onClick={showAlert} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                }}>
                                 Alerta
                             </Button>
                         </div>
@@ -126,14 +151,26 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                                         <td>{devolucion.UO_identificador}</td>
                                         <td>{devolucion.TP_nombre}</td>
                                         <td>{devolucion.CA_nombre}</td>
-                                        <td>{new Date (devolucion.HO_fecha).toISOString().slice(0, 10)}</td>
-                                        <td>{new Date (devolucion.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
+                                        <td>{new Date(devolucion.HO_fecha).toISOString().slice(0, 10)}</td>
+                                        <td>{new Date(devolucion.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
                                         <td>{devolucion['CE-correoElectronico']}</td>
                                         <td>
-                                            <Button variant="light" className="ml-2" onClick={() => handleEdit(devolucion)}>
+                                            <Button variant="light" className="ml-2" onClick={() => handleEdit(devolucion)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                                onMouseEnter={(e) => {
+                                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                                }}>
                                                 Editar
                                             </Button>
-                                            <Button variant="danger" className="ml-2" onClick={() => handleDelete(devolucion)}>
+                                            <Button variant="danger" className="ml-2" onClick={() => handleDelete(devolucion)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                                onMouseEnter={(e) => {
+                                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                                }}>
                                                 Eliminar
                                             </Button>
                                         </td>
@@ -212,10 +249,22 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setEditMode(false)}>
+                    <Button variant="secondary" onClick={() => setEditMode(false)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={saveChanges}>
+                    <Button variant="primary" onClick={saveChanges} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Guardar Cambios
                     </Button>
                 </Modal.Footer>
@@ -230,10 +279,22 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                     ¿Estás seguro de que deseas eliminar esta devolución?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setDeleteConfirmation(false)}>
+                    <Button variant="secondary" onClick={() => setDeleteConfirmation(false)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Cancelar
                     </Button>
-                    <Button variant="danger" onClick={confirmDelete}>
+                    <Button variant="danger" onClick={confirmDelete} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Eliminar
                     </Button>
                 </Modal.Footer>
@@ -299,10 +360,22 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowCreateForm(false)}>
+                    <Button variant="secondary" onClick={() => setShowCreateForm(false)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={submitNewDevolucion}>
+                    <Button variant="primary" onClick={submitNewDevolucion} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Crear
                     </Button>
                 </Modal.Footer>
@@ -355,10 +428,22 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setShowForm(false)}>
+                        <Button variant="secondary" onClick={() => setShowForm(false)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                            }}>
                             Cancelar
                         </Button>
-                        <Button variant="primary" onClick={submitForm}>
+                        <Button variant="primary" onClick={submitForm} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                            }}>
                             Enviar
                         </Button>
                     </Modal.Footer>
@@ -384,6 +469,6 @@ export const getServerSideProps = async (context) => {
                 Devoluciones: [], // Puedes proporcionar un valor predeterminado en caso de error.
             },
         };
-        
+
     }
 };

@@ -29,12 +29,7 @@ export default function Slidebar({ types }) {
         TP_nombre: "",
         TP_descripcion: "",
     })
-    // const [periferico, setPeriferico] = useState({
-    //     tipo: "Periferico",
-    //     EA_identificador: "",
-    //     EA_nombre: "",
-    // })
-
+    
     const handleChange = ({ target: { name, value } }) => {
         if (name === "TP_identificador") {
             setType({ ...type, TP_identificador: value });
@@ -86,6 +81,7 @@ export default function Slidebar({ types }) {
     const handleEditDevice = (device) => {
         setSelectedDevice(device);
         setEditedValues({
+            TP_identificador: device.TP_identificador|| "",
             TP_nombre: device.TP_nombre || "",
             TP_cantidad: device.TP_cantidad || "",
             EA_nombre: device.EA_nombre || "",
@@ -107,6 +103,10 @@ export default function Slidebar({ types }) {
     const filteredDevices = Dispositivos.Dispositivos && Array.isArray(Dispositivos.Dispositivos)
         ? Dispositivos.Dispositivos.filter((device) => {
             return (
+                (device.AO_identificador &&
+                    ((typeof device.AO_identificador === 'string' && /^\d+$/.test(device.AO_identificador)) || (typeof device.AO_identificador === 'number')) &&
+                    device.AO_identificador.toString().toLowerCase().includes(searchText.toLowerCase())
+                ) ||
                 (device.TP_nombre && device.TP_nombre.toLowerCase().includes(searchText.toLowerCase())) ||
                 (device.TP_cantidad &&
                     ((typeof device.TP_cantidad === 'string' && /^\d+$/.test(device.TP_cantidad)) || (typeof device.TP_cantidad === 'number')) &&
@@ -223,6 +223,7 @@ export default function Slidebar({ types }) {
                     <Table variant='secondary' striped bordered hover responsive>
                         <thead>
                             <tr>
+                                <th className="text-center">Codigo ID</th>
                                 <th className="text-center">Dispositivo</th>
                                 <th className="text-center">Descripción</th>
                                 <th className="text-center">Estado</th>
@@ -232,6 +233,7 @@ export default function Slidebar({ types }) {
                         <tbody>
                             {filteredDevices.map((device) => (
                                 <tr key={device.LP_identificador}>
+                                    <td className="text-center">{device.AO_identificador}</td>
                                     <td className="text-center">{device.TP_nombre}</td>
                                     <td className="text-center">{device.AO_descripcion}</td>
                                     <td className="text-center">{device.AO_estado}</td>

@@ -1,132 +1,141 @@
 import React, { useState } from 'react';
-import axios from "axios";
-import Image from 'next/image';
+import axios from 'axios';
 
-export default function SidebarReporte ({ Reporte }) {
+export default function SidebarReporte({ Reporte }) {
+  const [searchText, setSearchText] = useState('');
+  const [editMode, setEditMode] = useState(false);
+  const [editedReporte, setEditedReporte] = useState({});
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [newReporte, setNewReporte] = useState({});
+  const [alertVisible, setAlertVisible] = useState(false);
 
-    const [] = useState({
-        EE_idenficador:"",
-        UO_primer_nombre: "",
-        UO_identificador: "",
-        TP_nombre: "",
-        EA_nombre: "",
-        CA_nombre: "",
-        HO_fecha: "",
-        LP_fechaDevolucion: "",
-        CE_correoElectronico: "",
-      });
+  const handleEdit = (reporte) => {
+    setEditedReporte(reporte);
+    setEditMode(true);
+  };
 
-    return (
-            <div className="flex-1 p-8 bg-[#041A34] overflow-x-auto shadow-md min-h-screen">
-                <form className='mb-5'>
-                    <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
-                    <div className="relative">
-                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg className="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                            </svg>
-                        </div>
-                        <input type="search" id="default-search" className="block w-full p-4 pl-10 text-sm text-white border border-gray-600 rounded-lg bg-gray-700 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400" placeholder="Search Mockups, Logos..." required />
-                        <button type="submit" className="text-white absolute right-2.5 bottom-2.5 bg-[#132335] hover:bg-[#242d66] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
-                    </div>
-                </form>
+  const saveChanges = () => {
+    // Implementa la lógica para guardar los cambios aquí
+    setEditMode(false);
+  };
 
-                <div className="relative overflow-x-auto bg-[#041A34] overflow-y-auto min-h-[calc(100vh-64px)]">
-                    <table class="w-full text-sm text-center text-[#757373]">
-                        <thead class="text-xs text-[#ffffff] uppercase bg-[#132335]">
-                            <tr>
-                                <th scope="col" class="px-6 py-3    ">
-                                    Nombre
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Cedula
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Dispositivo
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Periferico
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Carrera
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Fecha entregado
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Fecha devolucion
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Correo
-                                </th>
-                                <th scope="col" class="px-6 py-3 w-20">
-                                    Administrar
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Reporte.map((Reporte) => (
+  const handleDelete = (reporte) => {
+    setEditedReporte(reporte);
+    setDeleteConfirmation(true);
+  };
 
-                            <tr className="bg-[#212C39] border-b hover:bg-[#242d66] group" key={Reporte.EE_idenficador}>
-                                <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
-                                    {Reporte.UO_primer_nombre}
-                                </th>
-                                <td className="px-6 py-4 text-white">
-                                    {Reporte.UO_identificador}
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    {Reporte.TP_nombre}
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    {Reporte.EA_nombre}
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    {Reporte.CA_nombre}
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    {Reporte.HO_fecha}
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    {Reporte.LP_fechaDevolucion}
-                                </td>
-                                <td className="px-6 py-4 text-white">
-                                    {(Reporte["CE-correoElectronico"])}
-                                </td>
-                                <td className="grid grid-cols-3 gap-2 mt-4 bg-[#212C39] group-hover:bg-[rgb(36,45,102)]">
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/add-icon.png" alt="logo universidad nacional de costa rica" width={30} height={30} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/delete-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                    <button className='bg-[#212C39] text-white group-hover:bg-[#242d66] ml-2'><Image src="/edit-icon.png" alt="logo universidad nacional de costa rica" width={25} height={25} />
-                                    </button>
-                                </td>
-                            </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <button className=' text-white border-white text-sm mt-6 ml-3 w-40 h-10 bg-[#132335] hover:bg-[#242d66]'>Reporte Individual</button>
-                    <button className=' text-white border-white text-sm  mt-6 ml-3 w-40 h-10 bg-[#132335] hover:bg-[#242d66]'>Reporte General</button>
-                </div>
-            </div>
-        );
-    }
+  const confirmDelete = () => {
+    // Implementa la lógica para eliminar el elemento aquí
+    setDeleteConfirmation(false);
+  };
 
-    export const getServerSideProps = async (context) => {
-        try{
-        const { data: Reporte } = await axios.get(
-            "http://localhost:3000/api/config/BibliotecaReportes"
-        )
-        return {
-            props: {
-                Reporte,
-            },
-        };
-        }catch(error){
-            console.log(error)
-            return {
-                props: {
-                    Reporte: [], // Puedes proporcionar un valor predeterminado en caso de error.
-                },
-            };
-        }
+  const createReporte = () => {
+    setShowCreateForm(true);
+  };
+
+  const handleAlertClose = () => {
+    setAlertVisible(false);
+  };
+
+  const submitNewReporte = () => {
+    // Implementa la lógica para guardar el nuevo reporte
+    setAlertVisible(true);
+  };
+
+  return (
+    <div className="flex-1 p-8">
+      <div className="card bg-primary text-white">
+        <div className="card-header">
+          <div className="d-flex justify-content-between">
+            <span>Reportes</span>
+            <button
+              className="btn btn-success"
+              onClick={createReporte}
+            >
+              Nuevo Reporte
+            </button>
+          </div>
+        </div>
+        <div className="card-body">
+          <div className="mb-3">
+            <form>
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Buscar reporte..."
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                />
+              </div>
+            </form>
+          </div>
+          <table className="table table-striped table-bordered table-hover table-secondary table-responsive">
+            <thead>
+              <tr>
+                <th className="text-center">Nombre</th>
+                <th className="text-center">Cedula</th>
+                <th className="text-center">Dispositivo</th>
+                <th className="text-center">Periferico</th>
+                <th className="text-center">Carrera</th>
+                <th className="text-center">Fecha entregado</th>
+                <th className="text-center">Fecha devolucion</th>
+                <th className="text-center">Correo</th>
+                <th className="text-center">Administrar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Reporte.map((reporte) => (
+                <tr key={reporte.EE_idenficador}>
+                  <td className="text-center">{reporte.UO_primer_nombre}</td>
+                  <td className="text-center">{reporte.UO_identificador}</td>
+                  <td className="text-center">{reporte.TP_nombre}</td>
+                  <td className="text-center">{reporte.EA_nombre}</td>
+                  <td className="text-center">{reporte.CA_nombre}</td>
+                  <td className="text-center">{reporte.HO_fecha}</td>
+                  <td className="text-center">{reporte.LP_fechaDevolucion}</td>
+                  <td className="text-center">{reporte.CE_correoElectronico}</td>
+                  <td className="text-center">
+                    <button
+                      className="btn btn-light ml-2"
+                      onClick={() => handleEdit(reporte)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="btn btn-light ml-2"
+                      onClick={() => handleDelete(reporte)}
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Los componentes de modales, formularios de creación y alertas irían aquí */}
+    </div>
+  );
+}
+
+export const getServerSideProps = async (context) => {
+  try {
+    const { data: Reporte } = await axios.get("http://localhost:3000/api/config/BibliotecaReportes");
+    return {
+      props: {
+        Reporte,
+      },
     };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        Reporte: [],
+      },
+    };
+  }
+};

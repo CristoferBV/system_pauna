@@ -42,7 +42,18 @@ export default function Horario({ Horarios }) {
         setShowCreateForm(true);
     };
 
-    
+    const buttonStyle = {
+        backgroundColor: '#021730',
+        color: 'white',
+        border: 'none', // Agregar un borde blanco
+        transition: 'background-color 0.3s, border 0.3s', // También añadir la transición para el borde
+    };
+
+    const buttonHoverStyle = {
+        backgroundColor: '#010E1F',  // Nuevo color de fondo al pasar el cursor
+        color: 'black',  // Texto de color oscuro
+        border: '1px solid white',
+    };
 
     return (
         <div className="flex-1 p-8">
@@ -50,7 +61,13 @@ export default function Horario({ Horarios }) {
                 <Card.Header>
                     <div className="d-flex justify-content-between">
                         <span>Horario</span>
-                        <Button variant="success" onClick={createHorario}>
+                        <Button variant="success" onClick={createHorario} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                }}>
                             Crear Horario
                         </Button>
                     </div>
@@ -85,10 +102,22 @@ export default function Horario({ Horarios }) {
                                         <td className="text-center">{horario.HO_hora}</td>
                                         <td className="text-center">{horario.HO_estado}</td>
                                         <td className="text-center">
-                                            <Button variant="light" className="ml-2" onClick={() => handleEdit(horario)}>
+                                            <Button variant="light" className="ml-2" onClick={() => handleEdit(horario)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                }}>
                                                 Editar
                                             </Button>
-                                            <Button variant="light" className="ml-2" onClick={handleDelete}>
+                                            <Button variant="light" className="ml-2" onClick={handleDelete} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                }}>
                                                 Eliminar
                                             </Button>
                                         </td>
@@ -137,10 +166,22 @@ export default function Horario({ Horarios }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setEditMode(false)}>
+                    <Button variant="secondary" onClick={() => setEditMode(false)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                }}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={saveChanges}>
+                    <Button variant="primary" onClick={saveChanges} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                }}>
                         Guardar Cambios
                     </Button>
                 </Modal.Footer>
@@ -155,10 +196,22 @@ export default function Horario({ Horarios }) {
                     ¿Estás seguro de que deseas eliminar este horario?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setDeleteConfirmation(false)}>
+                    <Button variant="secondary" onClick={() => setDeleteConfirmation(false)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                }}>
                         Cancelar
                     </Button>
-                    <Button variant="danger" onClick={confirmDelete}>
+                    <Button variant="danger" onClick={confirmDelete} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                }}>
                         Eliminar
                     </Button>
                 </Modal.Footer>
@@ -198,10 +251,22 @@ export default function Horario({ Horarios }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowCreateForm(false)}>
+                    <Button variant="secondary" onClick={() => setShowCreateForm(false)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                }}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={() => handleInputChange }>
+                    <Button variant="primary" onClick={() => handleInputChange } style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onMouseEnter={(e) => {
+                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                }}>
                         Crear
                     </Button>
                 </Modal.Footer>

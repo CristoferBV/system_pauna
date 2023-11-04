@@ -18,8 +18,8 @@ export default async function handler(req, res) {
 }
 
 const getAllActivos = async (req, res) => {
-    const [result] = await pool.query("SELECT t.TP_nombre, a.AO_descripcion, a.AO_estado FROM `pau_btc_tbl_listaprestamo` lp INNER JOIN `pau_btc_tbl_activo` a ON lp.LP_identificador_activo = a.AO_identificador INNER JOIN `pau_btc_tbl_tipo` t ON a.AO_identificador_tipo = t.TP_identificador");
-    const [typeResult] = await pool.query("SELECT TP_nombre FROM pau_btc_tbl_tipo");
+    const [result] = await pool.query("SELECT a.AO_identificador, t.TP_nombre, a.AO_descripcion, a.AO_estado FROM `pau_btc_tbl_tipo` t INNER JOIN `pau_btc_tbl_activo` a ON a.AO_identificador_tipo = t.TP_identificador");
+    const [typeResult] = await pool.query("SELECT TP_identificador, TP_nombre FROM pau_btc_tbl_tipo");
     console.log(result)
     console.log(typeResult)
     return res.status(200).json({ Dispositivos: result, types: typeResult });
@@ -40,10 +40,16 @@ const saveData = async (table, data, res) => {
 
 const saveActivo = async (req, res) => {
     console.log(req.body);
+    const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
+    await pool.query(disableForeignKeyCheckQuery);
+
     const { AO_descripcion, AO_estado, AO_identificador_tipo } = req.body;
     const data = { AO_descripcion, AO_estado, AO_identificador_tipo }
     console.log(data)
     const { result } = saveData('pau_btc_tbl_activo', data, res);
+
+    const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
+    await pool.query(enableForeignKeyCheckQuery);
     return result;
 };
 

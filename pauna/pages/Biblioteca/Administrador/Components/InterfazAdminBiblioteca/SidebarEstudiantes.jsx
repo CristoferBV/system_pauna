@@ -99,6 +99,12 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                         <Button
                             onClick={handleCreateEstudiante}
                             style={buttonStyle}
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                            }}
                         >
                             Crear Estudiante
                         </Button>
@@ -142,8 +148,8 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                                     <td className="text-nowrap">{estudiante.AO_descripcion}</td>
                                     <td className="text-nowrap">{estudiante['DO-nombre']}</td>
                                     <td className="text-nowrap">{estudiante.EE_campus}</td>
-                                    <td className="text-nowrap">{new Date (estudiante.HO_fecha).toISOString().slice(0, 10)}</td>
-                                    <td className="text-nowrap">{new Date (estudiante.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
+                                    <td className="text-nowrap">{new Date(estudiante.HO_fecha).toISOString().slice(0, 10)}</td>
+                                    <td className="text-nowrap">{new Date(estudiante.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
                                     <td className="text-nowrap">{estudiante.RE_observacion}</td>
                                     <td className="text-nowrap">{estudiante["CE-correoElectronico"]}</td>
                                     <td className="text-nowrap">{estudiante["TO-numero"]}</td>
@@ -151,10 +157,21 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                                         <Button
                                             onClick={handleEditEstudiante}
                                             style={buttonStyle}
+                                            onMouseEnter={(e) => {
+                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                            }}
 
                                         > Editar
                                         </Button>
-                                        <Button className='ml-2' onClick={() => confirmDeleteEstudiante(estudiante)} style={buttonStyle}>
+                                        <Button className='ml-2' onClick={() => confirmDeleteEstudiante(estudiante)} style={buttonStyle} onMouseEnter={(e) => {
+                                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                        }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                            }}>
                                             Eliminar
                                         </Button>
                                     </td>
@@ -290,10 +307,20 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => setShowCreateForm(false)} style={buttonStyle}>
+                    <Button onClick={() => setShowCreateForm(false)} style={buttonStyle} onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                    }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Cerrar
                     </Button>
-                    <Button  onClick={() => createEstudiante(editedValues)} style={buttonStyle}> {/* Reemplaza 'createEstudiante' con la función adecuada */}
+                    <Button onClick={() => createEstudiante(editedValues)} style={buttonStyle} onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                    }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}> {/* Reemplaza 'createEstudiante' con la función adecuada */}
                         Guardar
                     </Button>
                 </Modal.Footer>
@@ -424,10 +451,20 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button  onClick={() => setShowEditForm(false)} style={buttonStyle}>
+                    <Button onClick={() => setShowEditForm(false)} style={buttonStyle} onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                    }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Cerrar
                     </Button>
-                    <Button  onClick={handleSaveEditEstudiante} style={buttonStyle}>
+                    <Button onClick={handleSaveEditEstudiante} style={buttonStyle} onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                    }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Guardar
                     </Button>
                 </Modal.Footer>
@@ -440,10 +477,20 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                     ¿Estás seguro de que deseas eliminar a este estudiante?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => setShowDeleteConfirmation(false)} style={buttonStyle}>
+                    <Button onClick={() => setShowDeleteConfirmation(false)} style={buttonStyle} onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                    }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Cancelar
                     </Button>
-                    <Button onClick={confirmDeleteEstudiante} style={buttonStyle}>
+                    <Button onClick={confirmDeleteEstudiante} style={buttonStyle} onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                    }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Eliminar
                     </Button>
                 </Modal.Footer>

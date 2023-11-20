@@ -8,13 +8,42 @@ export default async function handler(req, res) {
         case "POST":
             const type = req.body.tipo
             switch (type) {
-                case "Tipo":
-                    return await saveType(req, res);
                 case "Activo":
-                        await saveActivo(req, res);
-                        break
+                    await saveActivo(req, res);
+                case "Tipo":
+                    await saveType(req, res);
+                    break
             }
-    }
+        // case "PUT":
+        //     return await updateActivos(req, res);
+
+        case "DELETE":
+            return deleteActivos(req, res);
+        }
+}
+
+// const updateActivos = async (req, res) => {
+//     const {AO_identificador, AO_descripcion, AO_estado}= req.body;
+//     const data= {AO_descripcion, AO_estado}
+//     const result = await pool.query("UPDATE `pau_btc_tbl_activo` SET ? WHERE AO_identificador = ?",
+//         [data, AO_identificador]
+//     )
+//     return res.status(200).json(result)
+// };
+
+const deleteActivos = async(req, res)=>{
+    const AO_identificador = req.body.AO_identificador;
+
+    const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
+    await pool.query(disableForeignKeyCheckQuery);
+
+    const deleteActivo = "DELETE FROM `pau_btc_tbl_activo` WHERE AO_identificador = ?";
+    const result = await pool.query(deleteActivo, [AO_identificador]);
+
+    const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
+    await pool.query(enableForeignKeyCheckQuery);
+
+    return res.status(200).json({ Dispositivos: result});
 }
 
 const getAllActivos = async (req, res) => {
@@ -53,10 +82,13 @@ const saveActivo = async (req, res) => {
     return result;
 };
 
+
 const saveType = async (req, res) => {
     console.log(req.body);
-    const { tipo, TP_nombre, TP_descripcion } = req.body;
-    const data = { TP_nombre, TP_descripcion }
+    const { TP_identificador, TP_nombre, TP_descripcion } = req.body;
+    const data = { TP_identificador, TP_nombre, TP_descripcion }
+    console.log(data)
 
-    return saveData('pau_btc_tbl_tipo', data, res);
+    const { result } = saveData('pau_btc_tbl_tipo', data, res);
+    return  result;
 }

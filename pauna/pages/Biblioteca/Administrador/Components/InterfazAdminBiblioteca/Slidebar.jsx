@@ -29,12 +29,12 @@ export default function Slidebar({ types }) {
         TP_nombre: "",
         TP_descripcion: "",
     })
-    
+
     const handleChange = ({ target: { name, value } }) => {
-        if (name === "TP_identificador") {
-            setType({ ...type, TP_identificador: value });
-        } else if (name in activo) {
+        if (name in activo) {
             setActivo({ ...activo, [name]: value });
+        } else if (name in type){
+            setType({...type,[name]:value})
         }
     };
 
@@ -59,6 +59,19 @@ export default function Slidebar({ types }) {
         }, 2000);
         reloadPage();
     };
+
+    const handleDeleteActivo = async (activoID) => {
+        const res = await axios
+          .delete("/api/config/BibliotecaDispositivos", {data: {tipo:"Activo", AO_identificador:activoID}})
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(res)
+        reloadPage();
+      };
 
     const handleSaveTipo = (object) => {
         handleSubmit(object)
@@ -90,10 +103,6 @@ export default function Slidebar({ types }) {
         });
     };
 
-    const confirmDeleteDevice = () => {
-        // Realizar la acción para confirmar la eliminación aquí
-        setDeleteConfirmation(false);
-    };
 
     const cancelDeleteDevice = () => {
         setDeleteConfirmation(false);
@@ -254,7 +263,7 @@ export default function Slidebar({ types }) {
                                         {' '}
                                         <Button
                                             variant="danger"
-                                            onClick={() => setDeleteConfirmation(true)}
+                                            onClick={() => handleDeleteActivo(device.AO_identificador)}
                                             style={buttonStyle}
                                             onMouseEnter={(e) => {
                                                 e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
@@ -354,9 +363,20 @@ export default function Slidebar({ types }) {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
+                    <Form.Group>
+                            <Form.Label>Codigo ID</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="TP_identificador"
+                                value={type.TP_identificador}
+                                onChange={handleChange}
+                            >
+                            </Form.Control>
+                        </Form.Group>
                         <Form.Group>
                             <Form.Label>Nombre</Form.Label>
                             <Form.Control
+                                type="text"
                                 name="TP_nombre"
                                 value={type.TP_nombre}
                                 onChange={handleChange}
@@ -391,7 +411,8 @@ export default function Slidebar({ types }) {
                     <Button
                         variant="primary"
                         onClick={() => handleSaveTipo({
-                            tipo: "Activo",
+                            tipo: "Tipo",
+                            TP_identificador: type.TP_identificador,
                             TP_nombre: type.TP_nombre,
                             TP_descripcion: type.TP_descripcion
                         })}
@@ -415,30 +436,17 @@ export default function Slidebar({ types }) {
                     <Form>
                         <Form.Group>
                             <Form.Label>Dispositivo</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="TP_nombre"
-                                value={editedValues.TP_nombre || ''}
-                                onChange={handleInputChange}
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Cantidad</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="TP_cantidad"
-                                value={editedValues.TP_cantidad || ''}
-                                onChange={handleInputChange}
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Periféricos</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="EA_nombre"
-                                value={editedValues.EA_nombre || ''}
-                                onChange={handleInputChange}
-                            />
+                            <Form.Select
+                                name="TP_identificador"
+                                value={type.TP_identificador}
+                                onChange={handleChange}
+                            >
+                                {types.map((type) => (
+                                    <option key={type.TP_identificador} value={type.TP_identificador}>
+                                        {type.TP_nombre}
+                                    </option>
+                                ))}
+                            </Form.Select>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Descripción</Form.Label>
@@ -512,7 +520,7 @@ export default function Slidebar({ types }) {
                     </Button>
                     <Button
                         variant="danger"
-                        onClick={confirmDeleteDevice}
+                        onClick={""}
                         style={buttonStyle}
                         onMouseEnter={(e) => {
                             e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;

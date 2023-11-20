@@ -5,10 +5,10 @@ import { FaInstagram, FaFacebook, FaGithub } from 'react-icons/fa';
 const FooterBibliotecaAdmin = () => {
     return (
         <div>
-            <footer style={{ backgroundColor: '#021730' }} className="text-white mt-4 py-2 text-center">
-                <p>Derechos reservados: @Desarrolladores PAUNA 2023</p>
+            <footer style={{ backgroundColor: '#021730' }} className="text-white mt-1 py-3 text-center">
+                <p className='mt-3'>Derechos reservados: @Desarrolladores PAUNA 2023</p>
                 <div className="mt-3">
-                    <Button
+                    {/* <Button
                         variant="primary"
                         className="m-2 bg-dark border border-white" // Cambia el fondo del botón a color negro y establece los bordes en blanco
                         onClick={() => window.location.href = 'URL_DEL_BOTON_1'}
@@ -28,7 +28,7 @@ const FooterBibliotecaAdmin = () => {
                         onClick={() => window.location.href = 'URL_DEL_BOTON_3'}
                     >
                         <FaGithub/>
-                    </Button>
+                    </Button> */}
                 </div>
             </footer>
         </div>

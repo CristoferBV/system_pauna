@@ -40,9 +40,9 @@ const HomeClient = () => {
                     href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                     onClick={() => setActive(item.section)}
                     style={{ textDecoration: "none" }}
-                    className="d-flex align-items-center justify-content-center"
+                    className="d-flex align-items-center justify-content-center p-2"
                     >
-                    <Nav.Link
+                    <Nav
                         key={item.name}
                         href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                         className={
@@ -50,7 +50,7 @@ const HomeClient = () => {
                         }
                     >
                         {item.name}
-                    </Nav.Link>
+                    </Nav>
                     </Link>
                 ))}
                 <Link href={'/LoginAndRegister/Login/Login'} className="d-flex justify-content-center" style={{ textDecoration: "none" }}>

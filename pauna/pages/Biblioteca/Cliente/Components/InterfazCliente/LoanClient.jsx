@@ -7,11 +7,16 @@ import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import { Navbar, Nav, Form, Button, Card, Table, Container, Row, Col } from "react-bootstrap";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
-export default function LoanClient() {
+export default function LoanClient( {prestamo} ) {
 
   const router = useRouter();
   const [active, setActive] = useState("");
+  const [cedula, setCedula] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [device, setDevice] = useState("");
+  //const [comprobanteMatricula, setComprobanteMatricula] = useState(null);
 
   const navigation = [
     { name: "Inicio", section: "HomeClient", current: false },
@@ -64,6 +69,34 @@ export default function LoanClient() {
       });
   }, []);
 
+  // Prestamo del cliente
+  const handleAceptarClick = async () => {
+
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Su préstamo ha sido realizado",
+      showConfirmButton: false,
+      timer: 1500
+
+    });
+
+    console.log("Clic en Aceptar", cedula, selectedDate, device);
+    try {
+      const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+      console.log("Datos enviados al servidor:", { cedula, selectedDate: formattedDate, device});
+  
+      const { data } = await Axios.post("/api/libraryClient/loan", { cedula, selectedDate: formattedDate, device });
+  
+    } catch (error) {
+      console.error("Error al enviar la solicitud:", error);
+      
+    }
+    
+  };
+  
+
+
   return (
     <div className=" flex flex-col min-h-screen">
       <Navbar bg="danger" expand="lg">
@@ -87,9 +120,9 @@ export default function LoanClient() {
               href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
               onClick={() => setActive(item.section)}
               style={{ textDecoration: "none" }}
-              className="d-flex align-items-center justify-content-center"
+              className="d-flex align-items-center justify-content-center p-2"
             >
-              <Nav.Link
+              <Nav
                 key={item.name}
                 href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                 className={
@@ -97,7 +130,7 @@ export default function LoanClient() {
                 }
               >
                 {item.name}
-              </Nav.Link>
+              </Nav>
             </Link>
           ))}
            <Link href={'/LoginAndRegister/Login/Login'} className="d-flex justify-content-center" style={{ textDecoration: "none" }}>
@@ -137,7 +170,7 @@ export default function LoanClient() {
                 </Form.Group>
                 
               </Col>
-              <Col>
+              <Col md={4}>
               <Form.Group className="mb-3">
                   <label className="font-semibold">Segundo Nombre (Solo si tiene)</label>
                   <Form.Control
@@ -172,6 +205,8 @@ export default function LoanClient() {
                   <Form.Control
                     type="input"
                     placeholder="Ejemplo: 018080472"
+                    value={cedula}
+                    onChange={(e) => setCedula(e.target.value)}
                   />
                 </Form.Group>
 
@@ -209,10 +244,14 @@ export default function LoanClient() {
 
                 <Form.Group className="mb-3">
                 <label className="font-semibold">Dispositivos</label>
-                <Form.Control as="select">
+                <Form.Control as="select"
+                onChange={(e) => {
+                  const selectedDeviceDescription = e.target.options[e.target.selectedIndex].getAttribute("data-description");
+                  setDevice(selectedDeviceDescription);
+                }}>
                   <option value="">-Seleccionar opción-</option>
                   {deviceData.map((device, index) => (
-                    <option key={index} value={device.value}>
+                    <option key={index} value={device.value} data-description={device.label}>
                       {device.label}
                     </option>
                   ))}
@@ -225,10 +264,16 @@ export default function LoanClient() {
                   <label className="font-semibold">Fechas de prestamos</label>
                   <Form.Control
                     as="select"
+                    onChange={(e) => {
+                      const selectedDate = e.target.options[e.target.selectedIndex].getAttribute("data-date");
+                      // Formatear la fecha antes de guardarla en el estado
+                      const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+                      setSelectedDate(formattedDate);
+                    }}
                   >
                     <option value="">-Seleccionar opción-</option>
                     {horarios.map((horario) => (
-                      <option key={horario.value} value={horario.value}>
+                      <option key={horario.value} value={horario.value} data-date={horario.label}>
                         {new Date(horario.label).toLocaleDateString()}
                       </option>
                     ))}
@@ -253,8 +298,34 @@ export default function LoanClient() {
               </Col>
             </Row>
 
+            <Row className="justify-content-center">
+              <Col md={6}>
+                <Form.Group className="mb-3 text-center mx-auto" style={{ maxWidth: '80%' }}>
+                  <label className="font-semibold">Comprobante de Beca</label>
+                  <div>
+                    <Form.Control
+                      type="file"
+                      accept=".pdf, .doc, .docx"
+                    />
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3 text-center mx-auto" style={{ maxWidth: '80%' }}>
+                  <label className="font-semibold">Comprobante de Matricula</label>
+                  <div>
+                    <Form.Control
+                      type="file"
+                      accept=".pdf, .doc, .docx, .png, .jpg"
+                      //onChange={(e) => setComprobanteMatricula(e.target.files[0])}
+                    />
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+
             <div className="text-center mt-4">
-              <Button variant="danger">
+              <Button variant="danger" onClick={handleAceptarClick}>
                 Aceptar
               </Button>
             </div>
@@ -281,3 +352,32 @@ export default function LoanClient() {
     </div>
   );
 }
+
+export const getServerSideProps = async (context) => {
+  try {
+      const response = await axios.get("http://localhost:3000/api/libraryClient/loan");
+      const data = response.data;
+
+      if (data && data.prestamo) {
+          const { prestamo} = data;
+          return {
+              props: {
+                prestamo
+              },
+          };
+      } else {
+          return {
+              props: {
+                prestamo: []
+              },
+          };
+      }
+  } catch (error) {
+      console.log(error);
+      return {
+          props: {
+            prestamo: []
+          },
+      };
+  }
+};

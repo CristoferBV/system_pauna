@@ -18,13 +18,13 @@ export default function SidebarEstudiantes({ Estudiantes }) {
             (estudiante.TP_nombre || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.TP_identificador || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.AO_descripcion || '').toLowerCase().includes(searchText.toLowerCase()) ||
-            (estudiante['DO-nombre'] || '').toLowerCase().includes(searchText.toLowerCase()) ||
+            (estudiante.DO_nombre || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.EE_campus || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.HO_fecha || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.LP_fechaDevolucion || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.RE_observacion || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.CE_correoElectronico || '').toLowerCase().includes(searchText.toLowerCase()) ||
-            (estudiante["TO-numero"] || '').toLowerCase().includes(searchText.toLowerCase())
+            (estudiante.TO_numero || '').toLowerCase().includes(searchText.toLowerCase())
         );
     });
 
@@ -134,13 +134,13 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                                     <td className="text-nowrap">{estudiante.TP_nombre}</td>
                                     <td className="text-nowrap">{estudiante.TP_identificador}</td>
                                     <td className="text-nowrap">{estudiante.AO_descripcion}</td>
-                                    <td className="text-nowrap">{estudiante['DO-nombre']}</td>
+                                    <td className="text-nowrap">{estudiante.DO_nombre}</td>
                                     <td className="text-nowrap">{estudiante.EE_campus}</td>
                                     <td className="text-nowrap">{new Date(estudiante.HO_fecha).toISOString().slice(0, 10)}</td>
                                     <td className="text-nowrap">{new Date(estudiante.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
                                     <td className="text-nowrap">{estudiante.RE_observacion}</td>
-                                    <td className="text-nowrap">{estudiante["CE-correoElectronico"]}</td>
-                                    <td className="text-nowrap">{estudiante["TO-numero"]}</td>
+                                    <td className="text-nowrap">{estudiante.CE_correoElectronico}</td>
+                                    <td className="text-nowrap">{estudiante.TO_numero}</td>
                                     <td className="d-flex align-items-center">
                                         <Button
                                             onClick={handleEditEstudiante}

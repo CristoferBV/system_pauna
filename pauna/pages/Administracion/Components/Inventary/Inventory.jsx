@@ -337,7 +337,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
       <Modal show={showFormState.edit} onHide={() => handleCloseForm('edit')}>
         <Modal.Header closeButton>
-          <Modal.Title>Editar cantidades</Modal.Title>
+          <Modal.Title>Prestamo</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -434,11 +434,6 @@ export default function Inventary({ materials, colors, brands, ubications, types
                                 <Col>
                                   <Button variant="warning" onClick={() => handleEditMaterial(material)}>
                                     <FaEdit></FaEdit>
-                                  </Button>
-                                </Col>
-                                <Col>
-                                  <Button variant="danger" onClick={() => handleDeleteMaterial(material.ML_identificador)}>
-                                    <FaTrash />
                                   </Button>
                                 </Col>
                               </Row>

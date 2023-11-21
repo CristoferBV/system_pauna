@@ -8,10 +8,11 @@ import LogoBombilla from "../../../../../public/bombilla.png";
 import { Navbar, Nav, Form, Button, Card, Table, Container, Row, Col } from "react-bootstrap";
 import { useRouter } from "next/router";
 
-export default function LoanClient() {
+export default function LoanClient( {prestamo} ) {
 
   const router = useRouter();
   const [active, setActive] = useState("");
+  const [cedula, setCedula] = useState("");
 
   const navigation = [
     { name: "Inicio", section: "HomeClient", current: false },
@@ -64,6 +65,24 @@ export default function LoanClient() {
       });
   }, []);
 
+  // Prestamo del cliente
+  const handleAceptarClick = async () => {
+    console.log(cedula);
+    try {
+      const { data } = await Axios.post("/api/libraryClient/loan", {cedula});
+
+      // Procesar la respuesta del API según sea necesario
+      console.log(data);
+
+    } catch (error) {
+      console.error("Error al enviar la solicitud:", error);
+
+      // Mostrar un mensaje de error al usuario
+      // Puedes usar una librería de notificaciones o manejar esto de otra manera en tu aplicación
+    }
+  };
+
+
   return (
     <div className=" flex flex-col min-h-screen">
       <Navbar bg="danger" expand="lg">
@@ -87,9 +106,9 @@ export default function LoanClient() {
               href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
               onClick={() => setActive(item.section)}
               style={{ textDecoration: "none" }}
-              className="d-flex align-items-center justify-content-center"
+              className="d-flex align-items-center justify-content-center p-2"
             >
-              <Nav.Link
+              <Nav
                 key={item.name}
                 href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                 className={
@@ -97,7 +116,7 @@ export default function LoanClient() {
                 }
               >
                 {item.name}
-              </Nav.Link>
+              </Nav>
             </Link>
           ))}
            <Link href={'/LoginAndRegister/Login/Login'} className="d-flex justify-content-center" style={{ textDecoration: "none" }}>
@@ -172,6 +191,8 @@ export default function LoanClient() {
                   <Form.Control
                     type="input"
                     placeholder="Ejemplo: 018080472"
+                    value={cedula}
+                    onChange={(e) => setCedula(e.target.value)}
                   />
                 </Form.Group>
 
@@ -279,7 +300,7 @@ export default function LoanClient() {
             </Row>
 
             <div className="text-center mt-4">
-              <Button variant="danger">
+              <Button variant="danger" onClick={handleAceptarClick}>
                 Aceptar
               </Button>
             </div>
@@ -306,3 +327,32 @@ export default function LoanClient() {
     </div>
   );
 }
+
+export const getServerSideProps = async (context) => {
+  try {
+      const response = await axios.get("http://localhost:3000/api/libraryClient/loan");
+      const data = response.data;
+
+      if (data && data.prestamo) {
+          const { prestamo} = data;
+          return {
+              props: {
+                prestamo
+              },
+          };
+      } else {
+          return {
+              props: {
+                prestamo: []
+              },
+          };
+      }
+  } catch (error) {
+      console.log(error);
+      return {
+          props: {
+            prestamo: []
+          },
+      };
+  }
+};

@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         SELECT UO.UO_primer_nombre AS Nombre,
         UO.UO_primer_apellido AS PrimerApellido,
         UO.UO_segundo_apellido AS SegundoApellido,
-        CE.\`CE-correoElectronico\` AS Correo,
+        CE.CE_correoElectronico AS Correo,
         LP.LP_fechaDevolucion AS FechaEntrega
 
         FROM PAU_GNL_USUARIO UO

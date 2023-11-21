@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, Button, Modal, Form, Card, InputGroup, FormControl } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import jsPDF from 'jspdf';
+import "jspdf-autotable";
 
 export default function SidebarReporte({ Reporte }) {
-  const [selectedDevice, setSelectedDevice] = useState(null);
+    const [selectedDevice, setSelectedDevice] = useState(null);
     const [editedValues, setEditedValues] = useState({});
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);
     const [searchText, setSearchText] = useState('');
@@ -26,8 +28,8 @@ export default function SidebarReporte({ Reporte }) {
     const handleChange = ({ target: { name, value } }) => {
         if (name in activo) {
             setActivo({ ...activo, [name]: value });
-        } else if (name in type){
-            setType({...type,[name]:value})
+        } else if (name in type) {
+            setType({ ...type, [name]: value })
         }
     };
 
@@ -55,16 +57,16 @@ export default function SidebarReporte({ Reporte }) {
 
     const handleDeleteActivo = async (activoID) => {
         const res = await axios
-          .delete("/api/config/BibliotecaDispositivos", {data: { AO_identificador:activoID}})
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+            .delete("/api/config/BibliotecaDispositivos", { data: { AO_identificador: activoID } })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         console.log(res)
         reloadPage();
-      };
+    };
 
     const handleSaveTipo = (object) => {
         handleSubmit(object)
@@ -87,20 +89,20 @@ export default function SidebarReporte({ Reporte }) {
         setDeleteConfirmation(false);
     };
 
-        const filteredReporte = Reportes.filter((reporte) => {
-            return (
-              (reporte.UO_primer_nombre || '').toLowerCase().includes(searchText.toLowerCase()) ||
-              (reporte.UO_identificador || '').toLowerCase().includes(searchText.toLowerCase()) ||
-              (reporte.TP_nombre || '').toLowerCase().includes(searchText.toLowerCase()) ||
-              (reporte.LP_fechaDevolucion || '').toLowerCase().includes(searchText.toLowerCase()) ||
-              (reporte.RE_observacion || '').toLowerCase().includes(searchText.toLowerCase())
-              );
-            });
+    const filteredReporte = Reportes.filter((reporte) => {
+        return (
+            (reporte.UO_primer_nombre || '').toLowerCase().includes(searchText.toLowerCase()) ||
+            (reporte.UO_identificador || '').toLowerCase().includes(searchText.toLowerCase()) ||
+            (reporte.TP_nombre || '').toLowerCase().includes(searchText.toLowerCase()) ||
+            (reporte.LP_fechaDevolucion || '').toLowerCase().includes(searchText.toLowerCase()) ||
+            (reporte.RE_observacion || '').toLowerCase().includes(searchText.toLowerCase())
+        );
+    });
 
-        const handleEditDispositivo = (reporte) => {
-            setDispositivos(reporte);
-            handleToggleForm('edit')
-        };
+    const handleEditDispositivo = (reporte) => {
+        setDispositivos(reporte);
+        handleToggleForm('edit')
+    };
 
     const handleCreateDevice = () => {
         setShowCreateForm(true);
@@ -156,6 +158,72 @@ export default function SidebarReporte({ Reporte }) {
     };
 
 
+    const exportCurrentjsPDF = (data) => {
+        const doc = new jsPDF('p', 'pt', 'letter');
+
+        const fontSize = 16;
+        const tableFontSize = 12;
+        doc.setFontSize(tableFontSize);
+        doc.setFontSize(fontSize);
+        const title = "PLATAFORMA ADMINISTRATIVA UNA";
+        const subTitle = "Área de Reporte Generales de Devoluciones";
+        const titleWidth = doc.getStringUnitWidth(title) * fontSize;
+        const pageWidth = doc.internal.pageSize.width;
+        const titleXPosition = (pageWidth - titleWidth) / 2;
+        const subTitleXPosition = (pageWidth - titleWidth) / 2.2;
+
+        // Other position settings...
+
+        const titleYPosition = 30;
+        const subTitleYPosition = 80;
+
+        doc.text(title, titleXPosition, titleYPosition);
+        doc.text(subTitle, subTitleXPosition, subTitleYPosition);
+        // Add an image to the left
+        const imageWidth = 100; // Adjust the width of the image as needed
+        const imageHeight = 85; // Adjust the height of the image as needed
+        const imageXPosition = 20; // Adjust the X position of the image as needed
+        const imageYPosition = titleYPosition - 25; // Adjust the Y position of the image as needed
+
+        doc.addImage('/Logo-UNA-Rojo_HD.png', 'PNG', imageXPosition, imageYPosition, imageWidth, imageHeight);
+
+        const tableColumns = [
+            "Nombre Estudiante",
+            "Cédula",
+            "Dispositivo",
+            "Fecha Devolucion",
+            "Observacion",
+        ];
+
+        const tableData = data.map((reporte) => [
+            reporte.UO_primer_nombre,
+            reporte.UO_identificador,
+            reporte.TP_nombre,
+            new Date(reporte.LP_fechaDevolucion).toISOString().slice(0, 10),
+            reporte.RE_observacion,
+        ]);
+
+        const startYPosition = titleYPosition + 70;
+
+        doc.autoTable({
+            head: [tableColumns],
+            body: tableData,
+            startY: startYPosition,
+            styles: { fontSize: tableFontSize },
+        });
+
+        const totalYPosition = doc.autoTable.previous.finalY + 50;
+        const totalXPosition = (pageWidth - doc.getStringUnitWidth(`Total: ${data.length}`) * fontSize) / 2;
+
+        doc.text(`Total: ${data.length}`, totalXPosition, totalYPosition);
+
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        doc.save(`Reporte_General_De_Devoluciones_${formattedDate}.pdf`);
+    }
+
+
 
     return (
         <div className="p-4">
@@ -177,10 +245,11 @@ export default function SidebarReporte({ Reporte }) {
                             >
                                 Crear Reporte
                             </Button>
-                            <Button className='ml-2'
+                            <Button
+                                className='ml-2'
                                 variant="info"
-                                onClick={handleCreateTipo}
-                                style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                onClick={() => exportCurrentjsPDF(filteredReporte)}
+                                style={buttonStyle}
                                 onMouseEnter={(e) => {
                                     e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
                                 }}
@@ -218,7 +287,7 @@ export default function SidebarReporte({ Reporte }) {
                                     <td className="text-center">{reporte.UO_primer_nombre}</td>
                                     <td className="text-center">{reporte.UO_identificador}</td>
                                     <td className="text-center">{reporte.TP_nombre}</td>
-                                    <td className="text-center">{new Date (reporte.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
+                                    <td className="text-center">{new Date(reporte.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
                                     <td className="text-center">{reporte.RE_observacion}</td>
                                     <td className="text-center">
                                         <Button
@@ -307,7 +376,7 @@ export default function SidebarReporte({ Reporte }) {
                     </Button>
                     <Button
                         variant="primary"
-                        
+
                         style={buttonStyle}
                         onMouseEnter={(e) => {
                             e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
@@ -322,11 +391,11 @@ export default function SidebarReporte({ Reporte }) {
             </Modal>
             <Modal show={showTipoForm} onHide={() => setShowTipoForm(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Crear Tipo</Modal.Title>
+                    <Modal.Title>Crear Reporte</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                    <Form.Group>
+                        <Form.Group>
                             <Form.Label>Codigo ID</Form.Label>
                             <Form.Control
                                 type="text"
@@ -387,7 +456,7 @@ export default function SidebarReporte({ Reporte }) {
             </Modal>
             <Modal show={selectedDevice !== null} onHide={() => setSelectedDevice(null)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Editar Dispositivo</Modal.Title>
+                    <Modal.Title>Editar Reporte</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -504,7 +573,7 @@ export const getServerSideProps = async (context) => {
         } else {
             return {
                 props: {
-                  Reportes: [],
+                    Reportes: [],
                 },
             };
         }

@@ -382,6 +382,5 @@ export const getServerSideProps = async (context) => {
                 Perifericos: [], // Puedes proporcionar un valor predeterminado en caso de error.
             },
         };
-        
     }
 };

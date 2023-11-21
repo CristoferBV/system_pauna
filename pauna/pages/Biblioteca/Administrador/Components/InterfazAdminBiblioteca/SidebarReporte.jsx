@@ -233,19 +233,6 @@ export default function SidebarReporte({ Reporte }) {
                         <span>Lista de Reportes</span>
                         <div>
                             <Button
-                                variant="success"
-                                onClick={handleCreateDevice}
-                                style={buttonStyle}
-                                onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                }}
-                            >
-                                Crear Reporte
-                            </Button>
-                            <Button
                                 className='ml-2'
                                 variant="info"
                                 onClick={() => exportCurrentjsPDF(filteredReporte)}

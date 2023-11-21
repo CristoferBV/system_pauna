@@ -363,10 +363,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
               <Form.Label>Nombre</Form.Label>
               <Form.Control disabled={true} name="ML_descripcion" value={material.ML_descripcion} onChange={handleChange} type="text" placeholder="Ingrese el color" />
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Cantidad en el inventario</Form.Label>
-              <Form.Control disabled={true} name="ML_cantidad" value={material.ML_cantidad} onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
-            </Form.Group>
+            
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Cantidad entregada</Form.Label>
               <Form.Control name="ML_cantidad" onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
@@ -392,7 +389,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
             MO_cantidad: material.ML_cantidad,
             ML_identificador: material.ML_identificador,
             DO_identificador: deparment.DO_identificador
-          })}>
+          })}disabled={!material.ML_cantidad || material.ML_cantidad <= 0}>
             Enviar
           </Button>
         </Modal.Footer>
@@ -431,7 +428,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Nombre</Form.Label>
-              <Form.Control disabled={true} name="ML_descripcion" value={material.ML_cantidad} onChange={handleChange} type="text" placeholder={material.ML_cantidad} />
+              <Form.Control disabled={true} name="ML_descripcion" value={material.ML_descripcion} onChange={handleChange} type="text" placeholder={material.ML_descripcion} />
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Cantidad a ingresar</Form.Label>
@@ -457,32 +454,14 @@ export default function Inventary({ materials, colors, brands, ubications, types
         ¡Guardado con éxito!
       </Alert>
       <div style={{ marginTop: '8rem', marginBottom: '8rem' }}>
-        <Container className="text-center" style={{ marginTop: '2rem', marginBottom: '2rem' }}>
-          <Row style={{}}>
-            <Col >
-              <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.5rem' }}>
-                SUPERIOR
-              </Button>
-            </Col>
-            <Col>
-              <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.5rem' }}>
-                INFERIOR
-              </Button>
-            </Col>
-            <Col>
-              <Button variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.5rem' }}>
-                AUDITORIO
-              </Button>
-            </Col>
-          </Row>
-        </Container>
+        
         <Container className="rounded" style={{ backgroundColor: '#212529' }}>
           <Container>
-            <Form style={{ fontSize: '1.1rem', padding: '1.1rem' }}>
+            <Form style={{ fontSize: '1.1rem', padding: '1.1rem', maxWidth: '300px' }}>
               <Form.Control type="text" placeholder="Buscar..." value={filterValue}
                 onChange={handleFilterChange} style={{
                   backgroundColor: '#041a34', fontSize: '1.1rem', color: 'white', padding: '1rem', WebkitTextFillColor: 'white',
-                }}>
+              }}>
               </Form.Control>
             </Form>
           </Container>
@@ -496,9 +475,9 @@ export default function Inventary({ materials, colors, brands, ubications, types
                     <thead>
                       <tr>
                         <th>Código</th>
-                        <th>Fecha</th>
-                        <th>Marca</th>
                         <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Cantidad</th>
                         <th>Observaciones</th>
                         <th>Acciones</th>
                       </tr>

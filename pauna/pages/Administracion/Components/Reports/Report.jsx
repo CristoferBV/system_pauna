@@ -354,26 +354,7 @@ export default function Report({ materials, rebajos, aumentos }) {
                 {showMovimientos && (
                     <Container className="rounded" style={{ backgroundColor: '#212529', color: 'white' }}>
                         {<Container style={{ marginTop: '0.6rem', padding: '2rem', marginRight: '0.8rem' }}>
-                            <Row >
-                                <Col >
-                                    <Form style={{ fontSize: '1.1rem', padding: '1.1rem', maxWidth: '300px' }}>
-                                        <Form.Label className="text-center">Fecha de inicio</Form.Label>
-                                        <Form.Control type="date" style={{
-                                            backgroundColor: '#041a34', fontSize: '1.1rem', color: 'white', padding: '1rem', WebkitTextFillColor: 'white',
-                                        }}>
-                                        </Form.Control>
-                                    </Form>
-                                </Col>
-                                <Col>
-                                    <Form style={{ fontSize: '1.1rem', padding: '1.1rem', maxWidth: '300px' }}>
-                                        <Form.Label className="text-center">Fecha de finalizacion</Form.Label>
-                                        <Form.Control type="date" style={{
-                                            backgroundColor: '#041a34', fontSize: '1.1rem', color: 'white', padding: '1rem', WebkitTextFillColor: 'white',
-                                        }}>
-                                        </Form.Control>
-                                    </Form>
-                                </Col>
-                            </Row>
+                            
                             <Container style={{ maxHeight: '400px', overflowY: 'auto' }}>
                                 <Table variant="dark" striped bordered hover style={{ fontSize: '1.1rem' }}>
                                     <thead>

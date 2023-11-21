@@ -178,6 +178,7 @@ const saveRebajo = async (req, res) => {
 }
 const saveAumentos = async (req, res) => {
     console.log(req.body.ML_identificador);
+    console.log(req.body.MA_cantidad);
     const { tipo,
         MA_cantidad,
         MA_fecha, 

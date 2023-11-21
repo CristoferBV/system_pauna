@@ -137,7 +137,7 @@ export default function LoanClient() {
                 </Form.Group>
                 
               </Col>
-              <Col>
+              <Col md={4}>
               <Form.Group className="mb-3">
                   <label className="font-semibold">Segundo Nombre (Solo si tiene)</label>
                   <Form.Control
@@ -249,6 +249,31 @@ export default function LoanClient() {
                     type="input"
                     placeholder="Ejemplo: 85893501"
                   />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="justify-content-center">
+              <Col md={6}>
+                <Form.Group className="mb-3 text-center mx-auto" style={{ maxWidth: '80%' }}>
+                  <label className="font-semibold">Comprobante de Beca</label>
+                  <div>
+                    <Form.Control
+                      type="file"
+                      accept=".pdf, .doc, .docx"
+                    />
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3 text-center mx-auto" style={{ maxWidth: '80%' }}>
+                  <label className="font-semibold">Comprobante de Matricula</label>
+                  <div>
+                    <Form.Control
+                      type="file"
+                      accept=".pdf, .doc, .docx"
+                    />
+                  </div>
                 </Form.Group>
               </Col>
             </Row>

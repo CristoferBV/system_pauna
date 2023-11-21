@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Table, Button, Form, Modal, Alert } from 'react-bootstrap';
+import { Table, Button, Modal, Form, Card, Alert, InputGroup, FormControl } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 
 export default function SidebarDevoluciones({ Devoluciones }) {
     const [searchText, setSearchText] = useState('');
@@ -11,17 +12,30 @@ export default function SidebarDevoluciones({ Devoluciones }) {
     const [newDevolucion, setNewDevolucion] = useState({});
     const [alertVisible, setAlertVisible] = useState(false);
     const [showForm, setShowForm] = useState(false); // Agregado para mostrar el formulario
+    const router = useRouter();
 
-    const [formData, setFormData] = useState({
-        nombre: '',
-        cedula: '',
-        dispositivo: '',
-        carrera: '',
-        fechaEntregado: '',
-        fechaDevolucion: '',
-        correo: '',
-        descripcion: '', // Agregado para la descripción
+    const [devolucion, setdevolucion] = useState({
+        UO_primer_nombre: '',
+        UO_identificador: '',
+        TP_nombre: '',
+        CA_nombre: '',
+        LP_fechaDevolucion: '',
     });
+
+
+
+
+    // const loadDevoluciones = async () => {
+    //     try {
+    //         const response = await axios.get("http://localhost:3000/api/config/BibliotecaDevoluciones");
+    //         const devoluciones = response.data; // Accede a los dispositivos desde la respuesta
+    //         setDevoluciones(devoluciones); // Almacena los dispositivos en el estado
+
+    //         // Resto de tu código...
+    //     } catch (error) {
+    //         console.error('Error al cargar dispositivos:', error);
+    //     }
+    // }
 
     const handleEdit = (devolucion) => {
         setEditedDevolucion(devolucion);
@@ -63,7 +77,7 @@ export default function SidebarDevoluciones({ Devoluciones }) {
 
     const submitForm = () => {
         // Implementa la lógica para enviar el formulario aquí
-        // Puedes acceder a los valores del formulario en el objeto formData
+        // Puedes acceder a los valores del formulario en el objeto devolucion
         setShowForm(false); // Oculta el formulario después de enviar
     };
 
@@ -79,6 +93,23 @@ export default function SidebarDevoluciones({ Devoluciones }) {
         color: 'black',  // Texto de color oscuro
         border: '1px solid white',
     };
+
+    const filteredDevoluciones = Array.isArray(Devoluciones)
+        ? Devoluciones.filter((devolucion) => {
+            return (
+                (devolucion.UO_primer_nombre && devolucion.UO_primer_nombre.toLowerCase().includes(searchText.toLowerCase())) ||
+                (devolucion.UO_identificador && devolucion.UO_identificador.toLowerCase().includes(searchText.toLowerCase())) ||
+                (devolucion.TP_nombre && devolucion.TP_nombre.toLowerCase().includes(searchText.toLowerCase())) ||
+                (devolucion.CA_nombre && devolucion.CA_nombre.toLowerCase().includes(searchText.toLowerCase())) ||
+                (devolucion.LP_fechaDevolucion && devolucion.LP_fechaDevolucion.toLowerCase().includes(searchText.toLowerCase()))
+            );
+        })
+        : [];
+
+
+    const reloadPage = () => {
+        router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarDevoluciones");
+    }
 
     return (
         <div className="flex-1 p-8">
@@ -129,54 +160,39 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                                 <th>Dispositivo</th>
                                 <th>Carrera</th>
                                 <th>Fecha entregado</th>
-                                <th>Fecha devolucion</th>
-                                <th>Correo</th>
                                 <th>Administrar</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {Devoluciones
-                                .filter((devolucion) =>
-                                    devolucion.UO_primer_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
-                                    devolucion.UO_identificador.toLowerCase().includes(searchText.toLowerCase()) ||
-                                    devolucion.TP_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
-                                    devolucion.CA_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
-                                    devolucion.HO_fecha.toLowerCase().includes(searchText.toLowerCase()) ||
-                                    devolucion.LP_fechaDevolucion.toLowerCase().includes(searchText.toLowerCase()) ||
-                                    devolucion['CE-correoElectronico'].toLowerCase().includes(searchText.toLowerCase())
-                                )
-                                .map((devolucion) => (
-                                    <tr key={devolucion.EE_idenficador}>
-                                        <td>{devolucion.UO_primer_nombre}</td>
-                                        <td>{devolucion.UO_identificador}</td>
-                                        <td>{devolucion.TP_nombre}</td>
-                                        <td>{devolucion.CA_nombre}</td>
-                                        <td>{new Date(devolucion.HO_fecha).toISOString().slice(0, 10)}</td>
-                                        <td>{new Date(devolucion.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
-                                        <td>{devolucion['CE-correoElectronico']}</td>
-                                        <td>
-                                            <Button variant="light" className="ml-2" onClick={() => handleEdit(devolucion)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
-                                                onMouseEnter={(e) => {
-                                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                                }}>
-                                                Editar
-                                            </Button>
-                                            <Button variant="danger" className="ml-2" onClick={() => handleDelete(devolucion)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
-                                                onMouseEnter={(e) => {
-                                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                                }}>
-                                                Eliminar
-                                            </Button>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
+                            {filteredDevoluciones.map((devolucion, index) => (
+                                <tr key={index}>
+                                    <td>{devolucion.PrimerNombreUsuario}</td>
+                                    <td>{devolucion.IdentificadorUsuario}</td>
+                                    <td>{devolucion.NombreTipo}</td>
+                                    <td>{devolucion.NombreCarrera}</td>
+                                    <td>{new Date(devolucion.FechaDevolucion).toISOString().slice(0, 10)}</td>
+                                    <td>
+                                        <Button variant="light" className="ml-2" onClick={() => handleEdit(devolucion)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                            onMouseEnter={(e) => {
+                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                            }}>
+                                            Editar
+                                        </Button>
+                                        <Button variant="danger" className="ml-2" onClick={() => handleDelete(devolucion)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                                            onMouseEnter={(e) => {
+                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                            }}>
+                                            Eliminar
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </Table>
                 </Card.Body>
@@ -398,9 +414,9 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                                 <Form.Label>Nombre</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    value={formData.nombre}
+                                    value={devolucion.nombre}
                                     onChange={(e) =>
-                                        setFormData({ ...formData, nombre: e.target.value })
+                                        setdevolucion({ ...devolucion, nombre: e.target.value })
                                     }
                                 />
                             </Form.Group>
@@ -408,9 +424,9 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                                 <Form.Label>Cédula</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    value={formData.cedula}
+                                    value={devolucion.cedula}
                                     onChange={(e) =>
-                                        setFormData({ ...formData, cedula: e.target.value })
+                                        setdevolucion({ ...devolucion, cedula: e.target.value })
                                     }
                                 />
                             </Form.Group>
@@ -419,9 +435,9 @@ export default function SidebarDevoluciones({ Devoluciones }) {
                                 <Form.Control
                                     as="textarea"
                                     rows={4}
-                                    value={formData.descripcion}
+                                    value={devolucion.descripcion}
                                     onChange={(e) =>
-                                        setFormData({ ...formData, descripcion: e.target.value })
+                                        setdevolucion({ ...devolucion, descripcion: e.target.value })
                                     }
                                 />
                             </Form.Group>
@@ -453,7 +469,6 @@ export default function SidebarDevoluciones({ Devoluciones }) {
     );
 }
 
-// Función para obtener datos de Devoluciones (puede ajustarse según tu API)
 export const getServerSideProps = async (context) => {
     try {
         const { data: Devoluciones } = await axios.get("http://localhost:3000/api/config/BibliotecaDevoluciones");
@@ -466,9 +481,10 @@ export const getServerSideProps = async (context) => {
         console.log(error)
         return {
             props: {
-                Devoluciones: [], // Puedes proporcionar un valor predeterminado en caso de error.
+                Devoluciones: [],
             },
         };
 
     }
 };
+

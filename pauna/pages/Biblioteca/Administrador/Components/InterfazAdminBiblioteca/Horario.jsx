@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Table, Button, Card, InputGroup, FormControl, Modal, Form } from 'react-bootstrap';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Horario({ Horarios }) {
     const [searchText, setSearchText] = useState('');
@@ -10,6 +11,13 @@ export default function Horario({ Horarios }) {
     const [editedValues, setEditedValues] = useState({});
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);
     const [showCreateForm, setShowCreateForm] = useState(false);
+    const router = useRouter();
+
+    const [horario, setHorario] = useState({
+        HO_fecha: "",
+        HO_hora: "",
+        HO_estado: "",
+    })
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -42,6 +50,51 @@ export default function Horario({ Horarios }) {
         setShowCreateForm(true);
     };
 
+    const handleChange = ({ target: { name, value } }) => {
+        if (name in horario) {
+            setHorario({ ...horario, [name]: value });
+        }
+    };
+
+    const handleSubmit = async (data) => {
+        console.log("hola");
+        const res = await axios
+            .post("/api/config/BibliotecaHorario", data)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        console.log(res)
+    };
+
+    const handleSave = (object) => {
+        handleSubmit(object)
+        setShowCreateForm(true);
+        setTimeout(() => {
+            setShowCreateForm(false);
+        }, 2000);
+        reloadPage();
+    };
+
+    const reloadPage = () => {
+        router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Horario");
+    }
+
+    const handleDeleteHorario = async (horarioID) => {
+        const res = await axios
+            .delete("/api/config/BibliotecaHorario", { data: { HO_identificador:horarioID} })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        console.log(res)
+        reloadPage();
+    };
+
     const buttonStyle = {
         backgroundColor: '#021730',
         color: 'white',
@@ -57,17 +110,17 @@ export default function Horario({ Horarios }) {
 
     return (
         <div className="flex-1 p-8">
-            <Card bg="secondary" text="white">
+            <Card style={{ backgroundColor: '#2F3E5B', color: 'white' }} text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
                         <span>Horario</span>
                         <Button variant="success" onClick={createHorario} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
-                                onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                }}>
+                            onMouseEnter={(e) => {
+                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                            }}
+                            onMouseLeave={(e) => {
+                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                            }}>
                             Crear Horario
                         </Button>
                     </div>
@@ -98,26 +151,28 @@ export default function Horario({ Horarios }) {
                                 )
                                 .map((horario) => (
                                     <tr key={horario.HO_identificador}>
-                                        <td className="text-center">{new Date (horario.HO_fecha).toISOString().slice(0, 10)}</td>
+                                        <td className="text-center">{new Date(horario.HO_fecha).toISOString().slice(0, 10)}</td>
                                         <td className="text-center">{horario.HO_hora}</td>
                                         <td className="text-center">{horario.HO_estado}</td>
                                         <td className="text-center">
                                             <Button variant="light" className="ml-2" onClick={() => handleEdit(horario)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
-                                onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                }}>
+                                                onMouseEnter={(e) => {
+                                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                                }}>
                                                 Editar
                                             </Button>
-                                            <Button variant="light" className="ml-2" onClick={handleDelete} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
-                                onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                }}>
+                                            <Button variant="light" className="ml-2"
+                                                onClick={() => handleDeleteHorario(horario.HO_identificador)}
+                                                style={buttonStyle}  
+                                                onMouseEnter={(e) => {
+                                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                                                }}>
                                                 Eliminar
                                             </Button>
                                         </td>
@@ -167,28 +222,28 @@ export default function Horario({ Horarios }) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setEditMode(false)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
-                                onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                }}>
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Cancelar
                     </Button>
                     <Button variant="primary" onClick={saveChanges} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
-                                onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                }}>
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Guardar Cambios
                     </Button>
                 </Modal.Footer>
             </Modal>
 
             {/* Modal de confirmación de eliminación */}
-            <Modal show={deleteConfirmation} onHide={() => setDeleteConfirmation(false)}>
+            {/* <Modal show={deleteConfirmation} onHide={() => setDeleteConfirmation(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Confirmar eliminación</Modal.Title>
                 </Modal.Header>
@@ -196,26 +251,28 @@ export default function Horario({ Horarios }) {
                     ¿Estás seguro de que deseas eliminar este horario?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setDeleteConfirmation(false)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
-                                onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                }}>
+                    <Button variant="secondary" onClick={() => { }} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Cancelar
                     </Button>
-                    <Button variant="danger" onClick={confirmDelete} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
-                                onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                }}>
+                    <Button variant="danger"
+                        onClick={() => handleDeleteHorario(horario.HO_identificador)}
+                        style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Eliminar
                     </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal> */}
 
             {/* Modal de creación de horario */}
             <Modal show={showCreateForm} onHide={() => setShowCreateForm(false)}>
@@ -225,19 +282,21 @@ export default function Horario({ Horarios }) {
                 <Modal.Body>
                     <Form>
                         <Form.Group>
-                            <Form.Label>Hora</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="HO_hora"
-                                onChange={(e) => handleInputChange }
-                            />
-                        </Form.Group>
-                        <Form.Group>
                             <Form.Label>Fecha</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="HO_fecha"
-                                onChange={(e) => Han }
+                                value={horario.HO_fecha}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Hora</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="HO_hora"
+                                value={horario.HO_hora}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                         <Form.Group>
@@ -245,28 +304,36 @@ export default function Horario({ Horarios }) {
                             <Form.Control
                                 type="text"
                                 name="HO_estado"
-                                onChange={(e) => handleInputChange }
+                                value={horario.HO_estado}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowCreateForm(false)} style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
-                                onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                }}>
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={() => handleInputChange } style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
-                                onMouseEnter={(e) => {
-                                    e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                }}>
+                    <Button variant="primary"
+                        onClick={() => handleSave({
+                            tipo: "Horario",
+                            HO_fecha: horario.HO_fecha,
+                            HO_hora: horario.HO_hora,
+                            HO_estado: horario.HO_estado,
+                        })}
+                        style={buttonStyle}  // Puedes utilizar el mismo estilo o personalizarlo
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
                         Crear
                     </Button>
                 </Modal.Footer>
@@ -292,6 +359,6 @@ export const getServerSideProps = async (context) => {
                 Horarios: [], // Puedes proporcionar un valor predeterminado en caso de error.
             },
         };
-        
+
     }
 };

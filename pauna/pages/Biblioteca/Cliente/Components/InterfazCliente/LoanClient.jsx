@@ -7,12 +7,16 @@ import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import { Navbar, Nav, Form, Button, Card, Table, Container, Row, Col } from "react-bootstrap";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 export default function LoanClient( {prestamo} ) {
 
   const router = useRouter();
   const [active, setActive] = useState("");
   const [cedula, setCedula] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [device, setDevice] = useState("");
+  //const [comprobanteMatricula, setComprobanteMatricula] = useState(null);
 
   const navigation = [
     { name: "Inicio", section: "HomeClient", current: false },
@@ -67,20 +71,30 @@ export default function LoanClient( {prestamo} ) {
 
   // Prestamo del cliente
   const handleAceptarClick = async () => {
-    console.log(cedula);
+
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Su préstamo ha sido realizado",
+      showConfirmButton: false,
+      timer: 1500
+
+    });
+
+    console.log("Clic en Aceptar", cedula, selectedDate, device);
     try {
-      const { data } = await Axios.post("/api/libraryClient/loan", {cedula});
-
-      // Procesar la respuesta del API según sea necesario
-      console.log(data);
-
+      const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+      console.log("Datos enviados al servidor:", { cedula, selectedDate: formattedDate, device});
+  
+      const { data } = await Axios.post("/api/libraryClient/loan", { cedula, selectedDate: formattedDate, device });
+  
     } catch (error) {
       console.error("Error al enviar la solicitud:", error);
-
-      // Mostrar un mensaje de error al usuario
-      // Puedes usar una librería de notificaciones o manejar esto de otra manera en tu aplicación
+      
     }
+    
   };
+  
 
 
   return (
@@ -230,10 +244,14 @@ export default function LoanClient( {prestamo} ) {
 
                 <Form.Group className="mb-3">
                 <label className="font-semibold">Dispositivos</label>
-                <Form.Control as="select">
+                <Form.Control as="select"
+                onChange={(e) => {
+                  const selectedDeviceDescription = e.target.options[e.target.selectedIndex].getAttribute("data-description");
+                  setDevice(selectedDeviceDescription);
+                }}>
                   <option value="">-Seleccionar opción-</option>
                   {deviceData.map((device, index) => (
-                    <option key={index} value={device.value}>
+                    <option key={index} value={device.value} data-description={device.label}>
                       {device.label}
                     </option>
                   ))}
@@ -246,10 +264,16 @@ export default function LoanClient( {prestamo} ) {
                   <label className="font-semibold">Fechas de prestamos</label>
                   <Form.Control
                     as="select"
+                    onChange={(e) => {
+                      const selectedDate = e.target.options[e.target.selectedIndex].getAttribute("data-date");
+                      // Formatear la fecha antes de guardarla en el estado
+                      const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+                      setSelectedDate(formattedDate);
+                    }}
                   >
                     <option value="">-Seleccionar opción-</option>
                     {horarios.map((horario) => (
-                      <option key={horario.value} value={horario.value}>
+                      <option key={horario.value} value={horario.value} data-date={horario.label}>
                         {new Date(horario.label).toLocaleDateString()}
                       </option>
                     ))}
@@ -292,7 +316,8 @@ export default function LoanClient( {prestamo} ) {
                   <div>
                     <Form.Control
                       type="file"
-                      accept=".pdf, .doc, .docx"
+                      accept=".pdf, .doc, .docx, .png, .jpg"
+                      //onChange={(e) => setComprobanteMatricula(e.target.files[0])}
                     />
                   </div>
                 </Form.Group>

@@ -8,7 +8,9 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 
 
 
-export default function Inventary({ materials, colors, brands, ubications, types }) {
+export default function Inventary({ materials, colors, brands, ubications, types, deparments }) {
+  const today = new Date();
+  const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
   const router = useRouter();
   console.log({ materials })
   const [showAlert, setShowAlert] = useState(false);
@@ -21,7 +23,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
     edit: false
   });
 
- 
+
 
   const handleSubmit = async (data) => {
     console.log("hola");
@@ -93,6 +95,11 @@ export default function Inventary({ materials, colors, brands, ubications, types
     TP_nombre: "",
     TP_descripcion: ""
   });
+  const [deparment, setDepartments] = useState({
+    tipo: "Deparment",
+    DO_identificador: "",
+    DO_nombre: "",
+  });
 
   const handleChange = ({ target: { name, value } }) => {
     if (name in color) {
@@ -105,6 +112,8 @@ export default function Inventary({ materials, colors, brands, ubications, types
       setTypes({ ...type, [name]: value });
     } else if (name in material) {
       setMaterial({ ...material, [name]: value });
+    } else if (name in deparment) {
+      setDepartments({ ...deparment, [name]: value });
     }
   };
 
@@ -337,7 +346,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
       <Modal show={showFormState.edit} onHide={() => handleCloseForm('edit')}>
         <Modal.Header closeButton>
-          <Modal.Title>Prestamo</Modal.Title>
+          <Modal.Title>Materiales</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -350,12 +359,21 @@ export default function Inventary({ materials, colors, brands, ubications, types
               <Form.Control disabled={true} name="ML_descripcion" value={material.ML_descripcion} onChange={handleChange} type="text" placeholder="Ingrese el color" />
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>Cantidad</Form.Label>
-              <Form.Control name="ML_cantidad" value={material.ML_cantidad} onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
+              <Form.Label>Cantidad en el inventario</Form.Label>
+              <Form.Control disabled={true} name="ML_cantidad" value={material.ML_cantidad} onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>Observaciones</Form.Label>
-              <Form.Control name="ML_observacion" value={material.ML_observacion} onChange={handleChange} as="textarea" placeholder="Ingrese la nueva observacion observaciones" />
+              <Form.Label>Cantidad entregada</Form.Label>
+              <Form.Control name="ML_cantidad" onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+            <Form.Label>Departamento</Form.Label>
+              <Form.Select name="DO_identificador" value={parseInt(deparment.DO_identificador)} onChange={handleChange}>
+              <option>Elija un departamento</option>
+                {deparments.map((deparment) => (
+                  <option key={deparment.DO_identificador} value={deparment.DO_identificador}>{deparment.DO_nombre}</option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -363,8 +381,14 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Button variant="secondary" onClick={() => handleCloseForm('edit')}>
             Cerrar
           </Button>
-          <Button type="submit" variant="primary" onClick={() => handleUpdate(material)}>
-            Guardar
+          <Button type="submit" variant="primary" onClick={() => handleSave({
+            tipo: "Rebajo",
+            MO_fecha:formattedDate,
+            MO_cantidad: material.ML_cantidad,
+            ML_identificador: material.ML_identificador,
+            DO_identificador: deparment.DO_identificador
+          })}>
+            Enviar
           </Button>
         </Modal.Footer>
       </Modal>
@@ -490,14 +514,15 @@ export const getServerSideProps = async (context) => {
     const { data } = await axios.get(
       "http://localhost:3000/api/material/view"
     );
-    const { materials, colors, brands, ubications, types } = data;
+    const { materials, colors, brands, ubications, types, deparments } = data;
     return {
       props: {
         materials,
         colors,
         brands,
         ubications,
-        types
+        types,
+        deparments
       },
     };
   } catch (error) {

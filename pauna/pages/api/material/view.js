@@ -21,6 +21,8 @@ export default async function handler(req, res) {
                     await saveMaterialXBrand(req, res);
                     await saveMaterialXColor(req, res);
                     break
+                case "Rebajo":
+                    return await saveRebajo(req, res);
             }
         case "PUT":
             return await updateMaterial(req, res);
@@ -31,15 +33,15 @@ export default async function handler(req, res) {
 }
 
 const updateMaterial = async (req, res) => {
-    const {ML_identificador, ML_cantidad, ML_observacion}= req.body;
-    const data= {ML_cantidad, ML_observacion}
+    const { ML_identificador, ML_cantidad, ML_observacion } = req.body;
+    const data = { ML_cantidad, ML_observacion }
     const result = await pool.query("UPDATE `pau_adm_tbl_material` SET ? WHERE ML_identificador = ?",
         [data, ML_identificador]
     )
     return res.status(200).json(result)
 };
 
-const deleteMaterial = async(req, res)=>{
+const deleteMaterial = async (req, res) => {
     const ML_identificador = req.body.ML_identificador;
 
     const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
@@ -56,7 +58,7 @@ const deleteMaterial = async(req, res)=>{
     const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
     await pool.query(enableForeignKeyCheckQuery);
 
-    return res.status(200).json({resultBrand, resultColor, result});
+    return res.status(200).json({ resultBrand, resultColor, result });
 }
 
 const getAllMaterial = async (req, res) => {
@@ -68,12 +70,14 @@ const getAllMaterial = async (req, res) => {
     const sqlMarca = "SELECT MC_identificador, MC_nombre FROM `pau_adm_tbl_marca`;"
     const sqlUbicaction = "SELECT UN_identificador, UN_lugar FROM `pau_adm_tbl_ubicacion`;"
     const sqlType = "SELECT TP_identificador, TP_nombre FROM `pau_adm_tbl_tipo`"
+    const sqlDepartment = "SELECT DO_identificador, DO_nombre FROM `pau_gnl_tbl_departamento`;"
     const [materials] = await pool.query(sqlMaterial);
     const [colors] = await pool.query(sqlColor);
     const [brands] = await pool.query(sqlMarca);
     const [ubications] = await pool.query(sqlUbicaction);
     const [types] = await pool.query(sqlType);
-    return res.status(200).json({ materials: materials, colors: colors, brands: brands, ubications: ubications, types: types });
+    const [deparments] = await pool.query(sqlDepartment);
+    return res.status(200).json({ materials: materials, colors: colors, brands: brands, ubications: ubications, types: types, deparments: deparments });
 };
 
 
@@ -154,3 +158,17 @@ const saveType = async (req, res) => {
 
     return saveData('pau_adm_tbl_tipo', data, res);
 };
+
+const saveRebajo = async (req, res) => {
+    console.log(req.body);
+    const { tipo,
+        MO_cantidad,
+        MO_fecha,
+        ML_identificador,
+        DO_identificador }= req.body;
+    const data = {MO_cantidad,
+        MO_fecha,
+        ML_identificador,
+        DO_identificador};
+    return saveData('pau_adm_movimiento_rebajo',data,res);
+}

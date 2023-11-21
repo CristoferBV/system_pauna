@@ -23,6 +23,8 @@ export default async function handler(req, res) {
                     break
                 case "Rebajo":
                     return await saveRebajo(req, res);
+                case "Aumentos":
+                    return await saveAumentos(req, res);    
             }
         case "PUT":
             return await updateMaterial(req, res);
@@ -33,13 +35,15 @@ export default async function handler(req, res) {
 }
 
 const updateMaterial = async (req, res) => {
-    const { ML_identificador, ML_cantidad, ML_observacion } = req.body;
-    const data = { ML_cantidad, ML_observacion }
-    const result = await pool.query("UPDATE `pau_adm_tbl_material` SET ? WHERE ML_identificador = ?",
-        [data, ML_identificador]
-    )
-    return res.status(200).json(result)
-};
+    const { ML_identificador, ML_cantidad } = req.body;
+    console.log("ML_cantidad:", ML_identificador);
+    console.log("ML_cantidad:", ML_cantidad);
+    const result = await pool.query(
+      "UPDATE `pau_adm_tbl_material` SET ML_cantidad = ML_cantidad + ? WHERE ML_identificador = ?",
+      [ML_cantidad, ML_identificador]
+    );
+    return res.status(200).json(result);
+  };
 
 const deleteMaterial = async (req, res) => {
     const ML_identificador = req.body.ML_identificador;
@@ -171,4 +175,14 @@ const saveRebajo = async (req, res) => {
         ML_identificador,
         DO_identificador};
     return saveData('pau_adm_movimiento_rebajo',data,res);
+}
+const saveAumentos = async (req, res) => {
+    console.log(req.body.ML_identificador);
+    const { tipo,
+        MA_cantidad,
+        MA_fecha, 
+        ML_identificador}= req.body;
+    const data = {MA_cantidad,
+        MA_fecha,ML_identificador};
+    return saveData('pau_adm_movimiento_aumetos',data,res);
 }

@@ -6,6 +6,8 @@ import React, { useState } from 'react';
 import { Row, Col, Container, Button, Form, Table, Modal, Alert } from "react-bootstrap"
 import { FaEdit, FaTrash } from "react-icons/fa";
 
+
+
 export default function Inventary({ materials, colors, brands, ubications, types }) {
   const router = useRouter();
   console.log({ materials })
@@ -18,6 +20,8 @@ export default function Inventary({ materials, colors, brands, ubications, types
     brand: false,
     edit: false
   });
+
+ 
 
   const handleSubmit = async (data) => {
     console.log("hola");
@@ -48,7 +52,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
   const handleDeleteMaterial = async (materialID) => {
     const res = await axios
-      .delete("/api/material/view", {data: {tipo:"Material", ML_identificador:materialID}})
+      .delete("/api/material/view", { data: { tipo: "Material", ML_identificador: materialID } })
       .then(function (response) {
         console.log(response);
       })
@@ -428,13 +432,13 @@ export default function Inventary({ materials, colors, brands, ubications, types
                             <Container>
                               <Row>
                                 <Col>
-                                  <Button variant="warning"onClick={() => handleEditMaterial(material)}>
+                                  <Button variant="warning" onClick={() => handleEditMaterial(material)}>
                                     <FaEdit></FaEdit>
                                   </Button>
                                 </Col>
                                 <Col>
                                   <Button variant="danger" onClick={() => handleDeleteMaterial(material.ML_identificador)}>
-                                    <FaTrash/>
+                                    <FaTrash />
                                   </Button>
                                 </Col>
                               </Row>

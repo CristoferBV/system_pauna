@@ -11,6 +11,17 @@ export default function SidebarCitas({ Citas }) {
     const [newCita, setNewCita] = useState({});
     const [alertVisible, setAlertVisible] = useState(false);
 
+    const [citas, setCitas] = useState({
+        AO_descripcion: "",
+        AO_estado: "",
+    })
+
+    const handleChange = ({ target: { name, value } }) => {
+        if (name in citas) {
+            setCitas({ ...citas, [name]: value });
+        }
+    };
+
     const handleEdit = (cita) => {
         setEditedCita(cita);
         setEditMode(true);

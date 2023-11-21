@@ -91,17 +91,17 @@ export default function Slidebar({ types }) {
     };
 
 
-    const handleEditDevice = (device) => {
-        setSelectedDevice(device);
-        setEditedValues({
-            TP_identificador: device.TP_identificador|| "",
-            TP_nombre: device.TP_nombre || "",
-            TP_cantidad: device.TP_cantidad || "",
-            EA_nombre: device.EA_nombre || "",
-            AO_descripcion: device.AO_descripcion || "",
-            AO_estado: device.AO_estado || "",
-        });
-    };
+    // const handleEditDevice = (device) => {
+    //     setSelectedDevice(device);
+    //     setEditedValues({
+    //         TP_identificador: device.TP_identificador|| "",
+    //         TP_nombre: device.TP_nombre || "",
+    //         TP_cantidad: device.TP_cantidad || "",
+    //         EA_nombre: device.EA_nombre || "",
+    //         AO_descripcion: device.AO_descripcion || "",
+    //         AO_estado: device.AO_estado || "",
+    //     });
+    // };
 
 
     const cancelDeleteDevice = () => {
@@ -128,7 +128,10 @@ export default function Slidebar({ types }) {
         })
         : [];
 
-
+        const handleEditDispositivo = (device) => {
+            setDispositivos(device);
+            handleToggleForm('edit')
+        };
 
     const handleCreateDevice = () => {
         setShowCreateForm(true);
@@ -187,7 +190,7 @@ export default function Slidebar({ types }) {
 
     return (
         <div className="p-4">
-            <Card bg="secondary" text="white">
+            <Card style={{ backgroundColor: '#2F3E5B', color: 'white' }} text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
                         <span>Lista de Dispositivos</span>
@@ -229,7 +232,7 @@ export default function Slidebar({ types }) {
                             onChange={(e) => setSearchText(e.target.value)}
                         />
                     </InputGroup>
-                    <Table variant='secondary' striped bordered hover responsive>
+                    <Table style={{ backgroundColor: '#252440', color: 'white' }} striped bordered hover responsive>
                         <thead>
                             <tr>
                                 <th className="text-center">Codigo ID</th>
@@ -249,7 +252,7 @@ export default function Slidebar({ types }) {
                                     <td className="text-center">
                                         <Button
                                             variant="primary"
-                                            onClick={() => handleEditDevice(device)}
+                                            onClick={() => handleEditDispositivo(device)}
                                             style={buttonStyle}
                                             onMouseEnter={(e) => {
                                                 e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;

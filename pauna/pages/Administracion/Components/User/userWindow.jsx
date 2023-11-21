@@ -141,7 +141,7 @@ export default function UserWindow({ userAdmins, rols }) {
                 <p>Administradores</p>
               </Container>
 
-              <Table striped bordered hover variant='dark'>
+              <Table striped bordered hover responsive variant='dark'>
                 <thead>
                   <tr>
                     <th>Identificador</th>

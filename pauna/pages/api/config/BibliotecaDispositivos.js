@@ -14,22 +14,22 @@ export default async function handler(req, res) {
                     await saveType(req, res);
                     break
             }
-        // case "PUT":
-        //     return await updateActivos(req, res);
+        case "PUT":
+            return await updateActivos(req, res);
 
         case "DELETE":
             return deleteActivos(req, res);
         }
 }
 
-// const updateActivos = async (req, res) => {
-//     const {AO_identificador, AO_descripcion, AO_estado}= req.body;
-//     const data= {AO_descripcion, AO_estado}
-//     const result = await pool.query("UPDATE `pau_btc_tbl_activo` SET ? WHERE AO_identificador = ?",
-//         [data, AO_identificador]
-//     )
-//     return res.status(200).json(result)
-// };
+const updateActivos = async (req, res) => {
+    const {AO_identificador, AO_descripcion, AO_estado}= req.body;
+    const data= {AO_descripcion, AO_estado}
+    const result = await pool.query("UPDATE `pau_btc_tbl_activo` SET ? WHERE AO_identificador = ?",
+        [data, AO_identificador]
+    )
+    return res.status(200).json(result)
+};
 
 const deleteActivos = async(req, res)=>{
     const AO_identificador = req.body.AO_identificador;

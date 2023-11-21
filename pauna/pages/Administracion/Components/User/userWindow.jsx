@@ -118,7 +118,7 @@ export default function UserWindow({ userAdmins, rols }) {
                 <Form.Group className="mb-3" controlId="formGridAddress2">
                   <Form.Label>Elija el rol a desempeñar</Form.Label>
                   <Form.Select name="UO_identificador_rol" value={parseInt(user.UO_identificador_rol)} onChange={handleChange}>
-                  <option>Seleccione un rol</option>
+                  <option>Seleccione un rol en especifico</option>
                     {rols.map((rol)=>(
                       <option key={rol.RL_identificador} value={rol.RL_identificador}>{rol.RL_nombre}</option>
                     ))}

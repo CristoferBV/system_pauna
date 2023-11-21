@@ -167,6 +167,117 @@ export default function Report({ materials, rebajos, aumentos }) {
 
         doc.save(`Reporte_General_De_Materiales_${formattedDate}.pdf`);
     }
+    const exportReportsAndMovimientosjsPDF = (rebajos, aumentos) => {
+        const doc = new jsPDF('p', 'pt', 'letter');
+
+        const fontSize = 16;
+        const tableFontSize = 12; // Ajusta el tamaño de la fuente de la tabla según sea necesario
+        doc.setFontSize(tableFontSize);
+        const title = "PLATAFORMA ADMINISTRATIVA UNA";
+        const rebajoTitle="Rebajos";
+        const aumentoTitle="Aumentos";
+        const subTitle = "Área de Reporte Generales de Rebajos y Aumentos";
+        const currentDate = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = currentDate.toLocaleDateString('es-ES', options);
+
+        // Set font size
+        doc.setFontSize(fontSize);
+
+        const titleWidth = doc.getStringUnitWidth(title) * fontSize;
+        const subTitleWidth = doc.getStringUnitWidth(subTitle) * fontSize;
+        const dateWidth = doc.getStringUnitWidth(formattedDate) * fontSize;
+        const rebajoWidth = doc.getStringUnitWidth(rebajoTitle) * 12;
+        const aumentoWidth = doc.getStringUnitWidth(aumentoTitle) * 12;
+
+        const pageWidth = doc.internal.pageSize.width;
+        const titleXPosition = (pageWidth - titleWidth) / 2;
+        const subTitleXPosition = (pageWidth - subTitleWidth) / 2;
+        const dateXPosition = (pageWidth - dateWidth) / 2;
+        const rebajoXPosition = (pageWidth - rebajoWidth) / 2;
+        const aumentoXPosition = (pageWidth - aumentoWidth) / 2;
+        // Adjust the vertical positions based on your needs
+        const titleYPosition = 30;
+        const subTitleYPosition = 70;
+        const dateYPosition = 90;
+
+
+
+
+        doc.text(title, titleXPosition, titleYPosition);
+        doc.text(subTitle, subTitleXPosition, subTitleYPosition);
+        doc.text(formattedDate, dateXPosition, dateYPosition);
+        // Add an image to the left
+        const imageWidth = 100; // Adjust the width of the image as needed
+        const imageHeight = 85; // Adjust the height of the image as needed
+        const imageXPosition = 20; // Adjust the X position of the image as needed
+        const imageYPosition = titleYPosition - 25; // Adjust the Y position of the image as needed
+
+        doc.addImage('/CampusCOTO.png', 'PNG', imageXPosition, imageYPosition, imageWidth, imageHeight);
+
+        const tableColumns = [
+            "Movimiento",
+            "Fecha",
+            "Cantidad",
+            "Material",
+            "Departamento",
+        ];
+        const tableColumns2 = [
+            "Movimiento",
+            "Fecha",
+            "Cantidad",
+            "Material",
+        ];
+
+        const tableDataRebajos = rebajos && rebajos.map((rebajo) => [
+            rebajo.MO_identificador,
+            rebajo.MO_fecha,
+            rebajo.MO_cantidad,
+            rebajo.ML_descripcion,
+            rebajo.DO_nombre
+        ]);
+
+        const tableDataAumentos = aumentos && aumentos.map((aumento) => [
+            aumento.MA_identificador,
+            aumento.MA_fecha,
+            aumento.MA_cantidad,
+            aumento.ML_descripcion
+        ]);
+        const totalCantidad = rebajos.reduce((total, rebajo) => total + rebajo.MO_cantidad, 0);
+
+        // Adjust the startY position based on your title and subtitle
+        const tableStartYPositionR = Math.max(titleYPosition, dateYPosition) + 30;
+        const tableStartYPositionA = Math.max(titleYPosition, dateYPosition) + 20;
+
+        // Etiqueta para la tabla de rebajos
+        doc.text("Rebajos", rebajoXPosition, tableStartYPositionR - 5);
+        
+
+
+        doc.autoTable({
+            head: [tableColumns],
+            body: tableDataRebajos,
+            startY: tableStartYPositionR, // Adjust as needed based on your title and subtitle
+            styles: { fontSize: tableFontSize },
+        });
+        const tableStartYPositionAumentos = doc.autoTable.previous.finalY + 20;
+        doc.text("Aumentos", aumentoXPosition, tableStartYPositionAumentos -5);
+        doc.autoTable({
+            head: [tableColumns2],
+            body: tableDataAumentos,
+            startY: tableStartYPositionAumentos, // Adjust as needed based on your title and subtitle
+            styles: { fontSize: tableFontSize },
+        });
+        const totalYPosition = doc.autoTable.previous.finalY + 20; // Ajustar según sea necesario
+        const totalXPosition = (pageWidth - doc.getStringUnitWidth(`Total de materiales: ${totalCantidad}`) * fontSize) / 2;
+
+
+
+
+
+
+        doc.save(`Reporte_General_De_Movimientos_${formattedDate}.pdf`);
+    }
 
     return (
         <div>
@@ -300,7 +411,7 @@ export default function Report({ materials, rebajos, aumentos }) {
                                 </Table>
                             </Container>
                             <Button className="" variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
-                            >
+                                onClick={() => exportReportsAndMovimientosjsPDF(rebajos, aumentos)} >
                                 Generar
                             </Button>
                         </Container>}

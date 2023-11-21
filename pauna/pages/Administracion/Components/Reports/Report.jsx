@@ -81,26 +81,36 @@ export default function Report({ materials, colors, brands, ubications, types })
         const doc = new jsPDF('p', 'pt', 'letter');
 
         const fontSize = 16;
-        const title = "Plataforma Administrativa UNA";
+        const tableFontSize = 12; // Ajusta el tamaño de la fuente de la tabla según sea necesario
+        doc.setFontSize(tableFontSize);
+        const title = "PLATAFORMA ADMINISTRATIVA UNA";
         const subTitle = "Área de Reporte Generales de Materiales";
+        const currentDate = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = currentDate.toLocaleDateString('es-ES', options);
 
         // Set font size
         doc.setFontSize(fontSize);
 
         const titleWidth = doc.getStringUnitWidth(title) * fontSize;
         const subTitleWidth = doc.getStringUnitWidth(subTitle) * fontSize;
+        const dateWidth = doc.getStringUnitWidth(formattedDate) * fontSize;
 
         const pageWidth = doc.internal.pageSize.width;
         const titleXPosition = (pageWidth - titleWidth) / 2;
         const subTitleXPosition = (pageWidth - subTitleWidth) / 2;
-
+        const dateXPosition = (pageWidth - dateWidth) / 2;
         // Adjust the vertical positions based on your needs
         const titleYPosition = 30;
         const subTitleYPosition = 70;
+        const dateYPosition = 90;
+
+
+
 
         doc.text(title, titleXPosition, titleYPosition);
         doc.text(subTitle, subTitleXPosition, subTitleYPosition);
-
+        doc.text(formattedDate, dateXPosition, dateYPosition);
         // Add an image to the left
         const imageWidth = 100; // Adjust the width of the image as needed
         const imageHeight = 85; // Adjust the height of the image as needed
@@ -123,17 +133,26 @@ export default function Report({ materials, colors, brands, ubications, types })
             item.ML_observacion,
             item.ML_cantidad,
         ]);
+        const totalCantidad = items.reduce((total, item) => total + item.ML_cantidad, 0);
 
         // Adjust the startY position based on your title and subtitle
-        const tableStartYPosition = Math.max(titleYPosition, subTitleYPosition) + 20;
+        const tableStartYPosition = Math.max(titleYPosition, dateYPosition) + 20;
 
         doc.autoTable({
             head: [tableColumns],
             body: tableData,
             startY: tableStartYPosition, // Adjust as needed based on your title and subtitle
+            styles: { fontSize: tableFontSize },
         });
+        const totalYPosition = doc.autoTable.previous.finalY + 20; // Ajustar según sea necesario
+        const totalXPosition = (pageWidth - doc.getStringUnitWidth(`Total de materiales: ${totalCantidad}`) * fontSize) / 2;
+        doc.text(`Total de materiales: ${totalCantidad}`, totalXPosition, totalYPosition);
 
-        doc.save("Reporte_General_De_Materiales.pdf");
+
+
+
+
+        doc.save(`Reporte_General_De_Materiales_${formattedDate}.pdf`);
     }
 
     return (

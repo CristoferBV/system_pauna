@@ -4,27 +4,11 @@ export default async function handler(req, res) {
     console.log(req.method);
     switch (req.method) {
         case "GET":
-            return await getAllMaterial(req, res);
+            return await getAllMov(req, res);
         case "POST":
             const type = req.body.tipo
             switch (type) {
-                case "Color":
-                    return await saveColor(req, res);
-                case "Brand":
-                    return await saveBrand(req, res);
-                case "Ubication":
-                    return await saveUbication(req, res);
-                case "Type":
-                    return await saveType(req, res);
-                case "Material":
-                    await saveMaterial(req, res);
-                    await saveMaterialXBrand(req, res);
-                    await saveMaterialXColor(req, res);
-                    break
-                case "Rebajo":
-                    return await saveRebajo(req, res);
-                case "Aumentos":
-                    return await saveAumentos(req, res);    
+                   
             }
         case "PUT":
             return await updateMaterial(req, res);
@@ -65,23 +49,18 @@ const deleteMaterial = async (req, res) => {
     return res.status(200).json({ resultBrand, resultColor, result });
 }
 
-const getAllMaterial = async (req, res) => {
+const getAllMov = async (req, res) => {
     const sqlMaterial = "SELECT pm.ML_identificador, pm.ML_descripcion, pm.ML_observacion, pma.MC_nombre, pm.ML_cantidad" +
         " FROM `pau_adm_tbl_material` pm" +
         " INNER JOIN `pau_adm_tbl_material_x_tbl_marca` pmxma ON pm.ML_identificador = pmxma.ML_identificador" +
         " INNER JOIN `pau_adm_tbl_marca` pma ON pmxma.MC_identificador = pma.MC_identificador;"
-    const sqlColor = "SELECT CR_identificador, CR_nombre FROM `pau_adm_tbl_color`;"
-    const sqlMarca = "SELECT MC_identificador, MC_nombre FROM `pau_adm_tbl_marca`;"
-    const sqlUbicaction = "SELECT UN_identificador, UN_lugar FROM `pau_adm_tbl_ubicacion`;"
-    const sqlType = "SELECT TP_identificador, TP_nombre FROM `pau_adm_tbl_tipo`"
-    const sqlDepartment = "SELECT DO_identificador, DO_nombre FROM `pau_gnl_tbl_departamento`;"
-    const [materials] = await pool.query(sqlMaterial);
-    const [colors] = await pool.query(sqlColor);
-    const [brands] = await pool.query(sqlMarca);
-    const [ubications] = await pool.query(sqlUbicaction);
-    const [types] = await pool.query(sqlType);
-    const [deparments] = await pool.query(sqlDepartment);
-    return res.status(200).json({ materials: materials, colors: colors, brands: brands, ubications: ubications, types: types, deparments: deparments });
+    const sqlMovimientosRebajo = "SELECT r.MO_identificador,r.MO_fecha,r.MO_cantidad,m.ML_descripcion,d.DO_nombre FROM pau_adm_movimiento_rebajo r INNER JOIN pau_adm_tbl_material m on m.ML_identificador = r.ML_identificador"+
+     " INNER JOIN pau_gnl_tbl_departamento d on d.DO_identificador = r.DO_identificador;"
+     const sqlMovimientosAumento = "SELECT r.MA_identificador,r.MA_fecha,r.MA_cantidad,m.ML_descripcion FROM pau_adm_movimiento_aumetos r INNER JOIN pau_adm_tbl_material m on m.ML_identificador = r.ML_identificador;" 
+     const [materials] = await pool.query(sqlMaterial); 
+    const [rebajos] = await pool.query(sqlMovimientosRebajo);
+    const [aumentos] = await pool.query(sqlMovimientosAumento);
+    return res.status(200).json({materials: materials,rebajos: rebajos, aumentos: aumentos});
 };
 
 

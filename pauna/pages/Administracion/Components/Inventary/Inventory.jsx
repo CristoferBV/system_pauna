@@ -4,9 +4,13 @@ import axios from "axios";
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Row, Col, Container, Button, Form, Table, Modal, Alert } from "react-bootstrap"
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaClipboardList } from "react-icons/fa";
 
-export default function Inventary({ materials, colors, brands, ubications, types }) {
+
+
+export default function Inventary({ materials, colors, brands, ubications, types, deparments }) {
+  const today = new Date();
+  const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
   const router = useRouter();
   console.log({ materials })
   const [showAlert, setShowAlert] = useState(false);
@@ -16,8 +20,11 @@ export default function Inventary({ materials, colors, brands, ubications, types
     types: false,
     ubi: false,
     brand: false,
-    edit: false
+    edit: false,
+    moreMaterial: false
   });
+
+
 
   const handleSubmit = async (data) => {
     console.log("hola");
@@ -48,7 +55,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
   const handleDeleteMaterial = async (materialID) => {
     const res = await axios
-      .delete("/api/material/view", {data: {tipo:"Material", ML_identificador:materialID}})
+      .delete("/api/material/view", { data: { tipo: "Material", ML_identificador: materialID } })
       .then(function (response) {
         console.log(response);
       })
@@ -89,6 +96,11 @@ export default function Inventary({ materials, colors, brands, ubications, types
     TP_nombre: "",
     TP_descripcion: ""
   });
+  const [deparment, setDepartments] = useState({
+    tipo: "Deparment",
+    DO_identificador: "",
+    DO_nombre: "",
+  });
 
   const handleChange = ({ target: { name, value } }) => {
     if (name in color) {
@@ -101,6 +113,8 @@ export default function Inventary({ materials, colors, brands, ubications, types
       setTypes({ ...type, [name]: value });
     } else if (name in material) {
       setMaterial({ ...material, [name]: value });
+    } else if (name in deparment) {
+      setDepartments({ ...deparment, [name]: value });
     }
   };
 
@@ -143,7 +157,11 @@ export default function Inventary({ materials, colors, brands, ubications, types
   const handleEditMaterial = (material) => {
     setMaterial(material);
     handleToggleForm('edit')
+  };
 
+  const handleAddMoreMaterial = (material) => {
+    setMaterial(material);
+    handleToggleForm('moreMaterial')
   };
 
   const reloadPage = () => {
@@ -333,7 +351,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
       <Modal show={showFormState.edit} onHide={() => handleCloseForm('edit')}>
         <Modal.Header closeButton>
-          <Modal.Title>Editar cantidades</Modal.Title>
+          <Modal.Title>Materiales</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -346,12 +364,21 @@ export default function Inventary({ materials, colors, brands, ubications, types
               <Form.Control disabled={true} name="ML_descripcion" value={material.ML_descripcion} onChange={handleChange} type="text" placeholder="Ingrese el color" />
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>Cantidad</Form.Label>
-              <Form.Control name="ML_cantidad" value={material.ML_cantidad} onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
+              <Form.Label>Cantidad en el inventario</Form.Label>
+              <Form.Control disabled={true} name="ML_cantidad" value={material.ML_cantidad} onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>Observaciones</Form.Label>
-              <Form.Control name="ML_observacion" value={material.ML_observacion} onChange={handleChange} as="textarea" placeholder="Ingrese la nueva observacion observaciones" />
+              <Form.Label>Cantidad entregada</Form.Label>
+              <Form.Control name="ML_cantidad" onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+            <Form.Label>Departamento</Form.Label>
+              <Form.Select name="DO_identificador" value={parseInt(deparment.DO_identificador)} onChange={handleChange}>
+              <option>Elija un departamento</option>
+                {deparments.map((deparment) => (
+                  <option key={deparment.DO_identificador} value={deparment.DO_identificador}>{deparment.DO_nombre}</option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -359,7 +386,67 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Button variant="secondary" onClick={() => handleCloseForm('edit')}>
             Cerrar
           </Button>
-          <Button type="submit" variant="primary" onClick={() => handleUpdate(material)}>
+          <Button type="submit" variant="primary" onClick={() => handleSave({
+            tipo: "Rebajo",
+            MO_fecha:formattedDate,
+            MO_cantidad: material.ML_cantidad,
+            ML_identificador: material.ML_identificador,
+            DO_identificador: deparment.DO_identificador
+          })}>
+            Enviar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showFormState.colors} onHide={() => handleCloseForm('colors')}>
+        <Modal.Header closeButton>
+          <Modal.Title>Añadir colores</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control name="CR_nombre" value={color.CR_nombre} onChange={handleChange} type="text" placeholder="Ingrese el color" />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => handleCloseForm('colors')}>
+            Cerrar
+          </Button>
+          <Button type="submit" variant="primary" onClick={() => handleSave(color)}>
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showFormState.moreMaterial} onHide={() => handleCloseForm('moreMaterial')}>
+        <Modal.Header closeButton>
+          <Modal.Title>Ingresar material</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+          <Form.Group controlId="formBasicEmail">
+              <Form.Label>Codigo</Form.Label>
+              <Form.Control disabled={true} name="ML_identificador" value={material.ML_identificador} onChange={handleChange} type="text" placeholder="Ingrese el nombre" />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control disabled={true} name="ML_descripcion" value={material.ML_cantidad} onChange={handleChange} type="text" placeholder={material.ML_cantidad} />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Cantidad a ingresar</Form.Label>
+              <Form.Control name="ML_cantidad" onChange={handleChange} type="text" placeholder="Ingrese la descripción si desea" />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => handleCloseForm('moreMaterial')}>
+            Cerrar
+          </Button>
+          <Button type="submit" variant="primary" onClick={() => handleUpdate({
+            ML_identificador: material.ML_identificador,
+            ML_cantidad: material.ML_cantidad
+          })} disabled={!material.ML_cantidad || material.ML_cantidad <= 0}>
             Guardar
           </Button>
         </Modal.Footer>
@@ -409,9 +496,9 @@ export default function Inventary({ materials, colors, brands, ubications, types
                     <thead>
                       <tr>
                         <th>Código</th>
-                        <th>Nombre</th>
+                        <th>Fecha</th>
                         <th>Marca</th>
-                        <th>Cantidad</th>
+                        <th>Nombre</th>
                         <th>Observaciones</th>
                         <th>Acciones</th>
                       </tr>
@@ -428,13 +515,13 @@ export default function Inventary({ materials, colors, brands, ubications, types
                             <Container>
                               <Row>
                                 <Col>
-                                  <Button variant="warning"onClick={() => handleEditMaterial(material)}>
+                                  <Button variant="warning" onClick={() => handleEditMaterial(material)}>
                                     <FaEdit></FaEdit>
                                   </Button>
                                 </Col>
                                 <Col>
-                                  <Button variant="danger" onClick={() => handleDeleteMaterial(material.ML_identificador)}>
-                                    <FaTrash/>
+                                  <Button variant="light" onClick={() => handleAddMoreMaterial(material)}>
+                                    <FaClipboardList></FaClipboardList>
                                   </Button>
                                 </Col>
                               </Row>
@@ -491,14 +578,15 @@ export const getServerSideProps = async (context) => {
     const { data } = await axios.get(
       "http://localhost:3000/api/material/view"
     );
-    const { materials, colors, brands, ubications, types } = data;
+    const { materials, colors, brands, ubications, types, deparments } = data;
     return {
       props: {
         materials,
         colors,
         brands,
         ubications,
-        types
+        types,
+        deparments
       },
     };
   } catch (error) {

@@ -496,9 +496,9 @@ export default function Inventary({ materials, colors, brands, ubications, types
                     <thead>
                       <tr>
                         <th>Código</th>
-                        <th>Nombre</th>
+                        <th>Fecha</th>
                         <th>Marca</th>
-                        <th>Cantidad</th>
+                        <th>Nombre</th>
                         <th>Observaciones</th>
                         <th>Acciones</th>
                       </tr>

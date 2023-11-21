@@ -6,7 +6,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import axios from "axios";
 
-export default function Report({ materials, colors, brands, ubications, types }) {
+export default function Report({ materials, rebajos, aumentos }) {
     const [showReportes, setShowReportes] = useState(false);
     const [showMovimientos, setShowMovimientos] = useState(false);
 
@@ -19,6 +19,19 @@ export default function Report({ materials, colors, brands, ubications, types })
         setShowReportes(false);
         setShowMovimientos(true);
     };
+    const [aumento, setAumento] = useState({
+        MA_identificador: "",
+        MA_fecha: "",
+        MA_cantidad: "",
+        ML_descripcion: "",
+    })
+    const [rebajo, setRebajo] = useState({
+        MO_identificador: "",
+        MO_fecha: "",
+        MO_cantidad: "",
+        ML_descripcion: "",
+        DO_nombre: ""
+    })
     const [material, setMaterial] = useState({
         ML_identificador: "",
         ML_descripcion: "",
@@ -198,6 +211,7 @@ export default function Report({ materials, colors, brands, ubications, types })
                             <Container style={{ maxHeight: '400px', overflowY: 'auto' }}>
                                 <Table variant="dark" striped bordered hover style={{ fontSize: '1.1rem' }}>
                                     <thead>
+
                                         <tr>
                                             <th>Código</th>
                                             <th>Nombre</th>
@@ -255,82 +269,33 @@ export default function Report({ materials, colors, brands, ubications, types })
                                         <tr>
                                             <th>Movimiento</th>
                                             <th>Fecha</th>
-                                            <th>Codigo</th>
-                                            <th>Nombre</th>
-                                            <th>Marca</th>
                                             <th>Cantidad</th>
-                                            <th>Rebajo</th>
+                                            <th>Material</th>
+                                            <th>Departamento</th>
+                                            <th>Tipo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry the Bird</td>
-                                            <td>The Bird</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry the Bird</td>
-                                            <td>The Bird</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry the Bird</td>
-                                            <td>The Bird</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry the Bird</td>
-                                            <td>The Bird</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry the Bird</td>
-                                            <td>The Bird</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry the Bird</td>
-                                            <td>The Bird</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                            <td>Otto</td>
-                                        </tr>
+                                        {rebajos.map((rebajo) => (
+                                            <tr key={rebajo.MO_identificador}>
+                                                <td>{rebajo.MO_identificador}</td>
+                                                <td>{rebajo.MO_fecha}</td>
+                                                <td>{rebajo.MO_cantidad}</td>
+                                                <td>{rebajo.ML_descripcion}</td>
+                                                <td>{rebajo.DO_nombre}</td>
+                                                <td>Rebajo</td>
+                                            </tr>
+                                        ))}
+                                        {aumentos && aumentos.map((aumento) => (
+                                            <tr key={aumento.MA_identificador}>
+                                                <td>{aumento.MA_identificador}</td>
+                                                <td>{aumento.MA_fecha}</td>
+                                                <td>{aumento.MA_cantidad}</td>
+                                                <td>{aumento.ML_descripcion}</td>
+                                                <td>No necesita</td>
+                                                <td>Aumentos</td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </Table>
                             </Container>
@@ -348,16 +313,14 @@ export default function Report({ materials, colors, brands, ubications, types })
 export const getServerSideProps = async (context) => {
     try {
         const { data } = await axios.get(
-            "http://localhost:3000/api/material/view"
+            "http://localhost:3000/api/material/mov"
         );
-        const { materials, colors, brands, ubications, types } = data;
+        const { materials, rebajos, aumentos } = data;
         return {
             props: {
                 materials,
-                colors,
-                brands,
-                ubications,
-                types
+                rebajos,
+                aumentos
             },
         };
     } catch (error) {

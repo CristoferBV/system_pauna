@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Card, Table, Button, Form, Modal, Alert } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 
-export default function SidebarPerifericos({ Citas }) {
+export default function SidebarPerifericos({ Perifericos }) {
     const [searchText, setSearchText] = useState('');
     const [editMode, setEditMode] = useState(false);
     const [editedCita, setEditedCita] = useState({});
@@ -10,6 +11,7 @@ export default function SidebarPerifericos({ Citas }) {
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [newCita, setNewCita] = useState({});
     const [alertVisible, setAlertVisible] = useState(false);
+    const router = useRouter();
 
     const handleEdit = (cita) => {
         setEditedCita(cita);
@@ -44,6 +46,68 @@ export default function SidebarPerifericos({ Citas }) {
         setAlertVisible(true);
     };
 
+    const filteredPeriferico = Perifericos.Perifericos && Array.isArray(Perifericos.Perifericos)
+        ? Perifericos.Perifericos.filter((periferico) => {
+
+        return(
+        periferico.EA_identificador.toLowerCase().includes(searchText.toLowerCase()) ||
+        periferico.EA_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
+        periferico.EA_descripcion.toLowerCase().includes(searchText.toLowerCase())
+        );
+    })
+    : [];
+
+    const [periferico, setPeriferico] = useState({
+        EA_identificador: "",
+        EA_nombre: "",
+        EA_descripcion: "",
+    })
+
+    const handleChange = ({ target: { name, value } }) => {
+        if (name in periferico) {
+            setPeriferico({ ...periferico, [name]: value });
+        }
+    };
+
+    const handleSubmit = async (data) => {
+        console.log("hola");
+        const res = await axios
+            .post("/api/config/BibliotecaPerifericos", data)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        console.log(res)
+    };
+
+    const handleSave = (object) => {
+        handleSubmit(object)
+        setShowCreateForm(true);
+        setTimeout(() => {
+            setShowCreateForm(false);
+        }, 2000);
+        reloadPage();
+    };
+
+    const reloadPage = () => {
+        router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarPerifericos");
+    }
+
+    const handleDeletePeriferico = async (perifericoID) => {
+        const res = await axios
+          .delete("/api/config/BibliotecaPerifericos", {data: { EA_identificador:perifericoID}})
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(res)
+        reloadPage();
+      };
+
     const buttonStyle = {
         backgroundColor: '#021730',
         color: 'white',
@@ -72,12 +136,12 @@ export default function SidebarPerifericos({ Citas }) {
 
     return (
         <div className="flex-1 p-8">
-            <Card bg="secondary" text="white">
+            <Card style={{ backgroundColor: '#2F3E5B', color: 'white' }} text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
                         <span>Perifericos</span>
                         <Button variant="success" onClick={createCita} style={buttonStyle}>
-                            Nueva Cita
+                            Nuevo Periferico
                         </Button>
                     </div>
                 </Card.Header>
@@ -87,7 +151,7 @@ export default function SidebarPerifericos({ Citas }) {
                             <Form.Group>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Buscar cita..."
+                                    placeholder="Buscar Periferico..."
                                     value={searchText}
                                     onChange={(e) => setSearchText(e.target.value)}
                                 />
@@ -98,21 +162,18 @@ export default function SidebarPerifericos({ Citas }) {
                         {/* Encabezado de la tabla */}
                         <thead>
                             <tr>
+                                <th className="text-center">Codigo ID</th>
                                 <th className="text-center">Nombre</th>
                                 <th className="text-center">Descripción</th>
                                 <th className="text-center">Administrar</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {Citas
-                                .filter((cita) =>
-                                    cita.HO_fecha.toLowerCase().includes(searchText.toLowerCase()) ||
-                                    cita.HO_hora.toLowerCase().includes(searchText.toLowerCase())
-                                )
-                                .map((cita) => (
-                                    <tr key={cita.LP_identificador}>
-                                        <td className="text-center">{cita.HO_fecha}</td>
-                                        <td className="text-center">{cita.HO_hora}</td>
+                            {filteredPeriferico.map((periferico) => (
+                                    <tr key={periferico.EA_identificador}>
+                                        <td className="text-center">{periferico.EA_identificador}</td>
+                                        <td className="text-center">{periferico.EA_nombre}</td>
+                                        <td className="text-center">{periferico.EA_descripcion}</td>
                                         <td className="text-center">
                                             <Button
                                                 variant="light"
@@ -125,7 +186,7 @@ export default function SidebarPerifericos({ Citas }) {
                                             <Button
                                                 variant="light"
                                                 className="ml-2"
-                                                onClick={() => handleDelete(cita)}
+                                                onClick={() => handleDeletePeriferico(periferico.EA_identificador)}
                                                 style={tableButtonStyle}
                                             >
                                                 Eliminar
@@ -243,51 +304,33 @@ export default function SidebarPerifericos({ Citas }) {
             {/* Ventana modal para crear una nueva cita */}
             <Modal show={showCreateForm} onHide={() => setShowCreateForm(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Nueva Cita</Modal.Title>
+                    <Modal.Title>Nuevo Periferico</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         {/* Campos para crear una nueva cita */}
                         <Form.Group>
-                            <Form.Label>Fecha</Form.Label>
+                            <Form.Label>Codigo ID</Form.Label>
                             <Form.Control
-                                type="text"
-                                onChange={(e) => setNewCita({ ...newCita, HO_fecha: e.target.value })}
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Hora</Form.Label>
-                            <Form.Control
-                                type="text"
-                                onChange={(e) => setNewCita({ ...newCita, HO_hora: e.target.value })}
+                                name="EA_identificador"
+                                value={periferico.EA_identificador}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Nombre</Form.Label>
                             <Form.Control
-                                type="text"
-                                onChange={(e) => setNewCita({ ...newCita, UO_primer_nombre: e.target.value })}
+                                name="EA_nombre"
+                                value={periferico.EA_nombre}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Cedula</Form.Label>
+                            <Form.Label>Descripción</Form.Label>
                             <Form.Control
-                                type="text"
-                                onChange={(e) => setNewCita({ ...newCita, UO_identificador: e.target.value })}
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Carrera</Form.Label>
-                            <Form.Control
-                                type="text"
-                                onChange={(e) => setNewCita({ ...newCita, CA_nombre: e.target.value })}
-                            />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Dispositivo</Form.Label>
-                            <Form.Control
-                                type="text"
-                                onChange={(e) => setNewCita({ ...newCita, TP_nombre: e.target.value })}
+                                name="EA_descripcion"
+                                value={periferico.EA_descripcion}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                     </Form>
@@ -302,7 +345,12 @@ export default function SidebarPerifericos({ Citas }) {
                     </Button>
                     <Button
                         variant="primary"
-                        onClick={submitNewCita}
+                        onClick={() => handleSave({
+                            tipo: "Periferico",
+                            EA_identificador: periferico.EA_identificador,
+                            EA_nombre: periferico.EA_nombre,
+                            EA_descripcion: periferico.EA_descripcion
+                        })}
                         style={buttonStyle}
                     >
                         Crear
@@ -321,17 +369,17 @@ export default function SidebarPerifericos({ Citas }) {
 
 export const getServerSideProps = async (context) => {
     try {
-        const { data: Citas } = await axios.get("http://localhost:3000/api/config/BibliotecaCitas");
+        const { data: Perifericos } = await axios.get("http://localhost:3000/api/config/BibliotecaPerifericos");
         return {
             props: {
-                Citas,
+                Perifericos,
             },
         };
     } catch (error) {
         console.log(error)
         return {
             props: {
-                Citas: [], // Puedes proporcionar un valor predeterminado en caso de error.
+                Perifericos: [], // Puedes proporcionar un valor predeterminado en caso de error.
             },
         };
         

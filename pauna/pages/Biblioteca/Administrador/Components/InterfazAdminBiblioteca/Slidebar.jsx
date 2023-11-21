@@ -10,6 +10,8 @@ export default function Slidebar({ types }) {
     const [searchText, setSearchText] = useState('');
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [showTipoForm, setShowTipoForm] = useState(false);
+    const [editedDevice, setEditedDevice] = useState({});
+    const [editMode, setEditMode] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -62,7 +64,7 @@ export default function Slidebar({ types }) {
 
     const handleDeleteActivo = async (activoID) => {
         const res = await axios
-          .delete("/api/config/BibliotecaDispositivos", {data: {tipo:"Activo", AO_identificador:activoID}})
+          .delete("/api/config/BibliotecaDispositivos", {data: { AO_identificador:activoID}})
           .then(function (response) {
             console.log(response);
           })
@@ -91,17 +93,17 @@ export default function Slidebar({ types }) {
     };
 
 
-    // const handleEditDevice = (device) => {
-    //     setSelectedDevice(device);
-    //     setEditedValues({
-    //         TP_identificador: device.TP_identificador|| "",
-    //         TP_nombre: device.TP_nombre || "",
-    //         TP_cantidad: device.TP_cantidad || "",
-    //         EA_nombre: device.EA_nombre || "",
-    //         AO_descripcion: device.AO_descripcion || "",
-    //         AO_estado: device.AO_estado || "",
-    //     });
-    // };
+    const handleEditDevice = (device) => {
+        setSelectedDevice(device);
+        setEditedValues({
+            TP_identificador: device.TP_identificador|| "",
+            TP_nombre: device.TP_nombre || "",
+            TP_cantidad: device.TP_cantidad || "",
+            EA_nombre: device.EA_nombre || "",
+            AO_descripcion: device.AO_descripcion || "",
+            AO_estado: device.AO_estado || "",
+        });
+    };
 
 
     const cancelDeleteDevice = () => {
@@ -128,10 +130,15 @@ export default function Slidebar({ types }) {
         })
         : [];
 
-        const handleEditDispositivo = (device) => {
-            setDispositivos(device);
-            handleToggleForm('edit')
+        const handleEdit = (device) => {
+            setEditedDevice(device);
+            setEditMode(true);
         };
+
+        // const handleEditDispositivo = (device) => {
+        //     setDispositivos(device);
+        //     handleToggleForm('edit')
+        // };
 
     const handleCreateDevice = () => {
         setShowCreateForm(true);
@@ -150,12 +157,12 @@ export default function Slidebar({ types }) {
         handleToggleForm(key);
     };
 
-    const handleToggleForm = (key) => {
-        setShowFormState((prevState) => ({
-            ...prevState,
-            [key]: !prevState[key],
-        }));
-    };
+    // const handleToggleForm = (key) => {
+    //     setShowFormState((prevState) => ({
+    //         ...prevState,
+    //         [key]: !prevState[key],
+    //     }));
+    // };
 
     const reloadPage = () => {
         router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar");
@@ -252,7 +259,7 @@ export default function Slidebar({ types }) {
                                     <td className="text-center">
                                         <Button
                                             variant="primary"
-                                            onClick={() => handleEditDispositivo(device)}
+                                            onClick={() => handleEditDevice(device)}
                                             style={buttonStyle}
                                             onMouseEnter={(e) => {
                                                 e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;

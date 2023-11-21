@@ -92,22 +92,10 @@ export default function SidebarEstudiantes({ Estudiantes }) {
 
     return (
         <div className="p-8">
-            <Card bg="secondary" text="white">
+            <Card style={{ backgroundColor: '#2F3E5B', color: 'white' }} text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
                         <span>Lista de Estudiantes</span>
-                        <Button
-                            onClick={handleCreateEstudiante}
-                            style={buttonStyle}
-                            onMouseEnter={(e) => {
-                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                            }}
-                            onMouseLeave={(e) => {
-                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                            }}
-                        >
-                            Crear Estudiante
-                        </Button>
                     </div>
                 </Card.Header>
                 <Card.Body>

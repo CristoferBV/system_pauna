@@ -6,36 +6,57 @@ export default async function handler(req, res) {
         case "GET":
             return await getAllHorario(req, res);
         case "POST":
-            return await saveHorarios(req, res);
+            const type = req.body.tipo
+            switch (type) {
+                case "Horario":
+                    await saveHorarios(req, res);
+                    break
+                }
+            case "DELETE":
+                return deleteHorarios(req, res);
+            }
     }
-}
+
+    const deleteHorarios = async(req, res)=>{
+        const HO_identificador = req.body.HO_identificador;
+
+        const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
+        await pool.query(disableForeignKeyCheckQuery);
+
+        const deleteHorario = "DELETE FROM `pau_btc_tbl_horario` WHERE HO_identificador = ?";
+        const result = await pool.query(deleteHorario, [HO_identificador]);
+
+        const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
+        await pool.query(enableForeignKeyCheckQuery);
+
+        return res.status(200).json({ Horarios: result});
+    }
 
 const getAllHorario = async (req, res) => {
     const [result] = await pool.query("SELECT h.HO_fecha, h.HO_hora, h.HO_estado FROM `pau_btc_tbl_horario` h");
+    // const [dateResult] = await pool.query("SELECT HO_identificador, HO_fecha FROM pau_btc_tbl_horario");
     console.log(result)
     return res.status(200).json(result);
 };
 
+const saveData = async (table, data, res) => {
+    try {
+        console.log(data);
+        const result = await pool.query(`INSERT INTO ${table} SET ?`, data);
+        console.log(result);
+        return res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: 'Error al guardar los datos.' });
+    }
+};
+
 const saveHorarios = async (req, res) => {
     console.log(req.body);
-    const { HO_identificador,
-        HO_fecha,
-        HO_hora,
-        HO_estado} = req.body;
+    const { HO_fecha, HO_hora, HO_estado } = req.body;
+    const data = { HO_fecha, HO_hora, HO_estado }
+    console.log(data)
 
-    const result = await pool
-        .query("INSERT INTO `pau-tbl-horario` SET ?", {
-            HO_identificador,
-            HO_fecha,
-            HO_hora,
-            HO_estado,
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-
-    return res.status(200).json(result);
-};
+    const { result } = saveData('pau_btc_tbl_horario', data, res);
+    return  result;
+}

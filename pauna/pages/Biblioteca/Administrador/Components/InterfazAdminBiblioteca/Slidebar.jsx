@@ -251,7 +251,7 @@ export default function Slidebar({ types }) {
                         </thead>
                         <tbody>
                             {filteredDevices.map((device) => (
-                                <tr key={device.LP_identificador}>
+                                <tr key={device.AO_identificador}>
                                     <td className="text-center">{device.AO_identificador}</td>
                                     <td className="text-center">{device.TP_nombre}</td>
                                     <td className="text-center">{device.AO_descripcion}</td>

@@ -126,8 +126,8 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredEstudiantes.map((estudiante) => (
-                                <tr key={estudiante.EE_idenficador}>
+                            {filteredEstudiantes.map((estudiante, index) => (
+                                <tr key={`${estudiante.EE_idenficador}_${index}`}>
                                     <td className="text-nowrap">{estudiante.UO_primer_nombre}</td>
                                     <td className="text-nowrap">{estudiante.UO_identificador}</td>
                                     <td className="text-nowrap">{estudiante.EE_nivel}</td>

@@ -90,7 +90,6 @@ export default function SidebarCitas({ Citas }) {
         setAlertVisible(true);
     };
 
-    console.log("Datos de Citas:", Citas.Citas);
 
     const filteredCitas = Citas.Citas && Array.isArray(Citas.Citas)
     ? Citas.Citas.filter((cita) => {

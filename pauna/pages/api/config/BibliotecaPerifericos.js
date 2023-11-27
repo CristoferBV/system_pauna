@@ -15,22 +15,33 @@ export default async function handler(req, res) {
         case "DELETE":
             return deletePerifericos(req, res);
         }
+
     }
 
-    const deletePerifericos = async(req, res)=>{
-        const EA_identificador = req.body.EA_identificador;
-
-        const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
-        await pool.query(disableForeignKeyCheckQuery);
-
-        const deletePeriferico = "DELETE FROM `pau_btc_tbl_periferico` WHERE EA_identificador = ?";
-        const result = await pool.query(deletePeriferico, [EA_identificador]);
-
-        const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
-        await pool.query(enableForeignKeyCheckQuery);
-
-        return res.status(200).json({ Perifericos: result});
-    }
+    const deletePerifericos = async (req, res) => {
+        const { EA_identificador } = req.query;
+        console.log("EA_identificador recibido:", EA_identificador);
+    
+        try {
+            console.log("Before DELETE operation");
+            const result = await pool.query(`DELETE FROM pau_btc_tbl_periferico WHERE EA_identificador = ?`, [EA_identificador]);
+            console.log("After DELETE operation");
+            console.log(result);
+    
+            // Verificar si ya se ha enviado una respuesta antes de enviar otra
+            if (!res.headersSent) {
+                res.status(200).json(result);
+            }
+        } catch (error) {
+            console.error("Error during DELETE operation:", error);
+    
+            // Verificar si ya se ha enviado una respuesta antes de enviar otra
+            if (!res.headersSent) {
+                res.status(500).json({ error: 'Error al eliminar el periférico.' });
+            }
+        }
+    };
+    
 
     const getAllPerifericos = async (req, res) => {
         const [result] = await pool.query("SELECT  p.EA_identificador, p.EA_nombre, p.EA_descripcion FROM `pau_btc_tbl_periferico` p ");
@@ -43,19 +54,25 @@ export default async function handler(req, res) {
             console.log(data);
             const result = await pool.query(`INSERT INTO ${table} SET ?`, data);
             console.log(result);
-            return res.status(200).json(result);
+            return result;  // Solo retorna el resultado
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ error: 'Error al guardar los datos.' });
+            throw new Error('Error al guardar los datos.');  // Lanza un error en caso de fallo
         }
     };
+    
 
     const savePeriferico = async (req, res) => {
         console.log(req.body);
         const { EA_identificador, EA_nombre, EA_descripcion } = req.body;
-        const data = { EA_identificador, EA_nombre, EA_descripcion }
-        console.log(data)
-
-        const { result } = saveData('pau_btc_tbl_periferico', data, res);
-        return  result;
-    }
+        const data = { EA_identificador, EA_nombre, EA_descripcion };
+        console.log(data);
+    
+        try {
+            const result = await saveData('pau_btc_tbl_periferico', data, res);
+            res.status(200).json(result);  // Envía la respuesta solo si saveData tiene éxito
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: 'Error al guardar el periférico.' });  // Envía una respuesta de error en caso de fallo
+        }
+    };

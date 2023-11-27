@@ -32,7 +32,7 @@ function NavbarAdminBiblioteca() {
   return (
     <Navbar collapseOnSelect expand="lg" style={customNavbarStyle}>
       <Container>
-        <Navbar.Brand href="/" style={customTextStyle}>Pauna</Navbar.Brand>
+        <Navbar.Brand href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Inicio" style={customTextStyle}>Pauna</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" style={customTogglerStyle} />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">

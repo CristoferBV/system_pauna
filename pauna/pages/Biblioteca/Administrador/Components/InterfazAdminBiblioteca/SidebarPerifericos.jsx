@@ -49,13 +49,13 @@ export default function SidebarPerifericos({ Perifericos }) {
     const filteredPeriferico = Perifericos.Perifericos && Array.isArray(Perifericos.Perifericos)
         ? Perifericos.Perifericos.filter((periferico) => {
 
-        return(
-        periferico.EA_identificador.toLowerCase().includes(searchText.toLowerCase()) ||
-        periferico.EA_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
-        periferico.EA_descripcion.toLowerCase().includes(searchText.toLowerCase())
-        );
-    })
-    : [];
+            return (
+                periferico.EA_identificador.toLowerCase().includes(searchText.toLowerCase()) ||
+                periferico.EA_nombre.toLowerCase().includes(searchText.toLowerCase()) ||
+                periferico.EA_descripcion.toLowerCase().includes(searchText.toLowerCase())
+            );
+        })
+        : [];
 
     const [periferico, setPeriferico] = useState({
         EA_identificador: "",
@@ -70,44 +70,38 @@ export default function SidebarPerifericos({ Perifericos }) {
     };
 
     const handleSubmit = async (data) => {
-        console.log("hola");
-        const res = await axios
-            .post("/api/config/BibliotecaPerifericos", data)
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        console.log(res)
+        try {
+            const res = await axios.post("/api/config/BibliotecaPerifericos", data);
+            console.log(res);
+        } catch (error) {
+            console.error("Error al crear el periférico:", error);
+            // Puedes mostrar un mensaje de error al usuario aquí
+        }
     };
 
-    const handleSave = (object) => {
-        handleSubmit(object)
+
+    const handleSave = async (object) => {
+        await handleSubmit(object);
         setShowCreateForm(true);
-        setTimeout(() => {
-            setShowCreateForm(false);
-        }, 2000);
-        reloadPage();
+        reloadPage(); // Actualiza la lista de periféricos después de la creación
     };
 
     const reloadPage = () => {
         router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarPerifericos");
     }
 
-    const handleDeletePeriferico = async (perifericoID) => {
-        const res = await axios
-          .delete("/api/config/BibliotecaPerifericos", {data: { EA_identificador:perifericoID}})
-          .then(function (response) {
+    const handleDeletePeriferico = async (EA_identificador) => {
+        try {
+            const response = await axios.delete(`/api/config/BibliotecaPerifericos?EA_identificador=${EA_identificador}`);
             console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(res)
+            // Realizar otras acciones después de la eliminación
+        } catch (error) {
+            console.error("Error al eliminar el periférico:", error);
+            throw error;  // Permitir que el control fluya fuera de la función
+        }
         reloadPage();
-      };
-
+    };
+    
     const buttonStyle = {
         backgroundColor: '#021730',
         color: 'white',
@@ -170,30 +164,33 @@ export default function SidebarPerifericos({ Perifericos }) {
                         </thead>
                         <tbody>
                             {filteredPeriferico.map((periferico) => (
-                                    <tr key={periferico.EA_identificador}>
-                                        <td className="text-center">{periferico.EA_identificador}</td>
-                                        <td className="text-center">{periferico.EA_nombre}</td>
-                                        <td className="text-center">{periferico.EA_descripcion}</td>
-                                        <td className="text-center">
-                                            <Button
-                                                variant="light"
-                                                className="ml-2"
-                                                onClick={() => handleEdit(cita)}
-                                                style={tableButtonStyle}
-                                            >
-                                                Editar
-                                            </Button>
-                                            <Button
-                                                variant="light"
-                                                className="ml-2"
-                                                onClick={() => handleDeletePeriferico(periferico.EA_identificador)}
-                                                style={tableButtonStyle}
-                                            >
-                                                Eliminar
-                                            </Button>
-                                        </td>
-                                    </tr>
-                                ))
+                                <tr key={periferico.EA_identificador}>
+                                    <td className="text-center">{periferico.EA_identificador}</td>
+                                    <td className="text-center">{periferico.EA_nombre}</td>
+                                    <td className="text-center">{periferico.EA_descripcion}</td>
+                                    <td className="text-center">
+                                        <Button
+                                            variant="light"
+                                            className="ml-2"
+                                            onClick={() => handleEdit(cita)}
+                                            style={tableButtonStyle}
+                                        >
+                                            Editar
+                                        </Button>
+                                        <Button
+                                            variant="light"
+                                            className="ml-2"
+                                            onClick={() => {
+                                                console.log("EA_identificador:", periferico.EA_identificador);
+                                                handleDeletePeriferico(periferico.EA_identificador);
+                                            }}
+                                            style={tableButtonStyle}
+                                        >
+                                            Eliminar
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))
                             }
                         </tbody>
                     </Table>

@@ -15,8 +15,17 @@ export default function Slidebar({ types }) {
     const router = useRouter();
 
     useEffect(() => {
-        loadDevices();
+        loadDevices(); // Cargar dispositivos al inicio
+    
+        // Recargar dispositivos cada 5 segundos (ajusta según tus necesidades)
+        const interval = setInterval(() => {
+            loadDevices();
+        }, 10000);
+    
+        // Limpia el intervalo cuando el componente se desmonta
+        return () => clearInterval(interval);
     }, []);
+    
 
     const [Dispositivos, setDispositivos] = useState([]);
 
@@ -170,15 +179,17 @@ export default function Slidebar({ types }) {
 
     const loadDevices = async () => {
         try {
-            const response = await axios.get("http://localhost:3000/api/config/BibliotecaDispositivos");
-            const devices = response.data; // Accede a los dispositivos desde la respuesta
-            setDispositivos(devices); // Almacena los dispositivos en el estado
-
+            const timestamp = new Date().getTime();
+            const response = await axios.get(`http://localhost:3000/api/config/BibliotecaDispositivos?timestamp=${timestamp}`);
+            const devices = response.data;
+            
+            setDispositivos(devices);
+    
             // Resto de tu código...
         } catch (error) {
             console.error('Error al cargar dispositivos:', error);
         }
-    }
+    };
 
     const buttonStyle = {
         backgroundColor: '#021730',

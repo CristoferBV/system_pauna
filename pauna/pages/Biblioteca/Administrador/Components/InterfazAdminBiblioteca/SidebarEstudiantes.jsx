@@ -16,17 +16,13 @@ export default function SidebarEstudiantes({ Estudiantes }) {
             (estudiante.UO_identificador || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.EE_nivel || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.TP_nombre || '').toLowerCase().includes(searchText.toLowerCase()) ||
-            (estudiante.TP_identificador || '').toLowerCase().includes(searchText.toLowerCase()) ||
-            (estudiante.AO_descripcion || '').toLowerCase().includes(searchText.toLowerCase()) ||
-            (estudiante.DO_nombre || '').toLowerCase().includes(searchText.toLowerCase()) ||
+            (estudiante.AO_identificador || '').toString().toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.EE_campus || '').toLowerCase().includes(searchText.toLowerCase()) ||
-            (estudiante.HO_fecha || '').toLowerCase().includes(searchText.toLowerCase()) ||
-            (estudiante.LP_fechaDevolucion || '').toLowerCase().includes(searchText.toLowerCase()) ||
-            (estudiante.RE_observacion || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.CE_correoElectronico || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (estudiante.TO_numero || '').toLowerCase().includes(searchText.toLowerCase())
         );
     });
+    
 
     const confirmDeleteEstudiante = (estudiante) => {
         // Configura el estudiante seleccionado para eliminar
@@ -109,39 +105,29 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                     <Table variant="secondary" striped bordered hover responsive>
                         <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Cedula</th>
-                                <th>Nivel</th>
-                                <th>Requiere</th>
-                                <th>Activo</th>
-                                <th>Caracteristicas</th>
-                                <th>Perteneciente</th>
-                                <th className="text-nowrap">Otro Campus</th>
-                                <th>Fecha de prestamo</th>
-                                <th>Fecha Devolucion</th>
-                                <th>Observacion</th>
-                                <th>Correo</th>
-                                <th>Telefono</th>
-                                <th className="text-nowrap">Acciones</th>
+                                <th className="text-center">Nombre</th>
+                                <th className="text-center">Cedula</th>
+                                <th className="text-center">Nivel</th>
+                                <th className="text-center">Requiere</th>
+                                <th className="text-center">Activo</th>
+                                <th className="text-center">Campus</th>
+                                <th className="text-center">Correo</th>
+                                <th className="text-center">Telefono</th>
+                                <th className="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filteredEstudiantes.map((estudiante, index) => (
                                 <tr key={`${estudiante.EE_idenficador}_${index}`}>
-                                    <td className="text-nowrap">{estudiante.UO_primer_nombre}</td>
-                                    <td className="text-nowrap">{estudiante.UO_identificador}</td>
-                                    <td className="text-nowrap">{estudiante.EE_nivel}</td>
-                                    <td className="text-nowrap">{estudiante.TP_nombre}</td>
-                                    <td className="text-nowrap">{estudiante.TP_identificador}</td>
-                                    <td className="text-nowrap">{estudiante.AO_descripcion}</td>
-                                    <td className="text-nowrap">{estudiante.DO_nombre}</td>
-                                    <td className="text-nowrap">{estudiante.EE_campus}</td>
-                                    <td className="text-nowrap">{new Date(estudiante.HO_fecha).toISOString().slice(0, 10)}</td>
-                                    <td className="text-nowrap">{new Date(estudiante.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
-                                    <td className="text-nowrap">{estudiante.RE_observacion}</td>
-                                    <td className="text-nowrap">{estudiante.CE_correoElectronico}</td>
-                                    <td className="text-nowrap">{estudiante.TO_numero}</td>
-                                    <td className="d-flex align-items-center">
+                                    <td className="text-center">{estudiante.UO_primer_nombre}</td>
+                                    <td className="text-center">{estudiante.UO_identificador}</td>
+                                    <td className="text-center">{estudiante.EE_nivel}</td>
+                                    <td className="text-center">{estudiante.TP_nombre}</td>
+                                    <td className="text-center">{estudiante.AO_identificador}</td>
+                                    <td className="text-center">{estudiante.EE_campus}</td>
+                                    <td className="text-center">{estudiante.CE_correoElectronico}</td>
+                                    <td className="text-center">{estudiante.TO_numero}</td>
+                                    <td className="text-center">
                                         <Button
                                             onClick={handleEditEstudiante}
                                             style={buttonStyle}

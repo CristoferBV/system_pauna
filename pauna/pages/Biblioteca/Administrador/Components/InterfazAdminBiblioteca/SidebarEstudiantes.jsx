@@ -91,7 +91,7 @@ export default function SidebarEstudiantes({ Estudiantes }) {
             <Card style={{ backgroundColor: '#2F3E5B', color: 'white' }} text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
-                        <span>Lista de Estudiantes</span>
+                        <span>Estudiantes Prestamo Aceptado</span>
                     </div>
                 </Card.Header>
                 <Card.Body>

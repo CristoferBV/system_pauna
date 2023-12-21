@@ -21,7 +21,6 @@ export default function Slidebar({ types }) {
   const [editedDevice, setEditedDevice] = useState({});
   const [editMode, setEditMode] = useState(false);
   const router = useRouter();
-  const [throttle, setThrottle] = useState(false);
 
   // Agregar un objeto para almacenar la caché
   const cache = {};
@@ -197,15 +196,30 @@ export default function Slidebar({ types }) {
         })
       : [];
 
-  const handleEdit = (device) => {
-    setEditedDevice(device);
-    setEditMode(true);
-  };
+  const handleSaveChanges = async (device, editedValues) => {
+    try {
+      const updatedDevice = {
+        AO_identificador: device.AO_identificador,
+        AO_descripcion: editedValues.AO_descripcion,
+        AO_estado: editedValues.AO_estado,
+      };
 
-  // const handleEditDispositivo = (device) => {
-  //     setDispositivos(device);
-  //     handleToggleForm('edit')
-  // };
+      // Realizar la actualización llamando a la API correspondiente
+      const response = await axios.put(
+        "/api/config/BibliotecaDispositivos",
+        updatedDevice
+      );
+      console.log(response);
+
+      // Recargar la página o actualizar la lista de dispositivos
+      loadDevices();
+    } catch (error) {
+      console.error("Error al guardar los cambios:", error);
+    } finally {
+      // Cerrar el modal después de guardar los cambios
+      setSelectedDevice(null);
+    }
+  };
 
   const handleCreateDevice = () => {
     setShowCreateForm(true);
@@ -335,7 +349,7 @@ export default function Slidebar({ types }) {
                       }}
                     >
                       Editar
-                    </Button>{" "}
+                    </Button>
                     <Button
                       variant="danger"
                       onClick={() =>
@@ -573,7 +587,7 @@ export default function Slidebar({ types }) {
           </Button>
           <Button
             variant="primary"
-            onClick={() => setSelectedDevice(null)}
+            onClick={() => handleSaveChanges(selectedDevice, editedValues)}
             style={buttonStyle}
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;

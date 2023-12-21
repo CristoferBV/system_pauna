@@ -59,10 +59,9 @@ const deleteActivos = async(req, res)=>{
 const getAllActivos = async (req, res) => {
     const [result] = await pool.query("SELECT a.AO_identificador, t.TP_nombre, a.AO_descripcion, a.AO_estado FROM `pau_btc_tbl_tipo` t INNER JOIN `pau_btc_tbl_activo` a ON a.AO_identificador_tipo = t.TP_identificador");
     const [typeResult] = await pool.query("SELECT TP_identificador, TP_nombre FROM pau_btc_tbl_tipo");
-    console.log(result)
-    console.log(typeResult)
+    console.log("Resultados de dispositivos:", result);
+    console.log("Resultados de tipos:", typeResult);
     return res.status(200).json({ Dispositivos: result, types: typeResult });
-
 };
 
 const saveData = async (table, data, res) => {

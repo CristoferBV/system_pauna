@@ -18,8 +18,7 @@ export default function Slidebar({ types }) {
   const [searchText, setSearchText] = useState("");
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showTipoForm, setShowTipoForm] = useState(false);
-  const [editedDevice, setEditedDevice] = useState({});
-  const [editMode, setEditMode] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
   // Agregar un objeto para almacenar la caché
@@ -145,15 +144,30 @@ export default function Slidebar({ types }) {
   };
 
   const handleEditDevice = (device) => {
+    console.log("Dispositivo seleccionado:", device);
     setSelectedDevice(device);
+
+    // Buscar el tipo correspondiente al AO_identificador del dispositivo seleccionado
+    const selectedType = types.find(
+      (tipo) => tipo.TP_identificador === device.TP_identificador
+    );
+
+    // Establecer el estado type con el tipo correspondiente
+    setType({
+      TP_identificador: selectedType ? selectedType.TP_identificador : "",
+      TP_nombre: selectedType ? selectedType.TP_nombre : "",
+      TP_descripcion: "", // Si es necesario, puedes cargar la descripción del tipo desde types
+    });
+
     setEditedValues({
       TP_identificador: device.TP_identificador || "",
       TP_nombre: device.TP_nombre || "",
-      TP_cantidad: device.TP_cantidad || "",
-      EA_nombre: device.EA_nombre || "",
       AO_descripcion: device.AO_descripcion || "",
       AO_estado: device.AO_estado || "",
     });
+
+    // Establecer isEditing a true
+    setIsEditing(true);
   };
 
   const cancelDeleteDevice = () => {
@@ -197,11 +211,15 @@ export default function Slidebar({ types }) {
       : [];
 
   const handleSaveChanges = async (device, editedValues) => {
+    console.log("Updated Device:", device);
+    console.log("Edited Values:", editedValues);
+
     try {
       const updatedDevice = {
         AO_identificador: device.AO_identificador,
         AO_descripcion: editedValues.AO_descripcion,
         AO_estado: editedValues.AO_estado,
+        TP_identificador: editedValues.TP_identificador, // Añadir TP_identificador
       };
 
       // Realizar la actualización llamando a la API correspondiente
@@ -351,6 +369,7 @@ export default function Slidebar({ types }) {
                       Editar
                     </Button>
                     <Button
+                      className="ml-2"
                       variant="danger"
                       onClick={() =>
                         handleDeleteActivo(device.AO_identificador)
@@ -540,13 +559,14 @@ export default function Slidebar({ types }) {
                 name="TP_identificador"
                 value={type.TP_identificador}
                 onChange={handleChange}
+                disabled={isEditing} // Deshabilita el select si estás en modo de edición
               >
-                {types.map((type) => (
+                {types.map((tipo) => (
                   <option
-                    key={type.TP_identificador}
-                    value={type.TP_identificador}
+                    key={tipo.TP_identificador}
+                    value={tipo.TP_identificador}
                   >
-                    {type.TP_nombre}
+                    {tipo.TP_nombre}
                   </option>
                 ))}
               </Form.Select>

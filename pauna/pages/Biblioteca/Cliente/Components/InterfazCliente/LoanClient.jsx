@@ -5,161 +5,168 @@ import Link from "next/link";
 import Axios from "axios";
 import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
-import { Navbar, Nav, Form, Button, Card, Table, Container, Row, Col } from "react-bootstrap";
+import { Navbar, Nav, Form, Button, Card, Table, Container, Row, Col, Tabs, Tab } from "react-bootstrap";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 
-export default function LoanClient( {prestamo} ) {
+export default function LoanClient({ prestamo }) {
+    const router = useRouter();
+    const [active, setActive] = useState("");
+    const [cedula, setCedula] = useState("");
+    const [selectedDate, setSelectedDate] = useState("");
+    const [device, setDevice] = useState("");
+    //const [comprobanteMatricula, setComprobanteMatricula] = useState(null);
 
-  const router = useRouter();
-  const [active, setActive] = useState("");
-  const [cedula, setCedula] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [device, setDevice] = useState("");
-  //const [comprobanteMatricula, setComprobanteMatricula] = useState(null);
+    const navigation = [
+      { name: "Inicio", section: "HomeClient", current: false },
+      { name: "Préstamo", section: "LoanClient", current: false },
+      { name: "Devolución", section: "DevolutionClient", current: false },
+    ];
 
-  const navigation = [
-    { name: "Inicio", section: "HomeClient", current: false },
-    { name: "Préstamo", section: "LoanClient", current: false },
-    { name: "Devolución", section: "DevolutionClient", current: false },
-  ];
+    // Estados para llenar selects
+    const [carreras, setCarreras] = useState([]);
+    const [horarios, setHorarios] = useState([]);
+    const [deviceData, setDeviceData] = useState([]);
 
-  // Estados para llenar selects
-  const [carreras, setCarreras] = useState([]);
-  const [horarios, setHorarios] = useState([]);
-  const [deviceData, setDeviceData] = useState([]);
+    // Carreras
+    useEffect(() => {
+      // Realiza una solicitud GET a tu API para obtener las opciones de carrera
+      Axios.get("/api/fillSelectsLoan/career")
+        .then((response) => {
+          // Al recibir la respuesta, actualiza el estado con los datos de carrera
+          setCarreras(response.data);
+        })
+        .catch((error) => {
+          console.error("Error al obtener las opciones de carrera", error);
+        });
+    }, []);
 
+    ///Dispositivos
+    useEffect(() => {
+      Axios.get("/api/fillSelectsLoan/device")
+        .then((response) => {
+          // Al recibir la respuesta, actualiza el estado con los datos de dispositivos
+          setDeviceData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error al obtener las opciones de dispositivos", error);
+        });
+    }, []);
 
-  // Carreras
-  useEffect(() => {
-    // Realiza una solicitud GET a tu API para obtener las opciones de carrera
-    Axios.get("/api/fillSelectsLoan/career")
-      .then((response) => {
-        // Al recibir la respuesta, actualiza el estado con los datos de carrera
-        setCarreras(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener las opciones de carrera", error);
+    // Horarios
+    useEffect(() => {
+      // Realiza una solicitud GET a tu API para obtener las opciones de carrera
+      Axios.get("/api/fillSelectsLoan/deadline")
+        .then((response) => {
+          // Al recibir la respuesta, actualiza el estado con los datos de carrera
+          setHorarios(response.data);
+        })
+        .catch((error) => {
+          console.error("Error al obtener las opciones de carrera", error);
+        });
+    }, []);
+
+    // Prestamo del cliente
+    const handleAceptarClick = async () => {
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Su préstamo ha sido realizado",
+        showConfirmButton: false,
+        timer: 1500
+
       });
-  }, []);
 
-  ///Dispositivos
-  useEffect(() => {
-    Axios.get("/api/fillSelectsLoan/device")
-      .then((response) => {
-        // Al recibir la respuesta, actualiza el estado con los datos de dispositivos
-        setDeviceData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener las opciones de dispositivos", error);
-      });
-  }, []);
-  
-
-  // Horarios
-  useEffect(() => {
-    // Realiza una solicitud GET a tu API para obtener las opciones de carrera
-    Axios.get("/api/fillSelectsLoan/deadline")
-      .then((response) => {
-        // Al recibir la respuesta, actualiza el estado con los datos de carrera
-        setHorarios(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener las opciones de carrera", error);
-      });
-  }, []);
-
-  // Prestamo del cliente
-  const handleAceptarClick = async () => {
-
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "Su préstamo ha sido realizado",
-      showConfirmButton: false,
-      timer: 1500
-
-    });
-
-    console.log("Clic en Aceptar", cedula, selectedDate, device);
-    try {
-      const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
-      console.log("Datos enviados al servidor:", { cedula, selectedDate: formattedDate, device});
-  
-      const { data } = await Axios.post("/api/libraryClient/loan", { cedula, selectedDate: formattedDate, device });
-  
-    } catch (error) {
-      console.error("Error al enviar la solicitud:", error);
-      
-    }
-    
-  };
-  
-
+      console.log("Clic en Aceptar", cedula, selectedDate, device);
+      try {
+        const formattedDate = new Date(selectedDate).toISOString().split('T')[0];
+        console.log("Datos enviados al servidor:", { cedula, selectedDate: formattedDate, device});
+        const { data } = await Axios.post("/api/libraryClient/loan", { cedula, selectedDate: formattedDate, device });
+      } catch (error) {
+        console.error("Error al enviar la solicitud:", error);
+      }
+    };
 
   return (
     <div className=" flex flex-col min-h-screen">
       <Navbar bg="danger" expand="lg">
-      <Navbar.Brand href="#home">
-        <Image
-          className="h-9 w-9 mt-2.5 ml-2.5"
-          src={Logo}
-          width={1000}
-          height={1000}
-          alt="University"
-        />
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          {navigation.map((item) => (
-            <Link
-              variant="danger"
-              size="sm"
-              key={item.name}
-              href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-              onClick={() => setActive(item.section)}
-              style={{ textDecoration: "none" }}
-              className="d-flex align-items-center justify-content-center p-2"
-            >
-              <Nav
-                key={item.name}
+        <Navbar.Brand href="#home">
+          <Image
+            className="h-9 w-9 mt-2.5 ml-2.5"
+            src={Logo}
+            width={1000}
+            height={1000}
+            alt="University"
+          />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            {navigation.map((item) => (
+              <Link
+                variant="danger"
+                size="sm"
                 href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                className={
-                  active === item.section ? "bg-danger text-white" : "text-white"
-                }
+                onClick={() => setActive(item.section)}
+                style={{ textDecoration: "none" }}
+                className="d-flex align-items-center justify-content-center p-2"
               >
-                {item.name}
-              </Nav>
+                <Nav
+                  href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
+                  className={
+                    active === item.section
+                      ? "bg-danger text-white"
+                      : "text-white"
+                  }
+                >
+                  {item.name}
+                </Nav>
+              </Link>
+            ))}
+            <Link
+              href={"/LoginAndRegister/Login/Login"}
+              className="d-flex justify-content-center"
+              style={{ textDecoration: "none" }}
+            >
+              <Button Button variant="danger" size="ms">
+                Cerrar Sesión
+              </Button>
             </Link>
-          ))}
-           <Link href={'/LoginAndRegister/Login/Login'} className="d-flex justify-content-center" style={{ textDecoration: "none" }}>
-              <Button Button variant="danger" size="ms">Cerrar Sesión</Button>
-            </Link>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
 
       <main className="flex-1">
-      <header className="header-container d-flex align-items-center justify-content-center">
-        <Container>
-          <Row>
-            <Col>
-              <div className="d-flex align-items-center justify-content-center">
-                <Image src={LogoBombilla} alt="Logo" />
-                <h1 className="ml-3">Realice el Préstamo</h1>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </header>
-
-        <div className="mx-auto w-11/12 p-6 bg-[#e9e0e0] mb-8 md:mb-0" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' , borderRadius:"3px"}}> 
-        <h1 className="text-2xl font-bold mb-6 text-center">
-            Formulario de solicitudes
-          </h1>
-          <div className="rounded p-6">
+        <header className="header-container d-flex align-items-center justify-content-center">
+          <Container>
             <Row>
+              <Col>
+                <div className="d-flex align-items-center justify-content-center">
+                  <Image src={LogoBombilla} alt="Logo" />
+                  <h1 className="ml-3">Realice el Préstamo</h1>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </header>
+
+        <div
+          className="custom-container mx-auto w-11/12 p-6 mb-8 md:mb-0"
+          style={{
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            borderRadius: "3px",
+          }}
+        >
+          <Tabs id="controlled-tab-example" className="mb-3 custom-tabs">
+            <Tab
+              eventKey="Estudiantes"
+              title={
+                <span className="custom-tab-title">Llenar Formulario</span>
+              }
+            >
+              <Form>
+              <Row>
               <Col md={4}>
               <Form.Group className="mb-3">
                   <label className="font-semibold">Nombre</label>
@@ -326,15 +333,49 @@ export default function LoanClient( {prestamo} ) {
 
             <div className="text-center mt-4">
               <Button variant="danger" onClick={handleAceptarClick}>
-                Aceptar
+                Enviar Formulario
               </Button>
             </div>
-          </div>
+              </Form>
+            </Tab>
+
+            <Tab
+              eventKey="Datos"
+              title={
+                <span className="custom-tab-title">Realizar Prestamo</span>
+              }
+            >
+              <Table striped bordered hover responsive>
+                <thead>
+                  <tr>
+                    <th>Estudiante</th>
+                    <th>Identifición</th>
+                    <th>Carrera</th>
+                    <th>Dispositivo</th>
+                    <th>Fecha de Entrega</th>
+                  </tr>
+                </thead>
+                <tbody>{/* Aquí van datos para la tabla */}</tbody>
+              </Table>
+              <div className="d-flex justify-content-between align-items-center">
+                <Button variant="danger" type="button">
+                    Aceptar Préstamo
+                </Button>
+                <div className="mx-2"></div>
+                <Button variant="danger" type="button" >
+                    Eliminar Préstamo
+                </Button>
+              </div>
+            </Tab>
+          </Tabs>
         </div>
       </main>
 
       <footer>
-        <Card className="w-11/12 bg-danger text-white" style={{ margin: '20px auto', padding: '20px' }}>
+        <Card
+          className="w-11/12 bg-danger text-white"
+          style={{ margin: "20px auto", padding: "20px" }}
+        >
           <Container>
             <Row>
               <Col xs={12} md={6}>
@@ -354,30 +395,31 @@ export default function LoanClient( {prestamo} ) {
 }
 
 export const getServerSideProps = async (context) => {
-  try {
-      const response = await axios.get("http://localhost:3000/api/libraryClient/loan");
-      const data = response.data;
-
-      if (data && data.prestamo) {
-          const { prestamo} = data;
-          return {
-              props: {
-                prestamo
-              },
-          };
-      } else {
-          return {
-              props: {
-                prestamo: []
-              },
-          };
-      }
-  } catch (error) {
-      console.log(error);
-      return {
-          props: {
-            prestamo: []
-          },
-      };
-  }
-};
+    try {
+        const response = await axios.get("http://localhost:3000/api/libraryClient/loan");
+        const data = response.data;
+  
+        if (data && data.prestamo) {
+            const { prestamo} = data;
+            return {
+                props: {
+                  prestamo
+                },
+            };
+        } else {
+            return {
+                props: {
+                  prestamo: []
+                },
+            };
+        }
+    } catch (error) {
+        console.log(error);
+        return {
+            props: {
+              prestamo: []
+            },
+        };
+    }
+  };
+  

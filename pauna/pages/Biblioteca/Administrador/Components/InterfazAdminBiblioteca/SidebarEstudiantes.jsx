@@ -102,7 +102,8 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                             onChange={(e) => setSearchText(e.target.value)}
                         />
                     </InputGroup>
-                    <Table variant="secondary" striped bordered hover responsive>
+                    <Table 
+                        variant="secondary" striped bordered hover responsive>
                         <thead>
                             <tr>
                                 <th className="text-center">Nombre</th>

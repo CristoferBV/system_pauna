@@ -9,7 +9,7 @@ import { Navbar, Nav, Form, Button, Card, Table, Container, Row, Col, Tabs, Tab 
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 
-export default function LoanClient({ prestamo }) {
+const LoanClient = () => {
     const router = useRouter();
     const [active, setActive] = useState("");
     const [cedula, setCedula] = useState("");
@@ -175,7 +175,7 @@ export default function LoanClient({ prestamo }) {
                     placeholder="Ejemplo: Pepito"
                   />
                 </Form.Group>
-                
+
               </Col>
               <Col md={4}>
               <Form.Group className="mb-3">
@@ -394,32 +394,5 @@ export default function LoanClient({ prestamo }) {
   );
 }
 
-export const getServerSideProps = async (context) => {
-    try {
-        const response = await axios.get("http://localhost:3000/api/libraryClient/loan");
-        const data = response.data;
-  
-        if (data && data.prestamo) {
-            const { prestamo} = data;
-            return {
-                props: {
-                  prestamo
-                },
-            };
-        } else {
-            return {
-                props: {
-                  prestamo: []
-                },
-            };
-        }
-    } catch (error) {
-        console.log(error);
-        return {
-            props: {
-              prestamo: []
-            },
-        };
-    }
-  };
+export default LoanClient;
   

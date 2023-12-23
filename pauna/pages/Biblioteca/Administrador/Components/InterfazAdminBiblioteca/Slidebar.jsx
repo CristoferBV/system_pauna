@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Table,
-  Button,
-  Modal,
-  Form,
-  Card,
-  InputGroup,
-  FormControl,
-} from "react-bootstrap";
+import { Table, Button, Modal, Form, Card, InputGroup, FormControl,} from "react-bootstrap";
 import { useRouter } from "next/router";
 
 export default function Slidebar({ types }) {
@@ -20,10 +12,6 @@ export default function Slidebar({ types }) {
   const [showTipoForm, setShowTipoForm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
-
-  // Agregar un objeto para almacenar la caché
-  const cache = {};
-
   // Agregar un mecanismo de throttling en el lado del cliente
   let canMakeRequest = true;
 
@@ -37,15 +25,13 @@ export default function Slidebar({ types }) {
 
       // Establecer la bandera de restricción
       canMakeRequest = false;
-
       const timestamp = new Date().getTime();
       const response = await axios.get(
         `http://localhost:3000/api/config/BibliotecaDispositivos?timestamp=${timestamp}`
       );
+
       const devices = response.data;
-
       setDispositivos(devices);
-
       // Restablecer la bandera después de cierto tiempo (ajusta según tus necesidades)
       setTimeout(() => {
         canMakeRequest = true;
@@ -57,19 +43,17 @@ export default function Slidebar({ types }) {
 
   useEffect(() => {
     loadDevices(); // Cargar dispositivos al inicio
-
-    // Recargar dispositivos cada 5 segundos (ajusta según tus necesidades)
+    // Recargar dispositivos cada 1 segundos (ajusta según tus necesidades)
     const interval = setInterval(() => {
       loadDevices();
-    }, 1000); // 5 segundos
-
+    }, 1000); // 1 segundos
     // Limpia el intervalo cuando el componente se desmonta
     return () => clearInterval(interval);
   }, []);
 
   const [Dispositivos, setDispositivos] = useState([]);
-
   const [activo, setActivo] = useState({
+    AO_identificador: "",
     AO_descripcion: "",
     AO_estado: "",
   });
@@ -99,7 +83,6 @@ export default function Slidebar({ types }) {
       .catch(function (error) {
         console.log(error);
       });
-    console.log(res);
   };
 
   const handleSave = (object) => {
@@ -146,30 +129,28 @@ export default function Slidebar({ types }) {
   const handleEditDevice = (device) => {
     console.log("Dispositivo seleccionado:", device);
     setSelectedDevice(device);
-
+  
     // Buscar el tipo correspondiente al AO_identificador del dispositivo seleccionado
     const selectedType = types.find(
       (tipo) => tipo.TP_identificador === device.TP_identificador
     );
-
     // Establecer el estado type con el tipo correspondiente
     setType({
       TP_identificador: selectedType ? selectedType.TP_identificador : "",
       TP_nombre: selectedType ? selectedType.TP_nombre : "",
-      TP_descripcion: "", // Si es necesario, puedes cargar la descripción del tipo desde types
+      TP_descripcion: selectedType ? selectedType.TP_descripcion : "", // Puedes cargar la descripción del tipo desde types
     });
-
+    // Establecer editedValues, asegurándote de que TP_nombre refleje el nombre del tipo
     setEditedValues({
       TP_identificador: device.TP_identificador || "",
-      TP_nombre: device.TP_nombre || "",
+      TP_nombre: selectedType ? selectedType.TP_nombre : "",
       AO_descripcion: device.AO_descripcion || "",
       AO_estado: device.AO_estado || "",
     });
-
     // Establecer isEditing a true
     setIsEditing(true);
   };
-
+  
   const cancelDeleteDevice = () => {
     setDeleteConfirmation(false);
   };
@@ -219,16 +200,14 @@ export default function Slidebar({ types }) {
         AO_identificador: device.AO_identificador,
         AO_descripcion: editedValues.AO_descripcion,
         AO_estado: editedValues.AO_estado,
-        TP_identificador: editedValues.TP_identificador, // Añadir TP_identificador
+        TP_identificador: editedValues.TP_identificador,
       };
-
       // Realizar la actualización llamando a la API correspondiente
       const response = await axios.put(
         "/api/config/BibliotecaDispositivos",
         updatedDevice
       );
       console.log(response);
-
       // Recargar la página o actualizar la lista de dispositivos
       loadDevices();
     } catch (error) {
@@ -249,19 +228,7 @@ export default function Slidebar({ types }) {
     setShowTipoForm(true);
     setEditedValues({});
     setSelectedDevice(null);
-    // Aquí puedes definir la lógica para mostrar un formulario o realizar otras acciones relacionadas con la creación de tipos.
   };
-
-  const handleCloseForm = (key) => {
-    handleToggleForm(key);
-  };
-
-  // const handleToggleForm = (key) => {
-  //     setShowFormState((prevState) => ({
-  //         ...prevState,
-  //         [key]: !prevState[key],
-  //     }));
-  // };
 
   const reloadPage = () => {
     router.push(

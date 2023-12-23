@@ -19,7 +19,7 @@ const Login = () => {
       router.push("/Biblioteca/Cliente/Components/InterfazCliente/HomeClient");
     } else if (selectedOption === "biblioAdmin") {
       handleEnterLogin();
-      router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar");
+      router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Inicio");
     } else if (selectedOption === "administracion") {
       handleEnterLogin();
       router.push("/Administracion/Components/User/userWindow");

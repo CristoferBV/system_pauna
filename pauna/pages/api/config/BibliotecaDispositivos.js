@@ -28,10 +28,8 @@ const updateActivos = async (req, res) => {
     try {
         const {AO_identificador, AO_descripcion, AO_estado} = req.body;
         const data = {AO_descripcion, AO_estado};
-
         // Realizar la actualización en la base de datos
         const result = await pool.query("UPDATE `pau_btc_tbl_activo` SET ? WHERE AO_identificador = ?", [data, AO_identificador]);
-
         // Enviar una única respuesta al cliente
         return res.status(200).json(result);
     } catch (error) {
@@ -40,19 +38,14 @@ const updateActivos = async (req, res) => {
     }
 };
 
-
 const deleteActivos = async(req, res)=>{
     const AO_identificador = req.body.AO_identificador;
-
     const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
     await pool.query(disableForeignKeyCheckQuery);
-
     const deleteActivo = "DELETE FROM `pau_btc_tbl_activo` WHERE AO_identificador = ?";
     const result = await pool.query(deleteActivo, [AO_identificador]);
-
     const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
     await pool.query(enableForeignKeyCheckQuery);
-
     return res.status(200).json({ Dispositivos: result});
 }
 
@@ -82,10 +75,8 @@ const saveActivo = async (req, res) => {
     // Desactiva las claves foráneas antes de realizar la inserción
     const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
     await pool.query(disableForeignKeyCheckQuery);
-
     const { AO_descripcion, AO_estado, AO_identificador_tipo } = req.body;
     const data = { AO_descripcion, AO_estado, AO_identificador_tipo };
-
     try {
         // Utiliza destructuración en el resultado para obtener la información necesaria
         const [result] = await saveData('pau_btc_tbl_activo', data, res);
@@ -106,7 +97,6 @@ const saveType = async (req, res) => {
     const { TP_identificador, TP_nombre, TP_descripcion } = req.body;
     const data = { TP_identificador, TP_nombre, TP_descripcion }
     console.log(data)
-
     try {
         const result = await saveData('pau_btc_tbl_tipo', data, res);
         return res.status(200).json(result);

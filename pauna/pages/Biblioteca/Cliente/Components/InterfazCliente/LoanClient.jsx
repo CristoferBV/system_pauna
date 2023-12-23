@@ -324,7 +324,7 @@ const LoanClient = () => {
                     <Form.Control
                       type="file"
                       accept=".pdf, .doc, .docx, .png, .jpg"
-                      //onChange={(e) => setComprobanteMatricula(e.target.files[0])}
+                      
                     />
                   </div>
                 </Form.Group>
@@ -348,11 +348,20 @@ const LoanClient = () => {
               <Table striped bordered hover responsive>
                 <thead>
                   <tr>
-                    <th>Estudiante</th>
-                    <th>Identifición</th>
+                    <th>Primer Nombre</th>
+                    <th>Segundo Nombre</th>
+                    <th>Primer Apellido</th>
+                    <th>Segundo Apellido</th>
                     <th>Carrera</th>
+                    <th>Fecha Prestamo</th>
+                    <th>Cédula</th>
+                    <th>Nivel Carrera</th>
+                    <th>Campus</th>
+                    <th>Correo</th>
                     <th>Dispositivo</th>
-                    <th>Fecha de Entrega</th>
+                    <th>Teléfono</th>
+                    <th>Comprobante Beca</th>
+                    <th>Comprobante Matricula</th>
                   </tr>
                 </thead>
                 <tbody>{/* Aquí van datos para la tabla */}</tbody>

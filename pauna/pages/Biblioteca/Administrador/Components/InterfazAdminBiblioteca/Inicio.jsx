@@ -94,7 +94,6 @@ const Inicio = () => {
                     </Card.Body>
                   </Card>
                 </Col>
-                {/* Agrega más columnas según sea necesario */}
               </Row>
             </Carousel.Item>
             <Carousel.Item>

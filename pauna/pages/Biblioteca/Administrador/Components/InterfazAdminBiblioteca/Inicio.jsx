@@ -41,18 +41,35 @@ const Inicio = () => {
       <div style={{ textAlign: "center", marginTop: "1rem" }}>
         <h1 style={carouselTitleStyle}>Sistema Administrativo</h1>
       </div>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "60vh" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "60vh",
+        }}
+      >
         <div className="col-12">
           <Carousel
-            nextIcon={<BsChevronRight className="carousel-arrow" style={carouselArrowStyle} />}
-            prevIcon={<BsChevronLeft className="carousel-arrow" style={carouselArrowStyle} />}
+            nextIcon={
+              <BsChevronRight
+                className="carousel-arrow"
+                style={carouselArrowStyle}
+              />
+            }
+            prevIcon={
+              <BsChevronLeft
+                className="carousel-arrow"
+                style={carouselArrowStyle}
+              />
+            }
             interval={null} // Desactiva el autoavance
             slide={true} // Activa el modo "slide"
             slidesToScroll={1} // Número de elementos a desplazar
           >
             <Carousel.Item>
               <Row className="justify-content-center">
-                <Col md={3} style={{ margin: "0.5rem"}}>
+                <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
                     <Card.Img
                       variant="top"
@@ -60,13 +77,13 @@ const Inicio = () => {
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
-                        Sistema Administrativo
+                        Sistema Citas
                       </Card.Title>
                       <Card.Text>Bienvenido al modo administrativo.</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
-                <Col md={3} style={{ margin: "0.5rem"}}>
+                <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
                     <Card.Img
                       variant="top"
@@ -74,13 +91,13 @@ const Inicio = () => {
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
-                        Sistema Administrativo
+                        Sistema Activos
                       </Card.Title>
                       <Card.Text>Bienvenido al modo administrativo.</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
-                <Col md={3} style={{ margin: "0.5rem"}}>
+                <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
                     <Card.Img
                       variant="top"
@@ -88,7 +105,7 @@ const Inicio = () => {
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
-                        Sistema Administrativo
+                        Sistema Dispositiovos
                       </Card.Title>
                       <Card.Text>Bienvenido al modo administrativo.</Card.Text>
                     </Card.Body>
@@ -98,7 +115,7 @@ const Inicio = () => {
             </Carousel.Item>
             <Carousel.Item>
               <Row className="justify-content-center">
-                <Col md={3} style={{ margin: "0.5rem"}}>
+                <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
                     <Card.Img
                       variant="top"
@@ -106,13 +123,13 @@ const Inicio = () => {
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
-                        Sistema Administrativo
+                        Sistema Estudiantes
                       </Card.Title>
                       <Card.Text>Bienvenido al modo administrativo.</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
-                <Col md={3} style={{ margin: "0.5rem"}}>
+                <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
                     <Card.Img
                       variant="top"
@@ -120,13 +137,13 @@ const Inicio = () => {
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
-                        Sistema Administrativo
+                        Sistema Horario
                       </Card.Title>
                       <Card.Text>Bienvenido al modo administrativo.</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
-                <Col md={3} style={{ margin: "0.5rem"}}>
+                <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
                     <Card.Img
                       variant="top"
@@ -134,7 +151,7 @@ const Inicio = () => {
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
-                        Sistema Administrativo
+                        Sistema Reportes
                       </Card.Title>
                       <Card.Text>Bienvenido al modo administrativo.</Card.Text>
                     </Card.Body>

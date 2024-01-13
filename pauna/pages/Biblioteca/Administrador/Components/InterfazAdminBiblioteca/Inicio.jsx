@@ -65,7 +65,6 @@ const Inicio = () => {
             }
             interval={null} // Desactiva el autoavance
             slide={true} // Activa el modo "slide"
-            slidesToScroll={1} // Número de elementos a desplazar
           >
             <Carousel.Item>
               <Row className="justify-content-center">

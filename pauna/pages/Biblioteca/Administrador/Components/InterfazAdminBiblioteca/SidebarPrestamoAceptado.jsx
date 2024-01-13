@@ -91,7 +91,7 @@ export default function SidebarEstudiantes({ Estudiantes }) {
             <Card style={{ backgroundColor: '#2F3E5B', color: 'white' }} text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
-                        <span>Lista de Estudiantes</span>
+                        <span>Estudiantes Con Prestamo</span>
                     </div>
                 </Card.Header>
                 <Card.Body>
@@ -109,6 +109,8 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                                 <th className="text-center">Nombre</th>
                                 <th className="text-center">Cedula</th>
                                 <th className="text-center">Nivel</th>
+                                <th className="text-center">Requiere</th>
+                                <th className="text-center">Activo</th>
                                 <th className="text-center">Campus</th>
                                 <th className="text-center">Correo</th>
                                 <th className="text-center">Telefono</th>
@@ -121,6 +123,8 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                                     <td className="text-center">{estudiante.UO_primer_nombre}</td>
                                     <td className="text-center">{estudiante.UO_identificador}</td>
                                     <td className="text-center">{estudiante.EE_nivel}</td>
+                                    <td className="text-center">{estudiante.TP_nombre}</td>
+                                    <td className="text-center">{estudiante.AO_identificador}</td>
                                     <td className="text-center">{estudiante.EE_campus}</td>
                                     <td className="text-center">{estudiante.CE_correoElectronico}</td>
                                     <td className="text-center">{estudiante.TO_numero}</td>
@@ -152,6 +156,150 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                     </Table>
                 </Card.Body>
             </Card>
+            <Modal show={showCreateForm} onHide={() => setShowCreateForm(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Crear Estudiante</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Nombre</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Nombre del estudiante"
+                                value={editedValues.UO_primer_nombre}
+                                onChange={(e) => setEditedValues({ ...editedValues, UO_primer_nombre: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Cédula</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Cédula del estudiante"
+                                value={editedValues.UO_identificador} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, UO_identificador: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Nivel</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Nivel del estudiante"
+                                value={editedValues.EE_nivel} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, EE_nivel: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Requiere</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Dispositivo del estudiante"
+                                value={editedValues.TP_nombre} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, TP_nombre: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Activo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Activo del estudiante"
+                                value={editedValues.TP_identificador} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, TP_identificador: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Caracteristicas</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Caracteristicas"
+                                value={editedValues.AO_descripcion} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, AO_descripcion: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Perteneciente</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Perteneciente"
+                                value={editedValues['DO-nombre']} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, ['DO-nombre']: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Otro Campus</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Campus"
+                                value={editedValues.EE_campus} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, EE_campus: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Fecha de Prestamo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Fecha de Prestamo"
+                                value={editedValues.HO_fecha} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, HO_fecha: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Fecha de Devolucion</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Fecha de Devolucion"
+                                value={editedValues.LP_fechaDevolucion} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, LP_fechaDevolucion: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Observación</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Observación"
+                                value={editedValues.RE_observacion} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, RE_observacion: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Correo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Correo del estudiante"
+                                value={editedValues["CE-correoElectronico"]} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, ["CE-correoElectronico"]: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Teléfono</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Teléfono del estudiante"
+                                value={editedValues["TO-numero"]} // Reemplaza 'nombre' con el campo apropiado
+                                onChange={(e) => setEditedValues({ ...editedValues, ["TO-numero"]: e.target.value })} // Reemplaza 'nombre' con el campo apropiado
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={() => setShowCreateForm(false)} style={buttonStyle} onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                    }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}>
+                        Cerrar
+                    </Button>
+                    <Button onClick={() => createEstudiante(editedValues)} style={buttonStyle} onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                    }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                        }}> {/* Reemplaza 'createEstudiante' con la función adecuada */}
+                        Guardar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <Modal show={showEditForm} onHide={() => setShowEditForm(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Editar Estudiante</Modal.Title>
@@ -186,12 +334,75 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                             />
                         </Form.Group>
                         <Form.Group>
+                            <Form.Label>Requiere</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Dispositivo del estudiante"
+                                value={editedValues.TP_nombre}
+                                onChange={(e) => setEditedValues({ ...editedValues, TP_nombre: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Activo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Activo del estudiante"
+                                value={editedValues.TP_identificador}
+                                onChange={(e) => setEditedValues({ ...editedValues, TP_identificador: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Características</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Características"
+                                value={editedValues.AO_descripcion}
+                                onChange={(e) => setEditedValues({ ...editedValues, AO_descripcion: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Perteneciente</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Perteneciente"
+                                value={editedValues['DO-nombre']}
+                                onChange={(e) => setEditedValues({ ...editedValues, ['DO-nombre']: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group>
                             <Form.Label>Otro Campus</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Campus"
                                 value={editedValues.EE_campus}
                                 onChange={(e) => setEditedValues({ ...editedValues, EE_campus: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Fecha de Prestamo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Fecha de Prestamo"
+                                value={editedValues.HO_fecha}
+                                onChange={(e) => setEditedValues({ ...editedValues, HO_fecha: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Fecha de Devolucion</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Fecha de Devolucion"
+                                value={editedValues.LP_fechaDevolucion}
+                                onChange={(e) => setEditedValues({ ...editedValues, LP_fechaDevolucion: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Observación</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Observación"
+                                value={editedValues.RE_observacion}
+                                onChange={(e) => setEditedValues({ ...editedValues, RE_observacion: e.target.value })}
                             />
                         </Form.Group>
                         <Form.Group>
@@ -266,7 +477,7 @@ export default function SidebarEstudiantes({ Estudiantes }) {
 export const getServerSideProps = async (context) => {
     try {
         const { data: Estudiantes } = await axios.get(
-            "http://localhost:3000/api/config/BibliotecaEstudiantes"
+            "http://localhost:3000/api/config/BibliotecaPrestamoAceptado"
         );
         return {
             props: {

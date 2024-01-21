@@ -43,14 +43,16 @@ function NavbarAdminBiblioteca() {
               <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Slidebar" style={customDropdownStyle}>
                 Dispositivos
               </NavDropdown.Item>
-              <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarEstudiantes" style={customDropdownStyle}>
-                Estudiantes
-              </NavDropdown.Item>
               <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarPerifericos" style={customDropdownStyle}>Perifericos</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarDevoluciones" style={customTextStyle}>
-              Devoluciones
-            </Nav.Link>
+            <NavDropdown title={<span style={customDropdownTitleStyle}>Usuarios</span>} id="collapsible-nav-dropdown" style={customDropdownTitleStyle}>
+            <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarEstudiantes" style={customDropdownStyle}>
+                Estudiantes
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarPrestamoAceptado" style={customDropdownStyle}>
+              Estudiantes con Prestamo
+            </NavDropdown.Item>
+            </NavDropdown>
             <Nav.Link href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Horario" style={customTextStyle}>
               Horario
             </Nav.Link>

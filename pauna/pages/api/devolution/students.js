@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 
           LEFT JOIN PAU_BTC_TBL_ESTUDIANTE EE ON UO.UO_identificador = EE.EE_identificador_usuario
           LEFT JOIN PAU_BTC_TBL_LISTAPRESTAMO LP ON EE.EE_idenficador = LP.LP_identificador_usuario
-          LEFT JOIN PAU_GNL_TBL_CORREOELECTRONICO CE ON EE.EE_identificador_correo = CE.\`CE-idCorreo\`
+          LEFT JOIN PAU_GNL_TBL_CORREOELECTRONICO CE ON EE.EE_identificador_correo = CE.\`CE_idCorreo\`
 
         WHERE UO.UO_identificador IN (
           SELECT EE.EE_identificador_usuario

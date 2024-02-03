@@ -73,7 +73,7 @@ html, body {
 .custom-container {
   background-color: #e9e0e0;
   padding: 20px;
-  border: 1px solid #ccc; 
+  border: 1px solid #ccc;
   border-radius: 3px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

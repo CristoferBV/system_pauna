@@ -1,11 +1,49 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from 'next/router';
 import Image from "next/image";
 import Link from "next/link";
-import { Container, Row, Col, Button, Form } from "react-bootstrap"; // Importar componentes de React Bootstrap
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import axios from "axios";
 import Logo from "../../../public/LOGO-UNA.png";
 
 const Register = () => {
+
+  const router = useRouter();
+
+  const [user, setUser] = useState({
+    UO_identificador: "",
+    UO_primer_nombre: "",
+    UO_segundo_nombre: "",
+    UO_primer_apellido: "",
+    UO_segundo_apellido: "",
+    UO_identificador_rol: 1,
+    UO_contrasena: "",
+  });
+
+  const handleChange = ({ target: { name, value } }) => {
+    setUser({ ...user, [name]: value });
+  };
+
+  const [otherData, setOtherData] = useState({}); // Para obtener los datos del correo
+
+  // Enviar los datos al servidor
+  const handleClick = async (e) => {
+    console.log({ user });
+    e.preventDefault();
+    console.log(user);
+    const res = await axios
+      .post("/api/formUser/login_register", user)
+      .then(function (response) {
+        console.log(response);
+        router.push("/LoginAndRegister/Login/Login");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    console.log(res);
+  };
+
   return (
     <div
       className="d-flex flex-column flex-md-row"
@@ -33,36 +71,97 @@ const Register = () => {
             <h1 className="font-weight-bold text-xl text-md-2xl text-lg-3xl mb-2 mb-md-4 text-center">
               Registrarse
             </h1>
-            <Form.Group className="w-100 p-0">
-              <Form.Control
-                type="text"
-                placeholder="Nombre de usuario"
-                className="w-100 p-3 rounded-xl"
-              />
-            </Form.Group>
-            <Form.Group className="w-100 p-0">
-              <Form.Control
-                type="email"
-                placeholder="Correo electrónico"
-                className="w-100 p-3 rounded-xl"
-              />
-            </Form.Group>
-            <Form.Group className="w-100 p-0">
-              <Form.Control
-                type="password"
-                placeholder="Contraseña"
-                className="w-100 p-3 rounded-xl"
-              />
-            </Form.Group>
-              <Link href="/LoginAndRegister/Login/Login">
-                <Button
-                    variant="danger"
-                    className="px-4 px-md-6 py-2 rounded-xl mt-3 mt-md-5 mb-0 bg-[#E31919]"
-                    style={{ width: "100%" }}
-                >
-                    Entrar
-              </Button>
-            </Link>
+            <div className="row">
+              <div className="col-md-6">
+                <Form.Group className="w-100 p-2">
+                  <Form.Control
+                    name="UO_identificador"
+                    type="text"
+                    placeholder="Identificación"
+                    value={user.UO_identificador}
+                    onChange={handleChange}
+                    className="w-100 p-3 rounded-xl"
+                  />
+                </Form.Group>
+                <Form.Group className="w-100 p-2">
+                  <Form.Control
+                    name="UO_primer_nombre"
+                    type="text"
+                    placeholder="Primer Nombre"
+                    value={user.UO_primer_nombre}
+                    onChange={handleChange}
+                    className="w-100 p-3 rounded-xl"
+                  />
+                </Form.Group>
+                <Form.Group className="w-100 p-2">
+                  <Form.Control
+                    name="UO_segundo_nombre"
+                    type="text"
+                    placeholder="Segundo Nombre"
+                    value={user.UO_segundo_nombre}
+                    onChange={handleChange}
+                    className="w-100 p-3 rounded-xl"
+                  />
+                </Form.Group>
+                <Form.Group className="w-100 p-2">
+                  <Form.Control
+                    name="UO_primer_apellido"
+                    type="text"
+                    placeholder="Primer Apellido"
+                    value={user.UO_primer_apellido}
+                    onChange={handleChange}
+                    className="w-100 p-3 rounded-xl"
+                  />
+                </Form.Group>
+                <Form.Group className="w-100 p-2">
+                  <Form.Control
+                    name="UO_segundo_apellido"
+                    type="text"
+                    placeholder="Segundo Apellido"
+                    value={user.UO_segundo_apellido}
+                    onChange={handleChange}
+                    className="w-100 p-3 rounded-xl"
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group className="w-100 p-2">
+                  <Form.Control
+                    type="email"
+                    placeholder="Correo electrónico"
+                    className="w-100 p-3 rounded-xl"
+                  />
+                </Form.Group>
+                <Form.Group className="w-100 p-2">
+                  <Form.Control
+                    type="text"
+                    placeholder="Número de teléfono"
+                    className="w-100 p-3 rounded-xl"
+                  />
+                </Form.Group>
+                <Form.Group className="w-100 p-2">
+                  <Form.Control
+                    name="UO_contrasena"
+                    type="password"
+                    placeholder="Contraseña"
+                    value={user.UO_contrasena}
+                    onChange={handleChange}
+                    className="w-100 p-3 rounded-xl"
+                  />
+                </Form.Group>
+                <div className="mx-2 mt-2">
+                  <Link href="/LoginAndRegister/Login/Login">
+                    <Button
+                      variant="danger"
+                      className="p-2 rounded-xl mt-md-2 mb-0 bg-[#E31919] w-100"
+                      onClick={handleClick}
+                    >
+                      Entrar
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </div>

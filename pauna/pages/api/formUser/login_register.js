@@ -10,11 +10,9 @@ export default async function handler(req, res) {
     }
 }
 
-//Toma los datos del usuario ubicando el correo que se guardó y compara la contraseña que se guardó en la base de datos (se debe desencriptar)
 const getUser = async (req, res) => {
     try {
-        // Aquí podrías implementar la lógica para obtener usuarios desde la base de datos
-        // Por ejemplo, puedes consultar todos los usuarios o un usuario específico y enviar la respuesta
+        // Implementa la lógica para obtener usuarios desde la base de datos aquí
         res.status(200).json({ message: 'Obtener usuarios' });
     } catch (error) {
         console.error('Error al obtener usuarios:', error);
@@ -22,7 +20,6 @@ const getUser = async (req, res) => {
     }
 };
 
-//Crea el usuario insertando los datos traidos del lado cliente
 const postUser = async (req, res) => {
     console.log(req.body);
     const { UO_identificador,
@@ -31,14 +28,16 @@ const postUser = async (req, res) => {
         UO_primer_apellido,
         UO_segundo_apellido,
         UO_identificador_rol,
-        UO_contrasena } = req.body;
+        UO_contrasena,
+        phoneNumber,
+        gmail } = req.body;
 
     try {
         // Encripta la contraseña antes de insertarla en la base de datos
         const hashedPassword = await bcrypt.hash(UO_contrasena, 10);
 
-        // Inserta el nuevo usuario en la base de datos utilizando la contraseña encriptada
-        const result = await pool.query("INSERT INTO `pau_gnl_usuario` SET ?", {
+        // Inserta el nuevo usuario en la tabla pau_gnl_usuario utilizando la contraseña encriptada
+        await pool.query("INSERT INTO `pau_gnl_usuario` SET ?", {
             UO_identificador,
             UO_primer_nombre,
             UO_segundo_nombre,
@@ -48,7 +47,18 @@ const postUser = async (req, res) => {
             UO_contrasena: hashedPassword // Guarda la contraseña encriptada
         });
 
-        console.log(result);
+        // Inserta el número de teléfono en la tabla pau_gnl_tbl_telefono
+        await pool.query("INSERT INTO `pau_gnl_tbl_telefono` SET ?", {
+            TO_numero: phoneNumber,
+            TO_descripcion: "Numero de estudiante"
+        });
+
+        // Inserta el correo electrónico en la tabla pau_gnl_tbl_correoelectronico
+        await pool.query("INSERT INTO `pau_gnl_tbl_correoelectronico` SET ?", {
+            CE_correoElectronico: gmail,
+            CE_descripcion: "Correo de estudiante"
+        });
+
         return res.status(200).json({ message: 'Usuario registrado exitosamente' });
     } catch (error) {
         console.error('Error al registrar usuario:', error);

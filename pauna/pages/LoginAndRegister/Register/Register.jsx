@@ -19,13 +19,21 @@ const Register = () => {
     UO_segundo_apellido: "",
     UO_identificador_rol: 1,
     UO_contrasena: "",
+    phoneNumber: "", // Agrega el campo phoneNumber al objeto user
+    gmail: "" // Agrega el campo gmail al objeto user
   });
 
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });
   };
 
-  const [otherData, setOtherData] = useState({}); // Para obtener los datos del correo
+  const handleChangePhone = ({ target: { value } }) => {
+    setUser({ ...user, phoneNumber: value }); // Actualiza el estado de phoneNumber
+  };
+
+  const handleChangeGmail = ({ target: { value } }) => {
+    setUser({ ...user, gmail: value }); // Actualiza el estado de gmail
+  };
 
   // Enviar los datos al servidor
   const handleClick = async (e) => {
@@ -127,8 +135,10 @@ const Register = () => {
               <div className="col-md-6">
                 <Form.Group className="w-100 p-2">
                   <Form.Control
-                    type="email"
+                    type="email" 
                     placeholder="Correo electrónico"
+                    value={user.gmail} // Cambia el valor de gmail
+                    onChange={handleChangeGmail} // Utiliza la función handleChangeGmail
                     className="w-100 p-3 rounded-xl"
                   />
                 </Form.Group>
@@ -136,6 +146,8 @@ const Register = () => {
                   <Form.Control
                     type="text"
                     placeholder="Número de teléfono"
+                    value={user.phoneNumber} // Cambia el valor de phoneNumber
+                    onChange={handleChangePhone} // Utiliza la función handleChangePhone
                     className="w-100 p-3 rounded-xl"
                   />
                 </Form.Group>

@@ -83,10 +83,20 @@ html, body {
   border-radius: 3px;
 }
 
+.custom-tabs2 {
+  background-color: #f8f3f33b;
+  border-radius: 3px;
+}
+
 .custom-tab-title {
   color: black;
   font-weight: 600;
 }
+
+.custom-tabs-left .nav-tabs {
+  justify-content: flex-start;
+}
+
 
 @media (max-width: 768px) {
   .circle {

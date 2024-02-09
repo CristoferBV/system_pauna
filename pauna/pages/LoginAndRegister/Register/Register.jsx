@@ -1,14 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Tabs, Tab } from "react-bootstrap";
 import axios from "axios";
 import Logo from "../../../public/LOGO-UNA.png";
 
 const Register = () => {
-
   const router = useRouter();
 
   const [user, setUser] = useState({
@@ -20,7 +19,7 @@ const Register = () => {
     UO_identificador_rol: 1,
     UO_contrasena: "",
     phoneNumber: "", // Agrega el campo phoneNumber al objeto user
-    gmail: "" // Agrega el campo gmail al objeto user
+    gmail: "", // Agrega el campo gmail al objeto user
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -75,105 +74,174 @@ const Register = () => {
       </div>
       <div className="w-100 w-md-50 bg-white d-flex flex-column justify-content-center align-items-center p-4">
         <Container className="w-100 p-4 bg-white border border-gray rounded-lg shadow-sm">
-          <div className="d-flex flex-column align-items-center space-y-3 space-md-7">
-            <h1 className="font-weight-bold text-xl text-md-2xl text-lg-3xl mb-2 mb-md-4 text-center">
+          <div className="d-flex flex-column align-items-center space-y-3 space-md-7 mb-4">
+            <h1 className="font-weight-bold text-xl text-md-2xl text-lg-3xl mb-2 mb-md-4">
               Registrarse
             </h1>
-            <div className="row">
-              <div className="col-md-6">
-                <Form.Group className="w-100 p-2">
-                  <Form.Control
-                    name="UO_identificador"
-                    type="text"
-                    placeholder="Identificación"
-                    value={user.UO_identificador}
-                    onChange={handleChange}
-                    className="w-100 p-3 rounded-xl"
-                  />
-                </Form.Group>
-                <Form.Group className="w-100 p-2">
-                  <Form.Control
-                    name="UO_primer_nombre"
-                    type="text"
-                    placeholder="Primer Nombre"
-                    value={user.UO_primer_nombre}
-                    onChange={handleChange}
-                    className="w-100 p-3 rounded-xl"
-                  />
-                </Form.Group>
-                <Form.Group className="w-100 p-2">
-                  <Form.Control
-                    name="UO_segundo_nombre"
-                    type="text"
-                    placeholder="Segundo Nombre"
-                    value={user.UO_segundo_nombre}
-                    onChange={handleChange}
-                    className="w-100 p-3 rounded-xl"
-                  />
-                </Form.Group>
-                <Form.Group className="w-100 p-2">
-                  <Form.Control
-                    name="UO_primer_apellido"
-                    type="text"
-                    placeholder="Primer Apellido"
-                    value={user.UO_primer_apellido}
-                    onChange={handleChange}
-                    className="w-100 p-3 rounded-xl"
-                  />
-                </Form.Group>
-                <Form.Group className="w-100 p-2">
-                  <Form.Control
-                    name="UO_segundo_apellido"
-                    type="text"
-                    placeholder="Segundo Apellido"
-                    value={user.UO_segundo_apellido}
-                    onChange={handleChange}
-                    className="w-100 p-3 rounded-xl"
-                  />
-                </Form.Group>
-              </div>
-              <div className="col-md-6">
-                <Form.Group className="w-100 p-2">
-                  <Form.Control
-                    type="email" 
-                    placeholder="Correo electrónico"
-                    value={user.gmail} // Cambia el valor de gmail
-                    onChange={handleChangeGmail} // Utiliza la función handleChangeGmail
-                    className="w-100 p-3 rounded-xl"
-                  />
-                </Form.Group>
-                <Form.Group className="w-100 p-2">
-                  <Form.Control
-                    type="text"
-                    placeholder="Número de teléfono"
-                    value={user.phoneNumber} // Cambia el valor de phoneNumber
-                    onChange={handleChangePhone} // Utiliza la función handleChangePhone
-                    className="w-100 p-3 rounded-xl"
-                  />
-                </Form.Group>
-                <Form.Group className="w-100 p-2">
-                  <Form.Control
-                    name="UO_contrasena"
-                    type="password"
-                    placeholder="Contraseña"
-                    value={user.UO_contrasena}
-                    onChange={handleChange}
-                    className="w-100 p-3 rounded-xl"
-                  />
-                </Form.Group>
-                <div className="mx-2 mt-2">
-                  <Link href="/LoginAndRegister/Login/Login">
-                    <Button
-                      variant="danger"
-                      className="p-2 rounded-xl mt-md-2 mb-0 bg-[#E31919] w-100"
-                      onClick={handleClick}
-                    >
-                      Entrar
-                    </Button>
-                  </Link>
+          </div>
+          <div className="d-flex flex-column align-items-start space-y-3 space-md-7">
+            <Tabs
+              id="controlled-tab-example"
+              className="mb-3 custom-tabs2 custom-tabs-left"
+            >
+              {/* Tab 1 */}
+              <Tab
+                eventKey="Datos1"
+                title={<span className="custom-tab-title">Primera parte</span>}
+              >
+                <div className="row">
+                  <div className="col-md-6">
+                    {/* Contenido de la primera columna */}
+                    <Form.Group className="w-100 p-2">
+                      <Form.Control
+                        name="UO_identificador"
+                        type="text"
+                        placeholder="Identificación"
+                        value={user.UO_identificador}
+                        onChange={handleChange}
+                        className="w-100 p-3 rounded-xl"
+                      />
+                    </Form.Group>
+                    <Form.Group className="w-100 p-2">
+                      <Form.Control
+                        name="UO_primer_nombre"
+                        type="text"
+                        placeholder="Primer Nombre"
+                        value={user.UO_primer_nombre}
+                        onChange={handleChange}
+                        className="w-100 p-3 rounded-xl"
+                      />
+                    </Form.Group>
+                    <Form.Group className="w-100 p-2">
+                      <Form.Control
+                        name="UO_segundo_nombre"
+                        type="text"
+                        placeholder="Segundo Nombre"
+                        value={user.UO_segundo_nombre}
+                        onChange={handleChange}
+                        className="w-100 p-3 rounded-xl"
+                      />
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    {/* Contenido de la segunda columna */}
+                    <Form.Group className="w-100 p-2">
+                      <Form.Control
+                        name="UO_primer_apellido"
+                        type="text"
+                        placeholder="Primer Apellido"
+                        value={user.UO_primer_apellido}
+                        onChange={handleChange}
+                        className="w-100 p-3 rounded-xl"
+                      />
+                    </Form.Group>
+                    <Form.Group className="w-100 p-2">
+                      <Form.Control
+                        name="UO_segundo_apellido"
+                        type="text"
+                        placeholder="Segundo Apellido"
+                        value={user.UO_segundo_apellido}
+                        onChange={handleChange}
+                        className="w-100 p-3 rounded-xl"
+                      />
+                    </Form.Group>
+                    <Form.Group className="w-100 p-2">
+                      <Form.Control
+                        name="UO_contrasena"
+                        type="password"
+                        placeholder="Contraseña"
+                        value={user.UO_contrasena}
+                        onChange={handleChange}
+                        className="w-100 p-3 rounded-xl"
+                      />
+                    </Form.Group>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </Tab>
+
+              {/*  Tab 2 */}
+              <Tab
+                eventKey="Datos2"
+                title={<span className="custom-tab-title">Segunda parte</span>}
+              >
+                <div className="row">
+                  <div className="col-md-6">
+                    {/* Contenido de la primera columna */}
+                    <Form.Group className="w-100 p-2">
+                      <Form.Control
+                        type="email"
+                        placeholder="Correo electrónico"
+                        value={user.gmail}
+                        onChange={handleChangeGmail}
+                        className="w-100 p-3 rounded-xl"
+                      />
+                    </Form.Group>
+                    <Form.Group className="w-100 p-2">
+                      <Form.Control
+                        type="text"
+                        placeholder="Número de teléfono"
+                        value={user.phoneNumber}
+                        onChange={handleChangePhone}
+                        className="w-100 p-3 rounded-xl"
+                      />
+                    </Form.Group>
+                    <Form.Group className="w-100 p-2">
+                      <Form.Control
+                        /* name="UO_contrasena" */
+                        as="select"
+                        /* value={user.UO_contrasena} */
+                        /*  onChange={handleChange} */
+                        className="w-100 p-3 rounded-xl"
+                      >
+                        <option value="">-Campus-</option>
+                        <option value="">Campus PZ</option>
+                        <option value="">Campus Coto</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    {/* Contenido de la segunda columna */}
+                    <Form.Group className="w-100 p-2">
+                      <Form.Control
+                        /* name="UO_contrasena" */
+                        as="select"
+                        /* value={user.UO_contrasena} */
+                        /*  onChange={handleChange} */
+                        className="w-100 p-3 rounded-xl"
+                      >
+                        <option value="">-Carrera-</option>
+                      </Form.Control>
+                    </Form.Group>
+                    <Form.Group className="w-100 p-2">
+                      <Form.Control
+                        /* name="UO_contrasena" */
+                        as="select"
+                        /* value={user.UO_contrasena} */
+                        /*  onChange={handleChange} */
+                        className="w-100 p-3 rounded-xl"
+                      >
+                        <option value="">-Nivel de carrera-</option>
+                        <option value="">Nivel I</option>
+                        <option value="">Nivel II</option>
+                        <option value="">Nivel III</option>
+                        <option value="">Nivel IV</option>
+                      </Form.Control>
+                    </Form.Group>
+                    <div className="mx-2 mt-2">
+                      <Link href="/LoginAndRegister/Login/Login">
+                        <Button
+                          variant="danger"
+                          className="p-2 rounded-xl mt-md-2 mb-0 bg-[#E31919] w-100"
+                          onClick={handleClick}
+                        >
+                          Registrar
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </Tab>
+            </Tabs>
           </div>
         </Container>
       </div>

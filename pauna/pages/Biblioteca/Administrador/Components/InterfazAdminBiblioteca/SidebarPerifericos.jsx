@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Card, Table, Button, Form, Modal, Alert } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 
-export default function SidebarPerifericos({ Perifericos }) {
+export default function SidebarPerifericos({ Perifericos, cita }) {
     const [searchText, setSearchText] = useState('');
     const [editMode, setEditMode] = useState(false);
     const [editedCita, setEditedCita] = useState({});

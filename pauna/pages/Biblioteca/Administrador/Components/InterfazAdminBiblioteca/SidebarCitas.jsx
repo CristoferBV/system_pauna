@@ -40,51 +40,6 @@ export default function SidebarCitas({ Citas }) {
         }
     };
 
-    const handleToggleAceptado = async (identificador, UO_identificador, TP_nombre, AO_identificador, aceptado) => {
-        try {
-          const citaToUpdate = citas.find((cita) => cita.SD_identificador === identificador);
-      
-          if (citaToUpdate) {
-            await acceptCitaAPI(identificador, UO_identificador, TP_nombre, AO_identificador);
-      
-            // Obtener la cita actualizada después de aceptarla
-            const updatedCita = await getCitaById(identificador);
-      
-            // Actualizar el estado de las citas usando setCitas
-            const updatedCitas = citas.map((cita) =>
-              cita.SD_identificador === identificador ? { ...cita, aceptado: !cita.aceptado, ...updatedCita } : cita
-            );
-      
-            setCitas(updatedCitas);
-      
-            console.log("Cita aceptada exitosamente");
-          } else {
-            console.error(`No se encontró la cita con identificador ${identificador}`);
-          }
-        } catch (error) {
-          console.error("Hubo un error al aceptar la cita:", error);
-        }
-      };
-      
-
-    const handleChangeCheckbox = (identificador, UO_identificador, TP_nombre, AO_identificador, aceptado) => {
-        // Actualizar el estado de las citas aceptadas
-        setCitasAceptadas((prevCitasAceptadas) =>
-            aceptado
-                ? [...prevCitasAceptadas, identificador]
-                : prevCitasAceptadas.filter((id) => id !== identificador)
-        );
-
-        // Copiar el estado actual de las citas
-        const updatedCitas = citas.map((cita) =>
-            cita.SD_identificador === identificador ? { ...cita, aceptado } : cita
-        );
-
-        // Actualizar el estado de las citas usando setCitas
-        setCitas(updatedCitas);
-    };
-
-
     const handleChange = ({ target: { name, value } }) => {
         if (name in cita) {
             setCita({ ...cita, [name]: value });
@@ -173,7 +128,6 @@ export default function SidebarCitas({ Citas }) {
                     <Table style={{ backgroundColor: '#252440', color: 'white' }} striped bordered hover responsive>
                         <thead>
                             <tr>
-                                <th className="text-center">Check</th>
                                 <th className="text-center">Fecha</th>
                                 <th className="text-center">Hora</th>
                                 <th className="text-center">Nombre</th>
@@ -186,22 +140,6 @@ export default function SidebarCitas({ Citas }) {
                         <tbody>
                             {filteredCitas.map((cita, index) => (
                                 <tr key={`${cita.SD_identificador}_${index}`}>
-                                    <td className="text-center">
-                                        <input
-                                            type="checkbox"
-                                            checked={cita.aceptado || false}
-                                            onChange={() =>
-                                                handleChangeCheckbox(
-                                                    cita.SD_identificador,
-                                                    cita.UO_identificador,
-                                                    cita.TP_nombre,
-                                                    cita.AO_identificador,
-                                                    !cita.aceptado
-                                                )
-                                            }
-                                        />
-
-                                    </td>
                                     <td className="text-center">{new Date(cita.HO_fecha).toISOString().slice(0, 10)}</td>
                                     <td className="text-center">{cita.HO_hora}</td>
                                     <td className="text-center">{cita.UO_primer_nombre}</td>
@@ -236,28 +174,6 @@ export default function SidebarCitas({ Citas }) {
                                             }}
                                         >
                                             Eliminar
-                                        </Button>
-                                        <Button
-                                            variant="light"
-                                            className="ml-2"
-                                            onClick={() =>
-                                                handleToggleAceptado(
-                                                    cita.SD_identificador,
-                                                    cita.UO_identificador,
-                                                    cita.TP_nombre,
-                                                    cita.AO_identificador
-                                                )
-                                            }
-                                            disabled={!citasAceptadas.includes(cita.SD_identificador)}
-                                            style={buttonStyle}
-                                            onMouseEnter={(e) => {
-                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                            }}
-                                        >
-                                            Aceptar
                                         </Button>
                                     </td>
                                 </tr>

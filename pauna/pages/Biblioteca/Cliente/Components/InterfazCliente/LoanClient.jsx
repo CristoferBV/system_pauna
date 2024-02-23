@@ -317,7 +317,7 @@ const LoanClient = () => {
                   <Col md={4}>
                     <Form.Group className="mb-3">
                       <label className="font-semibold">
-                        Fechas de prestamos
+                        Fechas de citas
                       </label>
                       <Form.Control
                         as="select"

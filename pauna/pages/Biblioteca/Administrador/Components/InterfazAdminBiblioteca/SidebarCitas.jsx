@@ -27,19 +27,6 @@ export default function SidebarCitas({ Citas }) {
         }
     }, [Citas]);
 
-    const acceptCitaAPI = async (identificador, UO_identificador, TP_nombre, AO_identificador) => {
-        try {
-            await axios.post(`/api/config/BibliotecaCitas/${identificador}`, {
-                UO_identificador,
-                TP_nombre,
-                AO_identificador,
-            });
-            reloadPage();
-        } catch (error) {
-            console.error("Error al aceptar la cita:", error);
-        }
-    };
-
     const handleChange = ({ target: { name, value } }) => {
         if (name in cita) {
             setCita({ ...cita, [name]: value });
@@ -50,29 +37,54 @@ export default function SidebarCitas({ Citas }) {
         setEditedCita(cita);
         setEditMode(true);
     };
-
-    const saveChanges = () => {
-        // Aquí deberías implementar la lógica para guardar los cambios
-        setEditMode(false);
+    
+    const saveChanges = async () => {
+        try {
+            const res = await axios.put(`/api/config/BibliotecaCitas/${editedCita.SD_identificador}`, editedCita);
+            console.log(res);
+            if (res.status === 200) {
+                console.log("Los cambios se guardaron correctamente.");
+                reloadPage();
+            } else {
+                console.log("Hubo un error al guardar los cambios.");
+            }
+        } catch (error) {
+            console.log("Hubo un error al guardar los cambios:", error);
+        }
     };
-
+    
     const handleDelete = (cita) => {
         setEditedCita(cita);
         setDeleteConfirmation(true);
     };
-
-    const confirmDelete = () => {
-        // Aquí deberías implementar la lógica para eliminar la cita
-        setDeleteConfirmation(false);
+    
+    const confirmDelete = async () => {
+        try {
+            const citaId = editedCita.SD_identificador; // Obtener el identificador de la cita
+            console.log(citaId); // Añadir esta línea para verificar el valor de citaId en la consola
+            const res = await axios.delete(`/api/config/BibliotecaCitas/${citaId}`); // Concatenar el identificador de la cita a la URL
+            console.log(res);
+            if (res.status === 200) {
+                console.log("La cita se eliminó correctamente.");
+                reloadPage();
+            } else {
+                console.log("Hubo un error al eliminar la cita.");
+            }
+        } catch (error) {
+            console.log("Hubo un error al eliminar la cita:", error);
+        }
     };
-
+    
+    
+    
     const createCita = () => {
         setShowCreateForm(true);
     };
-
+    
     const handleAlertClose = () => {
         setAlertVisible(false);
     };
+    
 
     const filteredCitas = citas && Array.isArray(citas)
         ? citas.filter((cita) => {

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 }
 
 const deleteCitas = async (req, res) => {
-    const SD_identificador = req.body.SD_identificador;
+    const SD_identificador = req.params.id; // Obtener el identificador de los parámetros de la URL
 
     const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
     await pool.query(disableForeignKeyCheckQuery);
@@ -29,40 +29,9 @@ const deleteCitas = async (req, res) => {
     return res.status(200).json({ Citas: result });
 };
 
+
 const getAllCitas = async (req, res) => {
-    const [result] = await pool.query("SELECT s.SD_identificador, h.HO_fecha, h.HO_hora, u.UO_primer_nombre, u.UO_identificador, c.CA_nombre, t.TP_nombre FROM PAU_BTC_TBL_SOLICITUD s JOIN PAU_BTC_TBL_ESTUDIANTE e ON s.SD_identificador_usuario = e.EE_idenficador JOIN PAU_BTC_TBL_CARRERA c ON e.EE_idenficador_carrera = c.CA_identificador JOIN PAU_BTC_TBL_HORARIO h ON s.SD_identificador_horario = h.HO_identificador JOIN PAU_BTC_TBL_TIPO t ON s.SD_identificador_tipo = t.TP_identificador JOIN PAU_GNL_USUARIO u ON e.EE_identificador_usuario = u.UO_identificador");
+    const [result] = await pool.query("SELECT s.SD_identificador, h.HO_fecha, h.HO_hora, u.UO_primer_nombre, u.UO_identificador, c.CA_nombre, t.TP_nombre FROM PAU_BTC_TBL_SOLICITUD s LEFT JOIN PAU_BTC_TBL_ESTUDIANTE e ON s.SD_identificador_usuario = e.EE_idenficador LEFT JOIN PAU_BTC_TBL_CARRERA c ON e.EE_idenficador_carrera = c.CA_identificador LEFT JOIN PAU_BTC_TBL_HORARIO h ON s.SD_identificador_horario = h.HO_identificador LEFT JOIN PAU_BTC_TBL_TIPO t ON s.SD_identificador_tipo = t.TP_identificador LEFT JOIN PAU_GNL_USUARIO u ON e.EE_identificador_usuario = u.UO_identificador");
     console.log(result);
     return res.status(200).json({ Citas: result });
-};
-
-const acceptCita = async (req, res) => {
-    const { SD_identificador, UO_identificador, TP_nombre, AO_identificador } = req.body;
-
-    if (!SD_identificador || !UO_identificador || !TP_nombre || !AO_identificador) {
-        return res.status(400).json({ error: "Faltan parámetros necesarios" });
-    }
-
-    try {
-        const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
-        await pool.query(disableForeignKeyCheckQuery);
-
-        const insertIntoListaprestamo = `
-            INSERT INTO pau_btc_tbl_listaprestamo (LP_identificador_usuario, LP_identificador_activo)
-            SELECT DISTINCT e.EE_idenficador, a.AO_identificador
-            FROM pau_btc_tbl_solicitud s
-            INNER JOIN pau_btc_tbl_estudiante e ON s.SD_identificador_usuario = e.EE_idenficador
-            INNER JOIN pau_btc_tbl_activo a ON s.SD_identificador_tipo = a.AO_identificador_tipo
-            WHERE s.SD_identificador = ? AND a.AO_identificador IS NOT NULL;
-        `;
-
-        await pool.query(insertIntoListaprestamo, [SD_identificador]);
-
-        const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
-        await pool.query(enableForeignKeyCheckQuery);
-
-        return res.status(200).json({ mensaje: "Cita aceptada exitosamente" });
-    } catch (error) {
-        console.error("Error al aceptar la cita:", error);
-        return res.status(500).json({ error: "Hubo un error al aceptar la cita" });
-    }
 };

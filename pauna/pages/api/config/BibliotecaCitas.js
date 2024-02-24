@@ -5,10 +5,10 @@ export default async function handler(req, res) {
     switch (req.method) {
         case "GET":
             return await getAllCitas(req, res);
-        case "DELETE":
-            return deleteCitas(req, res);
         case "POST":
             return await acceptCita(req, res);
+        case "DELETE":
+            return deleteCitas(req, res);
 
     }
 

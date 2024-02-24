@@ -61,7 +61,7 @@ export default function SidebarCitas({ Citas }) {
     const confirmDelete = async () => {
         try {
             const citaId = editedCita.SD_identificador; // Obtener el identificador de la cita
-            console.log(citaId); // Añadir esta línea para verificar el valor de citaId en la consola
+            console.log("Identificador de la cita:", citaId); // Agrega este console.log para verificar el identificador
             const res = await axios.delete(`/api/config/BibliotecaCitas/${citaId}`); // Concatenar el identificador de la cita a la URL
             console.log(res);
             if (res.status === 200) {
@@ -74,8 +74,6 @@ export default function SidebarCitas({ Citas }) {
             console.log("Hubo un error al eliminar la cita:", error);
         }
     };
-    
-    
     
     const createCita = () => {
         setShowCreateForm(true);

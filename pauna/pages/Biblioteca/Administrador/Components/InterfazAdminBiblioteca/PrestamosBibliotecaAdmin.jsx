@@ -121,9 +121,19 @@ export default function SidebarCitas({ Citas }) {
                             <Form.Group>
                                 <Form.Label>Elegir Activo</Form.Label>
                                 <Form.Control as="select">
+                                    <option>-Seleccionar-</option>
                                     <option>Activo 1</option>
                                     <option>Activo 2</option>
                                     <option>Activo 3</option>
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Elegir Periferico</Form.Label>
+                                <Form.Control as="select">
+                                    <option>-Seleccionar-</option>
+                                    <option>Periferico 1</option>
+                                    <option>Periferico 2</option>
+                                    <option>Periferico 3</option>
                                 </Form.Control>
                             </Form.Group>
                         </Form>

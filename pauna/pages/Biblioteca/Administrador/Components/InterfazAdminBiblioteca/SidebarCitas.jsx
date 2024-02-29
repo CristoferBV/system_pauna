@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Table, Button, Form, Modal, Alert } from "react-bootstrap";
 import { useRouter } from "next/router";
-import Horario from "./Horario";
+
 
 export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
   const [searchText, setSearchText] = useState("");
@@ -14,8 +14,6 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
   const [alertVisible, setAlertVisible] = useState(false);
   const [horario, setHorario] = useState(Horario); // Utilizar Horario en lugar de horario
   const router = useRouter();
-
-  console.log(Citas);
 
   const [cita, setCita] = useState({
     SD_identificador: "",

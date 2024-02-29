@@ -10,11 +10,15 @@ export default async function handler(req, res) {
             switch (type) {
                 case "Periferico":
                     await savePeriferico(req, res);
-                    break
+                    break; // Agrega este break
             }
+            break; // Agrega este break
         case "DELETE":
             return deletePerifericos(req, res);
-        }
+        case "PUT":
+            return await updatePeriferico(req, res);
+    }
+    
 
     }
 
@@ -76,3 +80,20 @@ export default async function handler(req, res) {
             res.status(500).json({ error: 'Error al guardar el periférico.' });  // Envía una respuesta de error en caso de fallo
         }
     };
+
+    const updatePeriferico = async (req, res) => {
+        console.log("Ejecutando la función updatePeriferico...");
+        try {
+            const { EA_identificador, EA_nombre, EA_descripcion } = req.body;
+            console.log("Datos API",req.body);
+            console.log("EA_identificador recibido:", EA_identificador);
+            const data = {EA_identificador, EA_nombre, EA_descripcion }; // Quitamos el EA_identificador de los datos a actualizar
+            const result = await pool.query("UPDATE `pau_btc_tbl_periferico` SET ? WHERE EA_identificador = ?", [data, EA_identificador]);
+            return res.status(200).json(result);
+        } catch (error) {
+            console.error("Error en la actualización de activos:", error);
+            return res.status(500).json({ error: 'Error en la actualización de activos.' });
+        }
+    };
+    
+    

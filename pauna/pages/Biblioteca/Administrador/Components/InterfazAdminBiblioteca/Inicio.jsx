@@ -63,8 +63,8 @@ const Inicio = () => {
                 style={carouselArrowStyle}
               />
             }
-            interval={null} // Desactiva el autoavance
-            slide={true} // Activa el modo "slide"
+            interval={3000} // Cambia el intervalo a 5000 milisegundos (5 segundos)
+            slide={true} // Activa el modo "slide"s
           >
             <Carousel.Item>
               <Row className="justify-content-center">
@@ -78,7 +78,21 @@ const Inicio = () => {
                       <Card.Title style={cardTitleStyle}>
                         Sistema Citas
                       </Card.Title>
-                      <Card.Text>Bienvenido al modo administrativo.</Card.Text>
+                      <Card.Text>Parte encargada de validación de citas.</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+                <Col md={3} style={{ margin: "0.5rem" }}>
+                  <Card>
+                    <Card.Img
+                      variant="top"
+                      src="https://static.vecteezy.com/system/resources/previews/028/537/897/non_2x/3d-illustration-icon-design-of-metallic-orange-learning-book-education-with-square-podium-free-png.png"
+                    />
+                    <Card.Body>
+                      <Card.Title style={cardTitleStyle}>
+                        Sistema Prestamos
+                      </Card.Title>
+                      <Card.Text>Parte encargada de realizar prestamos.</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -92,21 +106,7 @@ const Inicio = () => {
                       <Card.Title style={cardTitleStyle}>
                         Sistema Activos
                       </Card.Title>
-                      <Card.Text>Bienvenido al modo administrativo.</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col md={3} style={{ margin: "0.5rem" }}>
-                  <Card>
-                    <Card.Img
-                      variant="top"
-                      src="https://static.vecteezy.com/system/resources/previews/028/537/897/non_2x/3d-illustration-icon-design-of-metallic-orange-learning-book-education-with-square-podium-free-png.png"
-                    />
-                    <Card.Body>
-                      <Card.Title style={cardTitleStyle}>
-                        Sistema Dispositiovos
-                      </Card.Title>
-                      <Card.Text>Bienvenido al modo administrativo.</Card.Text>
+                      <Card.Text>Parte encargada de crear, editar y eliminar activos.</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -122,9 +122,9 @@ const Inicio = () => {
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
-                        Sistema Estudiantes
+                        Sistema Usuarios
                       </Card.Title>
-                      <Card.Text>Bienvenido al modo administrativo.</Card.Text>
+                      <Card.Text>Parte encarga de verificación de estudiantes.</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -138,7 +138,7 @@ const Inicio = () => {
                       <Card.Title style={cardTitleStyle}>
                         Sistema Horario
                       </Card.Title>
-                      <Card.Text>Bienvenido al modo administrativo.</Card.Text>
+                      <Card.Text>Parte encargada de crear, editar y eliminar horarios.</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -152,7 +152,7 @@ const Inicio = () => {
                       <Card.Title style={cardTitleStyle}>
                         Sistema Reportes
                       </Card.Title>
-                      <Card.Text>Bienvenido al modo administrativo.</Card.Text>
+                      <Card.Text>Parte encargada de generar reportes en PDF.</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>

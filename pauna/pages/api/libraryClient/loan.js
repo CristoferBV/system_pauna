@@ -1,18 +1,20 @@
 import { pool } from "../../BD/Storage";
 
 export default async function handler(req, res) {
-    console.log(req.method);
-    switch (req.method) {
-        case "POST":
-            return saveLoan(req, res);
-    }
+  console.log(req.method);
+  switch (req.method) {
+    case "GET":
+      return getAllLoans(req, res);
+    case "POST":
+      return saveLoan(req, res);
+  }
 }
 
 const saveLoan = async (req, res) => {
   console.log("Body:", req.body);
   try {
     const { cedula, selectedDate, device, comprobanteBecaBlob, comprobanteMatriculaBlob } = req.body;
-    
+
     // Verifica los comprobantes han sido recibidos en la consola del servidor
     console.log("Beca recibida en el servidor:", comprobanteBecaBlob);
     console.log("Matricula recibida en el servidor:", comprobanteMatriculaBlob);
@@ -96,5 +98,53 @@ const saveLoan = async (req, res) => {
   } catch (error) {
     console.error("Error al procesar la solicitud de préstamo:", error);
     res.status(500).json({ error: "Error interno del servidor" });
+  }
+};
+
+const getAllLoans = async (req, res) => {
+  try {
+    // Consulta SQL para obtener solicitudes con detalles de estudiantes relacionados
+    const query = `
+    SELECT 
+    u.UO_primer_nombre,
+    u.UO_segundo_nombre,
+    u.UO_primer_apellido,
+    u.UO_segundo_apellido,
+    c.CA_nombre,
+    h.HO_fecha,
+    u.UO_identificador,
+    e.EE_nivel,
+    e.EE_campus,
+    co.CE_correoElectronico,
+    ti.TP_nombre,
+    t.TO_numero,
+    s.SD_comprobanteBeca,
+    s.SD_comprobanteMatricula
+FROM 
+    pau_btc_tbl_solicitud s
+JOIN
+    pau_btc_tbl_estudiante e ON s.SD_identificador_usuario = e.EE_idenficador
+JOIN
+    pau_btc_tbl_tipo ti ON s.SD_identificador_tipo = ti.TP_identificador
+JOIN
+    pau_btc_tbl_horario h ON s.SD_identificador_horario = h.HO_identificador
+JOIN 
+    pau_gnl_usuario u ON e.EE_identificador_usuario = u.UO_identificador
+JOIN
+    pau_btc_tbl_carrera c ON e.EE_idenficador_carrera = c.CA_identificador
+JOIN
+    pau_gnl_tbl_correoelectronico co ON e.EE_identificador_correo = co.CE_idCorreo
+JOIN
+    pau_gnl_tbl_telefono t ON e.EE_identifacador_telefono = t.TO_idenficador
+`;
+    // Ejecutar la consulta
+    const [solicitud] = await pool.query(query);
+    console.log(solicitud);
+    // Enviar los préstamos obtenidos como respuesta
+    return res.status(200).json(solicitud);
+    
+  } catch (error) {
+    console.error('Error al obtener préstamos:', error);
+    return res.status(500).json({ error: 'Error al obtener préstamos' });
   }
 };

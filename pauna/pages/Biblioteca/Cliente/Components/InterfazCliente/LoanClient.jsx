@@ -211,7 +211,7 @@ const LoanClient = () => {
               <Col>
                 <div className="d-flex align-items-center justify-content-center">
                   <Image src={LogoBombilla} alt="Logo" />
-                  <h1 className="ml-3">Realice el Préstamo</h1>
+                  <h1 className="ml-3">Llenar la solicitud</h1>
                 </div>
               </Col>
             </Row>
@@ -229,7 +229,7 @@ const LoanClient = () => {
             <Tab
               eventKey="Estudiantes"
               title={
-                <span className="custom-tab-title">Llenar Formulario</span>
+                <span className="custom-tab-title">Solicitud</span>
               }
             >
               <Form>
@@ -428,7 +428,7 @@ const LoanClient = () => {
             <Tab
               eventKey="Datos"
               title={
-                <span className="custom-tab-title">Realizar Prestamo</span>
+                <span className="custom-tab-title">Ver Solicitud</span>
               }
             >
               <Table striped bordered hover responsive>
@@ -495,15 +495,6 @@ const LoanClient = () => {
           )}
         </tbody>
       </Table>
-              <div className="d-flex justify-content-between align-items-center">
-                <Button variant="danger" type="button">
-                  Aceptar Préstamo
-                </Button>
-                <div className="mx-2"></div>
-                <Button variant="danger" type="button">
-                  Eliminar Préstamo
-                </Button>
-              </div>
             </Tab>
           </Tabs>
         </div>

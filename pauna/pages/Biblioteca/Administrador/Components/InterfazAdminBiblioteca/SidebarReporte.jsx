@@ -265,7 +265,6 @@ export default function SidebarReporte({ Reporte }) {
                                 <th className="text-center">Dispositivo</th>
                                 <th className="text-center">Fecha Devolucion</th>
                                 <th className="text-center">Observacion</th>
-                                <th className="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -276,35 +275,6 @@ export default function SidebarReporte({ Reporte }) {
                                     <td className="text-center">{reporte.TP_nombre}</td>
                                     <td className="text-center">{new Date(reporte.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
                                     <td className="text-center">{reporte.RE_observacion}</td>
-                                    <td className="text-center">
-                                        <Button
-                                            variant="primary"
-                                            onClick={() => handleEditDispositivo(device)}
-                                            style={buttonStyle}
-                                            onMouseEnter={(e) => {
-                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                            }}
-                                        >
-                                            Editar
-                                        </Button>
-                                        {' '}
-                                        <Button
-                                            variant="danger"
-                                            onClick={() => handleDeleteActivo(device.AO_identificador)}
-                                            style={buttonStyle}
-                                            onMouseEnter={(e) => {
-                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                            }}
-                                        >
-                                            Eliminar
-                                        </Button>
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>

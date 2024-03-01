@@ -10,15 +10,14 @@ export default async function handler(req, res) {
             switch (type) {
                 case "Periferico":
                     await savePeriferico(req, res);
-                    break; // Agrega este break
+                    break; 
             }
-            break; // Agrega este break
+            break; 
         case "DELETE":
             return deletePerifericos(req, res);
         case "PUT":
             return await updatePeriferico(req, res);
     }
-    
 
     }
 

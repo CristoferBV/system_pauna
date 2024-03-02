@@ -106,37 +106,40 @@ const getAllLoans = async (req, res) => {
     // Consulta SQL para obtener solicitudes con detalles de estudiantes relacionados
     const query = `
     SELECT 
-    u.UO_primer_nombre,
-    u.UO_segundo_nombre,
-    u.UO_primer_apellido,
-    u.UO_segundo_apellido,
-    c.CA_nombre,
-    h.HO_fecha,
-    u.UO_identificador,
-    e.EE_nivel,
-    e.EE_campus,
-    co.CE_correoElectronico,
-    ti.TP_nombre,
-    t.TO_numero,
-    s.SD_comprobanteBeca,
-    s.SD_comprobanteMatricula
-FROM 
-    pau_btc_tbl_solicitud s
-JOIN
-    pau_btc_tbl_estudiante e ON s.SD_identificador_usuario = e.EE_idenficador
-JOIN
-    pau_btc_tbl_tipo ti ON s.SD_identificador_tipo = ti.TP_identificador
-JOIN
-    pau_btc_tbl_horario h ON s.SD_identificador_horario = h.HO_identificador
-JOIN 
-    pau_gnl_usuario u ON e.EE_identificador_usuario = u.UO_identificador
-JOIN
-    pau_btc_tbl_carrera c ON e.EE_idenficador_carrera = c.CA_identificador
-JOIN
-    pau_gnl_tbl_correoelectronico co ON e.EE_identificador_correo = co.CE_idCorreo
-JOIN
-    pau_gnl_tbl_telefono t ON e.EE_identifacador_telefono = t.TO_idenficador
-`;
+
+      u.UO_primer_nombre,
+      u.UO_segundo_nombre,
+      u.UO_primer_apellido,
+      u.UO_segundo_apellido,
+      c.CA_nombre,
+      h.HO_fecha,
+      u.UO_identificador,
+      e.EE_nivel,
+      e.EE_campus,
+      co.CE_correoElectronico,
+      ti.TP_nombre,
+      t.TO_numero,
+      s.SD_comprobanteBeca,
+      s.SD_comprobanteMatricula
+
+    FROM 
+        pau_btc_tbl_solicitud s
+    JOIN
+        pau_btc_tbl_estudiante e ON s.SD_identificador_usuario = e.EE_idenficador
+    JOIN
+        pau_btc_tbl_tipo ti ON s.SD_identificador_tipo = ti.TP_identificador
+    JOIN
+        pau_btc_tbl_horario h ON s.SD_identificador_horario = h.HO_identificador
+    JOIN 
+        pau_gnl_usuario u ON e.EE_identificador_usuario = u.UO_identificador
+    JOIN
+        pau_btc_tbl_carrera c ON e.EE_idenficador_carrera = c.CA_identificador
+    JOIN
+        pau_gnl_tbl_correoelectronico co ON e.EE_identificador_correo = co.CE_idCorreo
+    JOIN
+        pau_gnl_tbl_telefono t ON e.EE_identifacador_telefono = t.TO_idenficador
+    `;
+    
     // Ejecutar la consulta
     const [solicitud] = await pool.query(query);
     console.log(solicitud);

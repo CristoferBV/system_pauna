@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState } from "react";
+import React, { useState, useEffect, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,25 +7,45 @@ import { Button, Container, Form } from "react-bootstrap";
 import { Row, Col } from "react-bootstrap";
 import Logo from "../../../public/LOGO-UNA.png";
 import Swal from "sweetalert2";
+import axios from 'axios';
 
 const Login = () => {
   const router = useRouter();
 
-  const [selectedOption, setSelectedOption] = useState("");
+  //const [selectedOption, setSelectedOption] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    if (selectedOption === "biblioteca") {
-      handleEnterLogin();
-      router.push("/Biblioteca/Cliente/Components/InterfazCliente/HomeClient");
-    } else if (selectedOption === "biblioAdmin") {
-      handleEnterLogin();
-      router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Inicio");
-    } else if (selectedOption === "administracion") {
-      handleEnterLogin();
-      router.push("/Administracion/Components/User/userWindow");
-      router.push("/Administracion/Components/User/landing");
+  const handleLogin = async () => {
+    /* console.log("Datos enviados al servidor: ", {
+        correo,
+        password
+    }); */
+
+    try {
+        // Hacer la llamada a la API para obtener idRol
+        /* const response = await axios.post('/api/formUser/login');
+        const data = response.data;
+        const idRol = data.idRol; */
+
+       //console.log("Respuesta del servidor:", data);
+        //console.log("Id del rol:", idRol);
+
+        if (idRol === 1) {
+            handleEnterLogin();
+            router.push("/Biblioteca/Cliente/Components/InterfazCliente/HomeClient");
+        } else if (idRol === 3) {
+            handleEnterLogin();
+            router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Inicio");
+        } else if (idRol === 2) {
+            handleEnterLogin();
+            router.push("/Administracion/Components/User/userWindow");
+            router.push("/Administracion/Components/User/landing");
+        }
+    } catch (error) {
+        console.error('Error al manejar el inicio de sesión:', error);
     }
-  };
+};
 
   const handleEnterLogin = () => {
     let timerInterval
@@ -45,11 +65,11 @@ const Login = () => {
         clearInterval(timerInterval)
       }
     }).then((result) => {
-      /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
         console.log('I was closed by the timer')
       }
     })
+    
   }
 
   return (
@@ -75,19 +95,22 @@ const Login = () => {
               <Form.Control type="text" placeholder="Nombre de usuario" className="w-100 p-3 rounded-xl" />
             </Form.Group>
             <Form.Group className="w-100 p-0">
-              <Form.Control type="email" placeholder="Correo electrónico" className="w-100 p-3 rounded-xl" />
+              <Form.Control type="email" placeholder="Correo electrónico" className="w-100 p-3 rounded-xl" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
             </Form.Group>
             <Form.Group className="w-100 p-0">
-              <Form.Control type="password" placeholder="Contraseña" className="w-100 p-3 rounded-xl" />
+              <Form.Control type="password" placeholder="Contraseña" className="w-100 p-3 rounded-xl" value={password} onChange={(e) => setPassword(e.target.value)}/>
             </Form.Group>
-            <Form.Group className="w-100 p-0">
+
+            {/* Select del rol */}
+            {/* <Form.Group className="w-100 p-0">
               <Form.Control as="select" className="w-100 p-3 rounded-xl" onChange={(e) => setSelectedOption(e.target.value)}>
                 <option value="">-Elige un rol-</option>
                 <option value="biblioteca">Biblioteca</option>
                 <option value="biblioAdmin">Biblioteca/Admin</option>
                 <option value="administracion">Administración</option>
               </Form.Control>
-            </Form.Group>
+            </Form.Group> */}
+
             <Button
               variant="primary"
               size="lg"

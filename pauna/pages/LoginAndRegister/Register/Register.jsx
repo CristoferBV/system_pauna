@@ -18,8 +18,8 @@ const Register = () => {
     UO_segundo_apellido: "",
     UO_identificador_rol: 1,
     UO_contrasena: "",
-    phoneNumber: "", // Agrega el campo phoneNumber al objeto user
-    gmail: "", // Agrega el campo gmail al objeto user
+    phoneNumber: "", 
+    gmail: "", 
   });
 
   const handleChange = ({ target: { name, value } }) => {

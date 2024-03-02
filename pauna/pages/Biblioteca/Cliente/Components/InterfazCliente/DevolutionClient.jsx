@@ -4,7 +4,7 @@ import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Row, Col, ButtonGroup  } from "react-bootstrap";
 import Tab from "react-bootstrap/Tab";
@@ -14,7 +14,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 export default function DevolutionClient({ Devolution }) {
-  const [selectedRow, setSelectedRow] = useState(null);
   const router = useRouter();
   const [active, setActive] = useState("");
   const [key, setKey] = useState("Inicio");
@@ -131,8 +130,14 @@ export default function DevolutionClient({ Devolution }) {
                         "success"
                       );
 
-                      // Recarga la página para reflejar los cambios en la tabla
-                      //window.location.href = '/Biblioteca/Cliente/Components/InterfazCliente/DevolutionClient';
+                      // Limpia los campos de entrada
+                      setIdentificacion("");
+                      setNombre("");
+                      setApellido1("");
+                      setApellido2("");
+                      setCorreo("");
+                      setFechaEntrega("");
+
                     } else {
                       console.log("Error al actualizar datos");
                     }
@@ -158,6 +163,7 @@ export default function DevolutionClient({ Devolution }) {
       // Muestra un mensaje de error si no se ha ingresado una cédula
       console.log("Ingrese una cédula antes de enviar los datos.");
     }
+    
   };
 
   return (

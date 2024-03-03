@@ -1,167 +1,123 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Card, Table, Button, Form, Modal, Alert } from 'react-bootstrap';
-import { useRouter } from 'next/router';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Card, Form, Col } from "react-bootstrap";
+import { useRouter } from "next/router";
 
-export default function SidebarCitas({ Citas }) {
-    const [searchText, setSearchText] = useState('');
-    const [editMode, setEditMode] = useState(false);
-    const [editedCita, setEditedCita] = useState({});
-    const [deleteConfirmation, setDeleteConfirmation] = useState(false);
-    const [showCreateForm, setShowCreateForm] = useState(false);
-    const [citas, setCitas] = useState([]);
-    const [alertVisible, setAlertVisible] = useState(false);
-    const router = useRouter();
+export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
+  const [prestamo, setPrestamo] = useState({
+    EA_identificador: "",
+    EA_nombre: "",
+    EA_descripcion: "",
+  });
+  const [dispositivos, setDispositivos] = useState([]);
+  const [perifericos, setPerifericos] = useState([]);
+  const router = useRouter();
 
-    const [cita, setCita] = useState({
-        SD_identificador: "",
-        SD_identificador_horario: "",
-        SD_identificador_tipo: "",
-        SD_identificador_usuario: "",
-        fechaPrestamo: ""
-    });
+  useEffect(() => {
+    console.log("Dispositivo:", Dispositivo);
+    console.log("Periferico:", Periferico);
 
-    useEffect(() => {
-        if (Citas && Citas.Citas) {
-            setCitas(Citas.Citas);
-        }
-    }, [Citas]);
+    if (
+      Dispositivo &&
+      Dispositivo.length > 0 &&
+      Periferico &&
+      Periferico.length > 0
+    ) {
+      setDispositivos(Dispositivo);
+      setPerifericos(Periferico);
+    }
+  }, [Dispositivo, Periferico]);
 
+  const handleChange = ({ target: { name, value } }) => {
+    if (name in prestamo) {
+      setPrestamo({ ...prestamo, [name]: value });
+    }
+  };
 
-    const handleChange = ({ target: { name, value } }) => {
-        if (name in cita) {
-            setCita({ ...cita, [name]: value });
-        }
-    };
-
-    const handleEdit = (cita) => {
-        setEditedCita(cita);
-        setEditMode(true);
-    };
-
-    const saveChanges = () => {
-        // Aquí deberías implementar la lógica para guardar los cambios
-        setEditMode(false);
-    };
-
-    const handleDelete = (cita) => {
-        setEditedCita(cita);
-        setDeleteConfirmation(true);
-    };
-
-    const confirmDelete = () => {
-        // Aquí deberías implementar la lógica para eliminar la cita
-        setDeleteConfirmation(false);
-    };
-
-    const handleAlertClose = () => {
-        setAlertVisible(false);
-    };
-
-    const filteredCitas = citas && Array.isArray(citas)
-        ? citas.filter((cita) => {
-            return (
-                (cita.UO_identificador && cita.UO_identificador.toLowerCase().includes(searchText.toLowerCase())) ||
-                (cita.HO_fecha && cita.HO_fecha.toLowerCase().includes(searchText.toLowerCase())) ||
-                (cita.HO_hora && cita.HO_hora.toLowerCase().includes(searchText.toLowerCase())) ||
-                (cita.UO_primer_nombre && cita.UO_primer_nombre.toLowerCase().includes(searchText.toLowerCase())) ||
-                (cita.CA_nombre && cita.CA_nombre.toLowerCase().includes(searchText.toLowerCase())) ||
-                (cita.TP_nombre && cita.TP_nombre.toLowerCase().includes(searchText.toLowerCase()))
-            );
-        })
-        : [];
-
-    const reloadPage = () => {
-        router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarCitas");
-    };
-
-    const buttonStyle = {
-        backgroundColor: '#021730',
-        color: 'white',
-        border: 'none',
-        transition: 'background-color 0.3s, border 0.3s',
-    };
-
-    const buttonHoverStyle = {
-        backgroundColor: '#010E1F',
-        color: 'black',
-        border: '1px solid white',
-    };
-
-    return (
-        <div className="flex-1 p-8">
-            <Card style={{ backgroundColor: '#2F3E5B', color: 'white' }} text="white">
-                <Card.Header>
-                    <div className="d-flex justify-content-between">
-                        <span>Prestamos Estudiantes</span>
-                    </div>
-                </Card.Header>
-                <Card.Body>
-                    <div className="mb-3">
-                        <Form>
-                            <Form.Group>
-                                <Form.Label>Cédula de Estudiante</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Cédula de estudiante"
-                                    value={cita.SD_identificador_usuario}
-                                    onChange={(e) => handleChange(e)}
-                                    name="SD_identificador_usuario"
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Fecha de Préstamo</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    value={cita.fechaPrestamo}
-                                    onChange={(e) => handleChange(e)}
-                                    name="fechaPrestamo"
-                                />
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Elegir Activo</Form.Label>
-                                <Form.Control as="select">
-                                    <option>-Seleccionar-</option>
-                                    <option>Activo 1</option>
-                                    <option>Activo 2</option>
-                                    <option>Activo 3</option>
-                                </Form.Control>
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Elegir Periferico</Form.Label>
-                                <Form.Control as="select">
-                                    <option>-Seleccionar-</option>
-                                    <option>Periferico 1</option>
-                                    <option>Periferico 2</option>
-                                    <option>Periferico 3</option>
-                                </Form.Control>
-                            </Form.Group>
-                        </Form>
-                    </div>
-                </Card.Body>
-            </Card>
-
-            {/* Resto del código como está */}
-        </div>
-    );
+  return (
+    <div className="flex-1 p-8">
+      <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
+        <Card.Header>
+          <div className="d-flex justify-content-between">
+            <span className=" text-black font-semibold">Prestamos Estudiantes</span>
+          </div>
+        </Card.Header>
+        <Card.Body>
+          <Form>
+            <Form.Group as={Col} xs={12} md={6}>
+              <Form.Label className=" text-black">Cédula de Estudiante</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Cédula de estudiante"
+                value={prestamo.SD_identificador_usuario}
+                onChange={(e) => handleChange(e)}
+                name="SD_identificador_usuario"
+              />
+            </Form.Group>
+            <Form.Group as={Col} xs={12} md={6}>
+              <Form.Label className=" text-black">Fecha de Préstamo</Form.Label>
+              <Form.Control
+                type="date"
+                value={prestamo.fechaPrestamo}
+                onChange={(e) => handleChange(e)}
+                name="fechaPrestamo"
+              />
+            </Form.Group>
+            <Form.Group as={Col} xs={12} md={6}>
+              <Form.Label className=" text-black">Elegir Activo</Form.Label>
+              <Form.Control as="select">
+                <option>-Seleccionar-</option>
+                {dispositivos.map((dispositivo) => (
+                  <option
+                    key={dispositivo.AO_identificador}
+                    value={dispositivo.AO_identificador}
+                  >
+                    Dispositivo:{" "}
+                    {`${dispositivo.TP_nombre} - Descripción: ${dispositivo.TP_descripcion} - Estado: ${dispositivo.AO_estado}`}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group as={Col} xs={12} md={6}>
+              <Form.Label className=" text-black">Elegir Periferico</Form.Label>
+              <Form.Control as="select">
+                <option>-Seleccionar-</option>
+                {perifericos.map((periferico) => (
+                  <option
+                    key={periferico.EA_identificador}
+                    value={periferico.EA_identificador}
+                  >
+                    Periferico:{" "}
+                    {`${periferico.EA_nombre} - Descripción: ${periferico.EA_descripcion}`}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        </Card.Body>
+      </Card>
+    </div>
+  );
 }
 
-
 export const getServerSideProps = async (context) => {
-    try {
-        const { data: Citas } = await axios.get("http://localhost:3000/api/config/BibliotecaCitas");
-        return {
-            props: {
-                Citas,
-            },
-        };
-    } catch (error) {
-        console.log(error)
-        return {
-            props: {
-                Citas: [],
-            },
-        };
-
-    }
+  try {
+    const {
+      data: { Dispositivo, Periferico },
+    } = await axios.get("http://localhost:3000/api/config/BibliotecaPrestamos");
+    return {
+      props: {
+        Dispositivo,
+        Periferico,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        Dispositivo: [],
+        Periferico: [],
+      },
+    };
+  }
 };

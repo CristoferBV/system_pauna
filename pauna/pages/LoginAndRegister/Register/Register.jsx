@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,21 @@ import Logo from "../../../public/LOGO-UNA.png";
 
 const Register = () => {
   const router = useRouter();
+
+  const [carreras, setCarreras] = useState([]);
+
+   // Carreras
+   useEffect(() => {
+    // Realiza una solicitud GET a tu API para obtener las opciones de carrera
+    axios.get("/api/fillSelectsLoan/career")
+      .then((response) => {
+        // Al recibir la respuesta, actualiza el estado con los datos de carrera
+        setCarreras(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las opciones de carrera", error);
+      });
+  }, []);
 
   const [user, setUser] = useState({
     UO_identificador: "",
@@ -116,7 +131,7 @@ const Register = () => {
                       <Form.Control
                         name="UO_segundo_nombre"
                         type="text"
-                        placeholder="Segundo Nombre"
+                        placeholder="Segundo Nombre (Si tiene)"
                         value={user.UO_segundo_nombre}
                         onChange={handleChange}
                         className="w-100 p-3 rounded-xl"
@@ -209,7 +224,12 @@ const Register = () => {
                         /*  onChange={handleChange} */
                         className="w-100 p-3 rounded-xl"
                       >
-                        <option value="">-Carrera-</option>
+                        <option value="">-Seleccionar carrera-</option>
+                        {carreras.map((carrera) => (
+                          <option key={carrera.value} value={carrera.value}>
+                            {carrera.label}
+                          </option>
+                        ))}
                       </Form.Control>
                     </Form.Group>
                     <Form.Group className="w-100 p-2">

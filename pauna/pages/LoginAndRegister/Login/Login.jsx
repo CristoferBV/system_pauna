@@ -12,6 +12,8 @@ import axios from 'axios';
 const Login = () => {
   const router = useRouter();
 
+  //QUEDA PENDIENTE TERMINAR LO DE LOGUEARSE
+
   //const [selectedOption, setSelectedOption] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");

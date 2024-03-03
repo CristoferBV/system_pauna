@@ -35,6 +35,9 @@ const Register = () => {
     UO_contrasena: "",
     phoneNumber: "", 
     gmail: "", 
+    carrera: "",
+    campus: "",
+    nivelCarrera: ""
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -47,6 +50,18 @@ const Register = () => {
 
   const handleChangeGmail = ({ target: { value } }) => {
     setUser({ ...user, gmail: value }); // Actualiza el estado de gmail
+  };
+
+  const handleChangeCarrera = ({ target: { value } }) => {
+    setUser({ ...user, carrera: value }); // Actualiza el estado de carrera
+  };
+
+  const handleChangeCampus = ({ target: { value } }) => {
+    setUser({ ...user, campus: value }); // Actualiza el estado de campus
+  };
+
+  const handleChangeNivelCarrera = ({ target: { value } }) => {
+    setUser({ ...user, nivelCarrera: value }); // Actualiza el estado de nivel carrera
   };
 
   // Enviar los datos al servidor
@@ -202,26 +217,26 @@ const Register = () => {
                     </Form.Group>
                     <Form.Group className="w-100 p-2">
                       <Form.Control
-                        /* name="UO_contrasena" */
-                        as="select"
-                        /* value={user.UO_contrasena} */
-                        /*  onChange={handleChange} */
-                        className="w-100 p-3 rounded-xl"
+                          name="campus"
+                          as="select"
+                          value={user.campus}
+                          onChange={handleChangeCampus}
+                          className="w-100 p-3 rounded-xl"
                       >
-                        <option value="">-Campus-</option>
-                        <option value="">Campus PZ</option>
-                        <option value="">Campus Coto</option>
+                          <option value="">-Campus-</option>
+                          <option value="Campus PZ">Campus PZ</option>
+                          <option value="Campus Coto">Campus Coto</option>
                       </Form.Control>
-                    </Form.Group>
+                  </Form.Group>
                   </div>
                   <div className="col-md-6">
                     {/* Contenido de la segunda columna */}
                     <Form.Group className="w-100 p-2">
                       <Form.Control
-                        /* name="UO_contrasena" */
+                        name="carrera"
                         as="select"
-                        /* value={user.UO_contrasena} */
-                        /*  onChange={handleChange} */
+                        value={user.carrera}
+                         onChange={handleChangeCarrera}
                         className="w-100 p-3 rounded-xl"
                       >
                         <option value="">-Seleccionar carrera-</option>
@@ -234,17 +249,17 @@ const Register = () => {
                     </Form.Group>
                     <Form.Group className="w-100 p-2">
                       <Form.Control
-                        /* name="UO_contrasena" */
+                        name="nivelCarrera"
                         as="select"
-                        /* value={user.UO_contrasena} */
-                        /*  onChange={handleChange} */
+                        value={user.nivelCarrera}
+                        onChange={handleChangeNivelCarrera}
                         className="w-100 p-3 rounded-xl"
                       >
                         <option value="">-Nivel de carrera-</option>
-                        <option value="">Nivel I</option>
-                        <option value="">Nivel II</option>
-                        <option value="">Nivel III</option>
-                        <option value="">Nivel IV</option>
+                        <option value="Nivel I">Nivel I</option>
+                        <option value="Nivel II">Nivel II</option>
+                        <option value="Nivel III">Nivel III</option>
+                        <option value="Nivel IV">Nivel IV</option>
                       </Form.Control>
                     </Form.Group>
                     <div className="mx-2 mt-2">

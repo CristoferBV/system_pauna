@@ -19,27 +19,31 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    /* console.log("Datos enviados al servidor: ", {
+    console.log("Datos enviados al servidor: ", {
         correo,
         password
-    }); */
+    });
 
     try {
-        // Hacer la llamada a la API para obtener idRol
-        /* const response = await axios.post('/api/formUser/login');
+        // Realizar la solicitud al servidor para autenticar al usuario y obtener idRol
+        const response = await axios.post('/api/formUser/login', {
+            correo,
+            password
+        });
+
         const data = response.data;
-        const idRol = data.idRol; */
+        //const idRol = data.idRol;
 
-       //console.log("Respuesta del servidor:", data);
         //console.log("Id del rol:", idRol);
+        console.log("data:", data.UO_identificador_rol);
 
-        if (idRol === 1) {
+        if (data.UO_identificador_rol === 1) {
             handleEnterLogin();
             router.push("/Biblioteca/Cliente/Components/InterfazCliente/HomeClient");
-        } else if (idRol === 3) {
+        } else if (data.UO_identificador_rol === 3) {
             handleEnterLogin();
             router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Inicio");
-        } else if (idRol === 2) {
+        } else if (data.UO_identificador_rol === 2) {
             handleEnterLogin();
             router.push("/Administracion/Components/User/userWindow");
             router.push("/Administracion/Components/User/landing");
@@ -48,6 +52,7 @@ const Login = () => {
         console.error('Error al manejar el inicio de sesión:', error);
     }
 };
+
 
   const handleEnterLogin = () => {
     let timerInterval

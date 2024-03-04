@@ -70,7 +70,7 @@ const Register = () => {
     e.preventDefault();
     console.log(user);
     const res = await axios
-      .post("/api/formUser/login_register", user)
+      .post("/api/formUser/register", user)
       .then(function (response) {
         console.log(response);
         router.push("/LoginAndRegister/Login/Login");

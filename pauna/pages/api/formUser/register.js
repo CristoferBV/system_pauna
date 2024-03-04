@@ -26,7 +26,7 @@ const postUser = async (req, res) => {
 
     try {
         // Encripta la contraseña antes de insertarla en la base de datos
-        const hashedPassword = await bcrypt.hash(UO_contrasena, 10);
+        const hashedPassword = await bcrypt.hash(UO_contrasena, 8);
 
         // Inserta el nuevo usuario en la tabla pau_gnl_usuario utilizando la contraseña encriptada
         await pool.query("INSERT INTO `pau_gnl_usuario` SET ?", {
@@ -41,8 +41,7 @@ const postUser = async (req, res) => {
 
         // Obtén el ID del usuario recién insertado (es el mismo que UO_identificador)
         const usuarioId = UO_identificador;
-        //console.log("Id usuario:", usuarioId);
-
+        
         // Inserta el número de teléfono en la tabla pau_gnl_tbl_telefono
         await pool.query("INSERT INTO `pau_gnl_tbl_telefono` SET ?", {
             TO_numero: phoneNumber,
@@ -52,7 +51,6 @@ const postUser = async (req, res) => {
         // Obtén el ID del teléfono recién insertado
         const telefonoResult = await pool.query("SELECT LAST_INSERT_ID() as id");
         const telefonoId = telefonoResult[0][0].id;
-        //console.log("Id teléfono:", telefonoId);
 
         // Inserta el correo electrónico en la tabla pau_gnl_tbl_correoelectronico
         await pool.query("INSERT INTO `pau_gnl_tbl_correoelectronico` SET ?", {
@@ -63,7 +61,6 @@ const postUser = async (req, res) => {
         // Obtén el ID del correo electrónico recién insertado
         const correoResult = await pool.query("SELECT LAST_INSERT_ID() as id");
         const correoId = correoResult[0][0].id;
-        //console.log("Id correo electrónico:", correoId);
 
         //Insertar todos los datos de estudiante
         await pool.query("INSERT INTO `pau_btc_tbl_estudiante` SET ?", {
@@ -74,10 +71,6 @@ const postUser = async (req, res) => {
             EE_idenficador_carrera: carrera,
             EE_identificador_usuario: usuarioId
         })
-
-       /*  console.log("campuss:", campus)
-        console.log("carrera:", carrera)
-        console.log("nivel carrera:", nivelCarrera) */
 
         return res.status(200).json({ message: 'Usuario registrado exitosamente' });
     } catch (error) {

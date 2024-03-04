@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Form, Col } from "react-bootstrap";
+import { Card, Form, Col, Button } from "react-bootstrap";
 import { useRouter } from "next/router";
 
 export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
   const [prestamo, setPrestamo] = useState({
-    EA_identificador: "",
-    EA_nombre: "",
-    EA_descripcion: "",
+    LP_identificador_usuario: "",
+    LP_fechaDevolucion: "",
+    AO_identificador_dispositivo: "",
+    LP_identificador_prestamo: "", // Cambiado el nombre
+    EA_identificador_periferico: "", // Cambiado el nombre
   });
   const [dispositivos, setDispositivos] = useState([]);
   const [perifericos, setPerifericos] = useState([]);
@@ -29,8 +31,17 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
   }, [Dispositivo, Periferico]);
 
   const handleChange = ({ target: { name, value } }) => {
-    if (name in prestamo) {
-      setPrestamo({ ...prestamo, [name]: value });
+    setPrestamo({ ...prestamo, [name]: value }); // Aquí ya no se necesita verificar el nombre
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("Datos de préstamo:", prestamo);
+      await axios.post("http://localhost:3000/api/config/BibliotecaPrestamos", prestamo);
+      router.push("/exito");
+    } catch (error) {
+      console.error("Error al insertar el préstamo:", error);
     }
   };
 
@@ -43,29 +54,29 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
           </div>
         </Card.Header>
         <Card.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group as={Col} xs={12} md={6}>
               <Form.Label className=" text-black">Cédula de Estudiante</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Cédula de estudiante"
-                value={prestamo.SD_identificador_usuario}
-                onChange={(e) => handleChange(e)}
-                name="SD_identificador_usuario"
+                value={prestamo.LP_identificador_usuario}
+                onChange={handleChange}
+                name="LP_identificador_usuario"
               />
             </Form.Group>
             <Form.Group as={Col} xs={12} md={6}>
               <Form.Label className=" text-black">Fecha de Préstamo</Form.Label>
               <Form.Control
                 type="date"
-                value={prestamo.fechaPrestamo}
-                onChange={(e) => handleChange(e)}
-                name="fechaPrestamo"
+                value={prestamo.LP_fechaDevolucion}
+                onChange={handleChange}
+                name="LP_fechaDevolucion"
               />
             </Form.Group>
             <Form.Group as={Col} xs={12} md={6}>
               <Form.Label className=" text-black">Elegir Activo</Form.Label>
-              <Form.Control as="select">
+              <Form.Control as="select" onChange={handleChange} name="AO_identificador_dispositivo">
                 <option>-Seleccionar-</option>
                 {dispositivos.map((dispositivo) => (
                   <option
@@ -80,7 +91,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
             </Form.Group>
             <Form.Group as={Col} xs={12} md={6}>
               <Form.Label className=" text-black">Elegir Periferico</Form.Label>
-              <Form.Control as="select">
+              <Form.Control as="select" onChange={handleChange} name="EA_identificador_periferico">
                 <option>-Seleccionar-</option>
                 {perifericos.map((periferico) => (
                   <option
@@ -93,6 +104,9 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
                 ))}
               </Form.Control>
             </Form.Group>
+            <Button variant="primary" type="submit">
+              Guardar
+            </Button>
           </Form>
         </Card.Body>
       </Card>

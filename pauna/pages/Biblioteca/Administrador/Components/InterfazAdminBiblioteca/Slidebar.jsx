@@ -19,7 +19,7 @@ export default function Slidebar({ types }) {
     try {
       // Verificar si está permitido hacer la solicitud
       if (!canMakeRequest) {
-        console.log("Esperando para hacer la próxima solicitud...");
+
         return;
       }
 
@@ -373,6 +373,7 @@ export default function Slidebar({ types }) {
                 value={type.TP_identificador}
                 onChange={handleChange}
               >
+                <option>-Seleccionar-</option>
                 {types.map((type) => (
                   <option
                     key={type.TP_identificador}

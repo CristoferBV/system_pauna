@@ -132,38 +132,32 @@ export default function SidebarPerifericos({ Perifericos }) {
   };
 
   const buttonStyle = {
-    backgroundColor: "#021730",
+    backgroundColor: "#233C5B",
     color: "white",
     border: "none", // Agregar un borde blanco
     transition: "background-color 0.3s, border 0.3s", // También añadir la transición para el borde
   };
 
   const buttonHoverStyle = {
-    backgroundColor: "#010E1F", // Nuevo color de fondo al pasar el cursor
+    backgroundColor: "#152C4A", // Nuevo color de fondo al pasar el cursor
     color: "black", // Texto de color oscuro
     border: "1px solid white",
   };
 
-  const tableButtonStyle = {
-    backgroundColor: "#021730",
-    color: "white",
-    border: "none",
-    transition: "background-color 0.3s, border 0.3s",
-  };
-
-  const tableButtonHoverStyle = {
-    backgroundColor: "#010E1F",
-    color: "black",
-    border: "1px solid white",
-  };
 
   return (
     <div className="flex-1 p-8">
-      <Card style={{ backgroundColor: "#2F3E5B", color: "white" }} text="white">
+      <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
         <Card.Header>
           <div className="d-flex justify-content-between">
-            <span>Perifericos</span>
-            <Button variant="success" onClick={createCita} style={buttonStyle}>
+            <span className="text-black font-semibold">Perifericos</span>
+            <Button variant="success" onClick={createCita} style={buttonStyle}onMouseEnter={(e) => {
+                  e.target.style.backgroundColor =
+                    buttonHoverStyle.backgroundColor;
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                }}>
               Nuevo Periferico
             </Button>
           </div>
@@ -181,7 +175,11 @@ export default function SidebarPerifericos({ Perifericos }) {
               </Form.Group>
             </Form>
           </div>
-          <Table striped bordered hover variant="secondary" responsive>
+          <Table style={{ backgroundColor: "#252440", color: "white" }}
+            striped
+            bordered
+            hover
+            responsive>
             {/* Encabezado de la tabla */}
             <thead>
               <tr>
@@ -202,7 +200,13 @@ export default function SidebarPerifericos({ Perifericos }) {
                       variant="light"
                       className="ml-2"
                       onClick={() => handleEdit(periferico)}
-                      style={tableButtonStyle}
+                      style={buttonStyle}onMouseEnter={(e) => {
+                        e.target.style.backgroundColor =
+                          buttonHoverStyle.backgroundColor;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                      }}
                     >
                       Editar
                     </Button>
@@ -217,7 +221,13 @@ export default function SidebarPerifericos({ Perifericos }) {
                         );
                         handleDeletePeriferico(periferico.EA_identificador);
                       }}
-                      style={tableButtonStyle}
+                      style={buttonStyle}onMouseEnter={(e) => {
+                        e.target.style.backgroundColor =
+                          buttonHoverStyle.backgroundColor;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                      }}
                     >
                       Eliminar
                     </Button>
@@ -280,11 +290,23 @@ export default function SidebarPerifericos({ Perifericos }) {
           <Button
             variant="secondary"
             onClick={() => setEditMode(false)}
-            style={buttonStyle}
+            style={buttonStyle}onMouseEnter={(e) => {
+              e.target.style.backgroundColor =
+                buttonHoverStyle.backgroundColor;
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = buttonStyle.backgroundColor;
+            }}
           >
             Cancelar
           </Button>
-          <Button variant="primary" onClick={saveChanges} style={buttonStyle}>
+          <Button variant="primary" onClick={saveChanges} style={buttonStyle}onMouseEnter={(e) => {
+                  e.target.style.backgroundColor =
+                    buttonHoverStyle.backgroundColor;
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                }}>
             Guardar Cambios
           </Button>
         </Modal.Footer>
@@ -328,7 +350,13 @@ export default function SidebarPerifericos({ Perifericos }) {
           <Button
             variant="secondary"
             onClick={() => setShowCreateForm(false)}
-            style={buttonStyle}
+            style={buttonStyle} onMouseEnter={(e) => {
+              e.target.style.backgroundColor =
+                buttonHoverStyle.backgroundColor;
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = buttonStyle.backgroundColor;
+            }}
           >
             Cancelar
           </Button>
@@ -342,7 +370,13 @@ export default function SidebarPerifericos({ Perifericos }) {
                 EA_descripcion: periferico.EA_descripcion,
               })
             }
-            style={buttonStyle}
+            style={buttonStyle}onMouseEnter={(e) => {
+              e.target.style.backgroundColor =
+                buttonHoverStyle.backgroundColor;
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = buttonStyle.backgroundColor;
+            }}
           >
             Crear
           </Button>

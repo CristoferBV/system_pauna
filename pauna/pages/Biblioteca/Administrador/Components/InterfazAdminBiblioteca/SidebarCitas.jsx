@@ -153,24 +153,24 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
   };
 
   const buttonStyle = {
-    backgroundColor: "#021730",
+    backgroundColor: "#233C5B",
     color: "white",
     border: "none",
     transition: "background-color 0.3s, border 0.3s",
   };
 
   const buttonHoverStyle = {
-    backgroundColor: "#010E1F",
+    backgroundColor: "#152C4A",
     color: "black",
     border: "1px solid white",
   };
 
   return (
     <div className="flex-1 p-8">
-      <Card style={{ backgroundColor: "#2F3E5B", color: "white" }} text="white">
+      <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
         <Card.Header>
           <div className="d-flex justify-content-between">
-            <span>Citas</span>
+            <span className="text-black font-semibold">Citas</span>
           </div>
         </Card.Header>
         <Card.Body>

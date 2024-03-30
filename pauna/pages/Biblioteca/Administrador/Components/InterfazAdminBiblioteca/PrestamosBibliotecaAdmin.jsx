@@ -7,18 +7,14 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
   const [prestamo, setPrestamo] = useState({
     LP_identificador_usuario: "",
     LP_fechaDevolucion: "",
-    AO_identificador_dispositivo: "",
-    LP_identificador_prestamo: "", // Cambiado el nombre
-    EA_identificador_periferico: "", // Cambiado el nombre
+    LP_identificador: "", // Cambiado el nombre
+    EA_identificador: "", // Cambiado el nombre
   });
   const [dispositivos, setDispositivos] = useState([]);
   const [perifericos, setPerifericos] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
-    console.log("Dispositivo:", Dispositivo);
-    console.log("Periferico:", Periferico);
-
     if (
       Dispositivo &&
       Dispositivo.length > 0 &&
@@ -31,11 +27,19 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
   }, [Dispositivo, Periferico]);
 
   const handleChange = ({ target: { name, value } }) => {
-    setPrestamo({ ...prestamo, [name]: value }); // Aquí ya no se necesita verificar el nombre
+    setPrestamo({ ...prestamo, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Imprimir todos los nombres de los campos del objeto prestamo
+    console.log("Nombres de los campos del objeto prestamo:", Object.keys(prestamo));
+
+    if (!prestamo.LP_identificador_usuario || !prestamo.LP_fechaDevolucion || !prestamo.LP_identificador || !prestamo.EA_identificador) {
+      console.error("Faltan datos en la solicitud.");
+      return;
+    }
     try {
       console.log("Datos de préstamo:", prestamo);
       await axios.post("http://localhost:3000/api/config/BibliotecaPrestamos", prestamo);
@@ -76,7 +80,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
             </Form.Group>
             <Form.Group as={Col} xs={12} md={6}>
               <Form.Label className=" text-black">Elegir Activo</Form.Label>
-              <Form.Control as="select" onChange={handleChange} name="AO_identificador_dispositivo">
+              <Form.Control as="select" onChange={handleChange} name="LP_identificador">
                 <option>-Seleccionar-</option>
                 {dispositivos.map((dispositivo) => (
                   <option
@@ -91,7 +95,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
             </Form.Group>
             <Form.Group as={Col} xs={12} md={6}>
               <Form.Label className=" text-black">Elegir Periferico</Form.Label>
-              <Form.Control as="select" onChange={handleChange} name="EA_identificador_periferico">
+              <Form.Control as="select" onChange={handleChange} name="EA_identificador">
                 <option>-Seleccionar-</option>
                 {perifericos.map((periferico) => (
                   <option

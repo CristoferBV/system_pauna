@@ -18,20 +18,33 @@ export default async function handler(req, res) {
 
 const createPrestamo = async (req, res) => {
     try {
-        const { LP_identificador_usuario, LP_fechaDevolucion, AO_identificador_dispositivo, LP_identificador_prestamo, EA_identificador_periferico } = req.body;
+        // Imprimir todos los nombres de los campos recibidos en la solicitud
+        console.log("Nombres de los campos recibidos:", Object.keys(req.body));
 
-        console.log("Datos recibidos:", req.body);
+        const { LP_identificador_usuario, LP_fechaDevolucion, EA_identificador, LP_identificador } = req.body;
+        
+        // Verificar si se reciben todos los datos necesarios
+        if (!LP_identificador_usuario || !LP_fechaDevolucion || !EA_identificador) {
+            console.log("Faltan datos en la solicitud.");
+            return res.status(400).json({ error: 'Faltan datos en la solicitud.' });
+        }
 
+        // Verificar si el usuario existe
+        console.log("Consulta SQL para verificar usuario:", "SELECT UO_identificador FROM pau_gnl_usuario WHERE UO_identificador = ?", LP_identificador_usuario);
         const [UsuarioResult] = await pool.query("SELECT UO_identificador FROM pau_gnl_usuario WHERE UO_identificador = ?", [LP_identificador_usuario]);
         if (UsuarioResult.length === 0) {
             console.log("Usuario no encontrado:", LP_identificador_usuario);
             return res.status(404).json({ error: 'Usuario no encontrado.' });
         }
 
+        // Obtener el identificador del estudiante asociado al usuario
+        console.log("Consulta SQL para obtener identificador de estudiante:", "SELECT EE_idenficador FROM pau_btc_tbl_estudiante WHERE EE_identificador_usuario = ?", LP_identificador_usuario);
         const [EstudianteResult] = await pool.query("SELECT EE_idenficador FROM pau_btc_tbl_estudiante WHERE EE_identificador_usuario = ?", [LP_identificador_usuario]);
         const EE_idenficador = EstudianteResult[0].EE_idenficador;
 
-        const result = await pool.query("INSERT INTO pau_btc_tbl_listaprestamo (LP_fechaDevolucion, LP_identificador_activo, LP_identificador_usuario) VALUES (?, ?, ?)", [LP_fechaDevolucion, AO_identificador_dispositivo, EE_idenficador]);
+        // Insertar el préstamo en la tabla pau_btc_tbl_listaprestamo
+        console.log("Consulta SQL para insertar préstamo:", "INSERT INTO pau_btc_tbl_listaprestamo (LP_fechaDevolucion, LP_identificador_activo, LP_identificador_usuario) VALUES (?, ?, ?)", [LP_fechaDevolucion, EA_identificador, EE_idenficador]);
+        const result = await pool.query("INSERT INTO pau_btc_tbl_listaprestamo (LP_fechaDevolucion, LP_identificador_activo, LP_identificador_usuario) VALUES (?, ?, ?)", [LP_fechaDevolucion, LP_identificador, EE_idenficador]);
 
         console.log("Resultado de la inserción en la tabla pau_btc_tbl_listaprestamo:", result);
 
@@ -39,20 +52,20 @@ const createPrestamo = async (req, res) => {
             throw new Error("Error al insertar el préstamo en la base de datos.");
         }
 
-        const [insertIdResult] = await pool.query("SELECT LAST_INSERT_ID() as insertId"); // Obtener el último ID insertado
-
+        // Obtener el ID del préstamo insertado
+        console.log("Consulta SQL para obtener el ID del préstamo insertado:", "SELECT LAST_INSERT_ID() as insertId");
+        const [insertIdResult] = await pool.query("SELECT LAST_INSERT_ID() as insertId");
         if (!insertIdResult || !insertIdResult.length || !insertIdResult[0].insertId) {
             throw new Error("Error al obtener el ID del préstamo insertado.");
         }
+        const LP_identificador_insertado = insertIdResult[0].insertId;
 
-        const LP_identificador = insertIdResult[0].insertId; // Obtener el ID del préstamo insertado
-
-        const perifericoInsertResult = await pool.query("INSERT INTO pau_btc_tbl_listaprestamo_x_tbl_periferico (LP_identificador, EA_identificador) VALUES (?, ?)", [LP_identificador, EA_identificador_periferico]);
-
-        console.log("Resultado de la inserción en la tabla pau_btc_tbl_listaprestamo_x_tbl_periferico:", perifericoInsertResult);
+        // Insertar la relación entre el préstamo y el periférico en la tabla pau_btc_tbl_listaprestamo_x_periferico
+        console.log("Consulta SQL para insertar relación préstamo-periférico:", "INSERT INTO pau_btc_tbl_listaprestamo_x_periferico (LP_identificador, EA_identificador) VALUES (?, ?)", [LP_identificador_insertado, EA_identificador]);
+        const relationInsertResult = await pool.query("INSERT INTO pau_btc_tbl_listaprestamo_x_tbl_periferico (LP_identificador, EA_identificador) VALUES (?, ?)", [LP_identificador_insertado, EA_identificador]);
+        console.log("Resultado de la inserción en la tabla pau_btc_tbl_listaprestamo_x_periferico:", relationInsertResult);
 
         console.log("Datos de préstamo insertados correctamente.");
-
         return res.status(200).json({ message: 'Datos de préstamo insertados correctamente.' });
     } catch (error) {
         console.log("Error al insertar datos de préstamo:", error);

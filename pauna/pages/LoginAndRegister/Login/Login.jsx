@@ -12,9 +12,6 @@ import axios from 'axios';
 const Login = () => {
   const router = useRouter();
 
-  //QUEDA PENDIENTE TERMINAR LO DE LOGUEARSE
-
-  //const [selectedOption, setSelectedOption] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
 
@@ -32,9 +29,7 @@ const Login = () => {
         });
 
         const data = response.data;
-        //const idRol = data.idRol;
-
-        //console.log("Id del rol:", idRol);
+        
         console.log("data:", data.UO_identificador_rol);
 
         if (data.UO_identificador_rol === 1) {
@@ -52,7 +47,6 @@ const Login = () => {
         console.error('Error al manejar el inicio de sesión:', error);
     }
 };
-
 
   const handleEnterLogin = () => {
     let timerInterval
@@ -76,7 +70,6 @@ const Login = () => {
         console.log('I was closed by the timer')
       }
     })
-    
   }
 
   return (
@@ -107,17 +100,6 @@ const Login = () => {
             <Form.Group className="w-100 p-0">
               <Form.Control type="password" placeholder="Contraseña" className="w-100 p-3 rounded-xl" value={password} onChange={(e) => setPassword(e.target.value)}/>
             </Form.Group>
-
-            {/* Select del rol */}
-            {/* <Form.Group className="w-100 p-0">
-              <Form.Control as="select" className="w-100 p-3 rounded-xl" onChange={(e) => setSelectedOption(e.target.value)}>
-                <option value="">-Elige un rol-</option>
-                <option value="biblioteca">Biblioteca</option>
-                <option value="biblioAdmin">Biblioteca/Admin</option>
-                <option value="administracion">Administración</option>
-              </Form.Control>
-            </Form.Group> */}
-
             <Button
               variant="primary"
               size="lg"

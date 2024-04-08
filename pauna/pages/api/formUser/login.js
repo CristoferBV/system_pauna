@@ -4,63 +4,61 @@ import bcrypt from 'bcryptjs';
 export default async function handler(req, res) {
     switch (req.method) {
         case "POST":
-            return await postUserGmail(req, res);
+            await postUserGmail(req, res); // Espera a que se complete la función postUserGmail
+            break;
+        default:
+            res.status(405).end(); // Método no permitido
+            break;
     }
 }
 
 const postUserGmail = async (req, res) => {
-
-    /* QUEDA HACER VALIDACION CON EL CORREO TAMBIEN PARA QUE NO ME DEJE LOGUEAR SI NO ES EL CORRECTO*/
-
-    /* HACER NUEVA API DE QUE SOLO USE LA CONTRASENNA COMO VALIDACION */
-
     try {
-        const { correo, password } = req.body; // Llegan dos datos: Correo y Contraseña
-
-        console.log("Datos de API:", req.body);
-        console.log("constrasenna desde login: ", password)
+        const { correo, password } = req.body;
 
         const user = await pool.query(`
             SELECT 
                 u.UO_identificador,
                 u.UO_contrasena,
-                u.UO_identificador_rol
+                u.UO_identificador_rol,
+                u.UO_identificador_correo
             FROM
                 pau_gnl_usuario u  
-            JOIN
-                pau_btc_tbl_estudiante e ON u.UO_identificador = e.EE_identificador_usuario
             JOIN 
-                pau_gnl_tbl_correoelectronico c ON e.EE_identificador_correo = c.CE_idCorreo
+                pau_gnl_tbl_correoelectronico c ON u.UO_identificador_correo = c.CE_idCorreo
             WHERE
                 c.CE_correoElectronico = ?
         `, [correo]);
 
+        console.log("Resultado de la consulta:", user);
 
         if (user.length === 0) {
             return res.status(401).json({ error: 'Usuario no encontrado' });
         }
 
-        //console.log("Datos user:", user)
-
-        const userData = user[0][0]; // Obtén el primer elemento del primer conjunto de resultados
-        const { UO_identificador, UO_contrasena, UO_identificador_rol } = userData;
-
-        console.log("contrasenna: ", UO_contrasena);
-        console.log("id rol: ", UO_identificador_rol);
-        console.log("id usuario: ", UO_identificador);
-
-        // Desencriptar la contraseña almacenada antes de compararla
-        const match = bcrypt.compare(password, UO_contrasena);  //EL PROBLEMA ESTA AQUI YA QUE NO DA TRUE LA RESPUESTA, LO QUE SIGNIFICA QUE ALGUNA CONTRASENNA ES INCORRECTA
-                                                                //const match = bcrypt.compare(password, UO_contrasena); 2.0
-        if (!match) {
-            return res.status(401).json({ error: 'Contraseña incorrecta' }); //ESTA VALIDACION SE CUMPLE POR ENDE ESTA DANDO FALSO match Y NO SE PUEDE AVANZAR
+        const userData = user[0][0];
+        
+        if (!userData) {
+            return res.status(401).json({ error: 'Usuario no encontrado' });
         }
 
-        // Enviar el dato idRol al cliente
-        return res.status(200).json({ UO_identificador_rol });
+        const { UO_contrasena, UO_identificador_rol } = userData;
+
+        console.log("contrasenna login:", password);
+        console.log("contrasenna base de datos:", UO_contrasena);
+
+        const match = await bcrypt.compare(password, UO_contrasena); // Espera a que se complete la comparación
+
+        if (match) {
+            console.log("Contraseña correcta");
+            return res.status(200).json({ UO_identificador_rol });
+        } else {
+            console.log("Error en la contraseña");
+            return res.status(401).json({ error: 'Contraseña incorrecta' });
+        }
 
     } catch (error) {
         console.error('Error al autenticar el usuario:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        return res.status(500).json({ error: 'Error interno del servidor' });
     }
 };

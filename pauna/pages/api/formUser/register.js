@@ -25,8 +25,19 @@ const postUser = async (req, res) => {
     } = req.body;
 
     try {
+
+        // Inserta el correo electrónico en la tabla pau_gnl_tbl_correoelectronico
+        await pool.query("INSERT INTO `pau_gnl_tbl_correoelectronico` SET ?", {
+            CE_correoElectronico: gmail,
+            CE_descripcion: "Correo de estudiante"
+        });
+
+        // Obtén el ID del correo electrónico recién insertado
+        const correoResult = await pool.query("SELECT LAST_INSERT_ID() as id");
+        const correoId = correoResult[0][0].id;
+
         // Encripta la contraseña antes de insertarla en la base de datos
-        const hashedPassword = await bcrypt.hash(UO_contrasena, 8);
+        const hashedPassword = await bcrypt.hash(UO_contrasena, 5);
 
         // Inserta el nuevo usuario en la tabla pau_gnl_usuario utilizando la contraseña encriptada
         await pool.query("INSERT INTO `pau_gnl_usuario` SET ?", {
@@ -35,6 +46,7 @@ const postUser = async (req, res) => {
             UO_segundo_nombre,
             UO_primer_apellido,
             UO_segundo_apellido,
+            UO_identificador_correo: correoId, //nuevo
             UO_identificador_rol,
             UO_contrasena: hashedPassword // Guarda la contraseña encriptada
         });
@@ -52,22 +64,11 @@ const postUser = async (req, res) => {
         const telefonoResult = await pool.query("SELECT LAST_INSERT_ID() as id");
         const telefonoId = telefonoResult[0][0].id;
 
-        // Inserta el correo electrónico en la tabla pau_gnl_tbl_correoelectronico
-        await pool.query("INSERT INTO `pau_gnl_tbl_correoelectronico` SET ?", {
-            CE_correoElectronico: gmail,
-            CE_descripcion: "Correo de estudiante"
-        });
-
-        // Obtén el ID del correo electrónico recién insertado
-        const correoResult = await pool.query("SELECT LAST_INSERT_ID() as id");
-        const correoId = correoResult[0][0].id;
-
         //Insertar todos los datos de estudiante
         await pool.query("INSERT INTO `pau_btc_tbl_estudiante` SET ?", {
             EE_campus: campus,
             EE_nivel: nivelCarrera,
             EE_identifacador_telefono: telefonoId,
-            EE_identificador_correo: correoId,
             EE_idenficador_carrera: carrera,
             EE_identificador_usuario: usuarioId
         })

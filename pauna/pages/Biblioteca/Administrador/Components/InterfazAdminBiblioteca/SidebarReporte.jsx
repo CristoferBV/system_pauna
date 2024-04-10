@@ -34,7 +34,6 @@ export default function SidebarReporte({ Reporte }) {
     };
 
     const handleSubmit = async (data) => {
-        console.log("hola");
         const res = await axios
             .post("/api/config/BibliotecaDispositivos", data)
             .then(function (response) {
@@ -95,7 +94,7 @@ export default function SidebarReporte({ Reporte }) {
             (reporte.UO_identificador || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (reporte.TP_nombre || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (reporte.LP_fechaDevolucion || '').toLowerCase().includes(searchText.toLowerCase()) ||
-            (reporte.RE_observacion || '').toLowerCase().includes(searchText.toLowerCase())
+            (reporte.EA_nombre || '').toLowerCase().includes(searchText.toLowerCase())
         );
     });
 
@@ -191,8 +190,8 @@ export default function SidebarReporte({ Reporte }) {
             "Nombre Estudiante",
             "Cédula",
             "Dispositivo",
+            "Periferico",
             "Fecha Devolucion",
-            "Observacion",
         ];
 
         const tableData = data.map((reporte) => [
@@ -200,7 +199,7 @@ export default function SidebarReporte({ Reporte }) {
             reporte.UO_identificador,
             reporte.TP_nombre,
             new Date(reporte.LP_fechaDevolucion).toISOString().slice(0, 10),
-            reporte.RE_observacion,
+            reporte.EA_nombre,
         ]);
 
         const startYPosition = titleYPosition + 70;
@@ -263,8 +262,8 @@ export default function SidebarReporte({ Reporte }) {
                                 <th className="text-center">Nombre Estudiante</th>
                                 <th className="text-center">Cédula</th>
                                 <th className="text-center">Dispositivo</th>
+                                <th className="text-center">Periferico</th>
                                 <th className="text-center">Fecha Devolucion</th>
-                                <th className="text-center">Observacion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -273,8 +272,8 @@ export default function SidebarReporte({ Reporte }) {
                                     <td className="text-center">{reporte.UO_primer_nombre}</td>
                                     <td className="text-center">{reporte.UO_identificador}</td>
                                     <td className="text-center">{reporte.TP_nombre}</td>
+                                    <td className="text-center">{reporte.EA_nombre}</td>
                                     <td className="text-center">{new Date(reporte.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
-                                    <td className="text-center">{reporte.RE_observacion}</td>
                                 </tr>
                             ))}
                         </tbody>

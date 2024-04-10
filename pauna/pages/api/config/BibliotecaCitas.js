@@ -29,7 +29,7 @@ const deleteCitas = async (req, res) => {
 
 const getAllCitas = async (req, res) => {
     try {
-        const [citasResult] = await pool.query("SELECT s.SD_identificador, h.HO_fecha, h.HO_hora, u.UO_primer_nombre, u.UO_identificador, c.CA_nombre, t.TP_nombre FROM PAU_BTC_TBL_SOLICITUD s LEFT JOIN PAU_BTC_TBL_ESTUDIANTE e ON s.SD_identificador_usuario = e.EE_idenficador LEFT JOIN PAU_BTC_TBL_CARRERA c ON e.EE_idenficador_carrera = c.CA_identificador LEFT JOIN PAU_BTC_TBL_HORARIO h ON s.SD_identificador_horario = h.HO_identificador LEFT JOIN PAU_BTC_TBL_TIPO t ON s.SD_identificador_tipo = t.TP_identificador LEFT JOIN PAU_GNL_USUARIO u ON e.EE_identificador_usuario = u.UO_identificador");
+        const [citasResult] = await pool.query("SELECT s.SD_identificador, h.HO_fecha, h.HO_hora, u.UO_primer_nombre, u.UO_identificador, c.CA_nombre, t.TP_nombre FROM pau_btc_tbl_solicitud s LEFT JOIN pau_btc_tbl_estudiante e ON s.SD_identificador_usuario = e.EE_idenficador LEFT JOIN pau_btc_tbl_carrera c ON e.EE_idenficador_carrera = c.CA_identificador LEFT JOIN pau_btc_tbl_horario h ON s.SD_identificador_horario = h.HO_identificador LEFT JOIN pau_btc_tbl_tipo t ON s.SD_identificador_tipo = t.TP_identificador LEFT JOIN pau_gnl_usuario u ON e.EE_identificador_usuario = u.UO_identificador");
         const [horarioResult] = await pool.query("SELECT HO_identificador, HO_fecha, HO_hora FROM pau_btc_tbl_horario");
         const [DispositivoResult] = await pool.query("SELECT TP_identificador, TP_nombre FROM pau_btc_tbl_tipo");
         console.log(citasResult);

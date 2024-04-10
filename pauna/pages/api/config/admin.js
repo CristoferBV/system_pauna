@@ -1,4 +1,4 @@
-import { pool } from "../../BD/Storage";
+import { pool } from "../../../utils/BD/Storage";
 
 export default async function handler(req, res) {
     console.log(req.method);

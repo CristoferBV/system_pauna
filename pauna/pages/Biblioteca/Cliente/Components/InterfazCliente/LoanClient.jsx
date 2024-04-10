@@ -5,13 +5,29 @@ import Link from "next/link";
 import Axios from "axios";
 import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
-import { Navbar,Nav,Form, Button,Card,Table,Container,Row,Col,Tabs,Tab, } from "react-bootstrap";
+import { Navbar, Nav, Form, Button, Card, Table, Container, Row, Col, Tabs, Tab } from "react-bootstrap";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import React from "react";
 
 const LoanClient = () => {
   const router = useRouter();
+
+  //Datos de solicitud
+  const [loanData, setLoanData] = useState([]);
+
+  useEffect(() => {
+    // Realizar una solicitud GET a la API para obtener los préstamos
+    Axios.get("/api/libraryClient/loan")
+      .then((response) => {
+        // Al recibir la respuesta, actualizar el estado con los datos de los préstamos
+        setLoanData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los préstamos", error);
+      });
+  }, []);
+
   const [active, setActive] = useState("");
   const [cedula, setCedula] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -104,7 +120,9 @@ const LoanClient = () => {
       };
 
       const comprobanteBecaBlob = await convertToBlob(comprobanteBecaFile);
-      const comprobanteMatriculaBlob = await convertToBlob(comprobanteMatriculaFile);
+      const comprobanteMatriculaBlob = await convertToBlob(
+        comprobanteMatriculaFile
+      );
 
       console.log("Datos enviados al servidor:", {
         cedula,
@@ -193,7 +211,7 @@ const LoanClient = () => {
               <Col>
                 <div className="d-flex align-items-center justify-content-center">
                   <Image src={LogoBombilla} alt="Logo" />
-                  <h1 className="ml-3">Realice el Préstamo</h1>
+                  <h1 className="ml-3">Llenar la solicitud</h1>
                 </div>
               </Col>
             </Row>
@@ -211,7 +229,7 @@ const LoanClient = () => {
             <Tab
               eventKey="Estudiantes"
               title={
-                <span className="custom-tab-title">Llenar Formulario</span>
+                <span className="custom-tab-title">Solicitud</span>
               }
             >
               <Form>
@@ -316,9 +334,7 @@ const LoanClient = () => {
 
                   <Col md={4}>
                     <Form.Group className="mb-3">
-                      <label className="font-semibold">
-                        Fechas de prestamos
-                      </label>
+                      <label className="font-semibold">Fechas de citas</label>
                       <Form.Control
                         as="select"
                         onChange={(e) => {
@@ -412,39 +428,73 @@ const LoanClient = () => {
             <Tab
               eventKey="Datos"
               title={
-                <span className="custom-tab-title">Realizar Prestamo</span>
+                <span className="custom-tab-title">Ver Solicitud</span>
               }
             >
               <Table striped bordered hover responsive>
-                <thead>
-                  <tr>
-                    <th>Primer Nombre</th>
-                    <th>Segundo Nombre</th>
-                    <th>Primer Apellido</th>
-                    <th>Segundo Apellido</th>
-                    <th>Carrera</th>
-                    <th>Fecha Prestamo</th>
-                    <th>Cédula</th>
-                    <th>Nivel Carrera</th>
-                    <th>Campus</th>
-                    <th>Correo</th>
-                    <th>Dispositivo</th>
-                    <th>Teléfono</th>
-                    <th>Comprobante Beca</th>
-                    <th>Comprobante Matricula</th>
-                  </tr>
-                </thead>
-                <tbody>{/* Aquí van datos para la tabla */}</tbody>
-              </Table>
-              <div className="d-flex justify-content-between align-items-center">
-                <Button variant="danger" type="button">
-                  Aceptar Préstamo
-                </Button>
-                <div className="mx-2"></div>
-                <Button variant="danger" type="button">
-                  Eliminar Préstamo
-                </Button>
-              </div>
+        <thead>
+          <tr>
+            <th>Primer Nombre</th>
+            <th>Segundo Nombre</th>
+            <th>Primer Apellido</th>
+            <th>Segundo Apellido</th>
+            <th>Carrera</th>
+            <th>Fecha Prestamo</th>
+            <th>Cédula</th>
+            <th>Nivel Carrera</th>
+            <th>Campus</th>
+            <th>Correo</th>
+            <th>Dispositivo</th>
+            <th>Teléfono</th>
+            <th>Comprobante Beca</th>
+            <th>Comprobante Matricula</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Array.isArray(loanData) && loanData.length > 0 ? (
+            loanData.map((loan) => {
+              const cedulaMatches = cedula === loan.UO_identificador;
+
+              return (
+                <React.Fragment key={loan.UO_identificador}>
+                  {cedulaMatches && (
+                    <tr>
+                      <td>{loan.UO_primer_nombre}</td>
+                      <td>{loan.UO_segundo_nombre}</td>
+                      <td>{loan.UO_primer_apellido}</td>
+                      <td>{loan.UO_segundo_apellido}</td>
+                      <td>{loan.CA_nombre}</td>
+                      <td>{new Date(loan.HO_fecha).toLocaleDateString()}</td>
+                      <td>{loan.UO_identificador}</td>
+                      <td>{loan.EE_nivel}</td>
+                      <td>{loan.EE_campus}</td>
+                      <td>{loan.CE_correoElectronico}</td>
+                      <td>{loan.TP_nombre}</td>
+                      <td>{loan.TO_numero}</td>
+                      <td>
+                        {loan.SD_comprobanteBeca && (
+                          <img src={loan.SD_comprobanteBeca} alt="Comprobante de Beca" />
+                        )}
+                      </td>
+                      <td>
+                        {loan.SD_comprobanteMatricula && (
+                          <img src={loan.SD_comprobanteMatricula} alt="Comprobante de Matrícula" />
+                        )}
+                      </td>
+                    </tr>
+                  )}
+
+                  
+                </React.Fragment>
+              );
+            })
+          ) : (
+            <tr>
+              <td colSpan="14">No hay datos disponibles</td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
             </Tab>
           </Tabs>
         </div>

@@ -4,18 +4,16 @@ import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, ButtonGroup  } from "react-bootstrap";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import Container from "react-bootstrap/Container"
-import axios from 'axios';
+import Container from "react-bootstrap/Container";
+import axios from "axios";
 import Swal from "sweetalert2";
 
-
-export default function DevolutionClient({Devolution}) {
-  const [selectedRow, setSelectedRow] = useState(null);
+export default function DevolutionClient({ Devolution }) {
   const router = useRouter();
   const [active, setActive] = useState("");
   const [key, setKey] = useState("Inicio");
@@ -29,23 +27,25 @@ export default function DevolutionClient({Devolution}) {
 
   //Datos que se envían a la base de datos
   const [] = useState({
-    PrimerNombreUsuario: '',
-    IdentificadorUsuario: '',
-    NombreCarrera: '',
-    NombreTipo: '',
-    FechaDevolucion: '',
+    PrimerNombreUsuario: "",
+    IdentificadorUsuario: "",
+    NombreCarrera: "",
+    NombreTipo: "",
+    FechaDevolucion: "",
   });
 
-  const [identificacion, setIdentificacion] = useState('');
-  const [nombre, setNombre] = useState('');
-  const [apellido1, setApellido1] = useState('');
-  const [apellido2, setApellido2] = useState('');
-  const [correo, setCorreo] = useState('');
-  const [fechaEntrega, setFechaEntrega] = useState('YYYY-MM-DD');
+  const [identificacion, setIdentificacion] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [apellido1, setApellido1] = useState("");
+  const [apellido2, setApellido2] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [fechaEntrega, setFechaEntrega] = useState("YYYY-MM-DD");
 
   const buscarEstudiante = async () => {
     try {
-      const response = await axios.get(`/api/devolution/students?identificacion=${identificacion}`);
+      const response = await axios.get(
+        `/api/devolution/students?identificacion=${identificacion}`
+      );
       if (response.status === 200) {
         const data = response.data;
         if (data.length > 0) {
@@ -57,7 +57,9 @@ export default function DevolutionClient({Devolution}) {
 
           // Formatea la fecha en "YYYY-MM-DD" antes de establecerla en el estado
           const fechaEntrega = new Date(estudiante.FechaEntrega);
-          const formattedFechaEntrega = fechaEntrega.toISOString().split('T')[0];
+          const formattedFechaEntrega = fechaEntrega
+            .toISOString()
+            .split("T")[0];
           setFechaEntrega(formattedFechaEntrega);
         } else {
           // No se encontró ningún estudiante con la identificación proporcionada
@@ -67,9 +69,13 @@ export default function DevolutionClient({Devolution}) {
         // Manejar errores de la solicitud a la API
       }
     } catch (error) {
-      // Manejar errores de la solicitud
+      Swal.fire({
+        icon: "error",
+        title: "No se encontraron estudiantes...",
+        text: "Usted no posee una solicitud!",
+      });
     }
-  }
+  };
 
   const handleTabSelect = (key) => {
     if (key === "Datos") {
@@ -78,71 +84,86 @@ export default function DevolutionClient({Devolution}) {
     setKey(key);
   };
 
+
   // Función para manejar el clic en el botón "Enviar"
   const handleButtonDelete = () => {
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: "¡No podrás revertir esto!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        if (selectedRow !== null) {
-          // Obtén el identificador de la fila seleccionada
-          const identificacion = Devolution[selectedRow].IdentificadorUsuario;
-  
+    const identificacion = document.getElementById("formGridCedula").value; // Obtener el valor del campo de entrada de cédula
+
+    if (identificacion) {
+      // Verificar si se ha ingresado una cédula
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡No podrás revertir esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.isConfirmed) {
           // Define los datos a enviar a la API
           const dataToSend = {
             UO_identificador: identificacion,
           };
-  
+
           // Realiza una solicitud DELETE a la API para eliminar los datos en función del identificador
           axios
-            .delete('/api/devolution/data', { data: dataToSend })
+            .delete("/api/devolution/data", { data: dataToSend })
             .then((response) => {
               if (response.status === 200) {
                 // Los datos se eliminaron con éxito, puedes realizar alguna acción apropiada aquí.
-                console.log('Datos eliminados con éxito');
-  
+                console.log("Datos eliminados con éxito");
+
                 // Actualiza los datos después de la eliminación
                 axios
-                  .get('/api/devolution/data')
+                  .get("/api/devolution/data")
                   .then((response) => {
                     if (response.status === 200) {
-                      console.log('Datos actualizados:', response.data);
+                      console.log("Datos actualizados:", response.data);
                       const newData = response.data;
                       setData(newData); // Actualiza los datos en el estado
-  
+
                       // Muestra una notificación de éxito
-                      Swal.fire('Devolución realizada!', 'Su devolución ha sido realizada.', 'success');
-  
-                      // Recarga la página para reflejar los cambios en la tabla
-                     //window.location.href = '/Biblioteca/Cliente/Components/InterfazCliente/DevolutionClient';
+                      Swal.fire(
+                        "Devolución realizada!",
+                        "Su devolución ha sido realizada.",
+                        "success"
+                      );
+
+                      // Limpia los campos de entrada
+                      setIdentificacion("");
+                      setNombre("");
+                      setApellido1("");
+                      setApellido2("");
+                      setCorreo("");
+                      setFechaEntrega("");
+
                     } else {
-                      console.log('Error al actualizar datos');
+                      console.log("Error al actualizar datos");
                     }
                   })
                   .catch((error) => {
-                    console.error('Error al obtener datos actualizados:', error);
+                    console.error(
+                      "Error al obtener datos actualizados:",
+                      error
+                    );
                   });
               } else {
                 // Manejar otros códigos de estado de respuesta si es necesario.
-                console.log('Error al eliminar datos');
+                console.log("Error al eliminar datos");
               }
             })
             .catch((error) => {
               // Manejar errores de la solicitud
-              console.error('Error:', error);
+              console.error("Error:", error);
             });
-        } else {
-          // Muestra un mensaje de error o realiza alguna acción si no se ha seleccionado ninguna fila.
-          console.log('Selecciona una fila antes de enviar los datos.');
         }
-      }
-    });
+      });
+    } else {
+      // Muestra un mensaje de error si no se ha ingresado una cédula
+      console.log("Ingrese una cédula antes de enviar los datos.");
+    }
+    
   };
 
   return (
@@ -228,65 +249,37 @@ export default function DevolutionClient({Devolution}) {
               title={<span className="custom-tab-title">Inicio</span>}
             >
               <Card>
-                <Card.Body> <h4 >Bienvenido querido estudiante a la sección de devolución de dispositivos.</h4><br/>
-
-                  <span>●</span> El primer paso es ir a la sección de <b>"Devolución"</b>. <br/>
-                  <span>●</span> El segundo paso es visualizar si su <b>nombre completo y cedula</b> se encuentra en la tabla junto con el resto de datos del prestamo. <br/>
-                  <span>●</span> El tercer paso es <b>seleccionar</b> su nombre y pulsar el boton enviar. <br/> <br/>
-
-                  <h6> Dato: Como función extra en la sección "Estudiantes" podrán buscarse digitando unicamente su número de cédula.</h6>
-                  <h6> con la idea de saber si tienen algún prestamo activo. Si no se desplegan sus datos, es porque carece de un préstamo.</h6>
+                <Card.Body>
+                  {" "}
+                  <h4>
+                    Bienvenido querido estudiante a la sección de devolución de
+                    dispositivos.
+                  </h4>
+                  <br />
+                  <span>●</span> El primer paso es ir a la sección de{" "}
+                  <b>"Devolución"</b>. <br />
+                  <span>●</span> El segundo paso es visualizar si su{" "}
+                  <b>nombre completo y cedula</b> se encuentra en la tabla junto
+                  con el resto de datos del prestamo. <br />
+                  <span>●</span> El tercer paso es <b>seleccionar</b> su nombre
+                  y pulsar el boton enviar. <br /> <br />
+                  <h6>
+                    {" "}
+                    Dato: Como función extra en la sección "Estudiantes" podrán
+                    buscarse digitando unicamente su número de cédula.
+                  </h6>
+                  <h6>
+                    {" "}
+                    con la idea de saber si tienen algún prestamo activo. Si no
+                    se desplegan sus datos, es porque carece de un préstamo.
+                  </h6>
                 </Card.Body>
               </Card>
-
-            </Tab>
-
-            <Tab
-              eventKey="Datos"
-              title={<span className="custom-tab-title">Devolución</span>}
-            >
-              <Table striped bordered hover responsive>
-                <thead>
-                  <tr>
-                    <th>Estudiante</th>
-                    <th>Identifición</th>
-                    <th>Carrera</th>
-                    <th>Dispositivo</th>
-                    <th>Fecha de Entrega</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Devolution.map((Devolution, index) => (
-                    <tr
-                      key={Devolution.IdentificadorUsuario}
-                      className={selectedRow === index ? "selected-row" : ""}
-                      onClick={() => setSelectedRow(index)}
-                    >
-                      <td>{Devolution.PrimerNombreUsuario}</td>
-                      <td>{Devolution.IdentificadorUsuario}</td>
-                      <td> {Devolution.NombreCarrera}</td>
-                      <td>{Devolution.NombreTipo}</td>
-                      <td>
-                        {new Date(Devolution.FechaDevolucion)
-                          .toISOString()
-                          .slice(0, 10)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-              <Button
-                variant="danger"
-                type="button"
-                onClick={handleButtonDelete}
-              >
-                Enviar
-              </Button>
             </Tab>
 
             <Tab
               eventKey="Estudiantes"
-              title={<span className="custom-tab-title">Estudiantes</span>}
+              title={<span className="custom-tab-title">Devolución</span>}
             >
               <Form>
                 <Form.Group className="mb-3" controlId="formGridCedula">
@@ -366,13 +359,22 @@ export default function DevolutionClient({Devolution}) {
                   />
                 </Form.Group>
 
-                <Button
-                  variant="danger"
-                  type="button"
-                  onClick={buscarEstudiante}
-                >
-                  Buscar Estudiante
-                </Button>
+                <ButtonGroup className="mt-3 gap-3">
+                  <Button
+                    variant="primary"
+                    type="button"
+                    onClick={buscarEstudiante}
+                  >
+                    Buscar datos
+                  </Button>
+                  <Button
+                    variant="danger"
+                    type="button"
+                    onClick={handleButtonDelete}
+                  >
+                    Hacer Devolución
+                  </Button>
+                </ButtonGroup>
               </Form>
             </Tab>
           </Tabs>
@@ -404,22 +406,20 @@ export default function DevolutionClient({Devolution}) {
 
 export const getServerSideProps = async (context) => {
   try {
-      const { data: Devolution } = await axios.get(
-          "http://localhost:3000/api/devolution/data"
-      );
-      return {
-          props: {
-            Devolution,
-          },
-      };
+    const { data: Devolution } = await axios.get(
+      "http://localhost:3000/api/devolution/data"
+    );
+    return {
+      props: {
+        Devolution,
+      },
+    };
   } catch (error) {
-      console.log(error);
-      return {
-          props: {
-            Devolution: [], 
-          },
-      };
+    console.log(error);
+    return {
+      props: {
+        Devolution: [],
+      },
+    };
   }
 };
-
-

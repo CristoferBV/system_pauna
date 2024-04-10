@@ -7,24 +7,24 @@ export default async function handler(req, res) {
 
       // Consulta SQL para obtener los datos del estudiante por identificación
       const query = `
-        SELECT UO.UO_primer_nombre AS Nombre,
-        UO.UO_primer_apellido AS PrimerApellido,
-        UO.UO_segundo_apellido AS SegundoApellido,
-        CE.CE_correoElectronico AS Correo,
-        LP.LP_fechaDevolucion AS FechaEntrega
+      SELECT UO.UO_primer_nombre AS Nombre,
+      UO.UO_primer_apellido AS PrimerApellido,
+      UO.UO_segundo_apellido AS SegundoApellido,
+      CE.CE_correoElectronico AS Correo,
+      LP.LP_fechaDevolucion AS FechaEntrega
 
-        FROM PAU_GNL_USUARIO UO
+      FROM pau_gnl_usuario UO
 
-          LEFT JOIN PAU_BTC_TBL_ESTUDIANTE EE ON UO.UO_identificador = EE.EE_identificador_usuario
-          LEFT JOIN PAU_BTC_TBL_LISTAPRESTAMO LP ON EE.EE_idenficador = LP.LP_identificador_usuario
-          LEFT JOIN PAU_GNL_TBL_CORREOELECTRONICO CE ON EE.EE_identificador_correo = CE.\`CE_idCorreo\`
+        LEFT JOIN pau_btc_tbl_estudiante EE ON UO.UO_identificador = EE.EE_identificador_usuario
+        LEFT JOIN pau_btc_tbl_listaprestamo LP ON EE.EE_idenficador = LP.LP_identificador_usuario
+        LEFT JOIN pau_gnl_tbl_correoelectronico CE ON UO.UO_identificador_correo = CE.CE_idCorreo
 
-        WHERE UO.UO_identificador IN (
-          SELECT EE.EE_identificador_usuario
-          FROM PAU_BTC_TBL_ESTUDIANTE EE
-          INNER JOIN PAU_BTC_TBL_LISTAPRESTAMO LP ON EE.EE_idenficador = LP.LP_identificador_usuario
-          INNER JOIN PAU_GNL_USUARIO UO ON EE.EE_identificador_usuario = ?
-        );
+      WHERE UO.UO_identificador IN (
+        SELECT EE.EE_identificador_usuario
+        FROM pau_btc_tbl_estudiante EE
+        INNER JOIN pau_btc_tbl_listaprestamo LP ON EE.EE_idenficador = LP.LP_identificador_usuario
+        INNER JOIN pau_gnl_usuario UO ON EE.EE_identificador_usuario = 118080475
+      );
       `;
 
       // Ejecuta la consulta con la identificación proporcionada

@@ -15,18 +15,19 @@ const getAllData = async (req, res) => {
         // Consulta SQL para obtener los datos
         const query = `
         SELECT
-          UO.UO_primer_nombre AS PrimerNombreUsuario,
-          UO.UO_identificador AS IdentificadorUsuario,
-          CA.CA_nombre AS NombreCarrera,
-          TP.TP_nombre AS NombreTipo,
-          LP.LP_fechaDevolucion AS FechaDevolucion
-        FROM
-          PAU_GNL_USUARIO UO
-          JOIN PAU_BTC_TBL_ESTUDIANTE ES ON UO.UO_identificador = ES.EE_identificador_usuario
-          JOIN PAU_BTC_TBL_CARRERA CA ON ES.EE_idenficador_carrera = CA.CA_identificador
-          JOIN PAU_BTC_TBL_LISTAPRESTAMO LP ON ES.EE_idenficador = LP.LP_identificador_usuario
-          JOIN PAU_BTC_TBL_ACTIVO AO ON LP.LP_identificador_activo = AO.AO_identificador
-          JOIN PAU_BTC_TBL_TIPO TP ON AO.AO_identificador_tipo = TP.TP_identificador;
+      uo.UO_primer_nombre AS PrimerNombreUsuario,
+      uo.UO_identificador AS IdentificadorUsuario,
+      ca.CA_nombre AS NombreCarrera,
+      tp.TP_nombre AS NombreTipo,
+      lp.LP_fechaDevolucion AS FechaDevolucion
+      
+FROM pau_gnl_usuario uo
+
+      JOIN pau_btc_tbl_estudiante es ON uo.UO_identificador = es.EE_identificador_usuario
+      JOIN pau_btc_tbl_carrera ca ON es.EE_idenficador_carrera = ca.CA_identificador
+      JOIN pau_btc_tbl_listaprestamo lp ON es.EE_idenficador = lp.LP_identificador_usuario
+      JOIN pau_btc_tbl_activo ao ON lp.LP_identificador_activo = ao.AO_identificador
+      JOIN pau_btc_tbl_tipo tp ON ao.AO_identificador_tipo = tp.TP_identificador;
         `;
 
         // Ejecuta la consulta

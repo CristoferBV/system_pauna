@@ -106,7 +106,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
   const handleChange = ({ target: { name, value } }) => {
     if (name in color) {
-      if(!isNaN(value)){
+      if (value === '' || isNaN(value)){
         setColor({ ...color, [name]: value });
       }else{
         alert("Ingrese error no es posible ingresar numeros")
@@ -588,6 +588,16 @@ export const getServerSideProps = async (context) => {
       },
     };
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching data:");
+    return {
+      props: {
+        materials: [],
+        colors: [],
+        brands: [],
+        ubications: [],
+        types: [],
+        deparments: []
+      },
+    };
   }
 }

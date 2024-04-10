@@ -66,9 +66,9 @@ const Register = () => {
 
   // Enviar los datos al servidor
   const handleClick = async (e) => {
-    console.log({ user });
+    //console.log({ user });
     e.preventDefault();
-    console.log(user);
+    //console.log(user);
     const res = await axios
       .post("/api/formUser/register", user)
       .then(function (response) {

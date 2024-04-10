@@ -116,7 +116,6 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                                 <th className="text-center">Campus</th>
                                 <th className="text-center">Correo</th>
                                 <th className="text-center">Telefono</th>
-                                <th className="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -128,28 +127,6 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                                     <td className="text-center">{estudiante.EE_campus}</td>
                                     <td className="text-center">{estudiante.CE_correoElectronico}</td>
                                     <td className="text-center">{estudiante.TO_numero}</td>
-                                    <td className="text-center">
-                                        <Button
-                                            onClick={handleEditEstudiante}
-                                            style={buttonStyle}
-                                            onMouseEnter={(e) => {
-                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                            }}
-
-                                        > Editar
-                                        </Button>
-                                        <Button className='ml-2' onClick={() => confirmDeleteEstudiante(estudiante)} style={buttonStyle} onMouseEnter={(e) => {
-                                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                        }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                            }}>
-                                            Eliminar
-                                        </Button>
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>

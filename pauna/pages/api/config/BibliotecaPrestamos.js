@@ -6,13 +6,8 @@ export default async function handler(req, res) {
         case "GET":
             return await getAllPrestamos(req, res);
         case "POST":
-            return await createPrestamo(req, res);
-        case "PUT":
-            return await updatePrestamos(req, res);
-        case "DELETE":
-            return await deletePrestamos(req, res);
-        default:
-            return res.status(405).end(); // Método no permitido
+            await createPrestamo(req, res); 
+            return; 
     }
 }
 
@@ -24,7 +19,7 @@ const createPrestamo = async (req, res) => {
         const { LP_identificador_usuario, LP_fechaDevolucion, EA_identificador, LP_identificador } = req.body;
         
         // Verificar si se reciben todos los datos necesarios
-        if (!LP_identificador_usuario || !LP_fechaDevolucion || !EA_identificador) {
+        if (!LP_identificador_usuario || !LP_fechaDevolucion || !EA_identificador || !LP_identificador) {
             console.log("Faltan datos en la solicitud.");
             return res.status(400).json({ error: 'Faltan datos en la solicitud.' });
         }
@@ -42,15 +37,19 @@ const createPrestamo = async (req, res) => {
         const [EstudianteResult] = await pool.query("SELECT EE_idenficador FROM pau_btc_tbl_estudiante WHERE EE_identificador_usuario = ?", [LP_identificador_usuario]);
         const EE_idenficador = EstudianteResult[0].EE_idenficador;
 
-        // Insertar el préstamo en la tabla pau_btc_tbl_listaprestamo
-        console.log("Consulta SQL para insertar préstamo:", "INSERT INTO pau_btc_tbl_listaprestamo (LP_fechaDevolucion, LP_identificador_activo, LP_identificador_usuario) VALUES (?, ?, ?)", [LP_fechaDevolucion, EA_identificador, EE_idenficador]);
-        const result = await pool.query("INSERT INTO pau_btc_tbl_listaprestamo (LP_fechaDevolucion, LP_identificador_activo, LP_identificador_usuario) VALUES (?, ?, ?)", [LP_fechaDevolucion, LP_identificador, EE_idenficador]);
-
-        console.log("Resultado de la inserción en la tabla pau_btc_tbl_listaprestamo:", result);
-
-        if (!result.affectedRows) {
-            throw new Error("Error al insertar el préstamo en la base de datos.");
+        // Verificar si el activo existe
+        console.log("Consulta SQL para verificar si el activo existe:", "SELECT AO_identificador FROM pau_btc_tbl_activo WHERE AO_identificador = ?", EA_identificador);
+        const [ActivoResult] = await pool.query("SELECT AO_identificador FROM pau_btc_tbl_activo WHERE AO_identificador = ?", [EA_identificador]);
+        if (ActivoResult.length === 0) {
+            console.log("El activo no existe:", EA_identificador);
+            return res.status(404).json({ error: 'El activo no existe.' });
         }
+
+        const AO_identificador = ActivoResult[0].AO_identificador;
+
+        // Insertar el préstamo en la tabla pau_btc_tbl_listaprestamo
+        console.log("Consulta SQL para insertar préstamo:", "INSERT INTO pau_btc_tbl_listaprestamo (LP_fechaDevolucion, LP_identificador_activo, LP_identificador_usuario) VALUES (?, ?, ?)", [LP_fechaDevolucion, AO_identificador, EE_idenficador]);
+        const result = await pool.query("INSERT INTO pau_btc_tbl_listaprestamo (LP_fechaDevolucion, LP_identificador_activo, LP_identificador_usuario) VALUES (?, ?, ?)", [LP_fechaDevolucion, AO_identificador, EE_idenficador]);
 
         // Obtener el ID del préstamo insertado
         console.log("Consulta SQL para obtener el ID del préstamo insertado:", "SELECT LAST_INSERT_ID() as insertId");
@@ -61,9 +60,8 @@ const createPrestamo = async (req, res) => {
         const LP_identificador_insertado = insertIdResult[0].insertId;
 
         // Insertar la relación entre el préstamo y el periférico en la tabla pau_btc_tbl_listaprestamo_x_periferico
-        console.log("Consulta SQL para insertar relación préstamo-periférico:", "INSERT INTO pau_btc_tbl_listaprestamo_x_periferico (LP_identificador, EA_identificador) VALUES (?, ?)", [LP_identificador_insertado, EA_identificador]);
+        console.log("Consulta SQL para insertar relación préstamo-periférico:", "INSERT INTO pau_btc_tbl_listaprestamo_x_tbl_periferico (LP_identificador, EA_identificador) VALUES (?, ?)", [LP_identificador_insertado, EA_identificador]);
         const relationInsertResult = await pool.query("INSERT INTO pau_btc_tbl_listaprestamo_x_tbl_periferico (LP_identificador, EA_identificador) VALUES (?, ?)", [LP_identificador_insertado, EA_identificador]);
-        console.log("Resultado de la inserción en la tabla pau_btc_tbl_listaprestamo_x_periferico:", relationInsertResult);
 
         console.log("Datos de préstamo insertados correctamente.");
         return res.status(200).json({ message: 'Datos de préstamo insertados correctamente.' });
@@ -87,8 +85,4 @@ const getAllPrestamos = async (req, res) => {
         console.log(error);
         return res.status(500).json({ error: 'Error en la obtención de préstamos.' });
     }
-};
-
-const updatePrestamos = async (req, res) => {
-    // Implementa la lógica para actualizar préstamos si es necesario
 };

@@ -34,18 +34,36 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
     e.preventDefault();
 
     // Imprimir todos los nombres de los campos del objeto prestamo
-    console.log("Nombres de los campos del objeto prestamo:", Object.keys(prestamo));
+    console.log(
+      "Nombres de los campos del objeto prestamo:",
+      Object.keys(prestamo)
+    );
 
-    if (!prestamo.LP_identificador_usuario || !prestamo.LP_fechaDevolucion || !prestamo.LP_identificador || !prestamo.EA_identificador) {
+    if (
+      !prestamo.LP_identificador_usuario ||
+      !prestamo.LP_fechaDevolucion ||
+      !prestamo.LP_identificador ||
+      !prestamo.EA_identificador
+    ) {
       console.error("Faltan datos en la solicitud.");
       return;
     }
     try {
       console.log("Datos de préstamo:", prestamo);
-      await axios.post("http://localhost:3000/api/config/BibliotecaPrestamos", prestamo);
-      router.push("/exito");
+      await axios.post(
+        "http://localhost:3000/api/config/BibliotecaPrestamos",
+        prestamo
+      );
+      // Solo redirigir si la solicitud POST se completó correctamente
+      console.log("Préstamo insertado correctamente.");
     } catch (error) {
-      console.error("Error al insertar el préstamo:", error);
+      if (error.response && error.response.status === 404) {
+        console.error("El activo no existe.");
+        // Mostrar un mensaje de error al usuario
+      } else {
+        console.error("Error al insertar el préstamo:", error);
+        // Mostrar un mensaje de error general al usuario
+      }
     }
   };
 
@@ -54,13 +72,17 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
       <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
         <Card.Header>
           <div className="d-flex justify-content-between">
-            <span className=" text-black font-semibold">Prestamos Estudiantes</span>
+            <span className=" text-black font-semibold">
+              Prestamos Estudiantes
+            </span>
           </div>
         </Card.Header>
         <Card.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group as={Col} xs={12} md={6}>
-              <Form.Label className=" text-black">Cédula de Estudiante</Form.Label>
+              <Form.Label className=" text-black">
+                Cédula de Estudiante
+              </Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Cédula de estudiante"
@@ -79,8 +101,12 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
               />
             </Form.Group>
             <Form.Group as={Col} xs={12} md={6}>
-              <Form.Label className=" text-black">Elegir Activo</Form.Label>
-              <Form.Control as="select" onChange={handleChange} name="LP_identificador">
+              <Form.Label className="text-black">Elegir Activo</Form.Label>
+              <Form.Control
+                as="select"
+                onChange={handleChange}
+                name="LP_identificador" // Cambiado el nombre
+              >
                 <option>-Seleccionar-</option>
                 {dispositivos.map((dispositivo) => (
                   <option
@@ -95,7 +121,11 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
             </Form.Group>
             <Form.Group as={Col} xs={12} md={6}>
               <Form.Label className=" text-black">Elegir Periferico</Form.Label>
-              <Form.Control as="select" onChange={handleChange} name="EA_identificador">
+              <Form.Control
+                as="select"
+                onChange={handleChange}
+                name="EA_identificador" // Mantenido el nombre original
+              >
                 <option>-Seleccionar-</option>
                 {perifericos.map((periferico) => (
                   <option

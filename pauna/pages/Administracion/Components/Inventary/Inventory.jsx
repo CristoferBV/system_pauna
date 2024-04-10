@@ -39,7 +39,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
     console.log(res)
   };
 
-  const handleUpdate = async (data) => {
+  const handleUpdate = async (data,name) => {
     console.log("hola");
     const res = await axios
       .put("/api/material/view", data)
@@ -50,6 +50,8 @@ export default function Inventary({ materials, colors, brands, ubications, types
         console.log(error);
       });
     console.log(res)
+    handleCloseForm(name);
+    setShowAlert(true);
     reloadPage();
   };
 
@@ -104,7 +106,11 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
   const handleChange = ({ target: { name, value } }) => {
     if (name in color) {
-      setColor({ ...color, [name]: value });
+      if(!isNaN(value)){
+        setColor({ ...color, [name]: value });
+      }else{
+        alert("Ingrese error no es posible ingresar numeros")
+      }
     } else if (name in brand) {
       setBrand({ ...brand, [name]: value });
     } else if (name in ubication) {
@@ -129,8 +135,9 @@ export default function Inventary({ materials, colors, brands, ubications, types
     handleToggleForm(key);
   };
 
-  const handleSave = (object) => {
-    handleSubmit(object)
+  const handleSave = (object, name) => {  
+    handleSubmit(object);
+    handleCloseForm(name);
     setShowAlert(true);
     setTimeout(() => {
       setShowAlert(false);
@@ -149,9 +156,12 @@ export default function Inventary({ materials, colors, brands, ubications, types
     const description = material.ML_descripcion.toLowerCase();
     const name = material.MC_nombre.toLowerCase();
     const id = material.ML_identificador;
+    const location = material.UN_lugar.toLowerCase();
+    const type = material.TP_nombre.toLowerCase();
     const filterValueLowerCase = filterValue.toLowerCase();
 
-    return description.includes(filterValueLowerCase) || name.includes(filterValueLowerCase) || id == filterValue;
+    return description.includes(filterValueLowerCase) || name.includes(filterValueLowerCase) || id == filterValue || location.includes(filterValueLowerCase)
+    || type.includes(filterValueLowerCase);
   });
 
   const handleEditMaterial = (material) => {
@@ -241,7 +251,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
             CR_identificador: color.CR_identificador,
             ML_identificador_ubicacion: ubication.UN_identificador,
 
-          })}>
+          },'material')}>
             Guardar
           </Button>
         </Modal.Footer>
@@ -255,7 +265,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Form>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Nombre</Form.Label>
-              <Form.Control name="CR_nombre" value={color.CR_nombre} onChange={handleChange} type="text" placeholder="Ingrese el color" />
+              <Form.Control name="CR_nombre" value={color.CR_nombre} onChange={handleChange} type="text" placeholder="Ingrese el color"/>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -263,7 +273,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Button variant="secondary" onClick={() => handleCloseForm('colors')}>
             Cerrar
           </Button>
-          <Button type="submit" variant="primary" onClick={() => handleSave(color)}>
+          <Button type="submit" variant="primary" onClick={() => handleSave(color,'colors')}>
             Guardar
           </Button>
         </Modal.Footer>
@@ -289,7 +299,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Button variant="secondary" onClick={() => handleCloseForm('types')}>
             Cerrar
           </Button>
-          <Button type="submit" variant="primary" onClick={() => handleSave(type)}>
+          <Button type="submit" variant="primary" onClick={() => handleSave(type,"types")}>
             Guardar
           </Button>
         </Modal.Footer>
@@ -316,7 +326,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Button variant="secondary" onClick={() => handleCloseForm('ubi')}>
             Cerrar
           </Button>
-          <Button variant="primary" onClick={() => handleSave(ubication)}>
+          <Button variant="primary" onClick={() => handleSave(ubication,'ubi')}>
             Guardar
           </Button>
         </Modal.Footer>
@@ -343,7 +353,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Button variant="secondary" onClick={() => handleCloseForm('brand')}>
             Cerrar
           </Button>
-          <Button variant="primary" onClick={() => handleSave(brand)}>
+          <Button variant="primary" onClick={() => handleSave(brand,'brand')}>
             Guardar
           </Button>
         </Modal.Footer>
@@ -389,7 +399,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
             MO_cantidad: material.ML_cantidad,
             ML_identificador: material.ML_identificador,
             DO_identificador: deparment.DO_identificador
-          })}disabled={!material.ML_cantidad || material.ML_cantidad <= 0}>
+          },'edit')}disabled={!material.ML_cantidad || material.ML_cantidad <= 0}>
             Enviar
           </Button>
         </Modal.Footer>
@@ -410,7 +420,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Button variant="secondary" onClick={() => handleCloseForm('colors')}>
             Cerrar
           </Button>
-          <Button type="submit" variant="primary" onClick={() => handleSave(color)}>
+          <Button type="submit" variant="primary" onClick={() => handleSave(color,'colors')}>
             Guardar
           </Button>
         </Modal.Footer>
@@ -443,7 +453,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Button type="submit" variant="primary" onClick={() => handleUpdate({
             ML_identificador: material.ML_identificador,
             ML_cantidad: material.ML_cantidad
-          })} disabled={!material.ML_cantidad || material.ML_cantidad <= 0}>
+          },'moreMaterial')} disabled={!material.ML_cantidad || material.ML_cantidad <= 0}>
             Guardar
           </Button>
         </Modal.Footer>
@@ -453,6 +463,11 @@ export default function Inventary({ materials, colors, brands, ubications, types
       <Alert show={showAlert} variant="success" onClose={handleAlertClose} dismissible>
         ¡Guardado con éxito!
       </Alert>
+
+      <Alert show={showAlert} variant="success" onClose={handleAlertClose} dismissible>
+        ¡Ha ingresado la cantidad con éxito!
+      </Alert>
+
       <div style={{ marginTop: '8rem', marginBottom: '8rem' }}>
         
         <Container className="rounded" style={{ backgroundColor: '#212529' }}>
@@ -478,6 +493,8 @@ export default function Inventary({ materials, colors, brands, ubications, types
                         <th>Nombre</th>
                         <th>Marca</th>
                         <th>Cantidad</th>
+                        <th>Tipo</th>
+                        <th>Ubicación</th>
                         <th>Observaciones</th>
                         <th>Acciones</th>
                       </tr>
@@ -489,6 +506,8 @@ export default function Inventary({ materials, colors, brands, ubications, types
                           <td>{material.ML_descripcion}</td>
                           <td>{material.MC_nombre}</td>
                           <td>{material.ML_cantidad}</td>
+                          <td>{material.TP_nombre}</td>
+                          <td>{material.UN_lugar}</td>
                           <td>{material.ML_observacion}</td>
                           <td>
                             <Container>

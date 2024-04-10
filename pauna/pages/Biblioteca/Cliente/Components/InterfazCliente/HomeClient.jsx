@@ -3,11 +3,10 @@ import { Navbar, Nav, Button } from 'react-bootstrap';
 import Logo from '../../../../../public/LOGO-UNA.png';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Form, Card, Table, Container, Row, Col } from "react-bootstrap";
-import { useRouter } from "next/router";
+import { Card, Container, Row, Col } from "react-bootstrap";
 
 const HomeClient = () => {
-    const router = useRouter();
+    //const router = useRouter();
 
     const [active, setActive] = useState("");
 

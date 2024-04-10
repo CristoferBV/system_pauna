@@ -16,10 +16,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    console.log("Datos enviados al servidor: ", {
+    /* console.log("Datos enviados al servidor: ", {
         correo,
         password
-    });
+    }); */
 
     try {
         // Realizar la solicitud al servidor para autenticar al usuario y obtener idRol
@@ -30,7 +30,7 @@ const Login = () => {
 
         const data = response.data;
         
-        console.log("data:", data.UO_identificador_rol);
+        //console.log("data:", data.UO_identificador_rol);
 
         if (data.UO_identificador_rol === 1) {
             handleEnterLogin();

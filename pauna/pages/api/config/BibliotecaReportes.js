@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 }
 
 const getAllReportes = async (req, res) => {
-    const [result] = await pool.query("SELECT  u.UO_primer_nombre, u.UO_identificador, t.TP_nombre, lp.LP_fechaDevolucion, r.RE_observacion FROM `pau_btc_tbl_reporte` r INNER JOIN `pau_btc_tbl_listaprestamo` lp ON lp.LP_identificador = r.RE_identificador_prestamo INNER JOIN `pau_btc_tbl_estudiante` e ON e.EE_idenficador = lp.LP_identificador INNER JOIN `pau_gnl_usuario` u ON u.UO_identificador = e.EE_identificador_usuario INNER JOIN `pau_btc_tbl_activo` a ON a.AO_identificador = lp.LP_identificador_activo INNER JOIN `pau_btc_tbl_tipo` t ON t.TP_identificador = a.AO_identificador_tipo");
+    const [result] = await pool.query("SELECT u.UO_primer_nombre, u.UO_identificador, t.TP_nombre , p.EA_nombre, lp.LP_fechaDevolucion FROM pau_btc_tbl_estudiante e INNER JOIN pau_gnl_usuario u ON e.EE_identificador_usuario = u.UO_identificador LEFT JOIN pau_btc_tbl_listaprestamo lp ON e.EE_idenficador = lp.LP_identificador_usuario LEFT JOIN pau_btc_tbl_listaprestamo_x_tbl_periferico lpxp ON lp.LP_identificador = lpxp.LP_identificador LEFT JOIN pau_btc_tbl_periferico p ON lpxp.EA_identificador = p.EA_identificador LEFT JOIN pau_btc_tbl_activo a ON lp.LP_identificador_activo = a.AO_identificador LEFT JOIN pau_gnl_tbl_telefono te ON e.EE_identifacador_telefono = te.TO_idenficador LEFT JOIN pau_gnl_tbl_departamento d ON te.TO_idenficador = d.DO_identificador LEFT JOIN pau_gnl_tbl_correoelectronico ce ON u.UO_identificador_correo = ce.CE_idCorreo LEFT JOIN pau_btc_tbl_tipo t ON a.AO_identificador_tipo = t.TP_identificador WHERE lp.LP_identificador_activo IS NOT NULL");
     console.log(result)
     return res.status(200).json(result);
 };

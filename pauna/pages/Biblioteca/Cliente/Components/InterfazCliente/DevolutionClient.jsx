@@ -62,11 +62,8 @@ export default function DevolutionClient({ Devolution }) {
             .split("T")[0];
           setFechaEntrega(formattedFechaEntrega);
         } else {
-          // No se encontró ningún estudiante con la identificación proporcionada
-          // Puedes mostrar un mensaje de error o realizar alguna acción apropiada aquí.
         }
       } else {
-        // Manejar errores de la solicitud a la API
       }
     } catch (error) {
       Swal.fire({
@@ -112,14 +109,14 @@ export default function DevolutionClient({ Devolution }) {
             .then((response) => {
               if (response.status === 200) {
                 // Los datos se eliminaron con éxito, puedes realizar alguna acción apropiada aquí.
-                console.log("Datos eliminados con éxito");
+                //console.log("Datos eliminados con éxito");
 
                 // Actualiza los datos después de la eliminación
                 axios
                   .get("/api/devolution/data")
                   .then((response) => {
                     if (response.status === 200) {
-                      console.log("Datos actualizados:", response.data);
+                      //console.log("Datos actualizados:", response.data);
                       const newData = response.data;
                       setData(newData); // Actualiza los datos en el estado
 

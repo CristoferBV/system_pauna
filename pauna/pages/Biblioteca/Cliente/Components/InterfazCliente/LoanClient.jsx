@@ -6,12 +6,11 @@ import Axios from "axios";
 import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import { Navbar, Nav, Form, Button, Card, Table, Container, Row, Col, Tabs, Tab } from "react-bootstrap";
-import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import React from "react";
 
 const LoanClient = () => {
-  const router = useRouter();
+  //const router = useRouter();
 
   //Datos de solicitud
   const [loanData, setLoanData] = useState([]);
@@ -84,7 +83,7 @@ const LoanClient = () => {
       });
   }, []);
 
-  const handleComprobanteBecaChange = (e) => {
+  /* const handleComprobanteBecaChange = (e) => {
     const file = e.target.files[0];
     // Puedes realizar cualquier acción necesaria con el archivo, como actualizar el estado si es necesario
   };
@@ -92,7 +91,7 @@ const LoanClient = () => {
   const handleComprobanteMatriculaChange = (e) => {
     const file = e.target.files[0];
     // Puedes realizar cualquier acción necesaria con el archivo, como actualizar el estado si es necesario
-  };
+  }; */
 
   const handleAceptarClick = async () => {
     try {
@@ -104,7 +103,6 @@ const LoanClient = () => {
       // Verifica si los archivos están presentes
       if (!comprobanteBecaFile || !comprobanteMatriculaFile) {
         console.error("Por favor, seleccione los archivos necesarios.");
-        // Puedes mostrar un mensaje de error al usuario
         return;
       }
 
@@ -124,13 +122,13 @@ const LoanClient = () => {
         comprobanteMatriculaFile
       );
 
-      console.log("Datos enviados al servidor:", {
+      /* console.log("Datos enviados al servidor:", {
         cedula,
         selectedDate: formattedDate,
         device,
         comprobanteBecaBlob,
         comprobanteMatriculaBlob,
-      });
+      }); */
 
       // Enviar los datos al servidor
       const { data } = await Axios.post("/api/libraryClient/loan", {
@@ -141,7 +139,7 @@ const LoanClient = () => {
         comprobanteMatricula: comprobanteMatriculaBlob,
       });
 
-      console.log("Respuesta del servidor:", data);
+      //console.log("Respuesta del servidor:", data);
 
       Swal.fire({
         position: "center",

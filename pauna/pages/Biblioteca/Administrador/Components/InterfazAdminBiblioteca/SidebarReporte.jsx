@@ -33,50 +33,6 @@ export default function SidebarReporte({ Reporte }) {
         }
     };
 
-    const handleSubmit = async (data) => {
-        console.log("hola");
-        const res = await axios
-            .post("/api/config/BibliotecaDispositivos", data)
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        console.log(res)
-    };
-
-    const handleSave = (object) => {
-        handleSubmit(object)
-        setShowCreateForm(true);
-        setTimeout(() => {
-            setShowCreateForm(false);
-        }, 2000);
-        reloadPage();
-    };
-
-    const handleDeleteActivo = async (activoID) => {
-        const res = await axios
-            .delete("/api/config/BibliotecaDispositivos", { data: { AO_identificador: activoID } })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        console.log(res)
-        reloadPage();
-    };
-
-    const handleSaveTipo = (object) => {
-        handleSubmit(object)
-        setShowTipoForm(true);
-        setTimeout(() => {
-            setShowTipoForm(false);
-        }, 2000);
-        reloadPage();
-    };
-
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setEditedValues({
@@ -95,38 +51,9 @@ export default function SidebarReporte({ Reporte }) {
             (reporte.UO_identificador || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (reporte.TP_nombre || '').toLowerCase().includes(searchText.toLowerCase()) ||
             (reporte.LP_fechaDevolucion || '').toLowerCase().includes(searchText.toLowerCase()) ||
-            (reporte.RE_observacion || '').toLowerCase().includes(searchText.toLowerCase())
+            (reporte.EA_nombre || '').toLowerCase().includes(searchText.toLowerCase())
         );
     });
-
-    const handleEditDispositivo = (reporte) => {
-        setDispositivos(reporte);
-        handleToggleForm('edit')
-    };
-
-    const handleCreateDevice = () => {
-        setShowCreateForm(true);
-        setEditedValues({});
-        setSelectedDevice(null);
-    };
-
-    const handleCreateTipo = () => {
-        setShowTipoForm(true);
-        setEditedValues({});
-        setSelectedDevice(null);
-        // Aquí puedes definir la lógica para mostrar un formulario o realizar otras acciones relacionadas con la creación de tipos.
-    };
-
-    const handleCloseForm = (key) => {
-        handleToggleForm(key);
-    };
-
-    const handleToggleForm = (key) => {
-        setShowFormState((prevState) => ({
-            ...prevState,
-            [key]: !prevState[key],
-        }));
-    };
 
     const reloadPage = () => {
         router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarReporte");
@@ -135,10 +62,8 @@ export default function SidebarReporte({ Reporte }) {
     const loadDevices = async () => {
         try {
             const response = await axios.get("http://localhost:3000/api/config/BibliotecaReportes");
-            const reportes = response.data; // Accede a los dispositivos desde la respuesta
-            setReportes(reportes); // Almacena los dispositivos en el estado
-
-            // Resto de tu código...
+            const reportes = response.data; 
+            setReportes(reportes); 
         } catch (error) {
             console.error('Error al cargar dispositivos:', error);
         }
@@ -147,13 +72,13 @@ export default function SidebarReporte({ Reporte }) {
     const buttonStyle = {
         backgroundColor: '#233C5B',
         color: 'white',
-        border: 'none', // Agregar un borde blanco
-        transition: 'background-color 0.3s, border 0.3s', // También añadir la transición para el borde
+        border: 'none',
+        transition: 'background-color 0.3s, border 0.3s', 
     };
 
     const buttonHoverStyle = {
-        backgroundColor: '#152C4A',  // Nuevo color de fondo al pasar el cursor
-        color: 'black',  // Texto de color oscuro
+        backgroundColor: '#152C4A',  
+        color: 'black',  
         border: '1px solid white',
     };
 
@@ -172,35 +97,31 @@ export default function SidebarReporte({ Reporte }) {
         const titleXPosition = (pageWidth - titleWidth) / 2;
         const subTitleXPosition = (pageWidth - titleWidth) / 2.2;
 
-        // Other position settings...
-
         const titleYPosition = 30;
         const subTitleYPosition = 80;
 
         doc.text(title, titleXPosition, titleYPosition);
         doc.text(subTitle, subTitleXPosition, subTitleYPosition);
-        // Add an image to the left
-        const imageWidth = 100; // Adjust the width of the image as needed
-        const imageHeight = 85; // Adjust the height of the image as needed
-        const imageXPosition = 20; // Adjust the X position of the image as needed
-        const imageYPosition = titleYPosition - 25; // Adjust the Y position of the image as needed
-
+        const imageWidth = 100; 
+        const imageHeight = 85; 
+        const imageXPosition = 20; 
+        const imageYPosition = titleYPosition - 25; 
         doc.addImage('/Logo-UNA-Rojo_HD.png', 'PNG', imageXPosition, imageYPosition, imageWidth, imageHeight);
 
         const tableColumns = [
             "Nombre Estudiante",
             "Cédula",
             "Dispositivo",
+            "Periferico",
             "Fecha Devolucion",
-            "Observacion",
         ];
 
         const tableData = data.map((reporte) => [
             reporte.UO_primer_nombre,
             reporte.UO_identificador,
             reporte.TP_nombre,
+            reporte.EA_nombre,
             new Date(reporte.LP_fechaDevolucion).toISOString().slice(0, 10),
-            reporte.RE_observacion,
         ]);
 
         const startYPosition = titleYPosition + 70;
@@ -222,8 +143,6 @@ export default function SidebarReporte({ Reporte }) {
 
         doc.save(`Reporte_General_De_Devoluciones_${formattedDate}.pdf`);
     }
-
-
 
     return (
         <div className="p-4">
@@ -263,8 +182,8 @@ export default function SidebarReporte({ Reporte }) {
                                 <th className="text-center">Nombre Estudiante</th>
                                 <th className="text-center">Cédula</th>
                                 <th className="text-center">Dispositivo</th>
+                                <th className="text-center">Periferico</th>
                                 <th className="text-center">Fecha Devolucion</th>
-                                <th className="text-center">Observacion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -273,8 +192,8 @@ export default function SidebarReporte({ Reporte }) {
                                     <td className="text-center">{reporte.UO_primer_nombre}</td>
                                     <td className="text-center">{reporte.UO_identificador}</td>
                                     <td className="text-center">{reporte.TP_nombre}</td>
+                                    <td className="text-center">{reporte.EA_nombre}</td>
                                     <td className="text-center">{new Date(reporte.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
-                                    <td className="text-center">{reporte.RE_observacion}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -295,7 +214,6 @@ export default function SidebarReporte({ Reporte }) {
                                 value={reporte.UO_primer_nombre}
                                 onChange={handleChange}
                             />
-
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Descripción</Form.Label>

@@ -47,7 +47,7 @@ const postUserGmail = async (req, res) => {
         console.log("contrasenna login:", password);
         console.log("contrasenna base de datos:", UO_contrasena);
 
-        const match = await bcrypt.compare(password, UO_contrasena); // Espera a que se complete la comparación
+        const match = bcrypt.compare(password, UO_contrasena); // Espera a que se complete la comparación
 
         if (match) {
             console.log("Contraseña correcta");

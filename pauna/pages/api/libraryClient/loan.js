@@ -135,7 +135,7 @@ const getAllLoans = async (req, res) => {
     JOIN
         pau_btc_tbl_carrera c ON e.EE_idenficador_carrera = c.CA_identificador
     JOIN
-        pau_gnl_tbl_correoelectronico co ON e.EE_identificador_correo = co.CE_idCorreo
+        pau_gnl_tbl_correoelectronico co ON u.UO_identificador_correo = co.CE_idCorreo
     JOIN
         pau_gnl_tbl_telefono t ON e.EE_identifacador_telefono = t.TO_idenficador
     `;

@@ -16,9 +16,9 @@ export default async function handler(req, res) {
                 case "Type":
                     return await saveType(req, res);
                 case "Material":
-                    const returnData = await saveMaterial(req, res);
-                        await saveMaterialXBrand(req, res);
-                        await saveMaterialXColor(req, res);
+                    await saveMaterial(req, res);
+                    await saveMaterialXBrand(req, res);
+                    await saveMaterialXColor(req, res);
                     break;
                 case "Rebajo":
                     return await saveRebajo(req, res);

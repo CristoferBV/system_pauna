@@ -44,7 +44,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "Error al ingresar los datos",
+          text: error.response.data,
         });
       });
     //console.log(res)
@@ -171,9 +171,10 @@ export default function Inventary({ materials, colors, brands, ubications, types
     const location = material.UN_lugar.toLowerCase();
     const type = material.TP_nombre.toLowerCase();
     const filterValueLowerCase = filterValue.toLowerCase();
+    const cant = material.ML_cantidad;
 
-    return description.includes(filterValueLowerCase) || name.includes(filterValueLowerCase) || id == filterValue || location.includes(filterValueLowerCase)
-    || type.includes(filterValueLowerCase);
+    return description.includes(filterValueLowerCase) || name.includes(filterValueLowerCase) || id.includes(filterValue) || id == filterValue || location.includes(filterValueLowerCase)
+    || type.includes(filterValueLowerCase) || cant == filterValue;
   });
 
   const handleEditMaterial = (material) => {
@@ -277,7 +278,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Form>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Nombre</Form.Label>
-              <Form.Control name="CR_nombre" value={color.CR_nombre} onChange={handleChange} type="text" placeholder="Ingrese el color"/>
+              <Form.Control id="id-color-name" name="CR_nombre" value={color.CR_nombre} onChange={handleChange} type="text" placeholder="Ingrese el color"/>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -285,7 +286,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Button variant="secondary" onClick={() => handleCloseForm('colors')}>
             Cerrar
           </Button>
-          <Button type="submit" variant="primary" onClick={() => handleSave(color,'colors')}>
+          <Button  id="btn-color-safe" type="submit" variant="primary" onClick={() => handleSave(color,'colors')}>
             Guardar
           </Button>
         </Modal.Footer>

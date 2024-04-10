@@ -137,6 +137,9 @@ const saveColor = async (req, res) => {
     console.log(CR_nombre)
     const data = { CR_nombre }
     console.log(data)
+    if (locationExists('pau_adm_tbl_color', CR_nombre)){
+        res.status(409).send('El color ya existe');
+    }
     return saveData('pau_adm_tbl_color', data, res);
 };
 
@@ -144,7 +147,9 @@ const saveUbication = async (req, res) => {
     console.log(req.body);
     const { tipo, UN_lugar, UN_descripcion } = req.body;
     const data = { UN_lugar, UN_descripcion }
-
+    if (locationExists('pau_adm_tbl_ubicacion', UN_lugar)){
+        res.status(409).send('La ubicación ya existe');
+    }
     return saveData('pau_adm_tbl_ubicacion', data, res);
 };
 
@@ -152,7 +157,9 @@ const saveBrand = async (req, res) => {
     console.log(req.body);
     const { tipo, MC_nombre, MC_descripcion } = req.body;
     const data = { MC_nombre, MC_descripcion }
-
+    if (locationExists('pau_adm_tbl_marca', MC_nombre)){
+        res.status(409).send('La marca ya existe');
+    }
     return saveData('pau_adm_tbl_marca', data, res);
 };
 
@@ -160,7 +167,9 @@ const saveType = async (req, res) => {
     console.log(req.body);
     const { tipo, TP_nombre, TP_descripcion } = req.body;
     const data = { TP_nombre, TP_descripcion }
-
+    if (locationExists('pau_adm_tbl_tipo', TP_nombre)){
+        res.status(409).send('La tipo de almacenaje ya existe');
+    }
     return saveData('pau_adm_tbl_tipo', data, res);
 };
 
@@ -187,4 +196,12 @@ const saveAumentos = async (req, res) => {
     const data = {MA_cantidad,
         MA_fecha,ML_identificador};
     return saveData('pau_adm_movimiento_aumetos',data,res);
+}
+
+const locationExists = async (table,data) => {
+    const result = await pool.query('SELECT * FROM ?? WHERE UN_lugar = ?', [table, data]);
+    if(result.length > 0){
+        return true;
+    }
+    return false;
 }

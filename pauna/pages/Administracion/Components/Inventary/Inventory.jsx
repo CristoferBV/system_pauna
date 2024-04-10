@@ -29,6 +29,15 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
   const handleSubmit = async (data) => {
     //console.log("hola");
+
+    if(Object.keys(data).length === 0){
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No es posible tener espacios en blanco",
+      });
+      return;
+    }
     const res = await axios
       .post("/api/material/view", data)
       .then(function (response) {
@@ -48,6 +57,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
         });
       });
     //console.log(res)
+    reloadPage();
   };
 
   const handleUpdate = async (data,name) => {
@@ -67,7 +77,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "Error al actualizar los datos",
+          text: error.response.data,
         });
       });
     //console.log(res)
@@ -126,6 +136,10 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
   const handleChange = ({ target: { name, value } }) => {
     if (name in color) {
+      if(value =="" || value == " "){
+        alert("No se puede ingresar datos en blancos")
+        return;
+      }
         setColor({ ...color, [name]: value });
     } else if (name in brand) {
         setBrand({ ...brand, [name]: value });
@@ -134,7 +148,10 @@ export default function Inventary({ materials, colors, brands, ubications, types
     } else if (name in type) {
         setTypes({ ...type, [name]: value });
     } else if (name in material) {
-      setMaterial({ ...material, [name]: value });
+      setMaterial(prevState => ({
+        ...prevState,
+        [name]: value || ""
+    }));
     } else if (name in deparment) {
         setDepartments({ ...deparment, [name]: value });
     }

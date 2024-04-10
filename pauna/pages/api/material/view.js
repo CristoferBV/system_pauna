@@ -16,9 +16,14 @@ export default async function handler(req, res) {
                 case "Type":
                     return await saveType(req, res);
                 case "Material":
-                    await saveMaterial(req, res);
-                    await saveMaterialXBrand(req, res);
-                    await saveMaterialXColor(req, res);
+                    try{
+                        await saveMaterial(req, res);
+                        await saveMaterialXBrand(req, res);
+                        await saveMaterialXColor(req, res);
+                    }catch (error) {
+                        return res.status(500).send('Ya existe el material ingresado');
+                    }
+                    
                     break;
                 case "Rebajo":
                     return await saveRebajo(req, res);
@@ -37,6 +42,10 @@ const updateMaterial = async (req, res) => {
     const { ML_identificador, ML_cantidad } = req.body;
     console.log("ML_cantidad:", ML_identificador);
     console.log("ML_cantidad:", ML_cantidad);
+    if (!ML_cantidad) {
+        res.status(400).send('Los campos vacios');
+        return;
+    }
     const result = await pool.query(
       "UPDATE `pau_adm_tbl_material` SET ML_cantidad = ML_cantidad + ? WHERE ML_identificador = ?",
       [ML_cantidad, ML_identificador]
@@ -99,10 +108,10 @@ const saveData = async (table, data, res) => {
 };
 
 const saveMaterial = async (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     const { ML_identificador, ML_descripcion, ML_observacion, ML_cantidad, ML_identificador_ubicacion, MO_identificador_tipo } = req.body;
     const data = { ML_identificador, ML_descripcion, ML_observacion, ML_cantidad, ML_identificador_ubicacion, MO_identificador_tipo }
-    console.log(data)
+    //console.log(data)
     const { result } = saveData('pau_adm_tbl_material', data, res);
     return result;
 };
@@ -135,10 +144,15 @@ const saveColor = async (req, res) => {
     console.log(req.body);
     const { tipo, CR_identificador, CR_nombre } = req.body;
     console.log(CR_nombre)
+    if (!CR_nombre) {
+        res.status(400).send('Los campos vacios');
+        return;
+    }
     const data = { CR_nombre }
     console.log(data)
-    if (locationExists('pau_adm_tbl_color', CR_nombre)){
+    if (locationExists('pau_adm_tbl_color', "CR_nombre",CR_nombre)){
         res.status(409).send('El color ya existe');
+        return;
     }
     return saveData('pau_adm_tbl_color', data, res);
 };
@@ -146,9 +160,14 @@ const saveColor = async (req, res) => {
 const saveUbication = async (req, res) => {
     console.log(req.body);
     const { tipo, UN_lugar, UN_descripcion } = req.body;
+    if (!UN_lugar || !UN_descripcion) {
+        res.status(400).send('Los campos vacios');
+        return;
+    }
     const data = { UN_lugar, UN_descripcion }
-    if (locationExists('pau_adm_tbl_ubicacion', UN_lugar)){
+    if (locationExists('pau_adm_tbl_ubicacion', "UN_lugar",UN_lugar)){
         res.status(409).send('La ubicación ya existe');
+        return;
     }
     return saveData('pau_adm_tbl_ubicacion', data, res);
 };
@@ -156,9 +175,14 @@ const saveUbication = async (req, res) => {
 const saveBrand = async (req, res) => {
     console.log(req.body);
     const { tipo, MC_nombre, MC_descripcion } = req.body;
+    if (!MC_nombre || !MC_descripcion) {
+        res.status(400).send('Los campos vacios');
+        return;
+    }
     const data = { MC_nombre, MC_descripcion }
-    if (locationExists('pau_adm_tbl_marca', MC_nombre)){
+    if (locationExists('pau_adm_tbl_marca', "MC_nombre",MC_nombre)){
         res.status(409).send('La marca ya existe');
+        return;
     }
     return saveData('pau_adm_tbl_marca', data, res);
 };
@@ -166,9 +190,14 @@ const saveBrand = async (req, res) => {
 const saveType = async (req, res) => {
     console.log(req.body);
     const { tipo, TP_nombre, TP_descripcion } = req.body;
+    if (!TP_nombre || !TP_descripcion) {
+        res.status(400).send('Los campos vacios');
+        return;
+    }
     const data = { TP_nombre, TP_descripcion }
-    if (locationExists('pau_adm_tbl_tipo', TP_nombre)){
+    if (locationExists('pau_adm_tbl_tipo', "TP_nombre",TP_nombre)){
         res.status(409).send('La tipo de almacenaje ya existe');
+        return;
     }
     return saveData('pau_adm_tbl_tipo', data, res);
 };
@@ -180,6 +209,10 @@ const saveRebajo = async (req, res) => {
         MO_fecha,
         ML_identificador,
         DO_identificador }= req.body;
+    if (!MO_cantidad || !DO_identificador) {
+        res.status(400).send('Los campos vacios');
+        return;
+    }
     const data = {MO_cantidad,
         MO_fecha,
         ML_identificador,
@@ -193,13 +226,17 @@ const saveAumentos = async (req, res) => {
         MA_cantidad,
         MA_fecha, 
         ML_identificador}= req.body;
+    if (!MA_cantidad) {
+        res.status(400).send('Los campos vacios');
+        return;
+    }
     const data = {MA_cantidad,
         MA_fecha,ML_identificador};
     return saveData('pau_adm_movimiento_aumetos',data,res);
 }
 
-const locationExists = async (table,data) => {
-    const result = await pool.query('SELECT * FROM ?? WHERE UN_lugar = ?', [table, data]);
+const locationExists = async (table,name,data) => {
+    const result = await pool.query(`SELECT * FROM ?? WHERE ${name} = ?`, [table, data]);
     if(result.length > 0){
         return true;
     }

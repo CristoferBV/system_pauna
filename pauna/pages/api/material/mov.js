@@ -22,6 +22,10 @@ const updateMaterial = async (req, res) => {
     const { ML_identificador, ML_cantidad } = req.body;
     console.log("ML_cantidad:", ML_identificador);
     console.log("ML_cantidad:", ML_cantidad);
+    if (!ML_cantidad) {
+        res.status(400).send('Los campos vacios');
+        return;
+    }
     const result = await pool.query(
       "UPDATE `pau_adm_tbl_material` SET ML_cantidad = ML_cantidad + ? WHERE ML_identificador = ?",
       [ML_cantidad, ML_identificador]

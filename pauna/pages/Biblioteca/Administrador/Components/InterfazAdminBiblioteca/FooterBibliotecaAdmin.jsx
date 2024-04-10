@@ -1,6 +1,4 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import { FaInstagram, FaFacebook, FaGithub } from 'react-icons/fa';
 
 const FooterBibliotecaAdmin = () => {
     return (

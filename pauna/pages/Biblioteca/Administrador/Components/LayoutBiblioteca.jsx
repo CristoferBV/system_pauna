@@ -1,4 +1,3 @@
-import { useState } from "react";
 import NavbarAdminBiblioteca from "./InterfazAdminBiblioteca/NavbarAdminBiblioteca";
 import FooterBibliotecaAdmin from "./InterfazAdminBiblioteca/FooterBibliotecaAdmin";
 

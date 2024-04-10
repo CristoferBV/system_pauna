@@ -138,7 +138,7 @@ export default function Slidebar({ types }) {
     setType({
       TP_identificador: selectedType ? selectedType.TP_identificador : "",
       TP_nombre: selectedType ? selectedType.TP_nombre : "",
-      TP_descripcion: selectedType ? selectedType.TP_descripcion : "", // Puedes cargar la descripción del tipo desde types
+      TP_descripcion: selectedType ? selectedType.TP_descripcion : "", 
     });
     // Establecer editedValues, asegurándote de que TP_nombre refleje el nombre del tipo
     setEditedValues({

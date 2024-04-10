@@ -1,4 +1,4 @@
-import { pool } from "../../BD/Storage";
+import { pool } from "../../../utils/Storage";
 
 export default async function handler(req, res) {
     switch (req.method) {
@@ -59,23 +59,21 @@ const saveData = async (table, data, res) => {
         console.log(data);
         const result = await pool.query(`INSERT INTO ${table} SET ?`, data);
         console.log(result);
-        return [result];  // Devuelve un array con el resultado
+        return [result];  
     } catch (error) {
         console.log(error);
-        return [null, error];  // Devuelve un array con el error
+        return [null, error];
     }
 };
 
 const saveActivo = async (req, res) => {
     console.log(req.body);
 
-    // Desactiva las claves foráneas antes de realizar la inserción
     const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
     await pool.query(disableForeignKeyCheckQuery);
     const { AO_descripcion, AO_estado, AO_identificador_tipo } = req.body;
     const data = { AO_descripcion, AO_estado, AO_identificador_tipo };
     try {
-        // Utiliza destructuración en el resultado para obtener la información necesaria
         const [result] = await saveData('pau_btc_tbl_activo', data, res);
         console.log(result);
         return res.status(200).json(result);
@@ -83,7 +81,6 @@ const saveActivo = async (req, res) => {
         console.log(error);
         return res.status(500).json({ error: 'Error al guardar los datos.' });
     } finally {
-        // Habilita las claves foráneas después de realizar la inserción
         const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
         await pool.query(enableForeignKeyCheckQuery);
     }

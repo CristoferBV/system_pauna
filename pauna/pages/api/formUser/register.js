@@ -1,4 +1,4 @@
-import { pool } from '../../BD/Storage';
+import { pool } from '../../../utils/Storage';
 import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {

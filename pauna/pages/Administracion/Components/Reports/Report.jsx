@@ -427,6 +427,13 @@ export const getServerSideProps = async (context) => {
             },
         };
     } catch (error) {
-        console.log(error);
+        console.error("Error fetching data:");
+        return {
+            props: {
+                materials:[],
+                rebajos:[],
+                aumentos:[]
+            },
+        };
     }
 }

@@ -2,7 +2,7 @@ import {createPool} from "mysql2/promise";
 
 
 const pool= createPool({
-  host: "82.180.174.205",
+  host: "%",
   user:"u871258603_sebasaravi",
   password:"Sebas0112",
   port:3306,

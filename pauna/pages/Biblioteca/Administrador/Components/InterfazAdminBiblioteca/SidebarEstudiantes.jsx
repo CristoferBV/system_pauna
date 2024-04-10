@@ -73,14 +73,14 @@ export default function SidebarEstudiantes({ Estudiantes }) {
     };
 
     const buttonStyle = {
-        backgroundColor: '#021730',
+        backgroundColor: '#233C5B',
         color: 'white',
         border: 'none', // Agregar un borde blanco
         transition: 'background-color 0.3s, border 0.3s', // También añadir la transición para el borde
     };
 
     const buttonHoverStyle = {
-        backgroundColor: '#010E1F',  // Nuevo color de fondo al pasar el cursor
+        backgroundColor: '#152C4A',  // Nuevo color de fondo al pasar el cursor
         color: 'black',  // Texto de color oscuro
         border: '1px solid white',
     };
@@ -88,10 +88,10 @@ export default function SidebarEstudiantes({ Estudiantes }) {
 
     return (
         <div className="p-8">
-            <Card style={{ backgroundColor: '#2F3E5B', color: 'white' }} text="white">
+            <Card style={{ backgroundColor: '#DEEFE7', color: 'white' }} text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
-                        <span>Lista de Estudiantes</span>
+                        <span className='text-black font-semibold'>Lista de Estudiantes</span>
                     </div>
                 </Card.Header>
                 <Card.Body>
@@ -103,7 +103,11 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                         />
                     </InputGroup>
                     <Table 
-                        variant="secondary" striped bordered hover responsive>
+                        style={{ backgroundColor: "#252440", color: "white" }}
+                        striped
+                        bordered
+                        hover
+                        responsive>
                         <thead>
                             <tr>
                                 <th className="text-center">Nombre</th>
@@ -112,7 +116,6 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                                 <th className="text-center">Campus</th>
                                 <th className="text-center">Correo</th>
                                 <th className="text-center">Telefono</th>
-                                <th className="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -124,28 +127,6 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                                     <td className="text-center">{estudiante.EE_campus}</td>
                                     <td className="text-center">{estudiante.CE_correoElectronico}</td>
                                     <td className="text-center">{estudiante.TO_numero}</td>
-                                    <td className="text-center">
-                                        <Button
-                                            onClick={handleEditEstudiante}
-                                            style={buttonStyle}
-                                            onMouseEnter={(e) => {
-                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                            }}
-
-                                        > Editar
-                                        </Button>
-                                        <Button className='ml-2' onClick={() => confirmDeleteEstudiante(estudiante)} style={buttonStyle} onMouseEnter={(e) => {
-                                            e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                        }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                            }}>
-                                            Eliminar
-                                        </Button>
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>

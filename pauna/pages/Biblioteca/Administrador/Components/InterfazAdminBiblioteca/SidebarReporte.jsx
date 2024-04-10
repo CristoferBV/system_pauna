@@ -145,14 +145,14 @@ export default function SidebarReporte({ Reporte }) {
     }
 
     const buttonStyle = {
-        backgroundColor: '#021730',
+        backgroundColor: '#233C5B',
         color: 'white',
         border: 'none', // Agregar un borde blanco
         transition: 'background-color 0.3s, border 0.3s', // También añadir la transición para el borde
     };
 
     const buttonHoverStyle = {
-        backgroundColor: '#010E1F',  // Nuevo color de fondo al pasar el cursor
+        backgroundColor: '#152C4A',  // Nuevo color de fondo al pasar el cursor
         color: 'black',  // Texto de color oscuro
         border: '1px solid white',
     };
@@ -227,10 +227,10 @@ export default function SidebarReporte({ Reporte }) {
 
     return (
         <div className="p-4">
-            <Card style={{ backgroundColor: '#2F3E5B', color: 'white' }} text="white">
+            <Card style={{ backgroundColor: '#DEEFE7', color: 'white' }} text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
-                        <span>Lista de Reportes</span>
+                        <span className='text-black font-semibold'>Lista de Reportes</span>
                         <div>
                             <Button
                                 className='ml-2'
@@ -265,7 +265,6 @@ export default function SidebarReporte({ Reporte }) {
                                 <th className="text-center">Dispositivo</th>
                                 <th className="text-center">Fecha Devolucion</th>
                                 <th className="text-center">Observacion</th>
-                                <th className="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -276,35 +275,6 @@ export default function SidebarReporte({ Reporte }) {
                                     <td className="text-center">{reporte.TP_nombre}</td>
                                     <td className="text-center">{new Date(reporte.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
                                     <td className="text-center">{reporte.RE_observacion}</td>
-                                    <td className="text-center">
-                                        <Button
-                                            variant="primary"
-                                            onClick={() => handleEditDispositivo(device)}
-                                            style={buttonStyle}
-                                            onMouseEnter={(e) => {
-                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                            }}
-                                        >
-                                            Editar
-                                        </Button>
-                                        {' '}
-                                        <Button
-                                            variant="danger"
-                                            onClick={() => handleDeleteActivo(device.AO_identificador)}
-                                            style={buttonStyle}
-                                            onMouseEnter={(e) => {
-                                                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.backgroundColor = buttonStyle.backgroundColor;
-                                            }}
-                                        >
-                                            Eliminar
-                                        </Button>
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>

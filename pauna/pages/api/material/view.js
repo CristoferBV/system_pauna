@@ -1,7 +1,6 @@
 import { pool } from "../../BD/Storage";
 
 export default async function handler(req, res) {
-    console.log(req.method);
     switch (req.method) {
         case "GET":
             return await getAllMaterial(req, res);
@@ -17,9 +16,11 @@ export default async function handler(req, res) {
                 case "Type":
                     return await saveType(req, res);
                 case "Material":
-                    await saveMaterial(req, res);
-                    await saveMaterialXBrand(req, res);
-                    await saveMaterialXColor(req, res);
+                    const returnData = await saveMaterial(req, res);
+                    if(returnData != ""){
+                        await saveMaterialXBrand(req, res);
+                        await saveMaterialXColor(req, res);
+                    }
                     break
                 case "Rebajo":
                     return await saveRebajo(req, res);
@@ -66,10 +67,12 @@ const deleteMaterial = async (req, res) => {
 }
 
 const getAllMaterial = async (req, res) => {
-    const sqlMaterial = "SELECT pm.ML_identificador, pm.ML_descripcion, pm.ML_observacion, pma.MC_nombre, pm.ML_cantidad" +
+    const sqlMaterial = "SELECT pm.ML_identificador, pm.ML_descripcion, pm.ML_observacion, pma.MC_nombre, pm.ML_cantidad, pu.UN_lugar, pt.TP_nombre" +
         " FROM `pau_adm_tbl_material` pm" +
         " INNER JOIN `pau_adm_tbl_material_x_tbl_marca` pmxma ON pm.ML_identificador = pmxma.ML_identificador" +
-        " INNER JOIN `pau_adm_tbl_marca` pma ON pmxma.MC_identificador = pma.MC_identificador;"
+        " INNER JOIN `pau_adm_tbl_marca` pma ON pmxma.MC_identificador = pma.MC_identificador"+
+        " INNER JOIN `pau_adm_tbl_ubicacion` pu ON pu.UN_identificador = pm.ML_identificador_ubicacion"+
+        " INNER JOIN `pau_adm_tbl_tipo` pt ON pt.TP_identificador = pm.MO_identificador_tipo;"
     const sqlColor = "SELECT CR_identificador, CR_nombre FROM `pau_adm_tbl_color`;"
     const sqlMarca = "SELECT MC_identificador, MC_nombre FROM `pau_adm_tbl_marca`;"
     const sqlUbicaction = "SELECT UN_identificador, UN_lugar FROM `pau_adm_tbl_ubicacion`;"

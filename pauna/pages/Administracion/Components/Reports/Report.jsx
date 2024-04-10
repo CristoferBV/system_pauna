@@ -10,6 +10,16 @@ export default function Report({ materials, rebajos, aumentos }) {
     const [showReportes, setShowReportes] = useState(false);
     const [showMovimientos, setShowMovimientos] = useState(false);
 
+    const split =(data) =>{
+        const array = data.split("T");
+        return array[0].split("-")
+    }
+    const formatDate =(data) =>{
+        const date = split(data);
+        const format = date[2] +"/"+date[1]+"/"+date[0]
+        return format
+    }
+
     const handleShowReportes = () => {
         setShowReportes(true);
         setShowMovimientos(false);
@@ -143,8 +153,9 @@ export default function Report({ materials, rebajos, aumentos }) {
         const tableData = items.map((item) => [
             item.ML_identificador,
             item.ML_descripcion,
-            item.ML_observacion,
+            item.MC_nombre,
             item.ML_cantidad,
+            item.ML_observacion,
         ]);
         const totalCantidad = items.reduce((total, item) => total + item.ML_cantidad, 0);
 
@@ -371,7 +382,7 @@ export default function Report({ materials, rebajos, aumentos }) {
                                         {rebajos.map((rebajo) => (
                                             <tr key={rebajo.MO_identificador}>
                                                 <td>{rebajo.MO_identificador}</td>
-                                                <td>{rebajo.MO_fecha}</td>
+                                                <td>{formatDate(rebajo.MO_fecha)}</td>
                                                 <td>{rebajo.MO_cantidad}</td>
                                                 <td>{rebajo.ML_descripcion}</td>
                                                 <td>{rebajo.DO_nombre}</td>
@@ -381,7 +392,7 @@ export default function Report({ materials, rebajos, aumentos }) {
                                         {aumentos && aumentos.map((aumento) => (
                                             <tr key={aumento.MA_identificador}>
                                                 <td>{aumento.MA_identificador}</td>
-                                                <td>{aumento.MA_fecha}</td>
+                                                <td>{formatDate(aumento.MA_fecha)}</td>
                                                 <td>{aumento.MA_cantidad}</td>
                                                 <td>{aumento.ML_descripcion}</td>
                                                 <td>No necesita</td>

@@ -13,7 +13,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
   const today = new Date();
   const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
   const router = useRouter();
-  console.log({ materials })
+  //console.log({ materials })
   const [showAlert, setShowAlert] = useState(false);
   const [showFormState, setShowFormState] = useState({
     material: false,
@@ -28,11 +28,11 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
 
   const handleSubmit = async (data) => {
-    console.log("hola");
+    //console.log("hola");
     const res = await axios
       .post("/api/material/view", data)
       .then(function (response) {
-        console.log(response);
+        //console.log(response);
         Swal.fire({
           icon: "success",
           title: "Ingreso",
@@ -40,22 +40,22 @@ export default function Inventary({ materials, colors, brands, ubications, types
         });
       })
       .catch(function (error) {
-        console.log(error);
+        //console.log(error);
         Swal.fire({
           icon: "error",
           title: "Error",
           text: "Error al ingresar los datos",
         });
       });
-    console.log(res)
+    //console.log(res)
   };
 
   const handleUpdate = async (data,name) => {
-    console.log("hola");
+    //console.log("hola");
     const res = await axios
       .put("/api/material/view", data)
       .then(function (response) {
-        console.log(response);
+        //console.log(response);
         Swal.fire({
           icon: "success",
           title: "Ingreso",
@@ -63,14 +63,14 @@ export default function Inventary({ materials, colors, brands, ubications, types
         });
       })
       .catch(function (error) {
-        console.log(error);
+        //console.log(error);
         Swal.fire({
           icon: "error",
           title: "Error",
           text: "Error al actualizar los datos",
         });
       });
-    console.log(res)
+    //console.log(res)
     handleCloseForm(name);
     reloadPage();
   };
@@ -79,12 +79,12 @@ export default function Inventary({ materials, colors, brands, ubications, types
     const res = await axios
       .delete("/api/material/view", { data: { tipo: "Material", ML_identificador: materialID } })
       .then(function (response) {
-        console.log(response);
+        //console.log(response);
       })
       .catch(function (error) {
-        console.log(error);
+        //console.log(error);
       });
-    console.log(res)
+    //console.log(res)
     reloadPage();
   };
 

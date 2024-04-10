@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Row, Col, Container, Button, Form, Table, Modal, Alert } from "react-bootstrap"
 import { FaEdit, FaClipboardList } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 
 
@@ -32,9 +33,19 @@ export default function Inventary({ materials, colors, brands, ubications, types
       .post("/api/material/view", data)
       .then(function (response) {
         console.log(response);
+        Swal.fire({
+          icon: "success",
+          title: "Ingreso",
+          text: "Datos ingresados correctamente",
+        });
       })
       .catch(function (error) {
         console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error al ingresar los datos",
+        });
       });
     console.log(res)
   };
@@ -45,13 +56,22 @@ export default function Inventary({ materials, colors, brands, ubications, types
       .put("/api/material/view", data)
       .then(function (response) {
         console.log(response);
+        Swal.fire({
+          icon: "success",
+          title: "Ingreso",
+          text: "Datos actualizados correctamente",
+        });
       })
       .catch(function (error) {
         console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error al actualizar los datos",
+        });
       });
     console.log(res)
     handleCloseForm(name);
-    setShowAlert(true);
     reloadPage();
   };
 
@@ -106,21 +126,17 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
   const handleChange = ({ target: { name, value } }) => {
     if (name in color) {
-      if (value === '' || isNaN(value)){
         setColor({ ...color, [name]: value });
-      }else{
-        alert("Ingrese error no es posible ingresar numeros")
-      }
     } else if (name in brand) {
-      setBrand({ ...brand, [name]: value });
+        setBrand({ ...brand, [name]: value });
     } else if (name in ubication) {
-      setUbication({ ...ubication, [name]: value });
+        setUbication({ ...ubication, [name]: value });
     } else if (name in type) {
-      setTypes({ ...type, [name]: value });
+        setTypes({ ...type, [name]: value });
     } else if (name in material) {
       setMaterial({ ...material, [name]: value });
     } else if (name in deparment) {
-      setDepartments({ ...deparment, [name]: value });
+        setDepartments({ ...deparment, [name]: value });
     }
   };
 
@@ -138,10 +154,6 @@ export default function Inventary({ materials, colors, brands, ubications, types
   const handleSave = (object, name) => {  
     handleSubmit(object);
     handleCloseForm(name);
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 2000);
     reloadPage();
   };
   const handleAlertClose = () => {

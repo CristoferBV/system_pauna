@@ -17,15 +17,13 @@ export default async function handler(req, res) {
                     return await saveType(req, res);
                 case "Material":
                     const returnData = await saveMaterial(req, res);
-                    if(returnData != ""){
                         await saveMaterialXBrand(req, res);
                         await saveMaterialXColor(req, res);
-                    }
-                    break
+                    break;
                 case "Rebajo":
                     return await saveRebajo(req, res);
                 case "Aumentos":
-                    return await saveAumentos(req, res);    
+                    return await saveAumentos(req, res);
             }
         case "PUT":
             return await updateMaterial(req, res);

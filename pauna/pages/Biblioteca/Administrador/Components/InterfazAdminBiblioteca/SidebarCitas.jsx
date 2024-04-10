@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Table, Button, Form, Modal, Alert } from "react-bootstrap";
+import { Card, Table, Button, Form, Modal } from "react-bootstrap";
 import { useRouter } from "next/router";
-
+import Swal from "sweetalert2";
 
 export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
   const [searchText, setSearchText] = useState("");
@@ -11,8 +11,7 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [citas, setCitas] = useState([]);
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [horario, setHorario] = useState(Horario); // Utilizar Horario en lugar de horario
+  const [horario, setHorario] = useState(Horario);
   const router = useRouter();
 
   const [cita, setCita] = useState({
@@ -54,6 +53,7 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
       console.log(res);
       if (res.status === 200) {
         console.log("La cita se eliminó correctamente.");
+        showAlert("Cita eliminada correctamente");
         reloadPage();
       } else {
         console.log("Hubo un error al eliminar la cita.");
@@ -70,19 +70,19 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
         SD_identificador_horario,
         SD_identificador_tipo,
       } = editedCita;
-  
-      // Verificar que se hayan seleccionado tanto el identificador de hora como el de dispositivo
+
       if (SD_identificador_horario && SD_identificador_tipo) {
         const data = {
           SD_identificador,
           SD_identificador_horario,
           SD_identificador_tipo,
         };
-  
+
         const res = await axios.put("/api/config/BibliotecaCitas", data);
         console.log(res);
         if (res.status === 200) {
           console.log("Los cambios se guardaron correctamente.");
+          showAlert("Datos editados correctamente");
           reloadPage();
         } else {
           console.log("Hubo un error al guardar los cambios.");
@@ -94,13 +94,12 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
       console.log("Hubo un error al guardar los cambios:", error);
     }
   };
-  
 
   const handleDateChange = (event) => {
     const { name, value } = event.target;
     setEditedCita((prevCita) => ({
       ...prevCita,
-      [name]: value, // Actualiza el valor de la fecha en editedCita
+      [name]: value,
     }));
   };
 
@@ -108,16 +107,12 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
     const { name, value } = event.target;
     setEditedCita((prevCita) => ({
       ...prevCita,
-      [name]: value, // Actualiza el valor del dispositivo en editedCita
+      [name]: value,
     }));
   };
 
   const createCita = () => {
     setShowCreateForm(true);
-  };
-
-  const handleAlertClose = () => {
-    setAlertVisible(false);
   };
 
   const filteredCitas =
@@ -163,6 +158,16 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
     backgroundColor: "#152C4A",
     color: "black",
     border: "1px solid white",
+  };
+
+  const showAlert = (message) => {
+    Swal.fire({
+      title: "Alerta",
+      text: message,
+      icon: "success",
+      timer: 3000,
+      timerProgressBar: true,
+    });
   };
 
   return (
@@ -256,7 +261,6 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
         </Card.Body>
       </Card>
 
-      {/* Ventana modal para edición */}
       <Modal show={editMode} onHide={() => setEditMode(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Editar Cita</Modal.Title>
@@ -364,7 +368,6 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
         </Modal.Footer>
       </Modal>
 
-      {/* Ventana modal de confirmación de eliminación */}
       <Modal
         show={deleteConfirmation}
         onHide={() => setDeleteConfirmation(false)}
@@ -402,16 +405,6 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
           </Button>
         </Modal.Footer>
       </Modal>
-
-      {/* Alerta de confirmación para la creación de una nueva cita */}
-      <Alert
-        variant="success"
-        show={alertVisible}
-        onClose={handleAlertClose}
-        dismissible
-      >
-        Cita creada exitosamente.
-      </Alert>
     </div>
   );
 }
@@ -425,7 +418,7 @@ export const getServerSideProps = async (context) => {
       props: {
         Citas,
         Horario,
-        Dispositivo, // Pasar los datos de Dispositivo como una prop
+        Dispositivo,
       },
     };
   } catch (error) {
@@ -434,7 +427,7 @@ export const getServerSideProps = async (context) => {
       props: {
         Citas: [],
         Horario: [],
-        Dispositivo: [], // Inicializa Dispositivo como una matriz vacía en caso de error
+        Dispositivo: [],
       },
     };
   }

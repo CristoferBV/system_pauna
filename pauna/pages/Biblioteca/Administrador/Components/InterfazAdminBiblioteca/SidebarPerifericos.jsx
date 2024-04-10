@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2"; // Importar SweetAlert2
 import { Card, Table, Button, Form, Modal, Alert } from "react-bootstrap";
 import { useRouter } from "next/router";
 
@@ -34,6 +35,7 @@ export default function SidebarPerifericos({ Perifericos }) {
       console.log(res);
       if (res.status === 200) {
         console.log("Los cambios se guardaron correctamente.");
+        showAlert("Datos editados correctamente"); // Mostrar la alerta de éxito
         reloadPage();
       } else {
         console.log("Hubo un error al guardar los cambios.");
@@ -41,16 +43,6 @@ export default function SidebarPerifericos({ Perifericos }) {
     } catch (error) {
       console.log("Hubo un error al guardar los cambios:", error);
     }
-  };
-
-  const handleDelete = (cita) => {
-    setEditedCita(cita);
-    setDeleteConfirmation(true);
-  };
-
-  const confirmDelete = () => {
-    // Implementa la lógica para eliminar el elemento aquí
-    setDeleteConfirmation(false);
   };
 
   const createCita = () => {
@@ -61,10 +53,16 @@ export default function SidebarPerifericos({ Perifericos }) {
     setAlertVisible(false);
   };
 
-  const submitNewCita = () => {
-    // Implementa la lógica para guardar la nueva cita
-    setAlertVisible(true);
+  const showAlert = (message) => {
+    Swal.fire({
+      title: "Éxito",
+      text: message,
+      icon: "success",
+      timer: 3000, // Cerrar automáticamente después de 3 segundos
+      timerProgressBar: true,
+    });
   };
+
 
   const filteredPeriferico =
     Perifericos.Perifericos && Array.isArray(Perifericos.Perifericos)
@@ -99,9 +97,13 @@ export default function SidebarPerifericos({ Perifericos }) {
     try {
       const res = await axios.post("/api/config/BibliotecaPerifericos", data);
       console.log(res);
+      if (res.status === 200) {
+        console.log("El periférico se añadió correctamente.");
+        showAlert("Periférico añadido correctamente"); // Mostrar la alerta de éxito
+        reloadPage();
+      }
     } catch (error) {
       console.error("Error al crear el periférico:", error);
-      // Puedes mostrar un mensaje de error al usuario aquí
     }
   };
 
@@ -123,7 +125,13 @@ export default function SidebarPerifericos({ Perifericos }) {
         `/api/config/BibliotecaPerifericos?EA_identificador=${EA_identificador}`
       );
       console.log(response);
-      // Realizar otras acciones después de la eliminación
+      // Mostrar una alerta de éxito utilizando SweetAlert2
+      Swal.fire({
+        icon: 'success',
+        title: '¡Periférico eliminado correctamente!',
+        showConfirmButton: false,
+        timer: 2000 // La alerta se cierra automáticamente después de 2 segundos
+      });
     } catch (error) {
       console.error("Error al eliminar el periférico:", error);
       throw error; // Permitir que el control fluya fuera de la función

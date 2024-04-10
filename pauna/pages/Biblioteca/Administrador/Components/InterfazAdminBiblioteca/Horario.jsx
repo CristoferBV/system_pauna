@@ -10,6 +10,7 @@ import {
   Form,
 } from "react-bootstrap";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 export default function Horario({ Horarios }) {
   const [searchText, setSearchText] = useState("");
@@ -27,10 +28,10 @@ export default function Horario({ Horarios }) {
   });
 
   const handleEdit = (horario) => {
-    setEditedValues({ ...horario }); // Copiar los valores del horario seleccionado para editar
-    setEditMode(true); // Establecer el modo de edición en verdadero para mostrar el formulario de edición
+    setEditedValues({ ...horario });
+    setEditMode(true);
   };
-  
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setEditedValues({
@@ -38,13 +39,14 @@ export default function Horario({ Horarios }) {
       [name]: value,
     });
   };
-  
+
   const saveChanges = async () => {
     try {
       const res = await axios.put("/api/config/BibliotecaHorario", editedValues);
       console.log(res);
       if (res.status === 200) {
         console.log("Los cambios se guardaron correctamente.");
+        showAlert("Datos editados correctamente");
         reloadPage();
       } else {
         console.log("Hubo un error al guardar los cambios.");
@@ -53,7 +55,6 @@ export default function Horario({ Horarios }) {
       console.log("Hubo un error al guardar los cambios:", error);
     }
   };
-  
 
   const createHorario = () => {
     setShowCreateForm(true);
@@ -76,6 +77,7 @@ export default function Horario({ Horarios }) {
         console.log(error);
       });
     console.log(res);
+    showAlert("Horario añadido correctamente");
   };
 
   const handleSave = (object) => {
@@ -94,7 +96,7 @@ export default function Horario({ Horarios }) {
   };
 
   const handleDeleteHorario = async (horarioID) => {
-    console.log("Valor de horarioID:", horarioID); // Agrega este registro de consola
+    console.log("Valor de horarioID:", horarioID);
 
     try {
       const res = await axios.delete("/api/config/BibliotecaHorario", {
@@ -103,6 +105,7 @@ export default function Horario({ Horarios }) {
       console.log(res);
       if (res.status === 200) {
         console.log("El horario se eliminó correctamente.");
+        showAlert("Horario eliminado correctamente");
         reloadPage();
       } else {
         console.log("Hubo un error al eliminar el horario.");
@@ -123,14 +126,24 @@ export default function Horario({ Horarios }) {
   const buttonStyle = {
     backgroundColor: "#233C5B",
     color: "white",
-    border: "none", // Agregar un borde blanco
-    transition: "background-color 0.3s, border 0.3s", // También añadir la transición para el borde
+    border: "none",
+    transition: "background-color 0.3s, border 0.3s",
   };
 
   const buttonHoverStyle = {
     backgroundColor: "#152C4A",
-    color: "black", // Texto de color oscuro
+    color: "black",
     border: "1px solid white",
+  };
+
+  const showAlert = (message) => {
+    Swal.fire({
+      title: "Alerta",
+      text: message,
+      icon: "success",
+      timer: 3000,
+      timerProgressBar: true,
+    });
   };
 
   return (
@@ -142,7 +155,7 @@ export default function Horario({ Horarios }) {
             <Button
               variant="success"
               onClick={createHorario}
-              style={buttonStyle} // Puedes utilizar el mismo estilo o personalizarlo
+              style={buttonStyle}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor =
                   buttonHoverStyle.backgroundColor;
@@ -163,11 +176,13 @@ export default function Horario({ Horarios }) {
               onChange={(e) => setSearchText(e.target.value)}
             />
           </InputGroup>
-          <Table style={{ backgroundColor: "#252440", color: "white" }}
+          <Table
+            style={{ backgroundColor: "#252440", color: "white" }}
             striped
             bordered
             hover
-            responsive>
+            responsive
+          >
             <thead>
               <tr>
                 <th className="text-center">Fecha</th>
@@ -191,7 +206,9 @@ export default function Horario({ Horarios }) {
               ).map((horario, index) => {
                 return (
                   <tr key={horario.HO_identificador || index}>
-                    <td className="text-center">{new Date(horario.HO_fecha).toISOString().slice(0, 10)}</td>
+                    <td className="text-center">
+                      {new Date(horario.HO_fecha).toISOString().slice(0, 10)}
+                    </td>
                     <td className="text-center">{horario.HO_hora}</td>
                     <td className="text-center">{horario.HO_estado}</td>
                     <td className="text-center">
@@ -199,7 +216,7 @@ export default function Horario({ Horarios }) {
                         variant="light"
                         className="ml-2"
                         onClick={() => handleEdit(horario)}
-                        style={buttonStyle} // Puedes utilizar el mismo estilo o personalizarlo
+                        style={buttonStyle}
                         onMouseEnter={(e) => {
                           e.target.style.backgroundColor =
                             buttonHoverStyle.backgroundColor;
@@ -248,7 +265,6 @@ export default function Horario({ Horarios }) {
         </Card.Body>
       </Card>
 
-      {/* Modal de edición */}
       <Modal show={editMode} onHide={() => setEditMode(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Editar Horario</Modal.Title>
@@ -296,7 +312,7 @@ export default function Horario({ Horarios }) {
           <Button
             variant="secondary"
             onClick={() => setEditMode(false)}
-            style={buttonStyle} // Puedes utilizar el mismo estilo o personalizarlo
+            style={buttonStyle}
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
             }}
@@ -309,7 +325,7 @@ export default function Horario({ Horarios }) {
           <Button
             variant="primary"
             onClick={saveChanges}
-            style={buttonStyle} // Puedes utilizar el mismo estilo o personalizarlo
+            style={buttonStyle}
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
             }}
@@ -322,7 +338,6 @@ export default function Horario({ Horarios }) {
         </Modal.Footer>
       </Modal>
 
-      {/* Modal de creación de horario */}
       <Modal show={showCreateForm} onHide={() => setShowCreateForm(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Crear Horario</Modal.Title>
@@ -362,7 +377,7 @@ export default function Horario({ Horarios }) {
           <Button
             variant="secondary"
             onClick={() => setShowCreateForm(false)}
-            style={buttonStyle} // Puedes utilizar el mismo estilo o personalizarlo
+            style={buttonStyle}
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
             }}
@@ -382,7 +397,7 @@ export default function Horario({ Horarios }) {
                 HO_estado: horario.HO_estado,
               })
             }
-            style={buttonStyle} // Puedes utilizar el mismo estilo o personalizarlo
+            style={buttonStyle}
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
             }}
@@ -412,7 +427,7 @@ export const getServerSideProps = async (context) => {
     console.log(error);
     return {
       props: {
-        Horarios: [], // Puedes proporcionar un valor predeterminado en caso de error.
+        Horarios: [],
       },
     };
   }

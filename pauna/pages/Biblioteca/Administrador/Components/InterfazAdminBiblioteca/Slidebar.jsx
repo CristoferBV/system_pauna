@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Table, Button, Modal, Form, Card, InputGroup, FormControl,} from "react-bootstrap";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 export default function Slidebar({ types }) {
   const [selectedDevice, setSelectedDevice] = useState(null);
@@ -85,38 +86,37 @@ export default function Slidebar({ types }) {
       });
   };
 
-  const handleSave = (object) => {
-    handleSubmit(object);
-    setShowCreateForm(true);
-    setTimeout(() => {
-      setShowCreateForm(false);
-    }, 2000);
-    reloadPage();
-  };
-
-  const handleDeleteActivo = async (activoID) => {
-    const res = await axios
-      .delete("/api/config/BibliotecaDispositivos", {
-        data: { AO_identificador: activoID },
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
+  const handleSave = async (object) => {
+    try {
+      await axios.post("/api/config/BibliotecaDispositivos", object);
+      Swal.fire({
+        icon: "success",
+        title: "Exito",
+        text: "El dispositivo ha sido añadido correctamente.",
       });
-    console.log(res);
-    reloadPage();
+      reloadPage();
+    } catch (error) {
+      console.error("Error al crear dispositivo:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un problema al intentar añadir el dispositivo.",
+      });
+    }
   };
+  
 
   const handleSaveTipo = (object) => {
     handleSubmit(object);
-    setShowTipoForm(true);
-    setTimeout(() => {
-      setShowTipoForm(false);
-    }, 2000);
-    reloadPage();
-  };
+    // Mostrar la alerta de tipo añadido correctamente
+    Swal.fire({
+      icon: "success",
+      title: "Tipo añadido correctamente",
+      showConfirmButton: false,
+      timer: 2000 // Ocultar la alerta después de 2 segundos
+    });
+    reloadPage(); // Recargar la página (si es necesario)
+  };  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -191,32 +191,51 @@ export default function Slidebar({ types }) {
         })
       : [];
 
-  const handleSaveChanges = async (device, editedValues) => {
-    console.log("Updated Device:", device);
-    console.log("Edited Values:", editedValues);
-
-    try {
-      const updatedDevice = {
-        AO_identificador: device.AO_identificador,
-        AO_descripcion: editedValues.AO_descripcion,
-        AO_estado: editedValues.AO_estado,
-        TP_identificador: editedValues.TP_identificador,
+      const handleSaveChanges = async (device, editedValues) => {
+        try {
+          await axios.put("/api/config/BibliotecaDispositivos", {
+            AO_identificador: device.AO_identificador,
+            ...editedValues,
+          });
+          Swal.fire({
+            icon: "success",
+            title: "Exito",
+            text: "Los datos del dispositivo han sido editados correctamente.",
+          });
+          loadDevices(); // Recargar dispositivos después de editar
+        } catch (error) {
+          console.error("Error al editar dispositivo:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un problema al intentar editar los datos del dispositivo.",
+          });
+        } finally {
+          setSelectedDevice(null);
+        }
       };
-      // Realizar la actualización llamando a la API correspondiente
-      const response = await axios.put(
-        "/api/config/BibliotecaDispositivos",
-        updatedDevice
-      );
-      console.log(response);
-      // Recargar la página o actualizar la lista de dispositivos
-      loadDevices();
-    } catch (error) {
-      console.error("Error al guardar los cambios:", error);
-    } finally {
-      // Cerrar el modal después de guardar los cambios
-      setSelectedDevice(null);
-    }
-  };
+      
+      const handleDeleteActivo = async (activoID) => {
+        try {
+          await axios.delete("/api/config/BibliotecaDispositivos", {
+            data: { AO_identificador: activoID },
+          });
+          Swal.fire({
+            icon: "success",
+            title: "Exito",
+            text: "El dispositivo ha sido eliminado correctamente.",
+          });
+          reloadPage(); // Recargar la página después de eliminar
+        } catch (error) {
+          console.error("Error al eliminar dispositivo:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un problema al intentar eliminar el dispositivo.",
+          });
+        }
+      };
+      
 
   const handleCreateDevice = () => {
     setShowCreateForm(true);

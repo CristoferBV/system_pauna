@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Form, Col, Button } from "react-bootstrap";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
   const [prestamo, setPrestamo] = useState({
     LP_identificador_usuario: "",
     LP_fechaDevolucion: "",
-    LP_identificador: "", // Cambiado el nombre
-    EA_identificador: "", // Cambiado el nombre
+    LP_identificador: "",
+    EA_identificador: "",
   });
   const [dispositivos, setDispositivos] = useState([]);
   const [perifericos, setPerifericos] = useState([]);
@@ -33,33 +34,47 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Imprimir todos los nombres de los campos del objeto prestamo
-    console.log(
-      "Nombres de los campos del objeto prestamo:",
-      Object.keys(prestamo)
-    );
-
     if (
       !prestamo.LP_identificador_usuario ||
       !prestamo.LP_fechaDevolucion ||
       !prestamo.LP_identificador ||
       !prestamo.EA_identificador
     ) {
-      console.error("Faltan datos en la solicitud.");
+      Swal.fire({
+        icon: "error",
+        title: "Faltan datos",
+        text: "Por favor, completa todos los campos.",
+      });
       return;
     }
+
     try {
       console.log("Datos de préstamo:", prestamo);
       await axios.post(
         "http://localhost:3000/api/config/BibliotecaPrestamos",
         prestamo
       );
-      // Solo redirigir si la solicitud POST se completó correctamente
       console.log("Préstamo insertado correctamente.");
+      Swal.fire({
+        icon: "success",
+        title: "Préstamo realizado correctamente",
+        text: "El préstamo ha sido registrado exitosamente.",
+      });
     } catch (error) {
       if (error.response && error.response.status === 404) {
         console.error("El activo no existe.");
-        // Mostrar un mensaje de error al usuario
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Cedula sin solicitud de activo.",
+        });
+      } else if (error.response && error.response.status === 400) {
+        console.error("Error con la cédula.");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "La cédula ingresada es incorrecta.",
+        });
       } else {
         console.error("Error al insertar el préstamo:", error);
         // Mostrar un mensaje de error general al usuario
@@ -105,7 +120,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
               <Form.Control
                 as="select"
                 onChange={handleChange}
-                name="LP_identificador" // Cambiado el nombre
+                name="LP_identificador"
               >
                 <option>-Seleccionar-</option>
                 {dispositivos.map((dispositivo) => (
@@ -124,7 +139,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
               <Form.Control
                 as="select"
                 onChange={handleChange}
-                name="EA_identificador" // Mantenido el nombre original
+                name="EA_identificador"
               >
                 <option>-Seleccionar-</option>
                 {perifericos.map((periferico) => (

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Container, Row, Col, Button, Form, Tabs, Tab } from "react-bootstrap";
 import axios from "axios";
 import Logo from "../../../public/LOGO-UNA.png";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const router = useRouter();
@@ -66,19 +67,26 @@ const Register = () => {
 
   // Enviar los datos al servidor
   const handleClick = async (e) => {
-    //console.log({ user });
     e.preventDefault();
-    //console.log(user);
-    const res = await axios
-      .post("/api/formUser/register", user)
-      .then(function (response) {
-        console.log(response);
-        router.push("/LoginAndRegister/Login/Login");
-      })
-      .catch(function (error) {
-        console.log(error);
+  
+    try {
+      const response = await axios.post("/api/formUser/register", user);
+      console.log(response);
+      router.push("/LoginAndRegister/Login/Login");
+      Swal.fire({
+        icon: 'success',
+        title: 'Usuario registrado correctamente',
+        showConfirmButton: false,
+        timer: 1500
       });
-    console.log(res);
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Usuario no registrado',
+        text: 'Este usuario ya existe',
+      });
+    }
   };
 
   return (
@@ -217,17 +225,17 @@ const Register = () => {
                     </Form.Group>
                     <Form.Group className="w-100 p-2">
                       <Form.Control
-                          name="campus"
-                          as="select"
-                          value={user.campus}
-                          onChange={handleChangeCampus}
-                          className="w-100 p-3 rounded-xl"
+                        name="campus"
+                        as="select"
+                        value={user.campus}
+                        onChange={handleChangeCampus}
+                        className="w-100 p-3 rounded-xl"
                       >
-                          <option value="">-Campus-</option>
-                          <option value="Campus PZ">Campus PZ</option>
-                          <option value="Campus Coto">Campus Coto</option>
+                        <option value="">-Campus-</option>
+                        <option value="Campus PZ">Campus PZ</option>
+                        <option value="Campus Coto">Campus Coto</option>
                       </Form.Control>
-                  </Form.Group>
+                    </Form.Group>
                   </div>
                   <div className="col-md-6">
                     {/* Contenido de la segunda columna */}
@@ -236,7 +244,7 @@ const Register = () => {
                         name="carrera"
                         as="select"
                         value={user.carrera}
-                         onChange={handleChangeCarrera}
+                        onChange={handleChangeCarrera}
                         className="w-100 p-3 rounded-xl"
                       >
                         <option value="">-Seleccionar carrera-</option>
@@ -279,6 +287,19 @@ const Register = () => {
             </Tabs>
           </div>
         </Container>
+        <div className="p-3">
+          <span className="mt-3 mt-md-5 text-center">
+            ¿Nececitas devolverte?{" "}
+            <Link
+              href="/LoginAndRegister/Login/Login"
+              style={{ textDecoration: "none" }}
+            >
+              <span className="text-danger font-weight-bold">
+                <span>Login</span>
+              </span>
+            </Link>
+          </span>
+        </div>
       </div>
     </div>
   );

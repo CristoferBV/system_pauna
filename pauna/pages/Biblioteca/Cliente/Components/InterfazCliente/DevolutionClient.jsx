@@ -248,27 +248,21 @@ export default function DevolutionClient({ Devolution }) {
                 <Card.Body>
                   {" "}
                   <h4>
-                    Bienvenido querido estudiante a la sección de devolución de
+                    Bienvenido querido estudiante al apartado devolución de
                     dispositivos.
                   </h4>
                   <br />
                   <span>●</span> El primer paso es ir a la sección de{" "}
                   <b>"Devolución"</b>. <br />
-                  <span>●</span> El segundo paso es visualizar si su{" "}
-                  <b>nombre completo y cedula</b> se encuentra en la tabla junto
-                  con el resto de datos del prestamo. <br />
-                  <span>●</span> El tercer paso es <b>seleccionar</b> su nombre
-                  y pulsar el boton enviar. <br /> <br />
-                  <h6>
-                    {" "}
-                    Dato: Como función extra en la sección "Estudiantes" podrán
-                    buscarse digitando unicamente su número de cédula.
-                  </h6>
-                  <h6>
-                    {" "}
-                    con la idea de saber si tienen algún prestamo activo. Si no
-                    se desplegan sus datos, es porque carece de un préstamo.
-                  </h6>
+                  <span>●</span> El segundo paso es buscar el campo {" "}
+                  <b>Cédula o Identificación</b> que se encuentra al inicio de la sección Devolucion. <br />
+                  <span>●</span> El tercer paso es <b>digitar</b> su cédula en el campo correspondiente y <b>pulsar</b> el botón "Buscar datos" para llenar
+                  los campos. <br />
+                  <span>●</span> El cuarto paso es <b>pulsar</b> el botón "Hacer Devolución", para realizar
+                  la devolución correctamente.
+                  <br />
+                  <br />
+                  
                 </Card.Body>
               </Card>
             </Tab>

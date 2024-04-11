@@ -44,6 +44,11 @@ const Login = () => {
             router.push("/Administracion/Components/User/landing");
         }
     } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Usuario no encontrado',
+        text: 'Este usuario no existe',
+      });
         console.error('Error al manejar el inicio de sesión:', error);
     }
 };
@@ -110,7 +115,7 @@ const Login = () => {
             </Button>
             <p className="mt-3 mt-md-5 text-center">
               ¿No tienes una cuenta?{" "}
-              <Link href="/LoginAndRegister/Register/Register">
+              <Link href="/LoginAndRegister/Register/Register" style={{ textDecoration: "none" }}>
                 <span className="text-danger font-weight-bold">Regístrate</span>
               </Link>
             </p>

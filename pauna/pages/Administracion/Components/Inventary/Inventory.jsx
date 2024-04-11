@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 
 
 
-export default function Inventary({ materials, colors, brands, ubications, types, deparments }) {
+export default function Inventary({ materials, colors, brands, ubications, types, deparments}) {
   const today = new Date();
   const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
   const router = useRouter();
@@ -29,15 +29,6 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
   const handleSubmit = async (data) => {
     //console.log("hola");
-
-    if(Object.keys(data).length === 0){
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "No es posible tener espacios en blanco",
-      });
-      return;
-    }
     const res = await axios
       .post("/api/material/view", data)
       .then(function (response) {
@@ -98,6 +89,12 @@ export default function Inventary({ materials, colors, brands, ubications, types
     reloadPage();
   };
 
+  const [lowMaterial, setLowMaterial] = useState({
+    ML_identificador: "",
+    ML_descripcion: "",
+    ML_cantidad: "",
+  })
+  
   const [material, setMaterial] = useState({
     ML_identificador: "",
     ML_descripcion: "",
@@ -136,10 +133,6 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
   const handleChange = ({ target: { name, value } }) => {
     if (name in color) {
-      if(value =="" || value == " "){
-        alert("No se puede ingresar datos en blancos")
-        return;
-      }
         setColor({ ...color, [name]: value });
     } else if (name in brand) {
         setBrand({ ...brand, [name]: value });
@@ -295,7 +288,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Form>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Nombre</Form.Label>
-              <Form.Control id="id-color-name" name="CR_nombre" value={color.CR_nombre} onChange={handleChange} type="text" placeholder="Ingrese el color"/>
+              <Form.Control name="CR_nombre" value={color.CR_nombre} onChange={handleChange} type="text" placeholder="Ingrese el color"/>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -303,7 +296,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           <Button variant="secondary" onClick={() => handleCloseForm('colors')}>
             Cerrar
           </Button>
-          <Button  id="btn-color-safe" type="submit" variant="primary" onClick={() => handleSave(color,'colors')}>
+          <Button type="submit" variant="primary" onClick={() => handleSave(color,'colors')}>
             Guardar
           </Button>
         </Modal.Footer>
@@ -606,7 +599,7 @@ export const getServerSideProps = async (context) => {
     const { data } = await axios.get(
       "http://localhost:3000/api/material/view"
     );
-    const { materials, colors, brands, ubications, types, deparments } = data;
+    const { materials, colors, brands, ubications, types, deparments} = data;
     return {
       props: {
         materials,
@@ -614,7 +607,7 @@ export const getServerSideProps = async (context) => {
         brands,
         ubications,
         types,
-        deparments
+        deparments,
       },
     };
   } catch (error) {
@@ -626,7 +619,7 @@ export const getServerSideProps = async (context) => {
         brands: [],
         ubications: [],
         types: [],
-        deparments: []
+        deparments: [],
       },
     };
   }

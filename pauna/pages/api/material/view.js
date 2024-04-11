@@ -1,3 +1,4 @@
+import NoWorkResult from "postcss/lib/no-work-result";
 import { pool } from "../../../utils/Storage";
 
 export default async function handler(req, res) {
@@ -85,6 +86,8 @@ const getAllMaterial = async (req, res) => {
     const sqlUbicaction = "SELECT UN_identificador, UN_lugar FROM `pau_adm_tbl_ubicacion`;"
     const sqlType = "SELECT TP_identificador, TP_nombre FROM `pau_adm_tbl_tipo`"
     const sqlDepartment = "SELECT DO_identificador, DO_nombre FROM `pau_gnl_tbl_departamento`;"
+
+    const lowMaterial = "SELECT pm.ML_identificador, pm.ML_descripcion, pm.ML_cantidad FROM `pau_adm_tbl_material` pm WHERE pm.ML_cantidad < 5;"
     const [materials] = await pool.query(sqlMaterial);
     const [colors] = await pool.query(sqlColor);
     const [brands] = await pool.query(sqlMarca);
@@ -150,7 +153,7 @@ const saveColor = async (req, res) => {
     }
     const data = { CR_nombre }
     console.log(data)
-    if (locationExists('pau_adm_tbl_color', "CR_nombre",CR_nombre)){
+    if (await locationExists('pau_adm_tbl_color', 'CR_nombre',CR_nombre)){
         res.status(409).send('El color ya existe');
         return;
     }
@@ -165,7 +168,7 @@ const saveUbication = async (req, res) => {
         return;
     }
     const data = { UN_lugar, UN_descripcion }
-    if (locationExists('pau_adm_tbl_ubicacion', "UN_lugar",UN_lugar)){
+    if (await locationExists('pau_adm_tbl_ubicacion', 'UN_lugar',UN_lugar)){
         res.status(409).send('La ubicación ya existe');
         return;
     }
@@ -180,22 +183,21 @@ const saveBrand = async (req, res) => {
         return;
     }
     const data = { MC_nombre, MC_descripcion }
-    if (locationExists('pau_adm_tbl_marca', "MC_nombre",MC_nombre)){
+    if (await locationExists('pau_adm_tbl_marca', 'MC_nombre', MC_nombre)){
         res.status(409).send('La marca ya existe');
         return;
     }
     return saveData('pau_adm_tbl_marca', data, res);
 };
 
-const saveType = async (req, res) => {
-    console.log(req.body);
+const saveType = async (req, res) => {//
     const { tipo, TP_nombre, TP_descripcion } = req.body;
-    if (!TP_nombre || !TP_descripcion) {
+    if (!TP_nombre) {
         res.status(400).send('Los campos vacios');
         return;
     }
     const data = { TP_nombre, TP_descripcion }
-    if (locationExists('pau_adm_tbl_tipo', "TP_nombre",TP_nombre)){
+    if (await locationExists('pau_adm_tbl_tipo', 'TP_nombre',TP_nombre)){
         res.status(409).send('La tipo de almacenaje ya existe');
         return;
     }
@@ -237,8 +239,12 @@ const saveAumentos = async (req, res) => {
 
 const locationExists = async (table,name,data) => {
     const result = await pool.query(`SELECT * FROM ?? WHERE ${name} = ?`, [table, data]);
-    if(result.length > 0){
-        return true;
+    console.log(result[0].length);
+    console.log(result);
+    if (result[0].length > 0) {
+        console.log("entre");
+        return true; 
     }
-    return false;
+    console.log("es dalso");
+    return false; 
 }

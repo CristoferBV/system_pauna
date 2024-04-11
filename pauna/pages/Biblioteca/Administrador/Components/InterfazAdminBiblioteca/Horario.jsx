@@ -138,7 +138,7 @@ export default function Horario({ Horarios }) {
 
   const showAlert = (message) => {
     Swal.fire({
-      title: "Alerta",
+      title: "éxito",
       text: message,
       icon: "success",
       timer: 3000,

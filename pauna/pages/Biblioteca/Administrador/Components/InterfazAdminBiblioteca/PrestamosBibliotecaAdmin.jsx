@@ -57,7 +57,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
       console.log("Préstamo insertado correctamente.");
       Swal.fire({
         icon: "success",
-        title: "Préstamo realizado correctamente",
+        title: "Exito",
         text: "El préstamo ha sido registrado exitosamente.",
       });
     } catch (error) {
@@ -80,6 +80,19 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
         // Mostrar un mensaje de error general al usuario
       }
     }
+  };
+
+  const buttonStyle = {
+    backgroundColor: "#233C5B",
+    color: "white",
+    border: "none",
+    transition: "background-color 0.3s, border 0.3s",
+  };
+
+  const buttonHoverStyle = {
+    backgroundColor: "#152C4A",
+    color: "black",
+    border: "1px solid white",
   };
 
   return (
@@ -153,9 +166,20 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
                 ))}
               </Form.Control>
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Guardar
-            </Button>
+            <Form.Group as={Col} xs={12} md={6} style={{ marginTop: "1.5rem" }}>
+              <Button
+                style={buttonStyle}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor =
+                    buttonHoverStyle.backgroundColor;
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                }} type = "submit"
+              >
+                Guardar
+              </Button>
+            </Form.Group>
           </Form>
         </Card.Body>
       </Card>

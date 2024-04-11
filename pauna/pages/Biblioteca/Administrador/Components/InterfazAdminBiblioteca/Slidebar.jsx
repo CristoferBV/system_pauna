@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table, Button, Modal, Form, Card, InputGroup, FormControl,} from "react-bootstrap";
+import {
+  Table,
+  Button,
+  Modal,
+  Form,
+  Card,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 
@@ -13,30 +21,24 @@ export default function Slidebar({ types }) {
   const [showTipoForm, setShowTipoForm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
-  // Agregar un mecanismo de throttling en el lado del cliente
   let canMakeRequest = true;
 
   const loadDevices = async () => {
     try {
       // Verificar si está permitido hacer la solicitud
       if (!canMakeRequest) {
-
         return;
       }
-
-      // Establecer la bandera de restricción
       canMakeRequest = false;
       const timestamp = new Date().getTime();
       const response = await axios.get(
         `http://localhost:3000/api/config/BibliotecaDispositivos?timestamp=${timestamp}`
       );
-
       const devices = response.data;
       setDispositivos(devices);
-      // Restablecer la bandera después de cierto tiempo (ajusta según tus necesidades)
       setTimeout(() => {
         canMakeRequest = true;
-      }, 1000); // tiempo en milisegundos
+      }, 1000); //
     } catch (error) {
       console.error("Error al cargar dispositivos:", error);
     }
@@ -44,10 +46,9 @@ export default function Slidebar({ types }) {
 
   useEffect(() => {
     loadDevices(); // Cargar dispositivos al inicio
-    // Recargar dispositivos cada 1 segundos (ajusta según tus necesidades)
     const interval = setInterval(() => {
       loadDevices();
-    }, 1000); // 1 segundos
+    }, 1000); //
     // Limpia el intervalo cuando el componente se desmonta
     return () => clearInterval(interval);
   }, []);
@@ -75,7 +76,6 @@ export default function Slidebar({ types }) {
   };
 
   const handleSubmit = async (data) => {
-    console.log("hola");
     const res = await axios
       .post("/api/config/BibliotecaDispositivos", data)
       .then(function (response) {
@@ -86,37 +86,81 @@ export default function Slidebar({ types }) {
       });
   };
 
-  const handleSave = async (object) => {
-    try {
-      await axios.post("/api/config/BibliotecaDispositivos", object);
-      Swal.fire({
-        icon: "success",
-        title: "Exito",
-        text: "El dispositivo ha sido añadido correctamente.",
-      });
-      reloadPage();
-    } catch (error) {
-      console.error("Error al crear dispositivo:", error);
+  const handleSave = async () => {
+    // Verificar si algún campo está vacío en el formulario
+    if (
+      !activo.AO_descripcion ||
+      !activo.AO_estado ||
+      type.TP_identificador === "Type"
+    ) {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Hubo un problema al intentar añadir el dispositivo.",
+        text: "Por favor, completa todos los campos antes de guardar.",
+      });
+      return; // Detener la ejecución si hay campos vacíos
+    }
+
+    // Crear el objeto a enviar en la solicitud POST
+    const data = {
+      tipo: "Activo",
+      TP_nombre: type.TP_nombre,
+      AO_descripcion: activo.AO_descripcion,
+      AO_estado: activo.AO_estado,
+      AO_identificador_tipo: type.TP_identificador,
+    };
+
+    try {
+      // Enviar la solicitud POST
+      const response = await axios.post(
+        "/api/config/BibliotecaDispositivos",
+        data
+      );
+      console.log(response);
+      Swal.fire({
+        icon: "success",
+        title: "Exito",
+        text: "El dispositivo ha sido Agregado correctamente.",
+        timer: 2000,
+      });
+      loadDevices();
+    } catch (error) {
+      console.error(error);
+      // Mostrar una alerta de error si la solicitud falla
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un problema al intentar agregar el dispositivo.",
       });
     }
   };
-  
 
   const handleSaveTipo = (object) => {
+    // Verificar si algún campo está vacío en el formulario
+    if (
+      !object.TP_identificador ||
+      !object.TP_nombre ||
+      !object.TP_descripcion
+    ) {
+      // Mostrar alerta indicando que no se pueden añadir valores vacíos
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No puedes agregar un tipo con datos vacíos.",
+      });
+      return; // Detener la ejecución si hay campos vacíos
+    }
+
+    // Si todos los campos están llenos, proceder a guardar el tipo
     handleSubmit(object);
-    // Mostrar la alerta de tipo añadido correctamente
     Swal.fire({
       icon: "success",
-      title: "Tipo añadido correctamente",
-      showConfirmButton: false,
-      timer: 2000 // Ocultar la alerta después de 2 segundos
+      title: "Exito",
+      text: "Tipo añadido correctamente",
+      timer: 2000,
     });
-    reloadPage(); // Recargar la página (si es necesario)
-  };  
+    reloadPage();
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -129,7 +173,7 @@ export default function Slidebar({ types }) {
   const handleEditDevice = (device) => {
     console.log("Dispositivo seleccionado:", device);
     setSelectedDevice(device);
-  
+
     // Buscar el tipo correspondiente al AO_identificador del dispositivo seleccionado
     const selectedType = types.find(
       (tipo) => tipo.TP_identificador === device.TP_identificador
@@ -138,7 +182,7 @@ export default function Slidebar({ types }) {
     setType({
       TP_identificador: selectedType ? selectedType.TP_identificador : "",
       TP_nombre: selectedType ? selectedType.TP_nombre : "",
-      TP_descripcion: selectedType ? selectedType.TP_descripcion : "", 
+      TP_descripcion: selectedType ? selectedType.TP_descripcion : "",
     });
     // Establecer editedValues, asegurándote de que TP_nombre refleje el nombre del tipo
     setEditedValues({
@@ -150,7 +194,7 @@ export default function Slidebar({ types }) {
     // Establecer isEditing a true
     setIsEditing(true);
   };
-  
+
   const cancelDeleteDevice = () => {
     setDeleteConfirmation(false);
   };
@@ -191,51 +235,67 @@ export default function Slidebar({ types }) {
         })
       : [];
 
-      const handleSaveChanges = async (device, editedValues) => {
-        try {
-          await axios.put("/api/config/BibliotecaDispositivos", {
-            AO_identificador: device.AO_identificador,
-            ...editedValues,
-          });
-          Swal.fire({
-            icon: "success",
-            title: "Exito",
-            text: "Los datos del dispositivo han sido editados correctamente.",
-          });
-          loadDevices(); // Recargar dispositivos después de editar
-        } catch (error) {
-          console.error("Error al editar dispositivo:", error);
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Hubo un problema al intentar editar los datos del dispositivo.",
-          });
-        } finally {
-          setSelectedDevice(null);
-        }
-      };
-      
-      const handleDeleteActivo = async (activoID) => {
-        try {
-          await axios.delete("/api/config/BibliotecaDispositivos", {
-            data: { AO_identificador: activoID },
-          });
-          Swal.fire({
-            icon: "success",
-            title: "Exito",
-            text: "El dispositivo ha sido eliminado correctamente.",
-          });
-          reloadPage(); // Recargar la página después de eliminar
-        } catch (error) {
-          console.error("Error al eliminar dispositivo:", error);
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Hubo un problema al intentar eliminar el dispositivo.",
-          });
-        }
-      };
-      
+  const handleSaveChanges = async (device, editedValues) => {
+    // Verificar si algún campo está vacío en el formulario
+    if (
+      !editedValues.AO_descripcion.trim() || // Verificar si la descripción está vacía o solo contiene espacios en blanco
+      !editedValues.AO_estado.trim() // Verificar si el estado está vacío o solo contiene espacios en blanco
+    ) {
+      // Mostrar alerta indicando que no se pueden añadir valores vacíos
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No puedes guardar valores vacíos.",
+      });
+      return; // Detener la ejecución si hay campos vacíos
+    }
+
+    try {
+      // Enviar la solicitud PUT
+      await axios.put("/api/config/BibliotecaDispositivos", {
+        AO_identificador: device.AO_identificador,
+        ...editedValues,
+      });
+      Swal.fire({
+        icon: "success",
+        title: "Éxito",
+        text: "El dispositivo ha sido editado correctamente.",
+      });
+      // Recargar dispositivos después de editar
+      loadDevices();
+    } catch (error) {
+      console.error("Error al editar dispositivo:", error);
+      // Mostrar una alerta de error si la solicitud falla
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un problema al intentar editar los datos del dispositivo.",
+      });
+    } finally {
+      setSelectedDevice(null);
+    }
+  };
+
+  const handleDeleteActivo = async (activoID) => {
+    try {
+      await axios.delete("/api/config/BibliotecaDispositivos", {
+        data: { AO_identificador: activoID },
+      });
+      Swal.fire({
+        icon: "success",
+        title: "Exito",
+        text: "El dispositivo ha sido eliminado correctamente.",
+      });
+      reloadPage();
+    } catch (error) {
+      console.error("Error al eliminar dispositivo:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Hubo un problema al intentar eliminar el dispositivo.",
+      });
+    }
+  };
 
   const handleCreateDevice = () => {
     setShowCreateForm(true);
@@ -256,15 +316,15 @@ export default function Slidebar({ types }) {
   };
 
   const buttonStyle = {
-    backgroundColor: "#233C5B", 
+    backgroundColor: "#233C5B",
     color: "white",
-    border: "none", // Agregar un borde blanco
-    transition: "background-color 0.3s, border 0.3s", // También añadir la transición para el borde
+    border: "none",
+    transition: "background-color 0.3s, border 0.3s",
   };
 
   const buttonHoverStyle = {
-    backgroundColor: "#152C4A", // Nuevo color de fondo al pasar el cursor
-    color: "black", // Texto de color oscuro
+    backgroundColor: "#152C4A",
+    color: "black",
     border: "1px solid white",
   };
 
@@ -273,7 +333,9 @@ export default function Slidebar({ types }) {
       <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
         <Card.Header>
           <div className="d-flex justify-content-between">
-            <span className="text-black font-semibold">Lista de Dispositivos</span>
+            <span className="text-black font-semibold">
+              Lista de Dispositivos
+            </span>
             <div>
               <Button
                 variant="success"
@@ -293,7 +355,7 @@ export default function Slidebar({ types }) {
                 className="ml-2"
                 variant="info"
                 onClick={handleCreateTipo}
-                style={buttonStyle} // Puedes utilizar el mismo estilo o personalizarlo
+                style={buttonStyle}
                 onMouseEnter={(e) => {
                   e.target.style.backgroundColor =
                     buttonHoverStyle.backgroundColor;
@@ -439,15 +501,7 @@ export default function Slidebar({ types }) {
           </Button>
           <Button
             variant="primary"
-            onClick={() =>
-              handleSave({
-                tipo: "Activo",
-                TP_nombre: type.TP_nombre,
-                AO_descripcion: activo.AO_descripcion,
-                AO_estado: activo.AO_estado,
-                AO_identificador_tipo: type.TP_identificador,
-              })
-            }
+            onClick={handleSave}
             style={buttonStyle}
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;

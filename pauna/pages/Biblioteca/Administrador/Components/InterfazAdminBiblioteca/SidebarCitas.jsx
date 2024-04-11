@@ -162,7 +162,7 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
 
   const showAlert = (message) => {
     Swal.fire({
-      title: "Alerta",
+      title: "Éxito",
       text: message,
       icon: "success",
       timer: 3000,

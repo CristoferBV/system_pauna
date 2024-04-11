@@ -12,12 +12,6 @@ const getDevice = async (req, res) => {
     try {
         const [result] = await pool.query("SELECT TP.TP_identificador, TP.TP_descripcion FROM pau_btc_tbl_tipo TP LEFT JOIN pau_btc_tbl_activo AO ON TP.TP_identificador = AO.AO_identificador_tipo WHERE AO.AO_identificador_tipo = TP.TP_identificador")
 
-        //ASÍ ES COMO SE DEBE DE USAR CORRECTAMENTE
-        // const options = result.map((row) => ({
-        //     value: row['TP_identificador'], // Valor a enviar cuando se seleccione la opción
-        //     label: `${row['TP_identificador']} - ${row['TP_descripcion']}` // Texto que se mostrará en la opción
-        // }));
-
         const options = result.map((row) => ({
             value: row['TP_identificador'], // Valor a enviar cuando se seleccione la opción
             label: `${row['TP_descripcion']}` // Texto que se mostrará en la opción

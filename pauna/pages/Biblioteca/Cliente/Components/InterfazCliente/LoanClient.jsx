@@ -5,12 +5,29 @@ import Link from "next/link";
 import Axios from "axios";
 import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
-import { Navbar, Nav, Form, Button, Card, Table, Container, Row, Col, Tabs, Tab } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  Form,
+  Button,
+  Card,
+  Table,
+  Container,
+  Row,
+  Col,
+  Tabs,
+  Tab,
+} from "react-bootstrap";
 import Swal from "sweetalert2";
 import React from "react";
+import { useRouter } from "next/router";
 
 const LoanClient = () => {
-  //const router = useRouter();
+  const router = useRouter();
+
+  const reloadPage = () => {
+    router.push("/Biblioteca/Cliente/Components/InterfazCliente/LoanClient");
+  };
 
   //Datos de solicitud
   const [loanData, setLoanData] = useState([]);
@@ -96,7 +113,7 @@ const LoanClient = () => {
   const handleAceptarClick = async () => {
     try {
       const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
-      const comprobanteBecaFile = comprobanteBecaInputRef.current.files[0];
+      /* const comprobanteBecaFile = comprobanteBecaInputRef.current.files[0];
       const comprobanteMatriculaFile =
         comprobanteMatriculaInputRef.current.files[0];
 
@@ -120,7 +137,7 @@ const LoanClient = () => {
       const comprobanteBecaBlob = await convertToBlob(comprobanteBecaFile);
       const comprobanteMatriculaBlob = await convertToBlob(
         comprobanteMatriculaFile
-      );
+      ); */
 
       /* console.log("Datos enviados al servidor:", {
         cedula,
@@ -135,12 +152,13 @@ const LoanClient = () => {
         cedula,
         selectedDate: formattedDate,
         device,
-        comprobanteBeca: comprobanteBecaBlob,
-        comprobanteMatricula: comprobanteMatriculaBlob,
+        /* comprobanteBeca: comprobanteBecaBlob,
+        comprobanteMatricula: comprobanteMatriculaBlob, */
       });
 
       //console.log("Respuesta del servidor:", data);
 
+      // Si la solicitud es exitosa, muestra un mensaje de éxito
       Swal.fire({
         position: "center",
         icon: "success",
@@ -148,8 +166,17 @@ const LoanClient = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      reloadPage();
     } catch (error) {
+      // Si hay un error en la solicitud, muestra un mensaje de error
       console.error("Error al enviar la solicitud:", error);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Su préstamo no ha sido realizado",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
@@ -226,9 +253,7 @@ const LoanClient = () => {
           <Tabs id="controlled-tab-example" className="mb-3 custom-tabs">
             <Tab
               eventKey="Estudiantes"
-              title={
-                <span className="custom-tab-title">Solicitud</span>
-              }
+              title={<span className="custom-tab-title">Solicitud</span>}
             >
               <Form>
                 <Row>
@@ -378,7 +403,7 @@ const LoanClient = () => {
                   </Col>
                 </Row>
 
-                <Row className="justify-content-center">
+                {/* <Row className="justify-content-center">
                   <Col md={6}>
                     <Form.Group
                       className="mb-3 text-center mx-auto"
@@ -413,7 +438,7 @@ const LoanClient = () => {
                       </div>
                     </Form.Group>
                   </Col>
-                </Row>
+                </Row> */}
 
                 <div className="text-center mt-4">
                   <Button variant="danger" onClick={handleAceptarClick}>
@@ -425,74 +450,62 @@ const LoanClient = () => {
 
             <Tab
               eventKey="Datos"
-              title={
-                <span className="custom-tab-title">Ver Solicitud</span>
-              }
+              title={<span className="custom-tab-title">Ver Solicitud</span>}
             >
               <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>Primer Nombre</th>
-            <th>Segundo Nombre</th>
-            <th>Primer Apellido</th>
-            <th>Segundo Apellido</th>
-            <th>Carrera</th>
-            <th>Fecha Prestamo</th>
-            <th>Cédula</th>
-            <th>Nivel Carrera</th>
-            <th>Campus</th>
-            <th>Correo</th>
-            <th>Dispositivo</th>
-            <th>Teléfono</th>
-            <th>Comprobante Beca</th>
-            <th>Comprobante Matricula</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(loanData) && loanData.length > 0 ? (
-            loanData.map((loan) => {
-              const cedulaMatches = cedula === loan.UO_identificador;
+                <thead>
+                  <tr>
+                    <th>Primer Nombre</th>
+                    <th>Segundo Nombre</th>
+                    <th>Primer Apellido</th>
+                    <th>Segundo Apellido</th>
+                    <th>Carrera</th>
+                    <th>Fecha Prestamo</th>
+                    <th>Cédula</th>
+                    <th>Nivel Carrera</th>
+                    <th>Campus</th>
+                    <th>Correo</th>
+                    <th>Dispositivo</th>
+                    <th>Teléfono</th>
+                    {/* <th>Comprobante Beca</th>
+            <th>Comprobante Matricula</th> */}
+                  </tr>
+                </thead>
+                <tbody>
+                  {Array.isArray(loanData) && loanData.length > 0 ? (
+                    loanData.map((loan) => {
+                      const cedulaMatches = cedula === loan.UO_identificador;
 
-              return (
-                <React.Fragment key={loan.UO_identificador}>
-                  {cedulaMatches && (
+                      return (
+                        <React.Fragment key={loan.UO_identificador}>
+                          {cedulaMatches && (
+                            <tr>
+                              <td>{loan.UO_primer_nombre}</td>
+                              <td>{loan.UO_segundo_nombre}</td>
+                              <td>{loan.UO_primer_apellido}</td>
+                              <td>{loan.UO_segundo_apellido}</td>
+                              <td>{loan.CA_nombre}</td>
+                              <td>
+                                {new Date(loan.HO_fecha).toLocaleDateString()}
+                              </td>
+                              <td>{loan.UO_identificador}</td>
+                              <td>{loan.EE_nivel}</td>
+                              <td>{loan.EE_campus}</td>
+                              <td>{loan.CE_correoElectronico}</td>
+                              <td>{loan.TP_nombre}</td>
+                              <td>{loan.TO_numero}</td>
+                            </tr>
+                          )}
+                        </React.Fragment>
+                      );
+                    })
+                  ) : (
                     <tr>
-                      <td>{loan.UO_primer_nombre}</td>
-                      <td>{loan.UO_segundo_nombre}</td>
-                      <td>{loan.UO_primer_apellido}</td>
-                      <td>{loan.UO_segundo_apellido}</td>
-                      <td>{loan.CA_nombre}</td>
-                      <td>{new Date(loan.HO_fecha).toLocaleDateString()}</td>
-                      <td>{loan.UO_identificador}</td>
-                      <td>{loan.EE_nivel}</td>
-                      <td>{loan.EE_campus}</td>
-                      <td>{loan.CE_correoElectronico}</td>
-                      <td>{loan.TP_nombre}</td>
-                      <td>{loan.TO_numero}</td>
-                      <td>
-                        {loan.SD_comprobanteBeca && (
-                          <img src={loan.SD_comprobanteBeca} alt="Comprobante de Beca" />
-                        )}
-                      </td>
-                      <td>
-                        {loan.SD_comprobanteMatricula && (
-                          <img src={loan.SD_comprobanteMatricula} alt="Comprobante de Matrícula" />
-                        )}
-                      </td>
+                      <td colSpan="14">No hay datos disponibles</td>
                     </tr>
                   )}
-
-                  
-                </React.Fragment>
-              );
-            })
-          ) : (
-            <tr>
-              <td colSpan="14">No hay datos disponibles</td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+                </tbody>
+              </Table>
             </Tab>
           </Tabs>
         </div>

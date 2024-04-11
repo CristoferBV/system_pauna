@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         SELECT EE.EE_identificador_usuario
         FROM pau_btc_tbl_estudiante EE
         INNER JOIN pau_btc_tbl_listaprestamo LP ON EE.EE_idenficador = LP.LP_identificador_usuario
-        INNER JOIN pau_gnl_usuario UO ON EE.EE_identificador_usuario = 118080475
+        INNER JOIN pau_gnl_usuario UO ON EE.EE_identificador_usuario = ?
       );
       `;
 

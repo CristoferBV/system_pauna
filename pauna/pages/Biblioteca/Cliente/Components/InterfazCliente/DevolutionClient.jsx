@@ -1,9 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Navbar, Nav, Form, Button, Card, Table } from "react-bootstrap";
+import { Navbar, Nav, Form, Button, Card } from "react-bootstrap";
 import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import Link from "next/link";
 import { Row, Col, ButtonGroup  } from "react-bootstrap";
@@ -14,7 +13,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 export default function DevolutionClient({ Devolution }) {
-  const router = useRouter();
+  //const router = useRouter();
   const [active, setActive] = useState("");
   const [key, setKey] = useState("Inicio");
   const [data, setData] = useState(Devolution);

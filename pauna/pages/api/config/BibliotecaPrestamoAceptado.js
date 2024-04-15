@@ -18,28 +18,21 @@ const getAllPrestamoAceptado = async (req, res) => {
 };
 
 const deletePrestamoAceptado = async (req, res) => {
-    const { LP_identificador } = req.query;
-    console.log("LP_identificador recibido:", LP_identificador);
-
     try {
-        console.log("Before DELETE operation");
-        const result = await pool.query(`DELETE FROM pau_btc_tbl_listaprestamo WHERE LP_identificador = ?`, [LP_identificador]);
-        console.log("After DELETE operation");
-        console.log(result);
-
-        // Verificar si ya se ha enviado una respuesta antes de enviar otra
-        if (!res.headersSent) {
-            res.status(200).json(result);
-        }
+      const { LP_identificador } = req.body; // Obtener solo el identificador del préstamo desde el cuerpo de la solicitud
+  
+      // Eliminar los registros de la tabla pau_btc_tbl_listaprestamo_x_tbl_periferico
+      const deletePerifericosQuery = "DELETE FROM `pau_btc_tbl_listaprestamo_x_tbl_periferico` WHERE LP_identificador = ?";
+      await pool.query(deletePerifericosQuery, [LP_identificador]);
+  
+      // Eliminar el registro de la tabla pau_btc_tbl_listaprestamo
+      const deletePrestamoQuery = "DELETE FROM `pau_btc_tbl_listaprestamo` WHERE LP_identificador = ?";
+      await pool.query(deletePrestamoQuery, [LP_identificador]);
+  
+      return res.status(200).json({ message: "Préstamo eliminado correctamente." });
     } catch (error) {
-        console.error("Error during DELETE operation:", error);
-
-        // Verificar si ya se ha enviado una respuesta antes de enviar otra
-        if (!res.headersSent) {
-            res.status(500).json({ error: 'Error al eliminar el préstamo.' });
-        }
+      console.error("Hubo un error al eliminar el préstamo:", error);
+      return res.status(500).json({ error: "Hubo un error al eliminar el préstamo." });
     }
-};
-
-
-
+  };  
+  

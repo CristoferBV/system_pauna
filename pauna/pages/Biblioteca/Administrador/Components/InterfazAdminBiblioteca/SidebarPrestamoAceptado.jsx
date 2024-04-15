@@ -1,22 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  Table,
-  Card,
-  FormControl,
-  InputGroup,
-  Button,
-  Modal,
-  Form,
-} from "react-bootstrap";
+import { Table, Card, FormControl, InputGroup, Button} from "react-bootstrap";
+import { useRouter } from "next/router";
 
 export default function SidebarEstudiantes({ Estudiantes }) {
   const [searchText, setSearchText] = useState("");
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
-  const [editedValues, setEditedValues] = useState({});
-  const [selectedEstudiante, setSelectedEstudiante] = useState(null);
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const router = useRouter();
 
   const filteredEstudiantes = Estudiantes.filter((estudiante) => {
     return (
@@ -54,79 +43,45 @@ export default function SidebarEstudiantes({ Estudiantes }) {
     );
   });
 
-  const updateEstudiante = async (updatedEstudiante) => {
+  const reloadPage = () => {
+    router.push(
+      "/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/BibliotecaPrestamoAceptado"
+    );
+  };
+
+  const handleDelete = async (prestamoId) => { // Aquí solo se pasa el ID del préstamo
     try {
-      // Realiza una solicitud HTTP (por ejemplo, con Axios) para actualizar el estudiante en el servidor
-      await axios.put("URL_de_tu_API", updatedEstudiante);
-      // Lógica adicional, como actualizar el estado local con los nuevos datos si es necesario
+      const res = await axios.delete(`/api/config/BibliotecaPrestamoAceptado`, { data: { LP_identificador: prestamoId } });
+      console.log(res.data.message); // Mensaje de éxito de la eliminación
+      //reloadPage();
     } catch (error) {
-      console.error("Error al actualizar el estudiante:", error);
+      console.error("Hubo un error al eliminar el préstamo:", error);
+      // Manejar el error en caso de fallo
     }
   };
-
-  const createEstudiante = async (newEstudiante) => {
-    try {
-      // Realiza una solicitud HTTP (por ejemplo, con Axios) para crear un nuevo estudiante en el servidor
-      await axios.post("URL_de_tu_API", newEstudiante);
-      // Lógica adicional, como actualizar el estado local con los nuevos datos si es necesario
-      setShowCreateForm(false); // Cierra el modal después de crear el estudiante
-    } catch (error) {
-      console.error("Error al crear el estudiante:", error);
-    }
-  };
-
-  const handleDeletePrestamoAceptado = async (LP_identificador) => {
-    try {
-      const response = await axios.delete(
-        `/api/config/BibliotecaPrestamosAceptado?LP_identificador=${LP_identificador}`
-      );
-      console.log(response);
-      // Realizar otras acciones después de la eliminación
-    } catch (error) {
-      console.error("Error al eliminar el prestamo:", error);
-      throw error; // Permitir que el control fluya fuera de la función
-    }
-    reloadPage();
-  };
-
-  const handleCreateEstudiante = () => {
-    setShowCreateForm(true);
-    setEditedValues({});
-  };
-
-  // Función para abrir el formulario de edición
-  const handleEditEstudiante = (estudiante) => {
-    setSelectedEstudiante(estudiante);
-    setEditedValues({ ...estudiante });
-    setShowEditForm(true);
-  };
-
-  // Función para guardar cambios en la edición del estudiante
-  const handleSaveEditEstudiante = () => {
-    // Lógica para guardar los cambios del estudiante (usar 'updateEstudiante' aquí)
-    updateEstudiante(editedValues);
-    setShowEditForm(false);
-  };
-
+  
   const buttonStyle = {
     backgroundColor: "#233C5B",
     color: "white",
-    border: "none", // Agregar un borde blanco
-    transition: "background-color 0.3s, border 0.3s", // También añadir la transición para el borde
+    border: "none",
+    transition: "background-color 0.3s, border 0.3s",
   };
 
   const buttonHoverStyle = {
-    backgroundColor: "#152C4A", // Nuevo color de fondo al pasar el cursor
-    color: "black", // Texto de color oscuro
+    backgroundColor: "#152C4A",
+    color: "black",
     border: "1px solid white",
   };
+  
 
   return (
     <div className="p-8">
       <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
         <Card.Header>
           <div className="d-flex justify-content-between">
-            <span className="text-black font-semibold">Estudiantes Con Prestamo</span>
+            <span className="text-black font-semibold">
+              Estudiantes Con Prestamo
+            </span>
           </div>
         </Card.Header>
         <Card.Body>
@@ -137,11 +92,13 @@ export default function SidebarEstudiantes({ Estudiantes }) {
               onChange={(e) => setSearchText(e.target.value)}
             />
           </InputGroup>
-          <Table style={{ backgroundColor: "#252440", color: "white" }}
+          <Table
+            style={{ backgroundColor: "#252440", color: "white" }}
             striped
             bordered
             hover
-            responsive>
+            responsive
+          >
             <thead>
               <tr>
                 <th className="text-center">Nombre</th>
@@ -154,6 +111,7 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                 <th className="text-center">Correo</th>
                 <th className="text-center">Telefono</th>
                 <th className="text-center">Devolucion</th>
+                <th className="text-center">Administrar</th>
               </tr>
             </thead>
             <tbody>
@@ -174,6 +132,40 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                     {new Date(
                       estudiante.LP_fechaDevolucion
                     ).toLocaleDateString()}
+                  </td>
+                  <td className="text-center">
+                    <Button
+                      variant="light"
+                      className="ml-2"
+                      onClick={() => handleEdit(estudiante.LP_identificador)}
+                      style={buttonStyle}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor =
+                          buttonHoverStyle.backgroundColor;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor =
+                          buttonStyle.backgroundColor;
+                      }}
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      variant="light"
+                      className="ml-2"
+                      onClick={() => handleDelete(estudiante.LP_identificador)}
+                      style={buttonStyle}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor =
+                          buttonHoverStyle.backgroundColor;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor =
+                          buttonStyle.backgroundColor;
+                      }}
+                    >
+                      Eliminar
+                    </Button>
                   </td>
                 </tr>
               ))}

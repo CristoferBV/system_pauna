@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, Form, Col, Button } from "react-bootstrap";
-import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 
 export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
@@ -13,7 +12,6 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
   });
   const [dispositivos, setDispositivos] = useState([]);
   const [perifericos, setPerifericos] = useState([]);
-  const router = useRouter();
 
   useEffect(() => {
     if (

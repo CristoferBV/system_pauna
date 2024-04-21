@@ -597,7 +597,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
 export const getServerSideProps = async (context) => {
   try {
     const { data } = await axios.get(
-      "http://localhost:3000/api/material/view"
+      process.env.LINK+"/api/material/view"
     );
     const { materials, colors, brands, ubications, types, deparments} = data;
     return {

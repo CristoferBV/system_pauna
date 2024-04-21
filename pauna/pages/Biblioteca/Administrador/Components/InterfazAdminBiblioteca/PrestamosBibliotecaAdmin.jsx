@@ -49,7 +49,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
     try {
       console.log("Datos de préstamo:", prestamo);
       await axios.post(
-        process.env.LINK+"/api/config/BibliotecaPrestamos",
+        "/api/config/BibliotecaPrestamos",
         prestamo
       );
       console.log("Préstamo insertado correctamente.");
@@ -189,7 +189,7 @@ export const getServerSideProps = async (context) => {
   try {
     const {
       data: { Dispositivo, Periferico },
-    } = await axios.get(process.env.LINK+"/api/config/BibliotecaPrestamos");
+    } = await axios.get("/api/config/BibliotecaPrestamos");
     return {
       props: {
         Dispositivo,

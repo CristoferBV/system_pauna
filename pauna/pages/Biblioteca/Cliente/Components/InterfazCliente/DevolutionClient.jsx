@@ -38,7 +38,7 @@ export default function DevolutionClient({ Devolution }) {
   const [apellido1, setApellido1] = useState("");
   const [apellido2, setApellido2] = useState("");
   const [correo, setCorreo] = useState("");
-  const [fechaEntrega, setFechaEntrega] = useState("YYYY-MM-DD");
+  const [fechaEntrega, setFechaEntrega] = useState("");
 
   const buscarEstudiante = async () => {
     try {
@@ -80,7 +80,6 @@ export default function DevolutionClient({ Devolution }) {
     setKey(key);
   };
 
-
   // Función para manejar el clic en el botón "Enviar"
   const handleButtonDelete = () => {
     const identificacion = document.getElementById("formGridCedula").value; // Obtener el valor del campo de entrada de cédula
@@ -107,9 +106,7 @@ export default function DevolutionClient({ Devolution }) {
             .delete("/api/devolution/data", { data: dataToSend })
             .then((response) => {
               if (response.status === 200) {
-                // Los datos se eliminaron con éxito, puedes realizar alguna acción apropiada aquí.
-                //console.log("Datos eliminados con éxito");
-
+      
                 // Actualiza los datos después de la eliminación
                 axios
                   .get("/api/devolution/data")
@@ -205,7 +202,7 @@ export default function DevolutionClient({ Devolution }) {
               className="d-flex justify-content-center"
               style={{ textDecoration: "none" }}
             >
-              <Button Button variant="danger" size="ms">
+              <Button variant="danger" size="ms">
                 Cerrar Sesión
               </Button>
             </Link>

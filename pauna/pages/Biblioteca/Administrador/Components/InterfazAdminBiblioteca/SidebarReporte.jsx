@@ -61,7 +61,7 @@ export default function SidebarReporte({ Reporte }) {
 
     const loadDevices = async () => {
         try {
-            const response = await axios.get( process.env.LINK+"/api/config/BibliotecaReportes");
+            const response = await axios.get("/api/config/BibliotecaReportes");
             const reportes = response.data; 
             setReportes(reportes); 
         } catch (error) {
@@ -435,7 +435,7 @@ export default function SidebarReporte({ Reporte }) {
 
 export const getServerSideProps = async (context) => {
     try {
-        const response = await axios.get(process.env.LINK+"/api/config/BibliotecaReporte");
+        const response = await axios.get("/api/config/BibliotecaReporte");
         const data = response.data;
 
         if (data && data.Reportes) {

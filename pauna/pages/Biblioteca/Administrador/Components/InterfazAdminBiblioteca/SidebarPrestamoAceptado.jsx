@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Table, Card, FormControl, InputGroup, Button} from "react-bootstrap";
+import { Table, Card, FormControl, InputGroup, Button } from "react-bootstrap";
 import { useRouter } from "next/router";
 
 export default function SidebarEstudiantes({ Estudiantes }) {
@@ -49,17 +49,20 @@ export default function SidebarEstudiantes({ Estudiantes }) {
     );
   };
 
-  const handleDelete = async (prestamoId) => { // Aquí solo se pasa el ID del préstamo
+  const handleDelete = async (prestamoId) => {
+    console.log("ID del préstamo a eliminar:", prestamoId); // Registro de consola para verificar el ID del préstamo
     try {
-      const res = await axios.delete(`/api/config/BibliotecaPrestamoAceptado`, { data: { LP_identificador: prestamoId } });
-      console.log(res.data.message); // Mensaje de éxito de la eliminación
+      const res = await axios.delete(`/api/config/BibliotecaPrestamoAceptado`, {
+        data: { LP_identificador: prestamoId },
+      });
+      console.log(res.data.message);
       //reloadPage();
     } catch (error) {
       console.error("Hubo un error al eliminar el préstamo:", error);
       // Manejar el error en caso de fallo
     }
   };
-  
+
   const buttonStyle = {
     backgroundColor: "#233C5B",
     color: "white",
@@ -72,7 +75,11 @@ export default function SidebarEstudiantes({ Estudiantes }) {
     color: "black",
     border: "1px solid white",
   };
-  
+
+  const handleEdit = (prestamoId) => {
+    // Aquí puedes implementar la lógica para manejar la edición del préstamo
+    console.log("Editar préstamo con ID:", prestamoId);
+  };
 
   return (
     <div className="p-8">
@@ -111,7 +118,7 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                 <th className="text-center">Correo</th>
                 <th className="text-center">Telefono</th>
                 <th className="text-center">Devolucion</th>
-
+                <th className="text-center">Administrar</th>
               </tr>
             </thead>
             <tbody>
@@ -133,7 +140,46 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                       estudiante.LP_fechaDevolucion
                     ).toLocaleDateString()}
                   </td>
-                  
+                  <td className="text-center">
+                    <Button
+                      variant="light"
+                      className="ml-2"
+                      onClick={() => handleEdit(estudiante.LP_identificador)}
+                      style={buttonStyle}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor =
+                          buttonHoverStyle.backgroundColor;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor =
+                          buttonStyle.backgroundColor;
+                      }}
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      variant="light"
+                      className="ml-2"
+                      onClick={() => {
+                        console.log(
+                          "LP_identificador:",
+                          estudiante.LP_identificador
+                        );
+                        handleDelete(estudiante.LP_identificador);
+                      }}
+                      style={buttonStyle}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor =
+                          buttonHoverStyle.backgroundColor;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor =
+                          buttonStyle.backgroundColor;
+                      }}
+                    >
+                      Eliminar
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -147,7 +193,7 @@ export default function SidebarEstudiantes({ Estudiantes }) {
 export const getServerSideProps = async (context) => {
   try {
     const { data: Estudiantes } = await axios.get(
-      process.env.LINK+"/api/config/BibliotecaPrestamoAceptado"
+      process.env.LINK + "/api/config/BibliotecaPrestamoAceptado"
     );
     return {
       props: {

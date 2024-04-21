@@ -18,21 +18,25 @@ const getAllPrestamoAceptado = async (req, res) => {
 };
 
 const deletePrestamoAceptado = async (req, res) => {
-    try {
-      const { LP_identificador } = req.body; // Obtener solo el identificador del préstamo desde el cuerpo de la solicitud
-  
-      // Eliminar los registros de la tabla pau_btc_tbl_listaprestamo_x_tbl_periferico
-      const deletePerifericosQuery = "DELETE FROM `pau_btc_tbl_listaprestamo_x_tbl_periferico` WHERE LP_identificador = ?";
-      await pool.query(deletePerifericosQuery, [LP_identificador]);
-  
-      // Eliminar el registro de la tabla pau_btc_tbl_listaprestamo
-      const deletePrestamoQuery = "DELETE FROM `pau_btc_tbl_listaprestamo` WHERE LP_identificador = ?";
-      await pool.query(deletePrestamoQuery, [LP_identificador]);
-  
-      return res.status(200).json({ message: "Préstamo eliminado correctamente." });
-    } catch (error) {
-      console.error("Hubo un error al eliminar el préstamo:", error);
-      return res.status(500).json({ error: "Hubo un error al eliminar el préstamo." });
-    }
-  };  
+  try {
+    const { LP_identificador } = req.body; // Obtener solo el identificador del préstamo desde el cuerpo de la solicitud
+    console.log("ID del préstamo a eliminar:", LP_identificador); // Registro de consola para verificar el ID del préstamo recibido
+
+    // Eliminar los registros de la tabla pau_btc_tbl_listaprestamo_x_tbl_periferico
+    const deletePerifericosQuery = "DELETE FROM `pau_btc_tbl_listaprestamo_x_tbl_periferico` WHERE LP_identificador = ?";
+    await pool.query(deletePerifericosQuery, [LP_identificador]);
+    console.log("Registros de periféricos eliminados correctamente."); // Registro de consola para confirmar la eliminación de registros de periféricos
+
+    // Eliminar el registro de la tabla pau_btc_tbl_listaprestamo
+    const deletePrestamoQuery = "DELETE FROM `pau_btc_tbl_listaprestamo` WHERE LP_identificador = ?";
+    await pool.query(deletePrestamoQuery, [LP_identificador]);
+    console.log("Préstamo eliminado correctamente."); // Registro de consola para confirmar la eliminación del préstamo
+
+    return res.status(200).json({ message: "Préstamo eliminado correctamente." });
+  } catch (error) {
+    console.error("Hubo un error al eliminar el préstamo:", error);
+    return res.status(500).json({ error: "Hubo un error al eliminar el préstamo." });
+  }
+};
+
   

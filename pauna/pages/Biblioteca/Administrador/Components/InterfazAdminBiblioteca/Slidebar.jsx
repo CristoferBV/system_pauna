@@ -32,7 +32,7 @@
         canMakeRequest = false;
         const timestamp = new Date().getTime();
         const response = await axios.get(
-          process.env.LINK+`/api/config/BibliotecaDispositivos?timestamp=${timestamp}`
+          `/api/config/BibliotecaDispositivos?timestamp=${timestamp}`
         );
         const devices = response.data;
         setDispositivos(devices);
@@ -711,7 +711,7 @@
   export const getServerSideProps = async (context) => {
     try {
       const response = await axios.get(
-        process.env.LINK+"/api/config/BibliotecaDispositivos"
+        "/api/config/BibliotecaDispositivos"
       );
       const data = response.data;
 

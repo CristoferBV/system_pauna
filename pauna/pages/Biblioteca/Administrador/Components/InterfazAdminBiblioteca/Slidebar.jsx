@@ -32,7 +32,7 @@
         canMakeRequest = false;
         const timestamp = new Date().getTime();
         const response = await axios.get(
-          `http://localhost:3000/api/config/BibliotecaDispositivos?timestamp=${timestamp}`
+          process.env.LINK+`/api/config/BibliotecaDispositivos?timestamp=${timestamp}`
         );
         const devices = response.data;
         setDispositivos(devices);

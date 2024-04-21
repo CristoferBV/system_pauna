@@ -49,7 +49,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
     try {
       console.log("Datos de préstamo:", prestamo);
       await axios.post(
-        "http://localhost:3000/api/config/BibliotecaPrestamos",
+        process.env.LINK+"/api/config/BibliotecaPrestamos",
         prestamo
       );
       console.log("Préstamo insertado correctamente.");

@@ -187,16 +187,16 @@ export default function SidebarReporte({ Reporte }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredReporte.map((reporte) => (
-                                <tr key={reporte.LP_identificador}>
-                                    <td className="text-center">{reporte.UO_primer_nombre}</td>
-                                    <td className="text-center">{reporte.UO_identificador}</td>
-                                    <td className="text-center">{reporte.TP_nombre}</td>
-                                    <td className="text-center">{reporte.EA_nombre}</td>
-                                    <td className="text-center">{new Date(reporte.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
-                                </tr>
-                            ))}
-                        </tbody>
+                        {filteredReporte.map((reporte, index) => (
+                            <tr key={`${reporte.LP_identificador}-${index}`}>
+                            <td className="text-center">{reporte.UO_primer_nombre}</td>
+                            <td className="text-center">{reporte.UO_identificador}</td>
+                            <td className="text-center">{reporte.TP_nombre}</td>
+                            <td className="text-center">{reporte.EA_nombre}</td>
+                            <td className="text-center">{new Date(reporte.LP_fechaDevolucion).toISOString().slice(0, 10)}</td>
+                        </tr>
+                        ))}
+                    </tbody>
                     </Table>
                 </Card.Body>
             </Card>

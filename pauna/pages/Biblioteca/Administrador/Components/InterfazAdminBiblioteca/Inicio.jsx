@@ -1,6 +1,8 @@
 import React from "react";
 import { Carousel, Card, Row, Col } from "react-bootstrap";
 import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
+import Foto from '../../../../../public/img-fondo-inicio.webp';
+import Image from "next/image";
 
 const Inicio = () => {
   const cardTitleStyle = {
@@ -70,43 +72,55 @@ const Inicio = () => {
               <Row className="justify-content-center">
                 <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
-                    <Card.Img
-                      variant="top"
-                      src="https://static.vecteezy.com/system/resources/previews/028/537/897/non_2x/3d-illustration-icon-design-of-metallic-orange-learning-book-education-with-square-podium-free-png.png"
+                    <Image
+                      src={Foto} 
+                      alt="Descripción de tu imagen"
+                      priority
+                      style={{ width: "auto", height: "auto" }} //solo se utiliza cuando la imagen es tipo .web
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
                         Sistema Citas
                       </Card.Title>
-                      <Card.Text>Parte encargada de validación de citas.</Card.Text>
+                      <Card.Text>
+                        Parte encargada de validación de citas.
+                      </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
                 <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
-                    <Card.Img
-                      variant="top"
-                      src="https://static.vecteezy.com/system/resources/previews/028/537/897/non_2x/3d-illustration-icon-design-of-metallic-orange-learning-book-education-with-square-podium-free-png.png"
+                    <Image
+                      src={Foto} 
+                      alt="Descripción de tu imagen"
+                      priority
+                      style={{ width: "auto", height: "auto" }}
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
                         Sistema Prestamos
                       </Card.Title>
-                      <Card.Text>Parte encargada de realizar prestamos.</Card.Text>
+                      <Card.Text>
+                        Parte encargada de realizar prestamos.
+                      </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
                 <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
-                    <Card.Img
-                      variant="top"
-                      src="https://static.vecteezy.com/system/resources/previews/028/537/897/non_2x/3d-illustration-icon-design-of-metallic-orange-learning-book-education-with-square-podium-free-png.png"
+                    <Image
+                      src={Foto} 
+                      alt="Descripción de tu imagen"
+                      priority
+                      style={{ width: "auto", height: "auto" }}
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
                         Sistema Activos
                       </Card.Title>
-                      <Card.Text>Parte encargada de crear, editar y eliminar activos.</Card.Text>
+                      <Card.Text>
+                        Parte encargada de crear, editar y eliminar activos.
+                      </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
@@ -116,43 +130,55 @@ const Inicio = () => {
               <Row className="justify-content-center">
                 <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
-                    <Card.Img
-                      variant="top"
-                      src="https://static.vecteezy.com/system/resources/previews/028/537/897/non_2x/3d-illustration-icon-design-of-metallic-orange-learning-book-education-with-square-podium-free-png.png"
+                    <Image
+                      src={Foto} 
+                      alt="Descripción de tu imagen"
+                      priority
+                      style={{ width: "auto", height: "auto" }}
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
                         Sistema Usuarios
                       </Card.Title>
-                      <Card.Text>Parte encarga de verificación de estudiantes.</Card.Text>
+                      <Card.Text>
+                        Parte encarga de verificación de estudiantes.
+                      </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
                 <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
-                    <Card.Img
-                      variant="top"
-                      src="https://static.vecteezy.com/system/resources/previews/028/537/897/non_2x/3d-illustration-icon-design-of-metallic-orange-learning-book-education-with-square-podium-free-png.png"
+                    <Image
+                      src={Foto} 
+                      alt="Descripción de tu imagen"
+                      priority
+                      style={{ width: "auto", height: "auto" }}
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
                         Sistema Horario
                       </Card.Title>
-                      <Card.Text>Parte encargada de crear, editar y eliminar horarios.</Card.Text>
+                      <Card.Text>
+                        Parte encargada de crear, editar y eliminar horarios.
+                      </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
                 <Col md={3} style={{ margin: "0.5rem" }}>
                   <Card>
-                    <Card.Img
-                      variant="top"
-                      src="https://static.vecteezy.com/system/resources/previews/028/537/897/non_2x/3d-illustration-icon-design-of-metallic-orange-learning-book-education-with-square-podium-free-png.png"
+                    <Image
+                      src={Foto} 
+                      alt="Descripción de tu imagen"
+                      priority
+                      style={{ width: "auto", height: "auto" }}
                     />
                     <Card.Body>
                       <Card.Title style={cardTitleStyle}>
                         Sistema Reportes
                       </Card.Title>
-                      <Card.Text>Parte encargada de generar reportes en PDF.</Card.Text>
+                      <Card.Text>
+                        Parte encargada de generar reportes en PDF.
+                      </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>

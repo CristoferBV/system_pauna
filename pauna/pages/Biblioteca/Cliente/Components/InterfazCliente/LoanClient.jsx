@@ -121,13 +121,13 @@ const LoanClient = () => {
   return (
     <div className=" flex flex-col min-h-screen">
       <Navbar bg="danger" expand="lg">
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/Biblioteca/Cliente/Components/InterfazCliente/HomeClient">
           <Image
-            className="h-9 w-9 mt-2.5 ml-2.5"
+            className="h-11 w-12 mt-2.5 ml-2.5"
             src={Logo}
-            width={1000}
-            height={1000}
-            alt="University"
+            width={500}
+            height={500}
+            alt="Universidad Nacional"
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -135,6 +135,7 @@ const LoanClient = () => {
           <Nav className="mr-auto">
             {navigation.map((item) => (
               <Link
+                key={item.section}
                 variant="danger"
                 size="sm"
                 href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
@@ -197,40 +198,44 @@ const LoanClient = () => {
                 <Row>
                   <Col md={4}>
                     <Form.Group className="mb-3">
-                      <label className="font-semibold">Nombre</label>
-                      <Form.Control type="text" placeholder="Ejemplo: Pepito" />
+                      <label htmlFor="nombre" className="font-semibold">Nombre</label>
+                      <Form.Control id="nombre" name="nombre" type="text" placeholder="Ejemplo: Pepito" />
                     </Form.Group>
                   </Col>
                   <Col md={4}>
-                    <Form.Group className="mb-3">
-                      <label className="font-semibold">
-                        Segundo Nombre (Solo si tiene)
-                      </label>
-                      <Form.Control type="text" placeholder="Ejemplo: Bryan" />
-                    </Form.Group>
+                  <Form.Group className="mb-3">
+                    <label htmlFor="segundoNombre" className="font-semibold">
+                      Segundo Nombre (Solo si tiene)
+                    </label>
+                    <Form.Control id="segundoNombre" name="segundoNombre" type="text" placeholder="Ejemplo: Bryan" />
+                  </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group className="mb-3">
-                      <label className="font-semibold">Primer apellido</label>
-                      <Form.Control type="text" placeholder="Ejemplo: Gomez" />
+                      <label htmlFor="apellidoUno" className="font-semibold">Primer apellido</label>
+                      <Form.Control id="apellidoUno" name="apellidoUno" type="text" placeholder="Ejemplo: Gomez" />
                     </Form.Group>
                   </Col>
                 </Row>
 
                 <Row>
                   <Col md={4}>
-                    <Form.Group className="mb-3">
-                      <label className="font-semibold">Segundo apellido</label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Ejemplo: Arguedas"
-                      />
-                    </Form.Group>
+                  <Form.Group className="mb-3">
+                    <label htmlFor="apellidoDos" className="font-semibold">Segundo apellido</label>
+                    <Form.Control
+                      id="apellidoDos"
+                      name="apellidoDos"
+                      type="text"
+                      placeholder="Ejemplo: Arguedas"
+                    />
+                  </Form.Group>
 
                     <Form.Group className="mb-3">
-                      <label className="font-semibold">Cédula</label>
+                      <label htmlFor="cedula" className="font-semibold">Cédula</label>
                       <Form.Control
-                        type="input"
+                        id="cedula"
+                        name="cedula"
+                        type="text"
                         placeholder="Ejemplo: 018080472"
                         value={cedula}
                         onChange={(e) => setCedula(e.target.value)}
@@ -238,9 +243,11 @@ const LoanClient = () => {
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                      <label className="font-semibold">Correo</label>
+                      <label htmlFor="correo" className="font-semibold">Correo</label>
                       <Form.Control
-                        type="tel"
+                        id="correo"
+                        name="correo"
+                        type="email"
                         placeholder="Ejemplo: correo@gmail.com"
                       />
                     </Form.Group>
@@ -248,20 +255,20 @@ const LoanClient = () => {
 
                   <Col md={4}>
                   <Form.Group className="mb-3">
-                    <label className="font-semibold">Carrera</label>
-                    <Form.Control as="select">
-                      <option value="">-Seleccionar opción-</option>
-                      {carreras.map((carrera) => (
-                        <option key={carrera.CA_identificador} value={carrera.CA_identificador}>
-                          {carrera.label}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
+                  <label htmlFor="carrera" className="font-semibold">Carrera</label>
+                  <Form.Control id="carrera" name="carrera" as="select">
+                    <option value="">-Seleccionar opción-</option>
+                    {carreras.map((carrera) => (
+                      <option key={carrera.CA_identificador} value={carrera.CA_identificador}>
+                        {carrera.label}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
 
                   <Form.Group className="mb-3">
-                    <label className="font-semibold">Nivel de carrera</label>
-                    <Form.Control as="select">
+                    <label htmlFor="nivelCarrera" className="font-semibold">Nivel de carrera</label>
+                    <Form.Control id="nivelCarrera" name="nivelCarrera" as="select">
                       <option value="">-Seleccionar opción-</option>
                       <option value="Nivel I">Nivel I</option>
                       <option value="Nivel II">Nivel II</option>
@@ -273,8 +280,8 @@ const LoanClient = () => {
 
                   {/*ARREGLAR ESTO PARA QUE SOLO TOME TABLET O LAPTOP Y ENVIE EL ID A LA API LOAN */}
                   <Form.Group className="mb-3">
-                    <label className="font-semibold">Dispositivos</label>
-                    <Form.Control as="select" onChange={(e) => {
+                    <label htmlFor="dispositivos" className="font-semibold">Dispositivos</label>
+                    <Form.Control id="dispositivos" name="dispositivos" as="select" onChange={(e) => {
                       const selectedDeviceDescription =
                         e.target.options[e.target.selectedIndex].getAttribute("data-description");
                       setDevice(selectedDeviceDescription);
@@ -291,8 +298,8 @@ const LoanClient = () => {
 
                 <Col md={4}>
                   <Form.Group className="mb-3">
-                    <label className="font-semibold">Fechas de citas</label>
-                    <Form.Control as="select" onChange={(e) => {
+                    <label htmlFor="fechasCitas" className="font-semibold">Fechas de citas</label>
+                    <Form.Control id="fechasCitas" name="fechasCitas" as="select" onChange={(e) => {
                       const selectedDate =
                         e.target.options[e.target.selectedIndex].getAttribute("data-date");
                       const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
@@ -308,8 +315,8 @@ const LoanClient = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3">
-                    <label className="font-semibold">Campus</label>
-                    <Form.Control as="select">
+                    <label htmlFor="campus" className="font-semibold">Campus</label>
+                    <Form.Control id="campus" name="campus" as="select">
                       <option value="">-Seleccionar opción-</option>
                       <option value="Campus Coto">Campus Coto</option>
                       <option value="Campus PZ">Campus PZ</option>
@@ -317,8 +324,8 @@ const LoanClient = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3">
-                    <label className="font-semibold">Teléfono</label>
-                    <Form.Control type="input" placeholder="Ejemplo: 85893501" />
+                    <label htmlFor="telefono" className="font-semibold">Teléfono</label>
+                    <Form.Control id="telefono" name="telefono" type="text" placeholder="Ejemplo: 85893501" />
                   </Form.Group>
                 </Col>
                 </Row>
@@ -352,15 +359,14 @@ const LoanClient = () => {
                     <th>Teléfono</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {Array.isArray(loanData) && loanData.length > 0 ? (
-                    loanData.map((loan, index) => {
+                <tbody> 
+                  {loanData.map((loan, index) => {
                       const cedulaMatches = cedula === loan.UO_identificador;
 
                       // Retornar la fila solo si cedulaMatches es true
                       if (cedulaMatches) {
                         return (
-                          <tr key={`${loan.value}-${index}`}>
+                          <tr key={`${loan.UO_identificador}-${index}`}>
                             <td>{loan.UO_primer_nombre}</td>
                             <td>{loan.UO_segundo_nombre}</td>
                             <td>{loan.UO_primer_apellido}</td>
@@ -377,12 +383,7 @@ const LoanClient = () => {
                         );
                       }
                       return null;  // Si no hay coincidencia, no se devuelve ningún elemento.
-                    })
-                  ) : (
-                    <tr>
-                      <td colSpan="14">No hay datos disponibles</td>
-                    </tr>
-                  )}
+                    })}
                 </tbody>
 
               </Table>

@@ -175,7 +175,7 @@ export default function UserWindow({ userAdmins, rols }) {
 export const getServerSideProps = async (context) => {
   try {
     const { data } = await axios.get(
-      "http://localhost:3000/api/config/admin"
+      process.env.LINK+"/api/config/admin"
     )
     const {userAdmins, rols} = data;
     return {

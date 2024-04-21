@@ -415,7 +415,7 @@ export default function Report({ materials, rebajos, aumentos }) {
 export const getServerSideProps = async (context) => {
     try {
         const { data } = await axios.get(
-            "http://localhost:3000/api/material/mov"
+            process.env.LINK+"/api/material/mov"
         );
         const { materials, rebajos, aumentos } = data;
         return {

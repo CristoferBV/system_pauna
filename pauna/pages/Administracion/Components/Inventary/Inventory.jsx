@@ -209,15 +209,15 @@ export default function Inventary({ materials, colors, brands, ubications, types
         </Modal.Header>
         <Modal.Body>
           <Form >
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formCodeMaterial">
               <Form.Label>Codigo</Form.Label>
               <Form.Control name="ML_identificador" value={material.ML_identificador} onChange={handleChange} type="text" placeholder="Ingrese su codigo" />
             </Form.Group>
-            <Form.Group controlId="formBasicPassword">
+            <Form.Group controlId="formNameMaterial">
               <Form.Label>Nombre</Form.Label>
               <Form.Control name="ML_descripcion" value={material.ML_descripcion} onChange={handleChange} type="text" placeholder="Ingrese el nombre" />
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formBrandMaterial">
               <Form.Label>Marca</Form.Label>
               <Form.Select name="MC_identificador" value={parseInt(brand.MC_identificador)} onChange={handleChange}>
                 {brands && brands.map((brand) => (
@@ -225,7 +225,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
                 ))}
               </Form.Select>
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formTypeMaterial">
               <Form.Label>Tipo</Form.Label>
               <Form.Select name="TP_identificador" value={parseInt(type.TP_identificador)} onChange={handleChange}>
                 {types && types.map((type) => (
@@ -233,11 +233,11 @@ export default function Inventary({ materials, colors, brands, ubications, types
                 ))}
               </Form.Select>
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formCantMaterial">
               <Form.Label>Cantidad</Form.Label>
               <Form.Control name="ML_cantidad" value={material.ML_cantidad} onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formColorMaterial">
               <Form.Label>Color</Form.Label>
               <Form.Select name="CR_identificador" value={color.CR_identificador} onChange={handleChange}>
                 {colors && colors.map((color) => (
@@ -245,7 +245,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
                 ))}
               </Form.Select>
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formUbiMaterial">
               <Form.Label>Ubicacion</Form.Label>
               <Form.Select name="UN_identificador" value={parseInt(ubication.UN_identificador)} onChange={handleChange}>
                 {ubications && ubications.map((ubication) => (
@@ -253,7 +253,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
                 ))}
               </Form.Select>
             </Form.Group>
-            <Form.Group controlId="formBasicPassword">
+            <Form.Group controlId="formObsMaterial">
               <Form.Label>Observaciones</Form.Label>
               <Form.Control name="ML_observacion" value={material.ML_observacion} onChange={handleChange} as="textarea" placeholder="Ingrese sus observaciones" />
             </Form.Group>
@@ -286,7 +286,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formNameColor">
               <Form.Label>Nombre</Form.Label>
               <Form.Control name="CR_nombre" value={color.CR_nombre} onChange={handleChange} type="text" placeholder="Ingrese el color"/>
             </Form.Group>
@@ -308,11 +308,11 @@ export default function Inventary({ materials, colors, brands, ubications, types
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formNameType">
               <Form.Label>Nombre</Form.Label>
               <Form.Control name="TP_nombre" value={type.TP_nombre} onChange={handleChange} type="text" placeholder="Ingrese el nombre" />
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formDescType">
               <Form.Label>Descripción</Form.Label>
               <Form.Control name="TP_descripcion" value={type.TP_descripcion} onChange={handleChange} type="text" placeholder="Ingrese la descripción si desea" />
             </Form.Group>
@@ -335,11 +335,11 @@ export default function Inventary({ materials, colors, brands, ubications, types
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formNameUbi">
               <Form.Label>Nombre</Form.Label>
               <Form.Control name="UN_lugar" value={ubication.UN_lugar} onChange={handleChange} type="text" placeholder="Ingrese el nombre de la ubicación" />
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formDescUbi">
               <Form.Label>Descripción</Form.Label>
               <Form.Control name="UN_descripcion" value={ubication.UN_descripcion} onChange={handleChange} type="text" placeholder="Ingrese la descripción si desea" />
             </Form.Group>
@@ -362,11 +362,11 @@ export default function Inventary({ materials, colors, brands, ubications, types
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formNameBrand">
               <Form.Label>Nombre</Form.Label>
               <Form.Control name="MC_nombre" value={brand.MC_nombre} onChange={handleChange} type="text" placeholder="Ingrese el nombre de la marca" />
             </Form.Group>.
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formDescBrand">
               <Form.Label>Descripción</Form.Label>
               <Form.Control name="MC_descripcion" value={brand.MC_descripcion} onChange={handleChange} type="text" placeholder="Ingrese la descripción si desea" />
             </Form.Group>
@@ -388,20 +388,20 @@ export default function Inventary({ materials, colors, brands, ubications, types
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formCodeMaterialEntr">
               <Form.Label>Codigo</Form.Label>
               <Form.Control disabled={true} name="ML_identificador" value={material.ML_identificador} onChange={handleChange} type="text" placeholder="Ingrese el color" />
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formNameMaterialEntr">
               <Form.Label>Nombre</Form.Label>
               <Form.Control disabled={true} name="ML_descripcion" value={material.ML_descripcion} onChange={handleChange} type="text" placeholder="Ingrese el color" />
             </Form.Group>
             
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formCantMaterialEntr">
               <Form.Label>Cantidad entregada</Form.Label>
               <Form.Control name="ML_cantidad" onChange={handleChange} type="text" placeholder="Ingrese la cantidad" />
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formDepMaterialEntr">
             <Form.Label>Departamento</Form.Label>
               <Form.Select name="DO_identificador" value={parseInt(deparment.DO_identificador)} onChange={handleChange}>
               <option>Elija un departamento</option>
@@ -433,7 +433,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formNameColors">
               <Form.Label>Nombre</Form.Label>
               <Form.Control name="CR_nombre" value={color.CR_nombre} onChange={handleChange} type="text" placeholder="Ingrese el color" />
             </Form.Group>
@@ -455,15 +455,15 @@ export default function Inventary({ materials, colors, brands, ubications, types
         </Modal.Header>
         <Modal.Body>
           <Form>
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group controlId="formCodeMaterialUpd">
               <Form.Label>Codigo</Form.Label>
               <Form.Control disabled={true} name="ML_identificador" value={material.ML_identificador} onChange={handleChange} type="text" placeholder="Ingrese el nombre" />
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formNameMaterialUpd">
               <Form.Label>Nombre</Form.Label>
               <Form.Control disabled={true} name="ML_descripcion" value={material.ML_descripcion} onChange={handleChange} type="text" placeholder={material.ML_descripcion} />
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formCantMaterialUpd">
               <Form.Label>Cantidad a ingresar</Form.Label>
               <Form.Control name="ML_cantidad" onChange={handleChange} type="text" placeholder="Ingrese la descripción si desea" />
             </Form.Group>

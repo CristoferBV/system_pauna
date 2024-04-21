@@ -247,7 +247,7 @@ export default function SidebarEstudiantes({ Estudiantes }) {
 export const getServerSideProps = async (context) => {
     try {
         const { data: Estudiantes } = await axios.get(
-            "http://localhost:3000/api/config/BibliotecaEstudiantes"
+            process.env.LINK+"/api/config/BibliotecaEstudiantes"
         );
         return {
             props: {

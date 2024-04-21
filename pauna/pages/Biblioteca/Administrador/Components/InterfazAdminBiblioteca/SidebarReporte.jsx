@@ -435,7 +435,7 @@ export default function SidebarReporte({ Reporte }) {
 
 export const getServerSideProps = async (context) => {
     try {
-        const response = await axios.get("http://localhost:3000/api/config/BibliotecaReporte");
+        const response = await axios.get(process.env.LINK+"/api/config/BibliotecaReporte");
         const data = response.data;
 
         if (data && data.Reportes) {

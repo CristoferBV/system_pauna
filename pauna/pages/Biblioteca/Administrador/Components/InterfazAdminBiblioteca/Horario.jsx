@@ -416,7 +416,7 @@ export default function Horario({ Horarios }) {
 export const getServerSideProps = async (context) => {
   try {
     const { data: Horarios } = await axios.get(
-      "http://localhost:3000/api/config/BibliotecaHorario"
+      process.env.LINK+"/api/config/BibliotecaHorario"
     );
     return {
       props: {

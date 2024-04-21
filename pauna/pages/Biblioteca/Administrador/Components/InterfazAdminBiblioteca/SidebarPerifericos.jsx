@@ -407,7 +407,7 @@ export default function SidebarPerifericos({ Perifericos }) {
 export const getServerSideProps = async (context) => {
   try {
     const { data: Perifericos } = await axios.get(
-      "http://localhost:3000/api/config/BibliotecaPerifericos"
+      process.env.LINK+"/api/config/BibliotecaPerifericos"
     );
     return {
       props: {
@@ -418,7 +418,7 @@ export const getServerSideProps = async (context) => {
     console.log(error);
     return {
       props: {
-        Perifericos: [], // Puedes proporcionar un valor predeterminado en caso de error.
+        Perifericos: [],
       },
     };
   }

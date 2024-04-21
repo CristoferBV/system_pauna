@@ -1,6 +1,22 @@
 import { pool } from "../../../utils/Storage";
 
 export default async function handler(req, res) {
+    
+    // Permitir solicitudes desde cualquier origen
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    // Permitir los métodos HTTP que se utilizan
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    // Permitir los encabezados que se incluyen en las solicitudes
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    // Permitir acceso a la red privada
+    res.setHeader('Access-Control-Allow-Private-Network', 'true');
+
+    if (req.method === 'OPTIONS') {
+        // Manejar las solicitudes OPTIONS
+        res.status(200).end();
+        return;
+    }
+
     switch (req.method) {
         case "GET":
             return await getAllActivos(req, res);

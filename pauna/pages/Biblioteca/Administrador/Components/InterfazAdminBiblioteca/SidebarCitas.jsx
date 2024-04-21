@@ -413,7 +413,7 @@ export const getServerSideProps = async (context) => {
   try {
     const {
       data: { Citas, Horario, Dispositivo },
-    } = await axios.get("http://localhost:3000/api/config/BibliotecaCitas");
+    } = await axios.get(process.env.LINK+"/api/config/BibliotecaCitas");
     return {
       props: {
         Citas,

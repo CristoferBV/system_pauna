@@ -12,7 +12,7 @@ const getCareer = async (req, res) => {
     try {
         const [result] = await pool.query("SELECT CA_identificador, CA_nombre FROM pau_btc_tbl_carrera");
 
-        const options = result.map((row) => ({
+        const options = result && result.map((row) => ({
             value: row['CA_identificador'], // Valor a enviar cuando se seleccione la opción
             label: row['CA_nombre'] // Texto que se mostrará en la opción
         }));

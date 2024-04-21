@@ -16,10 +16,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    /* console.log("Datos enviados al servidor: ", {
-        correo,
-        password
-    }); */
 
     try {
         // Realizar la solicitud al servidor para autenticar al usuario y obtener idRol
@@ -29,8 +25,6 @@ const Login = () => {
         });
 
         const data = response.data;
-        
-        //console.log("data:", data.UO_identificador_rol);
 
         if (data.UO_identificador_rol === 1) {
             handleEnterLogin();
@@ -72,7 +66,7 @@ const Login = () => {
       }
     }).then((result) => {
       if (result.dismiss === Swal.DismissReason.timer) {
-        console.log('I was closed by the timer')
+        //console.log('I was closed by the timer')
       }
     })
   }
@@ -84,7 +78,7 @@ const Login = () => {
           <Row className="justify-content-center align-items-center min-height-100vh">
             <Col className="circle-container">
               <div className="circle">
-                <Image src={Logo} alt="Logo" height={300} className="img-fluid" />
+                <Image priority src={Logo} alt="Logo" height={300} className="img-fluid" />
               </div>
             </Col>
           </Row>
@@ -97,13 +91,13 @@ const Login = () => {
               Inicio de sesión
             </h1>
             <Form.Group className="w-100 p-0">
-              <Form.Control type="text" placeholder="Nombre de usuario" className="w-100 p-3 rounded-xl" />
+              <Form.Control name='nombreUsuario' type="text" placeholder="Nombre de usuario" className="w-100 p-3 rounded-xl" />
             </Form.Group>
             <Form.Group className="w-100 p-0">
-              <Form.Control type="email" placeholder="Correo electrónico" className="w-100 p-3 rounded-xl" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
+              <Form.Control name='correo' type="email" placeholder="Correo electrónico" className="w-100 p-3 rounded-xl" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
             </Form.Group>
             <Form.Group className="w-100 p-0">
-              <Form.Control type="password" placeholder="Contraseña" className="w-100 p-3 rounded-xl" value={password} onChange={(e) => setPassword(e.target.value)}/>
+              <Form.Control name='contraseña' type="password" placeholder="Contraseña" className="w-100 p-3 rounded-xl" value={password} onChange={(e) => setPassword(e.target.value)}/>
             </Form.Group>
             <Button
               variant="primary"

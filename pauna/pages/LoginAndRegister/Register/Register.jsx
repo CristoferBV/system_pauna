@@ -100,6 +100,7 @@ const Register = () => {
             <Col className="circle-container">
               <div className="circle_register">
                 <Image
+                  priority
                   src={Logo}
                   alt="Logo"
                   height={300}
@@ -207,6 +208,7 @@ const Register = () => {
                     {/* Contenido de la primera columna */}
                     <Form.Group className="w-100 p-2">
                       <Form.Control
+                        name="gmail"
                         type="email"
                         placeholder="Correo electrónico"
                         value={user.gmail}
@@ -216,6 +218,7 @@ const Register = () => {
                     </Form.Group>
                     <Form.Group className="w-100 p-2">
                       <Form.Control
+                        name="phoneNumber"
                         type="text"
                         placeholder="Número de teléfono"
                         value={user.phoneNumber}

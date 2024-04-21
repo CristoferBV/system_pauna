@@ -5,19 +5,7 @@ import Link from "next/link";
 import Axios from "axios";
 import Logo from "../../../../../public/LOGO-UNA.png";
 import LogoBombilla from "../../../../../public/bombilla.png";
-import {
-  Navbar,
-  Nav,
-  Form,
-  Button,
-  Card,
-  Table,
-  Container,
-  Row,
-  Col,
-  Tabs,
-  Tab,
-} from "react-bootstrap";
+import {Navbar,Nav,Form,Button,Card,Table,Container,Row,Col,Tabs,Tab} from "react-bootstrap";
 import Swal from "sweetalert2";
 import React from "react";
 import { useRouter } from "next/router";
@@ -48,8 +36,6 @@ const LoanClient = () => {
   const [cedula, setCedula] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [device, setDevice] = useState("");
-  const comprobanteBecaInputRef = React.createRef();
-  const comprobanteMatriculaInputRef = React.createRef();
 
   const navigation = [
     { name: "Inicio", section: "HomeClient", current: false },
@@ -100,63 +86,16 @@ const LoanClient = () => {
       });
   }, []);
 
-  /* const handleComprobanteBecaChange = (e) => {
-    const file = e.target.files[0];
-    // Puedes realizar cualquier acción necesaria con el archivo, como actualizar el estado si es necesario
-  };
-
-  const handleComprobanteMatriculaChange = (e) => {
-    const file = e.target.files[0];
-    // Puedes realizar cualquier acción necesaria con el archivo, como actualizar el estado si es necesario
-  }; */
-
   const handleAceptarClick = async () => {
     try {
       const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
-      /* const comprobanteBecaFile = comprobanteBecaInputRef.current.files[0];
-      const comprobanteMatriculaFile =
-        comprobanteMatriculaInputRef.current.files[0];
-
-      // Verifica si los archivos están presentes
-      if (!comprobanteBecaFile || !comprobanteMatriculaFile) {
-        console.error("Por favor, seleccione los archivos necesarios.");
-        return;
-      }
-
-      // Convertir las imágenes a Blobs
-      const convertToBlob = async (file) => {
-        return new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            resolve(new Blob([reader.result], { type: file.type }));
-          };
-          reader.readAsArrayBuffer(file);
-        });
-      };
-
-      const comprobanteBecaBlob = await convertToBlob(comprobanteBecaFile);
-      const comprobanteMatriculaBlob = await convertToBlob(
-        comprobanteMatriculaFile
-      ); */
-
-      /* console.log("Datos enviados al servidor:", {
-        cedula,
-        selectedDate: formattedDate,
-        device,
-        comprobanteBecaBlob,
-        comprobanteMatriculaBlob,
-      }); */
 
       // Enviar los datos al servidor
       const { data } = await Axios.post("/api/libraryClient/loan", {
         cedula,
         selectedDate: formattedDate,
         device,
-        /* comprobanteBeca: comprobanteBecaBlob,
-        comprobanteMatricula: comprobanteMatriculaBlob, */
       });
-
-      //console.log("Respuesta del servidor:", data);
 
       // Si la solicitud es exitosa, muestra un mensaje de éxito
       Swal.fire({
@@ -168,7 +107,6 @@ const LoanClient = () => {
       });
       reloadPage();
     } catch (error) {
-      // Si hay un error en la solicitud, muestra un mensaje de error
       console.error("Error al enviar la solicitud:", error);
       Swal.fire({
         position: "center",
@@ -221,7 +159,7 @@ const LoanClient = () => {
               className="d-flex justify-content-center"
               style={{ textDecoration: "none" }}
             >
-              <Button Button variant="danger" size="ms">
+              <Button variant="danger" size="ms">
                 Cerrar Sesión
               </Button>
             </Link>
@@ -309,136 +247,81 @@ const LoanClient = () => {
                   </Col>
 
                   <Col md={4}>
-                    <Form.Group className="mb-3">
-                      <label className="font-semibold">Carrera</label>
-                      <Form.Control as="select">
-                        <option value="">-Seleccionar opción-</option>
-                        {carreras.map((carrera) => (
-                          <option key={carrera.value} value={carrera.value}>
-                            {carrera.label}
-                          </option>
-                        ))}
-                      </Form.Control>
-                    </Form.Group>
+                  <Form.Group className="mb-3">
+                    <label className="font-semibold">Carrera</label>
+                    <Form.Control as="select">
+                      <option value="">-Seleccionar opción-</option>
+                      {carreras.map((carrera) => (
+                        <option key={carrera.CA_identificador} value={carrera.CA_identificador}>
+                          {carrera.label}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <label className="font-semibold">Nivel de carrera</label>
-                      <Form.Control
-                        type="input"
-                        placeholder="Ejemplo: Nivel I"
-                      />
-                    </Form.Group>
+                  <Form.Group className="mb-3">
+                    <label className="font-semibold">Nivel de carrera</label>
+                    <Form.Control as="select">
+                      <option value="">-Seleccionar opción-</option>
+                      <option value="Nivel I">Nivel I</option>
+                      <option value="Nivel II">Nivel II</option>
+                      <option value="Nivel III">Nivel III</option>
+                      <option value="Nivel IV">Nivel IV</option>
+                      <option value="Nivel V">Nivel V</option>
+                    </Form.Control>
+                  </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <label className="font-semibold">Dispositivos</label>
-                      <Form.Control
-                        as="select"
-                        onChange={(e) => {
-                          const selectedDeviceDescription =
-                            e.target.options[
-                              e.target.selectedIndex
-                            ].getAttribute("data-description");
-                          setDevice(selectedDeviceDescription);
-                        }}
-                      >
-                        <option value="">-Seleccionar opción-</option>
-                        {deviceData.map((device, index) => (
-                          <option
-                            key={index}
-                            value={device.value}
-                            data-description={device.label}
-                          >
-                            {device.label}
-                          </option>
-                        ))}
-                      </Form.Control>
-                    </Form.Group>
-                  </Col>
+                  {/*ARREGLAR ESTO PARA QUE SOLO TOME TABLET O LAPTOP Y ENVIE EL ID A LA API LOAN */}
+                  <Form.Group className="mb-3">
+                    <label className="font-semibold">Dispositivos</label>
+                    <Form.Control as="select" onChange={(e) => {
+                      const selectedDeviceDescription =
+                        e.target.options[e.target.selectedIndex].getAttribute("data-description");
+                      setDevice(selectedDeviceDescription);
+                    }}>
+                      <option value="">-Seleccionar opción-</option>
+                      {deviceData.map((device) => (
+                        <option key={device.AO_identificador} value={device.AO_identificador} data-description={device.label}>
+                          {device.label}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
 
-                  <Col md={4}>
-                    <Form.Group className="mb-3">
-                      <label className="font-semibold">Fechas de citas</label>
-                      <Form.Control
-                        as="select"
-                        onChange={(e) => {
-                          const selectedDate =
-                            e.target.options[
-                              e.target.selectedIndex
-                            ].getAttribute("data-date");
-                          // Formatear la fecha antes de guardarla en el estado
-                          const formattedDate = new Date(selectedDate)
-                            .toISOString()
-                            .split("T")[0];
-                          setSelectedDate(formattedDate);
-                        }}
-                      >
-                        <option value="">-Seleccionar opción-</option>
-                        {horarios.map((horario) => (
-                          <option
-                            key={horario.value}
-                            value={horario.value}
-                            data-date={horario.label}
-                          >
-                            {new Date(horario.label).toLocaleDateString()}
-                          </option>
-                        ))}
-                      </Form.Control>
-                    </Form.Group>
+                <Col md={4}>
+                  <Form.Group className="mb-3">
+                    <label className="font-semibold">Fechas de citas</label>
+                    <Form.Control as="select" onChange={(e) => {
+                      const selectedDate =
+                        e.target.options[e.target.selectedIndex].getAttribute("data-date");
+                      const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
+                      setSelectedDate(formattedDate);
+                    }}>
+                      <option value="">-Seleccionar opción-</option>
+                      {horarios.map((horario) => (
+                        <option key={horario.HO_identificador} value={horario.HO_identificador} data-date={horario.label}>
+                          {new Date(horario.label).toLocaleDateString()}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <label className="font-semibold">Campus</label>
-                      <Form.Control
-                        type="input"
-                        placeholder="Ejemplo: Campus Coto"
-                      />
-                    </Form.Group>
+                  <Form.Group className="mb-3">
+                    <label className="font-semibold">Campus</label>
+                    <Form.Control as="select">
+                      <option value="">-Seleccionar opción-</option>
+                      <option value="Campus Coto">Campus Coto</option>
+                      <option value="Campus PZ">Campus PZ</option>
+                    </Form.Control>
+                  </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <label className="font-semibold">Teléfono</label>
-                      <Form.Control
-                        type="input"
-                        placeholder="Ejemplo: 85893501"
-                      />
-                    </Form.Group>
-                  </Col>
+                  <Form.Group className="mb-3">
+                    <label className="font-semibold">Teléfono</label>
+                    <Form.Control type="input" placeholder="Ejemplo: 85893501" />
+                  </Form.Group>
+                </Col>
                 </Row>
-
-                {/* <Row className="justify-content-center">
-                  <Col md={6}>
-                    <Form.Group
-                      className="mb-3 text-center mx-auto"
-                      style={{ maxWidth: "80%" }}
-                    >
-                      <label className="font-semibold">
-                        Comprobante de Beca
-                      </label>
-                      <div>
-                        <Form.Control
-                          type="file"
-                          accept=".jpg, .png, .jpeg"
-                          ref={comprobanteBecaInputRef}
-                        />
-                      </div>
-                    </Form.Group>
-                  </Col>
-                  <Col md={6}>
-                    <Form.Group
-                      className="mb-3 text-center mx-auto"
-                      style={{ maxWidth: "80%" }}
-                    >
-                      <label className="font-semibold">
-                        Comprobante de Matricula
-                      </label>
-                      <div>
-                        <Form.Control
-                          type="file"
-                          accept=".jpg, .png, .jpeg"
-                          ref={comprobanteMatriculaInputRef}
-                        />
-                      </div>
-                    </Form.Group>
-                  </Col>
-                </Row> */}
 
                 <div className="text-center mt-4">
                   <Button variant="danger" onClick={handleAceptarClick}>
@@ -467,37 +350,33 @@ const LoanClient = () => {
                     <th>Correo</th>
                     <th>Dispositivo</th>
                     <th>Teléfono</th>
-                    {/* <th>Comprobante Beca</th>
-            <th>Comprobante Matricula</th> */}
                   </tr>
                 </thead>
                 <tbody>
                   {Array.isArray(loanData) && loanData.length > 0 ? (
-                    loanData.map((loan) => {
+                    loanData.map((loan, index) => {
                       const cedulaMatches = cedula === loan.UO_identificador;
 
-                      return (
-                        <React.Fragment key={loan.UO_identificador}>
-                          {cedulaMatches && (
-                            <tr>
-                              <td>{loan.UO_primer_nombre}</td>
-                              <td>{loan.UO_segundo_nombre}</td>
-                              <td>{loan.UO_primer_apellido}</td>
-                              <td>{loan.UO_segundo_apellido}</td>
-                              <td>{loan.CA_nombre}</td>
-                              <td>
-                                {new Date(loan.HO_fecha).toLocaleDateString()}
-                              </td>
-                              <td>{loan.UO_identificador}</td>
-                              <td>{loan.EE_nivel}</td>
-                              <td>{loan.EE_campus}</td>
-                              <td>{loan.CE_correoElectronico}</td>
-                              <td>{loan.TP_nombre}</td>
-                              <td>{loan.TO_numero}</td>
-                            </tr>
-                          )}
-                        </React.Fragment>
-                      );
+                      // Retornar la fila solo si cedulaMatches es true
+                      if (cedulaMatches) {
+                        return (
+                          <tr key={`${loan.value}-${index}`}>
+                            <td>{loan.UO_primer_nombre}</td>
+                            <td>{loan.UO_segundo_nombre}</td>
+                            <td>{loan.UO_primer_apellido}</td>
+                            <td>{loan.UO_segundo_apellido}</td>
+                            <td>{loan.CA_nombre}</td>
+                            <td>{new Date(loan.HO_fecha).toLocaleDateString()}</td>
+                            <td>{loan.UO_identificador}</td>
+                            <td>{loan.EE_nivel}</td>
+                            <td>{loan.EE_campus}</td>
+                            <td>{loan.CE_correoElectronico}</td>
+                            <td>{loan.TP_nombre}</td>
+                            <td>{loan.TO_numero}</td>
+                          </tr>
+                        );
+                      }
+                      return null;  // Si no hay coincidencia, no se devuelve ningún elemento.
                     })
                   ) : (
                     <tr>
@@ -505,6 +384,7 @@ const LoanClient = () => {
                     </tr>
                   )}
                 </tbody>
+
               </Table>
             </Tab>
           </Tabs>

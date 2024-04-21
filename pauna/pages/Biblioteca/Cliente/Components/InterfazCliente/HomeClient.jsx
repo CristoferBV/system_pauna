@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { Card, Container, Row, Col } from "react-bootstrap";
 
 const HomeClient = () => {
-    //const router = useRouter();
 
     const [active, setActive] = useState("");
 
@@ -53,7 +52,7 @@ const HomeClient = () => {
                     </Link>
                 ))}
                 <Link href={'/LoginAndRegister/Login/Login'} className="d-flex justify-content-center" style={{ textDecoration: "none" }}>
-                    <Button Button variant="danger" size="ms">Cerrar Sesión</Button>
+                    <Button variant="danger" size="ms">Cerrar Sesión</Button>
                 </Link>
                 </Nav>
             </Navbar.Collapse>

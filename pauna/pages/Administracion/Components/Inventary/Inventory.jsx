@@ -220,7 +220,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Marca</Form.Label>
               <Form.Select name="MC_identificador" value={parseInt(brand.MC_identificador)} onChange={handleChange}>
-                {brands.map((brand) => (
+                {brands && brands.map((brand) => (
                   <option key={brand.MC_identificador} value={brand.MC_identificador}>{brand.MC_nombre}</option>
                 ))}
               </Form.Select>
@@ -228,7 +228,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Tipo</Form.Label>
               <Form.Select name="TP_identificador" value={parseInt(type.TP_identificador)} onChange={handleChange}>
-                {types.map((type) => (
+                {types && types.map((type) => (
                   <option key={type.TP_identificador} value={type.TP_identificador}>{type.TP_nombre}</option>
                 ))}
               </Form.Select>
@@ -240,7 +240,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Color</Form.Label>
               <Form.Select name="CR_identificador" value={color.CR_identificador} onChange={handleChange}>
-                {colors.map((color) => (
+                {colors && colors.map((color) => (
                   <option key={color.CR_identificador} value={color.CR_identificador}>{color.CR_nombre}</option>
                 ))}
               </Form.Select>
@@ -248,7 +248,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Ubicacion</Form.Label>
               <Form.Select name="UN_identificador" value={parseInt(ubication.UN_identificador)} onChange={handleChange}>
-                {ubications.map((ubication) => (
+                {ubications && ubications.map((ubication) => (
                   <option key={ubication.UN_identificador} value={ubication.UN_identificador}>{ubication.UN_lugar}</option>
                 ))}
               </Form.Select>
@@ -405,7 +405,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
             <Form.Label>Departamento</Form.Label>
               <Form.Select name="DO_identificador" value={parseInt(deparment.DO_identificador)} onChange={handleChange}>
               <option>Elija un departamento</option>
-                {deparments.map((deparment) => (
+                {deparments && deparments.map((deparment) => (
                   <option key={deparment.DO_identificador} value={deparment.DO_identificador}>{deparment.DO_nombre}</option>
                 ))}
               </Form.Select>
@@ -523,7 +523,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredMaterials.map((material) => (
+                      {filteredMaterials && filteredMaterials.map((material) => (
                         <tr key={material.ML_identificador}>
                           <td>{material.ML_identificador}</td>
                           <td>{material.ML_descripcion}</td>

@@ -711,7 +711,7 @@
   export const getServerSideProps = async (context) => {
     try {
       const response = await axios.get(
-        "/api/config/BibliotecaDispositivos"
+        process.env.LINK+"/api/config/BibliotecaDispositivos"
       );
       const data = response.data;
 

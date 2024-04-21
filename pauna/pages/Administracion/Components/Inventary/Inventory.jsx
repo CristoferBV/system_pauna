@@ -174,7 +174,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
   const handleFilterChange = (event) => {
     setFilterValue(event.target.value);
   };
-  const filteredMaterials = materials.filter((material) => {
+  const filteredMaterials = materials && materials.filter((material) => {
     const description = material.ML_descripcion.toLowerCase();
     const name = material.MC_nombre.toLowerCase();
     const id = material.ML_identificador;

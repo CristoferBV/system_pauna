@@ -91,7 +91,7 @@ export default function SidebarReporte({ Reporte }) {
         doc.setFontSize(tableFontSize);
         doc.setFontSize(fontSize);
         const title = "PLATAFORMA ADMINISTRATIVA UNA";
-        const subTitle = "Área de Reporte Generales de Devoluciones";
+        const subTitle = "Área de Reporte Generales de Citas";
         const titleWidth = doc.getStringUnitWidth(title) * fontSize;
         const pageWidth = doc.internal.pageSize.width;
         const titleXPosition = (pageWidth - titleWidth) / 2;

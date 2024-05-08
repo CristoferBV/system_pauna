@@ -118,7 +118,6 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                 <th className="text-center">Correo</th>
                 <th className="text-center">Telefono</th>
                 <th className="text-center">Devolucion</th>
-                <th className="text-center">Administrar</th>
               </tr>
             </thead>
             <tbody>
@@ -139,46 +138,6 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                     {new Date(
                       estudiante.LP_fechaDevolucion
                     ).toLocaleDateString()}
-                  </td>
-                  <td className="text-center">
-                    <Button
-                      variant="light"
-                      className="ml-2"
-                      onClick={() => handleEdit(estudiante.LP_identificador)}
-                      style={buttonStyle}
-                      onMouseEnter={(e) => {
-                        e.target.style.backgroundColor =
-                          buttonHoverStyle.backgroundColor;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.backgroundColor =
-                          buttonStyle.backgroundColor;
-                      }}
-                    >
-                      Editar
-                    </Button>
-                    <Button
-                      variant="light"
-                      className="ml-2"
-                      onClick={() => {
-                        console.log(
-                          "LP_identificador:",
-                          estudiante.LP_identificador
-                        );
-                        handleDelete(estudiante.LP_identificador);
-                      }}
-                      style={buttonStyle}
-                      onMouseEnter={(e) => {
-                        e.target.style.backgroundColor =
-                          buttonHoverStyle.backgroundColor;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.backgroundColor =
-                          buttonStyle.backgroundColor;
-                      }}
-                    >
-                      Eliminar
-                    </Button>
                   </td>
                 </tr>
               ))}

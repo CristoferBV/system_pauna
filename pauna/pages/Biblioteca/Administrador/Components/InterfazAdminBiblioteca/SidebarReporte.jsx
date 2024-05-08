@@ -141,7 +141,7 @@ export default function SidebarReporte({ Reporte }) {
         const currentDate = new Date();
         const formattedDate = currentDate.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
 
-        doc.save(`Reporte_General_De_Devoluciones_${formattedDate}.pdf`);
+        doc.save(`Reporte_General_De_Citas_${formattedDate}.pdf`);
     }
 
     return (

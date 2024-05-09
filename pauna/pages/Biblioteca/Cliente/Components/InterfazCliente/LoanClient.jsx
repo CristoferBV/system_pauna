@@ -72,6 +72,7 @@ const LoanClient = () => {
         console.error("Error al obtener las opciones de dispositivos", error);
       });
   }, []);
+  console.log("Dispositivo Cliente", setDevice);
 
   // Horarios
   useEffect(() => {

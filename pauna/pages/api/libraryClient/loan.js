@@ -18,6 +18,7 @@ const saveLoan = async (req, res) => {
     // Verifica los comprobantes han sido recibidos en la consola del servidor
     console.log("Beca recibida en el servidor:", comprobanteBecaBlob);
     console.log("Matricula recibida en el servidor:", comprobanteMatriculaBlob);
+    console.log("Dispositivo", device);
 
     // Verifica la fecha recibida en la consola del servidor
     console.log("Fecha recibida en el servidor:", selectedDate);

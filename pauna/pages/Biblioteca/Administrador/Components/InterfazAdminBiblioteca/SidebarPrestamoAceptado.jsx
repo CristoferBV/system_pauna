@@ -86,7 +86,7 @@ export default function SidebarEstudiantes({ Estudiantes }) {
       <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
         <Card.Header>
           <div className="d-flex justify-content-between">
-            <span className="text-black font-semibold">
+            <span className="text-[#293659] font-semibold">
               Estudiantes Con Prestamo
             </span>
           </div>
@@ -100,7 +100,6 @@ export default function SidebarEstudiantes({ Estudiantes }) {
             />
           </InputGroup>
           <Table
-            style={{ backgroundColor: "#252440", color: "white" }}
             striped
             bordered
             hover
@@ -108,33 +107,33 @@ export default function SidebarEstudiantes({ Estudiantes }) {
           >
             <thead>
               <tr>
-                <th className="text-center">Nombre</th>
-                <th className="text-center">Cedula</th>
-                <th className="text-center">Nivel</th>
-                <th className="text-center">Codigo</th>
-                <th className="text-center">Activo</th>
-                <th className="text-center">Periferico</th>
-                <th className="text-center">Campus</th>
-                <th className="text-center">Correo</th>
-                <th className="text-center">Telefono</th>
-                <th className="text-center">Devolucion</th>
+                <th className="text-center" style={{ color: "#293659" }}>Nombre</th>
+                <th className="text-center" style={{ color: "#293659" }}>Cedula</th>
+                <th className="text-center" style={{ color: "#293659" }}>Nivel</th>
+                <th className="text-center" style={{ color: "#293659" }}>Codigo</th>
+                <th className="text-center" style={{ color: "#293659" }}>Activo</th>
+                <th className="text-center" style={{ color: "#293659" }}>Periferico</th>
+                <th className="text-center" style={{ color: "#293659" }}>Campus</th>
+                <th className="text-center" style={{ color: "#293659" }}>Correo</th>
+                <th className="text-center" style={{ color: "#293659" }}>Telefono</th>
+                <th className="text-center" style={{ color: "#293659" }}>Devolucion</th>
               </tr>
             </thead>
             <tbody>
               {filteredEstudiantes.map((estudiante, index) => (
                 <tr key={`${estudiante.EE_idenficador}_${index}`}>
-                  <td className="text-center">{estudiante.Nombre}</td>
-                  <td className="text-center">{estudiante.Cedula}</td>
-                  <td className="text-center">{estudiante.EE_nivel}</td>
-                  <td className="text-center">{estudiante.AO_identificador}</td>
-                  <td className="text-center">{estudiante.TP_nombre}</td>
-                  <td className="text-center">{estudiante.EA_nombre}</td>
-                  <td className="text-center">{estudiante.EE_campus}</td>
-                  <td className="text-center">
+                  <td className="text-center" style={{ color: "#000000" }}>{estudiante.Nombre}</td>
+                  <td className="text-center" style={{ color: "#000000" }}>{estudiante.Cedula}</td>
+                  <td className="text-center" style={{ color: "#000000" }}>{estudiante.EE_nivel}</td>
+                  <td className="text-center" style={{ color: "#000000" }}>{estudiante.AO_identificador}</td>
+                  <td className="text-center" style={{ color: "#000000" }}>{estudiante.TP_nombre}</td>
+                  <td className="text-center" style={{ color: "#000000" }}>{estudiante.EA_nombre}</td>
+                  <td className="text-center" style={{ color: "#000000" }}>{estudiante.EE_campus}</td>
+                  <td className="text-center" style={{ color: "#000000" }}>
                     {estudiante.CorreoElectronico}
                   </td>
-                  <td className="text-center">{estudiante.NumeroTelefono}</td>
-                  <td className="text-center">
+                  <td className="text-center" style={{ color: "#000000" }}>{estudiante.NumeroTelefono}</td>
+                  <td className="text-center" style={{ color: "#000000" }}>
                     {new Date(
                       estudiante.LP_fechaDevolucion
                     ).toLocaleDateString()}

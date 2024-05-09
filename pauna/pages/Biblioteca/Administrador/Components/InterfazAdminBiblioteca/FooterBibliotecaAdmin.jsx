@@ -3,7 +3,7 @@ import React from 'react';
 const FooterBibliotecaAdmin = () => {
     return (
         <div>
-            <footer style={{ backgroundColor: '#021730' }} className="text-white mt-1 py-3 text-center">
+            <footer style={{ backgroundColor: '#293659' }} className="text-white mt-1 py-3 text-center">
                 <p className='mt-3'>Derechos reservados: @Desarrolladores PAUNA 2023</p>
                 <div className="mt-3">
                     {/* <Button

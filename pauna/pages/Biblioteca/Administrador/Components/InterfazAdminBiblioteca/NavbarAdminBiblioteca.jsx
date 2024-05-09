@@ -8,23 +8,23 @@ import { useRouter } from 'next/router';
 
 function NavbarAdminBiblioteca() {
   const customNavbarStyle = {
-    backgroundColor: '#021730', // Cambia el color de fondo a #021730
+    backgroundColor: '#293659',
   };
 
   const customTextStyle = {
-    color: '#FFFFFF', // Cambia el color del texto a blanco (#FFFFFF)
+    color: '#FFFFFF', 
   };
 
   const customTogglerStyle = {
-    borderColor: '#FFFFFF', // Cambia el color del borde del botón a blanco
+    borderColor: '#FFFFFF', 
   };
 
   const customDropdownStyle = {
-    borderColor: '#FFFFFF', // Cambia el color de las líneas del menú desplegable a blanco
+    borderColor: '#FFFFFF', 
   };
 
   const customDropdownTitleStyle = {
-    color: '#FFFFFF', // Cambia el color del texto del título del menú desplegable a blanco
+    color: '#FFFFFF', 
   };
 
   const router = useRouter();

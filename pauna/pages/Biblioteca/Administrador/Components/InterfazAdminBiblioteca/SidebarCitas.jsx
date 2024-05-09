@@ -175,7 +175,7 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
       <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
         <Card.Header>
           <div className="d-flex justify-content-between">
-            <span className="text-black font-semibold">Citas</span>
+            <span className="text-[#293659] font-semibold">Citas</span>
           </div>
         </Card.Header>
         <Card.Body>
@@ -192,7 +192,6 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
             </Form>
           </div>
           <Table
-            style={{ backgroundColor: "#252440", color: "white" }}
             striped
             bordered
             hover
@@ -200,13 +199,13 @@ export default function SidebarCitas({ Citas, Horario, Dispositivo }) {
           >
             <thead>
               <tr>
-                <th className="text-center">Fecha</th>
-                <th className="text-center">Hora</th>
-                <th className="text-center">Nombre</th>
-                <th className="text-center">Cedula</th>
-                <th className="text-center">Carrera</th>
-                <th className="text-center">Dispositivo</th>
-                <th className="text-center">Administrar</th>
+                <th className="text-center" style={{ color: "#293659" }}>Fecha</th>
+                <th className="text-center" style={{ color: "#293659" }}>Hora</th>
+                <th className="text-center" style={{ color: "#293659" }}>Nombre</th>
+                <th className="text-center" style={{ color: "#293659" }}>Cedula</th>
+                <th className="text-center" style={{ color: "#293659" }}>Carrera</th>
+                <th className="text-center" style={{ color: "#293659" }}>Dispositivo</th>
+                <th className="text-center" style={{ color: "#293659" }}>Administrar</th>
               </tr>
             </thead>
             <tbody>

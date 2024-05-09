@@ -98,7 +98,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
       <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
         <Card.Header>
           <div className="d-flex justify-content-between">
-            <span className=" text-black font-semibold">
+            <span className=" text-[#293659] font-semibold">
               Prestamos Estudiantes
             </span>
           </div>
@@ -106,7 +106,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
         <Card.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group as={Col} xs={12} md={6}>
-              <Form.Label className=" text-black">
+              <Form.Label className=" text-[#293659] font-semibold">
                 Cédula de Estudiante
               </Form.Label>
               <Form.Control
@@ -118,7 +118,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
               />
             </Form.Group>
             <Form.Group as={Col} xs={12} md={6}>
-              <Form.Label className=" text-black">Fecha de Préstamo</Form.Label>
+              <Form.Label className=" text-[#293659] font-semibold">Fecha de Préstamo</Form.Label>
               <Form.Control
                 type="date"
                 value={prestamo.LP_fechaDevolucion}
@@ -127,7 +127,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
               />
             </Form.Group>
             <Form.Group as={Col} xs={12} md={6}>
-              <Form.Label className="text-black">Elegir Activo</Form.Label>
+              <Form.Label className="text-[#293659] font-semibold">Elegir Activo</Form.Label>
               <Form.Control
                 as="select"
                 onChange={handleChange}
@@ -146,7 +146,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
               </Form.Control>
             </Form.Group>
             <Form.Group as={Col} xs={12} md={6}>
-              <Form.Label className=" text-black">Elegir Periferico</Form.Label>
+              <Form.Label className=" text-[#293659] font-semibold">Elegir Periferico</Form.Label>
               <Form.Control
                 as="select"
                 onChange={handleChange}

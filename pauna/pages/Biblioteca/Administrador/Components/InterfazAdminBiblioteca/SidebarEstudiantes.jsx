@@ -91,7 +91,7 @@ export default function SidebarEstudiantes({ Estudiantes }) {
             <Card style={{ backgroundColor: '#DEEFE7', color: 'white' }} text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
-                        <span className='text-black font-semibold'>Lista de Estudiantes</span>
+                        <span className='text-[#293659] font-semibold'>Lista de Estudiantes</span>
                     </div>
                 </Card.Header>
                 <Card.Body>
@@ -103,19 +103,18 @@ export default function SidebarEstudiantes({ Estudiantes }) {
                         />
                     </InputGroup>
                     <Table 
-                        style={{ backgroundColor: "#252440", color: "white" }}
                         striped
                         bordered
                         hover
                         responsive>
                         <thead>
                             <tr>
-                                <th className="text-center">Nombre</th>
-                                <th className="text-center">Cedula</th>
-                                <th className="text-center">Nivel</th>
-                                <th className="text-center">Campus</th>
-                                <th className="text-center">Correo</th>
-                                <th className="text-center">Telefono</th>
+                                <th className="text-center" style={{ color: "#293659" }}>Nombre</th>
+                                <th className="text-center" style={{ color: "#293659" }}>Cedula</th>
+                                <th className="text-center" style={{ color: "#293659" }}>Nivel</th>
+                                <th className="text-center" style={{ color: "#293659" }}>Campus</th>
+                                <th className="text-center" style={{ color: "#293659" }}>Correo</th>
+                                <th className="text-center" style={{ color: "#293659" }}>Telefono</th>
                             </tr>
                         </thead>
                         <tbody>

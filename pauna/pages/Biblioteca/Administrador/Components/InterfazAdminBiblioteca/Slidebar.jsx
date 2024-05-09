@@ -333,7 +333,7 @@
         <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
           <Card.Header>
             <div className="d-flex justify-content-between">
-              <span className="text-black font-semibold">
+              <span className="text-[#293659] font-semibold">
                 Lista de Dispositivos
               </span>
               <div>
@@ -378,7 +378,6 @@
               />
             </InputGroup>
             <Table
-              style={{ backgroundColor: "#252440", color: "white" }}
               striped
               bordered
               hover
@@ -386,11 +385,11 @@
             >
               <thead>
                 <tr>
-                  <th className="text-center">Codigo ID</th>
-                  <th className="text-center">Dispositivo</th>
-                  <th className="text-center">Descripción</th>
-                  <th className="text-center">Estado</th>
-                  <th className="text-center">Acciones</th>
+                  <th className="text-center" style={{ color: "#293659" }}>Codigo ID</th>
+                  <th className="text-center" style={{ color: "#293659" }}>Dispositivo</th>
+                  <th className="text-center" style={{ color: "#293659" }}>Descripción</th>
+                  <th className="text-center" style={{ color: "#293659" }}>Estado</th>
+                  <th className="text-center" style={{ color: "#293659" }}>Acciones</th>
                 </tr>
               </thead>
               <tbody>

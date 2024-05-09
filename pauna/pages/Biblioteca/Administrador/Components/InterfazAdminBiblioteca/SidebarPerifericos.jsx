@@ -158,7 +158,7 @@ export default function SidebarPerifericos({ Perifericos }) {
       <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
         <Card.Header>
           <div className="d-flex justify-content-between">
-            <span className="text-black font-semibold">Perifericos</span>
+            <span className="text-[#293659] font-semibold">Perifericos</span>
             <Button variant="success" onClick={createCita} style={buttonStyle}onMouseEnter={(e) => {
                   e.target.style.backgroundColor =
                     buttonHoverStyle.backgroundColor;
@@ -183,24 +183,23 @@ export default function SidebarPerifericos({ Perifericos }) {
               </Form.Group>
             </Form>
           </div>
-          <Table style={{ backgroundColor: "#252440", color: "white" }}
+          <Table
             striped
             bordered
             hover
             responsive>
-            {/* Encabezado de la tabla */}
             <thead>
               <tr>
-                <th className="text-center">Codigo ID</th>
-                <th className="text-center">Nombre</th>
-                <th className="text-center">Descripción</th>
-                <th className="text-center">Administrar</th>
+                <th className="text-center" style={{ color: "#293659" }}>Codigo ID</th>
+                <th className="text-center" style={{ color: "#293659" }}>Nombre</th>
+                <th className="text-center" style={{ color: "#293659" }}>Descripción</th>
+                <th className="text-center" style={{ color: "#293659" }}>Administrar</th>
               </tr>
             </thead>
             <tbody>
               {filteredPeriferico.map((periferico) => (
                 <tr key={periferico.EA_identificador}>
-                  <td className="text-center">{periferico.EA_identificador}</td>
+                  <td className="text-center" >{periferico.EA_identificador}</td>
                   <td className="text-center">{periferico.EA_nombre}</td>
                   <td className="text-center">{periferico.EA_descripcion}</td>
                   <td className="text-center">

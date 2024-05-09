@@ -95,7 +95,7 @@ export default function SidebarReporte({ Reporte }) {
         const titleWidth = doc.getStringUnitWidth(title) * fontSize;
         const pageWidth = doc.internal.pageSize.width;
         const titleXPosition = (pageWidth - titleWidth) / 2;
-        const subTitleXPosition = (pageWidth - titleWidth) / 2.2;
+        const subTitleXPosition = (pageWidth - titleWidth) / 1.9;
 
         const titleYPosition = 30;
         const subTitleYPosition = 80;
@@ -149,7 +149,7 @@ export default function SidebarReporte({ Reporte }) {
             <Card style={{ backgroundColor: '#DEEFE7', color: 'white' }} text="white">
                 <Card.Header>
                     <div className="d-flex justify-content-between">
-                        <span className='text-black font-semibold'>Lista de Reportes</span>
+                        <span className='text-[#293659] font-semibold'>Lista de Reportes</span>
                         <div>
                             <Button
                                 className='ml-2'
@@ -179,11 +179,11 @@ export default function SidebarReporte({ Reporte }) {
                     <Table style={{ backgroundColor: '#252440', color: 'white' }} striped bordered hover responsive>
                         <thead>
                             <tr>
-                                <th className="text-center">Nombre Estudiante</th>
-                                <th className="text-center">Cédula</th>
-                                <th className="text-center">Dispositivo</th>
-                                <th className="text-center">Periferico</th>
-                                <th className="text-center">Fecha Devolucion</th>
+                                <th className="text-center" style={{ color: "#293659" }}>Nombre Estudiante</th>
+                                <th className="text-center" style={{ color: "#293659" }}>Cédula</th>
+                                <th className="text-center" style={{ color: "#293659" }}>Dispositivo</th>
+                                <th className="text-center" style={{ color: "#293659" }}>Periferico</th>
+                                <th className="text-center" style={{ color: "#293659" }}>Fecha Devolucion</th>
                             </tr>
                         </thead>
                         <tbody>

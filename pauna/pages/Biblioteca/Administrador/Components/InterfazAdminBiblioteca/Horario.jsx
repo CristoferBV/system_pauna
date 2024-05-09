@@ -151,7 +151,7 @@ export default function Horario({ Horarios }) {
       <Card style={{ backgroundColor: "#DEEFE7", color: "white" }} text="white">
         <Card.Header>
           <div className="d-flex justify-content-between">
-            <span className="text-black font-semibold">Horario</span>
+            <span className="text-[#293659] font-semibold">Horario</span>
             <Button
               variant="success"
               onClick={createHorario}
@@ -177,7 +177,6 @@ export default function Horario({ Horarios }) {
             />
           </InputGroup>
           <Table
-            style={{ backgroundColor: "#252440", color: "white" }}
             striped
             bordered
             hover
@@ -185,10 +184,10 @@ export default function Horario({ Horarios }) {
           >
             <thead>
               <tr>
-                <th className="text-center">Fecha</th>
-                <th className="text-center">Hora</th>
-                <th className="text-center">Estado</th>
-                <th className="text-center">Administrar</th>
+                <th className="text-center" style={{ color: "#293659" }}>Fecha</th>
+                <th className="text-center" style={{ color: "#293659" }}>Hora</th>
+                <th className="text-center" style={{ color: "#293659" }}>Estado</th>
+                <th className="text-center" style={{ color: "#293659" }}>Administrar</th>
               </tr>
             </thead>
             <tbody>

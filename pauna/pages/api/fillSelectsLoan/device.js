@@ -10,11 +10,11 @@ export default async function handler(req, res) {
 
 const getDevice = async (req, res) => {
     try {
-        const [result] = await pool.query("SELECT TP.TP_identificador, TP.TP_descripcion FROM pau_btc_tbl_tipo TP LEFT JOIN pau_btc_tbl_activo AO ON TP.TP_identificador = AO.AO_identificador_tipo WHERE AO.AO_identificador_tipo = TP.TP_identificador")
+        const [result] = await pool.query("SELECT TP_nombre FROM pau_btc_tbl_tipo");
 
         const options = result.map((row) => ({
-            value: row['TP_identificador'], // Valor a enviar cuando se seleccione la opción
-            label: `${row['TP_descripcion']}` // Texto que se mostrará en la opción
+            value: row['TP_nombre'], // Valor a enviar cuando se seleccione la opción
+            label: `${row['TP_nombre']}` // Texto que se mostrará en la opción
         }));
 
         return res.status(200).json(options);
@@ -23,4 +23,3 @@ const getDevice = async (req, res) => {
         return res.status(500).json({ error: 'Error al cargar los datos' });
     }
 };
-

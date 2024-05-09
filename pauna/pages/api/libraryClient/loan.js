@@ -15,13 +15,6 @@ const saveLoan = async (req, res) => {
   try {
     const { cedula, selectedDate, device, comprobanteBecaBlob, comprobanteMatriculaBlob } = req.body;
 
-    // Verifica los comprobantes han sido recibidos en la consola del servidor
-    console.log("Beca recibida en el servidor:", comprobanteBecaBlob);
-    console.log("Matricula recibida en el servidor:", comprobanteMatriculaBlob);
-
-    // Verifica la fecha recibida en la consola del servidor
-    console.log("Fecha recibida en el servidor:", selectedDate);
-
     // Desactivar llaves foráneas
     await pool.query("SET foreign_key_checks = 0");
 
@@ -43,7 +36,6 @@ const saveLoan = async (req, res) => {
 
       // Validar si se encontró el horario
       if (horario.length > 0 && horario[0].length > 0 && horario[0][0].HO_identificador !== undefined) {
-        //console.log("Horario:", horario);
         const HO_identificador = horario[0][0].HO_identificador;
 
         // Buscar el EE_idenficador relacionado con la cédula en la tabla pau_btc_tbl_estudiante
@@ -51,16 +43,14 @@ const saveLoan = async (req, res) => {
           "SELECT EE_idenficador FROM pau_btc_tbl_estudiante WHERE EE_identificador_usuario = ?",
           [UO_identificador]
         );
-        //console.log("Estudiante:", estudiante);
 
         // Validar si existe información de estudiante para el usuario
         if (estudiante.length > 0 && estudiante[0].length > 0 && estudiante[0][0].EE_idenficador !== undefined) {
           const EE_idenficador = estudiante[0][0].EE_idenficador;
-          //console.log("EE_idenficador:", EE_idenficador);
 
           // Buscar el TP_identificador basado en la descripción del dispositivo
           const tipoDispositivo = await pool.query(
-            "SELECT TP_identificador FROM pau_btc_tbl_tipo WHERE TP_descripcion = ?",
+            "SELECT TP_identificador FROM pau_btc_tbl_tipo WHERE TP_nombre = ?",
             [device]
           );
 
@@ -142,7 +132,7 @@ const getAllLoans = async (req, res) => {
     
     // Ejecutar la consulta
     const [solicitud] = await pool.query(query);
-    console.log(solicitud);
+    
     // Enviar los préstamos obtenidos como respuesta
     return res.status(200).json(solicitud);
     

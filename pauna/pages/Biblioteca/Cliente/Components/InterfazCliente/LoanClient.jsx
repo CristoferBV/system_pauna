@@ -288,7 +288,7 @@ const LoanClient = () => {
                     }}>
                       <option value="">-Seleccionar opción-</option>
                       {deviceData.map((device) => (
-                        <option key={device.AO_identificador} value={device.AO_identificador} data-description={device.label}>
+                        <option key={device.TP_nombre} value={device.TP_nombre} data-description={device.label}>
                           {device.label}
                         </option>
                       ))}

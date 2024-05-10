@@ -37,7 +37,7 @@ const postUser = async (req, res) => {
         const correoId = correoResult[0][0].id;
 
         // Encripta la contraseña antes de insertarla en la base de datos
-        const hashedPassword = await bcrypt.hash(UO_contrasena, 5);
+        const hashedPassword = await bcrypt.hash(UO_contrasena, 10);
 
         // Inserta el nuevo usuario en la tabla pau_gnl_usuario utilizando la contraseña encriptada
         await pool.query("INSERT INTO `pau_gnl_usuario` SET ?", {

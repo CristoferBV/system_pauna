@@ -14,21 +14,20 @@ const Login = () => {
 
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
+  const [cedula, setCedula] = useState("");
 
   const handleLogin = async () => {
 
     try {
-        // Realizar la solicitud al servidor para autenticar al usuario y obtener idRol
-        const response = await axios.post('/api/formUser/login', {
-            correo,
-            password
-        });
+      // Realizar la solicitud al servidor para autenticar al usuario y obtener idRol
+      const response = await axios.post('/api/formUser/login', { correo, password, cedula } );
+      const data = response.data;
 
-        const data = response.data;
-
+      if (response.status === 200) {
+        console.log("Contraseña correcta");
         if (data.UO_identificador_rol === 1) {
-            handleEnterLogin();
-            router.push("/Biblioteca/Cliente/Components/InterfazCliente/HomeClient");
+          handleEnterLogin();
+          router.push("/Biblioteca/Cliente/Components/InterfazCliente/HomeClient");
         } else if (data.UO_identificador_rol === 3) {
             handleEnterLogin();
             router.push("/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Inicio");
@@ -37,6 +36,13 @@ const Login = () => {
             router.push("/Administracion/Components/User/userWindow");
             router.push("/Administracion/Components/User/landing");
         }
+        
+      }else {
+        console.log("Error en la contraseña");
+        
+      }
+     
+
     } catch (error) {
       Swal.fire({
         icon: 'error',
@@ -45,7 +51,7 @@ const Login = () => {
       });
         console.error('Error al manejar el inicio de sesión:', error);
     }
-};
+  };
 
   const handleEnterLogin = () => {
     let timerInterval
@@ -91,7 +97,7 @@ const Login = () => {
               Inicio de sesión
             </h1>
             <Form.Group className="w-100 p-0">
-              <Form.Control name='nombreUsuario' type="text" placeholder="Nombre de usuario" className="w-100 p-3 rounded-xl" />
+              <Form.Control name='cedula' type="text" placeholder="Identificación" className="w-100 p-3 rounded-xl" value={cedula} onChange={(e) => setCedula(e.target.value)}/>
             </Form.Group>
             <Form.Group className="w-100 p-0">
               <Form.Control name='correo' type="email" placeholder="Correo electrónico" className="w-100 p-3 rounded-xl" value={correo} onChange={(e) => setCorreo(e.target.value)}/>

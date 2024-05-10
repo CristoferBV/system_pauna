@@ -39,9 +39,7 @@ const Login = () => {
         
       }else {
         console.log("Error en la contraseña");
-        
       }
-     
 
     } catch (error) {
       Swal.fire({

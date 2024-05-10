@@ -24,7 +24,6 @@ const Login = () => {
       const data = response.data;
 
       if (response.status === 200) {
-        console.log("Contraseña correcta");
         if (data.UO_identificador_rol === 1) {
           handleEnterLogin();
           router.push("/Biblioteca/Cliente/Components/InterfazCliente/HomeClient");
@@ -38,7 +37,7 @@ const Login = () => {
         }
         
       }else {
-        console.log("Error en la contraseña");
+        //console.log("Error en la contraseña");
       }
 
     } catch (error) {

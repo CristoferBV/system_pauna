@@ -16,10 +16,7 @@ const postUserIdRol = async (req, res) => {
     try {
         const { correo, password, cedula} = req.body;
 
-        console.log("Datos FrontEnd:", req.body); 
-
         const user = await pool.query(` SELECT u.UO_contrasena, u.UO_identificador_rol, u.UO_identificador_correo FROM pau_gnl_usuario u JOIN pau_gnl_tbl_correoelectronico c ON u.UO_identificador_correo = c.CE_idCorreo WHERE u.UO_identificador = ? AND c.CE_correoElectronico = ?`, [cedula, correo]);
-        console.log("Contraseña en hash recuperada:", user[0][0].UO_contrasena);
 
         if (user.length === 0) {
             return res.status(401).json({ error: 'Usuario no encontrado' });
@@ -35,11 +32,6 @@ const postUserIdRol = async (req, res) => {
 
         // Comparar la contraseña proporcionada con la almacenada en la base de datos
         const match = await bcrypt.compare(password, UO_contrasena);
-
-        // Imprimir las contraseñas y el resultado de la comparación
-        console.log("Contraseña en texto plano:", password);
-        console.log("Contraseña en hash:", UO_contrasena);
-        console.log("Resultado de la comparación:", match);
 
         if (!match) {
             return res.status(401).json({ error: 'Contraseña incorrecta' });

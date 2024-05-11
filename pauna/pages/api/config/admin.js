@@ -7,22 +7,19 @@ export default async function handler(req, res) {
         case "GET":
             return await getAllAdministrador(req, res);
         case "POST":
-            console.log(req.body);
             return await saveUserAdmin(req, res);
         case "PUT":
-            console.log(req.body);
             return await updateAdmin(req, res)
         case "DELETE":
-            console.log(req.body);
             return await deleteAdmin(req, res)
     }
 }
 const updateAdmin = async (req, res) => {
     const userID = req.body.UO_identificador;
-    console.log(userID);
+    
     const rol = await pool.query("SELECT RL_identificador FROM `pau_gnl_rol` WHERE RL_nombre = 'Usuario'");
     const rolID = rol[0][0].RL_identificador;
-    console.log(rolID);
+    
     const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
     await pool.query(disableForeignKeyCheckQuery);
 
@@ -36,21 +33,31 @@ const updateAdmin = async (req, res) => {
 };
 
 const deleteAdmin = async (req, res) => {
-    const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
-    await pool.query(disableForeignKeyCheckQuery);
-    //Usuarios
-    console.log(req.body.UO_identificador);
-    await pool.query(`DELETE FROM pau_gnl_usuario WHERE UO_identificador = '${req.body.UO_identificador}'`);
-    
-    //Correo
-    console.log(req.body.UO_identificador_correo);
-    await pool.query(`DELETE FROM pau_gnl_tbl_correoelectronico WHERE CE_correoElectronico = ${req.body.UO_identificador_correo}`);
+    try {
+        const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
+        await pool.query(disableForeignKeyCheckQuery);
+        
+        // Eliminar usuario
+        try {
+            await pool.query(`DELETE FROM pau_gnl_usuario WHERE UO_identificador = '${req.body.UO_identificador}'`);
+        } catch (error) {
+            return res.status(500).json({ error: "Error al eliminar usuario", message: error.message });
+        }
+        
+        // Eliminar correo
+        try {
+            await pool.query(`DELETE FROM pau_gnl_tbl_correoelectronico WHERE CE_correoElectronico = '${req.body.UO_identificador_correo}'`);
+        } catch (error) {
+            return res.status(500).json({ error: "Error al eliminar correo", message: error.message });
+        }
 
+        const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
+        await pool.query(enableForeignKeyCheckQuery);
 
-    const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
-    await pool.query(enableForeignKeyCheckQuery);
-
-    return res.status(200).json("Buenas")
+        return res.status(200).json("Usuario eliminado correctamente");
+    } catch (error) {
+        return res.status(500).json("Error interno del servidor");
+    }
 };
 
 
@@ -64,48 +71,47 @@ const getAllAdministrador = async (req, res) => {
 
 
 const saveUserAdmin = async (req, res) => {
-
-
-    console.log(req.body);
-    const { UO_identificador,
-        UO_primer_nombre,
-        UO_segundo_nombre,
-        UO_primer_apellido,
-        UO_segundo_apellido,
-        CE_correoElectronico,
-    } = req.body;
-
-
-    const rolResult = await pool.query("SELECT RL_identificador FROM `pau_gnl_rol` WHERE RL_nombre = 'Administrador'");
-    const UO_identificador_rol = rolResult[0][0].RL_identificador
-    console.log(UO_identificador_rol)
-    await pool.query("INSERT INTO `pau_gnl_tbl_correoelectronico` SET ?", {
-        CE_correoElectronico,
-        CE_descripcion: "Correo de administrador"
-    });
     
-    const resultId = await pool.query("SELECT LAST_INSERT_ID() as id");
-    const UO_identificador_correo = resultId[0][0].id;
-    console.log(UO_identificador_correo);
-    
-
-    const UO_contrasena = await bcrypt.hash(req.body.UO_contrasena, 10);
-    const result = await pool
-        .query("INSERT INTO `pau_gnl_usuario` SET ?", {
-            UO_identificador,
+    try {
+        const { UO_identificador,
             UO_primer_nombre,
             UO_segundo_nombre,
             UO_primer_apellido,
             UO_segundo_apellido,
-            UO_identificador_correo,
-            UO_identificador_rol,
-            UO_contrasena
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
+            CE_correoElectronico,
+        } = req.body;
+    
+        const rolResult = await pool.query("SELECT RL_identificador FROM `pau_gnl_rol` WHERE RL_nombre = 'Administrador'");
+        const UO_identificador_rol = rolResult[0][0].RL_identificador
+        
+        await pool.query("INSERT INTO `pau_gnl_tbl_correoelectronico` SET ?", {
+            CE_correoElectronico,
+            CE_descripcion: "Correo de administrador"
         });
-    return res.status(200).json(result);
+        
+        const resultId = await pool.query("SELECT LAST_INSERT_ID() as id");
+        const UO_identificador_correo = resultId[0][0].id;
+        
+        
+    
+        const UO_contrasena = await bcrypt.hash(req.body.UO_contrasena, 10);
+        await pool
+            .query("INSERT INTO `pau_gnl_usuario` SET ?", {
+                UO_identificador,
+                UO_primer_nombre,
+                UO_segundo_nombre,
+                UO_primer_apellido,
+                UO_segundo_apellido,
+                UO_identificador_correo,
+                UO_identificador_rol,
+                UO_contrasena
+            })
+            .catch(function (error) {
+                return res.status(500).json("Error al ingresar el usuario");
+            });
+        return res.status(200).json("Usuario administrador ingresado correctamente");
+    } catch (error) {
+        return res.status(500).json("Error interno del servidor");
+    }
+    
 };

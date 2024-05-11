@@ -3,39 +3,54 @@ import axios from "axios";
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Form, Row, Col, Button, Table, Container, Alert } from 'react-bootstrap';
+import Swal from "sweetalert2";
 
 export default function UserWindow({ userAdmins, rols }) {
   const router = useRouter();
   const handleSubmit = async (e) => {
-    console.log({user});
     e.preventDefault();
     console.log("hola");
     const res = await axios
       .post("/api/config/admin", user)
       .then(function (response) {
-        console.log(response);
+        Swal.fire({
+          icon: "success",
+          title: "Ingreso",
+          text: response.data,
+        });
+        reloadPage();
       })
       .catch(function (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error al ingresar datos",
+        });
       });
-    console.log(res)
   };
   const handleUpdate = async (e) => {
-    const res = await axios
+    await axios
       .delete("/api/config/admin", {data: selectedUser})
       .then(function (response) {
-        console.log(response);
+        Swal.fire({
+          icon: "success",
+          title: "Eliminar usuario",
+          text: response.data,
+        });
+        reloadPage();
       })
       .catch(function (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: error.data,
+        });
       });
-    console.log(res)
   };
 
 
   const handleRowClick= (userAdmin)=>{
     setSelectedUser(userAdmin)
-    console.log(userAdmin);
   }
 
   const [selectedUser, setSelectedUser] = useState(null);
@@ -62,25 +77,22 @@ export default function UserWindow({ userAdmins, rols }) {
   };
 
   const reloadPage = () => {
+    setUser({
+      UO_identificador: "",
+      UO_primer_nombre: "",
+      UO_segundo_nombre: "",
+      UO_primer_apellido: "",
+      UO_segundo_apellido: "",
+      UO_identificador_rol: 0,
+      CE_correoElectronico: "",
+      UO_contrasena: ""
+    });
     router.push("/Administracion/Components/User/userWindow");
   }
-  const [showAlert, setShowAlert] = useState(false);
-  const handleSave = () => {
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 4000);
-    reloadPage();
-  };
-  const handleAlertClose = () => {
-    setShowAlert(false);
-  };
+  
 
   return (
     <>
-      <Alert show={showAlert} variant="success" onClose={handleAlertClose} dismissible>
-        ¡Guardado con éxito!
-      </Alert>
       <div className="rounded" style={{ backgroundColor: '#212529', color: 'white', height: '100%', width: '100%', marginTop: '8rem', marginBottom: '8rem' }}>
 
 
@@ -125,7 +137,7 @@ export default function UserWindow({ userAdmins, rols }) {
                   <Form.Label>Contraseña</Form.Label>
                   <Form.Control name="UO_contrasena" value={user.UO_contrasena} onChange={handleChange} type="password" placeholder="Ingrese su contraseña" />
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={handleSave} >
+                <Button variant="primary" type="submit" onClick={handleSubmit} >
                   Añadir
                 </Button>
               </Form>

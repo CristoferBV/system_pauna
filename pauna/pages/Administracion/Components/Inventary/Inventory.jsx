@@ -7,6 +7,46 @@ import { Row, Col, Container, Button, Form, Table, Modal, Alert } from "react-bo
 import { FaEdit, FaClipboardList } from "react-icons/fa";
 import Swal from "sweetalert2";
 
+const initialState = {
+  ML_identificador: "",
+  ML_descripcion: "",
+  ML_observacion: "",
+  ML_cantidad: "",
+};
+
+const initialColorState = {
+  tipo: "Color",
+  CR_identificador: "",
+  CR_nombre: ""
+};
+
+const initialBrandState = {
+  tipo: "Brand",
+  MC_identificador: "",
+  MC_nombre: "",
+  MC_descripcion: ""
+};
+
+const initialUbicationState = {
+  tipo: "Ubication",
+  UN_identificador: "",
+  UN_lugar: "",
+  UN_descripcion: ""
+};
+
+const initialTypeState = {
+  tipo: "Type",
+  TP_identificador: "",
+  TP_nombre: "",
+  TP_descripcion: ""
+};
+
+const initialDeparmentState = {
+  tipo: "Deparment",
+  DO_identificador: "",
+  DO_nombre: "",
+};
+
 
 
 export default function Inventary({ materials, colors, brands, ubications, types, deparments}) {
@@ -95,41 +135,12 @@ export default function Inventary({ materials, colors, brands, ubications, types
     ML_cantidad: "",
   })
   
-  const [material, setMaterial] = useState({
-    ML_identificador: "",
-    ML_descripcion: "",
-    ML_observacion: "",
-    ML_cantidad: "",
-  })
-
-  const [color, setColor] = useState({
-    tipo: "Color",
-    CR_identificador: "",
-    CR_nombre: ""
-  });
-  const [brand, setBrand] = useState({
-    tipo: "Brand",
-    MC_identificador: "",
-    MC_nombre: "",
-    MC_descripcion: ""
-  });
-  const [ubication, setUbication] = useState({
-    tipo: "Ubication",
-    UN_identificador: "",
-    UN_lugar: "",
-    UN_descripcion: ""
-  });
-  const [type, setTypes] = useState({
-    tipo: "Type",
-    TP_identificador: "",
-    TP_nombre: "",
-    TP_descripcion: ""
-  });
-  const [deparment, setDepartments] = useState({
-    tipo: "Deparment",
-    DO_identificador: "",
-    DO_nombre: "",
-  });
+  const [material, setMaterial] = useState(initialState);
+  const [color, setColor] = useState(initialColorState);
+  const [brand, setBrand] = useState(initialBrandState);
+  const [ubication, setUbication] = useState(initialUbicationState);
+  const [type, setTypes] = useState(initialTypeState);
+  const [deparment, setDepartments] = useState(initialDeparmentState);
 
   const handleChange = ({ target: { name, value } }) => {
     if (name in color) {
@@ -198,6 +209,12 @@ export default function Inventary({ materials, colors, brands, ubications, types
   };
 
   const reloadPage = () => {
+    setMaterial(initialState);
+    setColor(initialColorState);
+    setBrand(initialBrandState);
+    setUbication(initialUbicationState);
+    setTypes(initialTypeState);
+    setDepartments(initialDeparmentState);
     router.push("/Administracion/Components/Inventary/Inventory");
   }
 

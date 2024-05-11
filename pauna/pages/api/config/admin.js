@@ -1,4 +1,5 @@
 import { pool } from "../../../utils/Storage";
+import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
     console.log(req.method);
@@ -40,15 +41,32 @@ const getAllAdministrador = async (req, res) => {
 
 
 const saveUserAdmin = async (req, res) => {
+
+
     console.log(req.body);
     const { UO_identificador,
         UO_primer_nombre,
         UO_segundo_nombre,
         UO_primer_apellido,
         UO_segundo_apellido,
-        UO_identificador_rol,
-        UO_contrasena } = req.body;
+        CE_correoElectronico,
+    } = req.body;
 
+
+    const rolResult = await pool.query("SELECT RL_identificador FROM `pau_gnl_rol` WHERE RL_nombre = 'Administrador'");
+    const UO_identificador_rol = rolResult[0][0].RL_identificador
+    console.log(UO_identificador_rol)
+    await pool.query("INSERT INTO `pau_gnl_tbl_correoelectronico` SET ?", {
+        CE_correoElectronico,
+        CE_descripcion: "Correo de administrador"
+    });
+    
+    const resultId = await pool.query("SELECT LAST_INSERT_ID() as id");
+    const UO_identificador_correo = resultId[0][0].id;
+    console.log(UO_identificador_correo);
+    
+
+    const UO_contrasena = await bcrypt.hash(req.body.UO_contrasena, 10);
     const result = await pool
         .query("INSERT INTO `pau_gnl_usuario` SET ?", {
             UO_identificador,
@@ -56,6 +74,7 @@ const saveUserAdmin = async (req, res) => {
             UO_segundo_nombre,
             UO_primer_apellido,
             UO_segundo_apellido,
+            UO_identificador_correo,
             UO_identificador_rol,
             UO_contrasena
         })

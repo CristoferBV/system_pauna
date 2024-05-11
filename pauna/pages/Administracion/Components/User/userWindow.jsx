@@ -46,6 +46,7 @@ export default function UserWindow({ userAdmins, rols }) {
     UO_primer_apellido: "",
     UO_segundo_apellido: "",
     UO_identificador_rol: 0,
+    CE_correoElectronico: "",
     UO_contrasena: ""
   });
 
@@ -116,14 +117,8 @@ export default function UserWindow({ userAdmins, rols }) {
                   </Form.Group>
                 </Row>
                 <Form.Group className="mb-3" controlId="formGridAddress2">
-                  <Form.Label>Elija el rol a desempeñar</Form.Label>
-                  <Form.Select name="UO_identificador_rol" value={parseInt(user.UO_identificador_rol)} onChange={handleChange}>
-                  <option>Seleccione un rol en especifico</option>
-                    {rols.map((rol)=>(
-                      <option key={rol.RL_identificador} value={rol.RL_identificador}>{rol.RL_nombre}</option>
-                    ))}
-                    
-                  </Form.Select>
+                  <Form.Label>Correo electronico</Form.Label>
+                  <Form.Control name="CE_correoElectronico" value={user.CE_correoElectronico} onChange={handleChange} placeholder="Ingrese el correo electronico" />
                 </Form.Group>
                 <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                   <Form.Label>Contraseña</Form.Label>

@@ -22,7 +22,7 @@ export default function UserWindow({ userAdmins, rols }) {
   };
   const handleUpdate = async (e) => {
     const res = await axios
-      .put("/api/config/admin", selectedUser)
+      .delete("/api/config/admin", {data: selectedUser})
       .then(function (response) {
         console.log(response);
       })
@@ -35,6 +35,7 @@ export default function UserWindow({ userAdmins, rols }) {
 
   const handleRowClick= (userAdmin)=>{
     setSelectedUser(userAdmin)
+    console.log(userAdmin);
   }
 
   const [selectedUser, setSelectedUser] = useState(null);

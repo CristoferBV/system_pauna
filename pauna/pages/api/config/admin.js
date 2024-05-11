@@ -12,6 +12,9 @@ export default async function handler(req, res) {
         case "PUT":
             console.log(req.body);
             return await updateAdmin(req, res)
+        case "DELETE":
+            console.log(req.body);
+            return await deleteAdmin(req, res)
     }
 }
 const updateAdmin = async (req, res) => {
@@ -32,12 +35,32 @@ const updateAdmin = async (req, res) => {
     return res.status(200).json(result)
 };
 
+const deleteAdmin = async (req, res) => {
+    const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
+    await pool.query(disableForeignKeyCheckQuery);
+    //Usuarios
+    console.log(req.body.UO_identificador);
+    await pool.query(`DELETE FROM pau_gnl_usuario WHERE UO_identificador = '${req.body.UO_identificador}'`);
+    
+    //Correo
+    console.log(req.body.UO_identificador_correo);
+    await pool.query(`DELETE FROM pau_gnl_tbl_correoelectronico WHERE CE_correoElectronico = ${req.body.UO_identificador_correo}`);
+
+
+    const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
+    await pool.query(enableForeignKeyCheckQuery);
+
+    return res.status(200).json("Buenas")
+};
+
 
 const getAllAdministrador = async (req, res) => {
     const [users] = await pool.query("SELECT * FROM `pau_gnl_usuario` u inner join `pau_gnl_rol` r on u.UO_identificador_rol = r.RL_identificador WHERE r.RL_nombre = 'Administrador'");
     const [rol] = await pool.query("SELECT * FROM `pau_gnl_rol`");
     return res.status(200).json({userAdmins:users, rols:rol});
 };
+
+
 
 
 const saveUserAdmin = async (req, res) => {

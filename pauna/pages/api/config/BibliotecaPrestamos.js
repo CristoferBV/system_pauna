@@ -25,18 +25,18 @@ const createPrestamo = async (req, res) => {
         }
         // Verificar si el usuario existe
         console.log("Consulta SQL para verificar usuario:", "SELECT UO_identificador FROM pau_gnl_usuario WHERE UO_identificador = ?", LP_identificador_usuario);
-        const [UsuarioResult] = await pool.query("SELECT UO_identificador FROM pau_gnl_usuario WHERE UO_identificador = ?", [LP_identificador_usuario]);
+        const [UsuarioResult] = await pool.query("SELECT UO_identificador FROM pau_gnl_usuario WHERE UO_identificador = ?", [LP_identificador_usuario]); //116020692
         if (UsuarioResult.length === 0) {
             console.log("Usuario no encontrado:", LP_identificador_usuario);
             return res.status(404).json({ error: 'Usuario no encontrado.' });
         }
         // Obtener el identificador del estudiante asociado al usuario
         console.log("Consulta SQL para obtener identificador de estudiante:", "SELECT EE_idenficador FROM pau_btc_tbl_estudiante WHERE EE_identificador_usuario = ?", LP_identificador_usuario);
-        const [EstudianteResult] = await pool.query("SELECT EE_idenficador FROM pau_btc_tbl_estudiante WHERE EE_identificador_usuario = ?", [LP_identificador_usuario]);
+        const [EstudianteResult] = await pool.query("SELECT EE_idenficador FROM pau_btc_tbl_estudiante WHERE EE_identificador_usuario = ?", [LP_identificador_usuario]); //EE_idenficador = 13
         const EE_idenficador = EstudianteResult[0].EE_idenficador;
         // Verificar si el activo existe
         console.log("Consulta SQL para verificar si el activo existe:", "SELECT AO_identificador FROM pau_btc_tbl_activo WHERE AO_identificador = ?", EA_identificador);
-        const [ActivoResult] = await pool.query("SELECT AO_identificador FROM pau_btc_tbl_activo WHERE AO_identificador = ?", [EA_identificador]);
+        const [ActivoResult] = await pool.query("SELECT AO_identificador FROM pau_btc_tbl_activo WHERE AO_identificador = ?", [LP_identificador]);
         if (ActivoResult.length === 0) {
             console.log("El activo no existe:", EA_identificador);
             return res.status(404).json({ error: 'El activo no existe.' });

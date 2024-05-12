@@ -140,7 +140,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
                     value={dispositivo.AO_identificador}
                   >
                     Dispositivo:{" "}
-                    {`${dispositivo.TP_nombre} - Descripción: ${dispositivo.TP_descripcion} - Estado: ${dispositivo.AO_estado}`}
+                    {`${dispositivo.TP_nombre} - Descripción: ${dispositivo.AO_descripcion} - Estado: ${dispositivo.AO_estado}`}
                   </option>
                 ))}
               </Form.Control>

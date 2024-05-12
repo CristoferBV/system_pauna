@@ -93,7 +93,8 @@ export default function DevolutionClient({ Devolution }) {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Aceptar",
       }).then((result) => {
         if (result.isConfirmed) {
           // Define los datos a enviar a la API

@@ -41,37 +41,54 @@ export default function DevolutionClient({ Devolution }) {
   const [fechaEntrega, setFechaEntrega] = useState("");
 
   const buscarEstudiante = async () => {
-    try {
-      const response = await axios.get(
-        `/api/devolution/students?identificacion=${identificacion}`
-      );
-      if (response.status === 200) {
-        const data = response.data;
-        if (data.length > 0) {
-          const estudiante = data[0];
-          setNombre(estudiante.Nombre);
-          setApellido1(estudiante.PrimerApellido);
-          setApellido2(estudiante.SegundoApellido);
-          setCorreo(estudiante.Correo);
+  try {
+    const response = await axios.get(`/api/devolution/students?identificacion=${identificacion}`);
+    if (response.status === 200) {
+      const data = response.data;
+      if (data.length > 0) {
+        const estudiante = data[0];
+        setNombre(estudiante.Nombre);
+        setApellido1(estudiante.PrimerApellido);
+        setApellido2(estudiante.SegundoApellido);
+        setCorreo(estudiante.Correo);
 
-          // Formatea la fecha en "YYYY-MM-DD" antes de establecerla en el estado
-          const fechaEntrega = new Date(estudiante.FechaEntrega);
-          const formattedFechaEntrega = fechaEntrega
-            .toISOString()
-            .split("T")[0];
-          setFechaEntrega(formattedFechaEntrega);
-        } else {
-        }
+        // Formatea la fecha en "YYYY-MM-DD" antes de establecerla en el estado
+        const fechaEntrega = new Date(estudiante.FechaEntrega);
+        const formattedFechaEntrega = fechaEntrega.toISOString().split("T")[0];
+        setFechaEntrega(formattedFechaEntrega);
+
+        // Devuelve el estudiante encontrado
+        return estudiante;
       } else {
+        // Muestra un mensaje de error si no se encuentra ningún estudiante
+        Swal.fire({
+          icon: "error",
+          title: "No se encontraron estudiantes...",
+          text: "Usted no posee una solicitud!",
+        });
+        return null;
       }
-    } catch (error) {
+    } else {
+      // Muestra un mensaje de error si la respuesta no es 200
       Swal.fire({
         icon: "error",
-        title: "No se encontraron estudiantes...",
-        text: "Usted no posee una solicitud!",
+        title: "Error de conexión",
+        text: "Hubo un problema al intentar obtener los datos del estudiante.",
       });
+      return null;
     }
-  };
+  } catch (error) {
+    // Muestra un mensaje de error si ocurre un error en la solicitud
+    Swal.fire({
+      icon: "error",
+      title: "Campo vacío o incorrecto",
+      text: "Hubo un error al intentar buscar al estudiante.",
+    });
+    // Lanza el error para que pueda ser manejado externamente
+    //throw error;
+  }
+};
+
 
   const handleTabSelect = (key) => {
     if (key === "Datos") {
@@ -83,93 +100,113 @@ export default function DevolutionClient({ Devolution }) {
   // Función para manejar el clic en el botón "Enviar"
   const handleButtonDelete = () => {
     const identificacion = document.getElementById("formGridCedula").value; // Obtener el valor del campo de entrada de cédula
-
-    if (identificacion) {
-      // Verificar si se ha ingresado una cédula
+  
+    // Verificar si el campo de cédula está vacío
+    if (!identificacion) {
       Swal.fire({
-        title: "¿Estás seguro?",
-        text: "¡No podrás revertir esto!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        cancelButtonText: "Cancelar",
-        confirmButtonText: "Aceptar",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Define los datos a enviar a la API
-          const dataToSend = {
-            UO_identificador: identificacion,
-          };
-
-          // Realiza una solicitud DELETE a la API para eliminar los datos en función del identificador
-          axios
-            .delete("/api/devolution/data", { data: dataToSend })
-            .then((response) => {
-              if (response.status === 200) {
-      
-                // Actualiza los datos después de la eliminación
-                axios
-                  .get("/api/devolution/data")
-                  .then((response) => {
-                    if (response.status === 200) {
-                      //console.log("Datos actualizados:", response.data);
-                      const newData = response.data;
-                      setData(newData); // Actualiza los datos en el estado
-
-                      // Muestra una notificación de éxito
-                      Swal.fire(
-                        "Devolución realizada!",
-                        "Su devolución ha sido realizada.",
-                        "success"
-                      );
-
-                      // Limpia los campos de entrada
-                      setIdentificacion("");
-                      setNombre("");
-                      setApellido1("");
-                      setApellido2("");
-                      setCorreo("");
-                      setFechaEntrega("");
-
-                    } else {
-                      console.log("Error al actualizar datos");
-                    }
-                  })
-                  .catch((error) => {
-                    console.error(
-                      "Error al obtener datos actualizados:",
-                      error
-                    );
-                  });
-              } else {
-                // Manejar otros códigos de estado de respuesta si es necesario.
-                console.log("Error al eliminar datos");
-              }
-            })
-            .catch((error) => {
-              // Manejar errores de la solicitud
-              console.error("Error:", error);
-            });
-        }
+        icon: "error",
+        title: "Campo Vacío",
+        text: "Por favor, ingrese una cédula antes de hacer la devolución.",
       });
-    } else {
-      // Muestra un mensaje de error si no se ha ingresado una cédula
-      console.log("Ingrese una cédula antes de enviar los datos.");
+      return; // Sale de la función si el campo está vacío
     }
-    
+  
+    // Realiza la búsqueda del estudiante
+    buscarEstudiante()
+      .then((estudiante) => {
+        if (!estudiante) {
+          console.log("estudiante", estudiante);
+          // Si no se encuentra ningún estudiante con la cédula proporcionada
+          Swal.fire({
+            icon: "error",
+            title: "Estudiante no encontrado",
+            text: "No se encontró ningún estudiante con la cédula proporcionada.",
+          });
+        } else {
+          // Si se encuentra el estudiante, procede con la devolución
+          Swal.fire({
+            title: "¿Estás seguro?",
+            text: "¡No podrás revertir esto!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Aceptar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Define los datos a enviar a la API
+              const dataToSend = {
+                UO_identificador: identificacion,
+              };
+  
+              // Realiza una solicitud DELETE a la API para eliminar los datos en función del identificador
+              axios
+                .delete("/api/devolution/data", { data: dataToSend })
+                .then((response) => {
+                  if (response.status === 200) {
+                    // Actualiza los datos después de la eliminación
+                    axios
+                      .get("/api/devolution/data")
+                      .then((response) => {
+                        if (response.status === 200) {
+                          const newData = response.data;
+                          setData(newData); // Actualiza los datos en el estado
+  
+                          // Muestra una notificación de éxito
+                          Swal.fire(
+                            "Devolución realizada!",
+                            "Su devolución ha sido realizada.",
+                            "success"
+                          );
+  
+                          // Limpia los campos de entrada
+                          setIdentificacion("");
+                          setNombre("");
+                          setApellido1("");
+                          setApellido2("");
+                          setCorreo("");
+                          setFechaEntrega("");
+                        } else {
+                          console.log("Error al actualizar datos");
+                        }
+                      })
+                      .catch((error) => {
+                        console.error(
+                          "Error al obtener datos actualizados:",
+                          error
+                        );
+                      });
+                  } else {
+                    // Manejar otros códigos de estado de respuesta si es necesario.
+                    console.log("Error al eliminar datos");
+                  }
+                })
+                .catch((error) => {
+                  // Manejar errores de la solicitud
+                  console.error("Error:", error);
+                });
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error al buscar estudiante:", error);
+        // Aquí puedes manejar errores de búsqueda de estudiante si es necesario
+      });
   };
+  
 
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar bg="danger" expand="lg">
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/Biblioteca/Cliente/Components/InterfazCliente/HomeClient">
           <Image
-            className="h-9 w-9 mt-2.5 ml-2.5"
+            className="h-11 w-12 mt-2.5 ml-2.5"
             src={Logo}
-            width={1000}
-            height={1000}
-            alt="University"
+            width={500}
+            height={500}
+            alt="Universidad Nacional"
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -177,16 +214,15 @@ export default function DevolutionClient({ Devolution }) {
           <Nav className="mr-auto">
             {navigation.map((item) => (
               <Link
+                key={item.section}
                 variant="danger"
                 size="sm"
-                key={item.name}
                 href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                 onClick={() => setActive(item.section)}
                 style={{ textDecoration: "none" }}
                 className="d-flex align-items-center justify-content-center p-2"
               >
                 <Nav
-                  key={item.name}
                   href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
                   className={
                     active === item.section

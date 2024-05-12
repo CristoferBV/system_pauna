@@ -72,12 +72,12 @@ export default function LoanClient () {
 
   const handleAceptarClick = async () => {
     try {
-      const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
+      //const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
 
       // Enviar los datos al servidor
       const { data } = await Axios.post("/api/libraryClient/loan", {
         cedula,
-        selectedDate: formattedDate,
+        selectedDate,
         device,
       });
 
@@ -294,22 +294,24 @@ export default function LoanClient () {
                 </Col>
 
                 <Col md={4}>
-                  <Form.Group className="mb-3">
-                    <label htmlFor="fechasCitas" className="font-semibold">Fechas de citas</label>
-                    <Form.Control id="fechasCitas" name="fechasCitas" as="select" onChange={(e) => {
-                      const selectedDate =
-                        e.target.options[e.target.selectedIndex].getAttribute("data-date");
-                      const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
-                      setSelectedDate(formattedDate);
-                    }}>
+                <Form.Group className="mb-3">
+                  <label htmlFor="fechasCitas" className="font-semibold">Fechas de citas</label>
+                  <Form.Control id="fechasCitas" name="fechasCitas" as="select" onChange={(e) => {
+                      const selectedDate = e.target.options[e.target.selectedIndex].getAttribute("data-date");
+                      const fecha = selectedDate.split(" - ")[0];
+                      const [dia, mes, año] = fecha.split("/");
+                      const fechaFormateada = `${año}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+                      setSelectedDate(fechaFormateada);                      
+                      console.log("fechas:",fechaFormateada);
+                  }}>
                       <option value="">-Seleccionar opción-</option>
                       {horarios.map((horario) => (
-                        <option key={horario.HO_identificador} value={horario.HO_identificador} data-date={horario.label}>
-                          {new Date(horario.label).toLocaleDateString()}
-                        </option>
+                          <option key={horario.value} value={horario.value} data-date={horario.label}>
+                              {horario.label}
+                          </option>
                       ))}
-                    </Form.Control>
-                  </Form.Group>
+                  </Form.Control>
+              </Form.Group>
 
                   <Form.Group className="mb-3">
                     <label htmlFor="campus" className="font-semibold">Campus</label>
@@ -427,7 +429,7 @@ export const getServerSideProps = async (context) => {
       },
     };
   } catch (error) {
-    console.error("Error fetching data:");
+    //console.error("Error fetching data:");
         return {
             props: {
               loanData : [],

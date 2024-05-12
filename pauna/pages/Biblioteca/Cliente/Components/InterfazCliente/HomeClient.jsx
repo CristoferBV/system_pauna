@@ -18,45 +18,52 @@ const HomeClient = () => {
   return (
     <div className=" main-bg flex flex-col min-h-screen">
       <Navbar bg="danger" expand="lg">
-        <Navbar.Brand href="#home">
-            <Image
-            className="h-9 w-9 mt-2.5 ml-2.5"
+        <Navbar.Brand href="/Biblioteca/Cliente/Components/InterfazCliente/HomeClient">
+          <Image
+            className="h-11 w-12 mt-2.5 ml-2.5"
             src={Logo}
-            width={1000}
-            height={1000}
-            alt="University"
-            />
+            width={500}
+            height={500}
+            alt="Universidad Nacional"
+          />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                {navigation.map((item) => (
-                    <Link
-                    variant="danger"
-                    size="sm"
-                    key={item.name}
-                    href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                    onClick={() => setActive(item.section)}
-                    style={{ textDecoration: "none" }}
-                    className="d-flex align-items-center justify-content-center p-2"
-                    >
-                    <Nav
-                        key={item.name}
-                        href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
-                        className={
-                        active === item.section ? "bg-danger text-white" : "text-white"
-                        }
-                    >
-                        {item.name}
-                    </Nav>
-                    </Link>
-                ))}
-                <Link href={'/LoginAndRegister/Login/Login'} className="d-flex justify-content-center" style={{ textDecoration: "none" }}>
-                    <Button variant="danger" size="ms">Cerrar Sesión</Button>
-                </Link>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            {navigation.map((item) => (
+              <Link
+                key={item.section}
+                variant="danger"
+                size="sm"
+                href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
+                onClick={() => setActive(item.section)}
+                style={{ textDecoration: "none" }}
+                className="d-flex align-items-center justify-content-center p-2"
+              >
+                <Nav
+                  href={`/Biblioteca/Cliente/Components/InterfazCliente/${item.section}`}
+                  className={
+                    active === item.section
+                      ? "bg-danger text-white"
+                      : "text-white"
+                  }
+                >
+                  {item.name}
                 </Nav>
-            </Navbar.Collapse>
-        </Navbar>
+              </Link>
+            ))}
+            <Link
+              href={"/LoginAndRegister/Login/Login"}
+              className="d-flex justify-content-center"
+              style={{ textDecoration: "none" }}
+            >
+              <Button variant="danger" size="ms">
+                Cerrar Sesión
+              </Button>
+            </Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
 
         <main className="flex-1">
         <header className="header-container-home d-flex align-items-center justify-content-center bg-danger">

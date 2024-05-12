@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 }
 
 const saveLoan = async (req, res) => {
-  //console.log("Body:", req.body);
+  console.log("Body:", req.body);
   try {
     const { cedula, selectedDate, device, comprobanteBecaBlob, comprobanteMatriculaBlob } = req.body;
 

@@ -43,9 +43,6 @@ export default function Administradores({ Administrador }) {
 if (Array.isArray(Administrador.Admins)) {
   filteredAdministrador = Administrador.Admins.filter((admin) => {
     return (
-     (admin.UO_identificador_correo || "")
-        .toLowerCase()
-        .includes(searchText.toLowerCase()) ||
       (admin.UO_primer_nombre || "")
         .toLowerCase()
         .includes(searchText.toLowerCase()) ||

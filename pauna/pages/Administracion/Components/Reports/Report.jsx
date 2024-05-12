@@ -4,18 +4,20 @@ import { Row, Col, Container, Button, Form, Table } from "react-bootstrap"
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function Report({ materials, rebajos, aumentos }) {
     const [showReportes, setShowReportes] = useState(false);
     const [showMovimientos, setShowMovimientos] = useState(false);
 
-    const split =(data) =>{
+    const split = (data) => {
         const array = data.split("T");
         return array[0].split("-")
     }
-    const formatDate =(data) =>{
+    const formatDate = (data) => {
         const date = split(data);
-        const format = date[2] +"/"+date[1]+"/"+date[0]
+        const format = date[2] + "/" + date[1] + "/" + date[0]
         return format
     }
 
@@ -86,6 +88,38 @@ export default function Report({ materials, rebajos, aumentos }) {
         }
     };
 
+
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+
+    const filteredAumentos = aumentos.filter((aumento) => {
+        if (startDate && endDate) {
+            const movimientoDate = new Date(aumento.MA_fecha);
+            return movimientoDate >= startDate && movimientoDate <= endDate;
+        }
+        return true;
+    });
+    const filteredRebajos = rebajos.filter((rebajo) => {
+        if (startDate && endDate) {
+            const movimientoDate = new Date(rebajo.MO_fecha);
+            return movimientoDate >= startDate && movimientoDate <= endDate;
+        }
+        return true;
+    });
+    
+
+    // Funciones de manejo de cambios para las fechas de inicio y fin
+    const handleStartDateChange = (dateString) => {
+        const date = new Date(dateString);
+        setStartDate(date);
+    };
+
+    const handleEndDateChange = (dateString) => {
+        const date = new Date(dateString);
+        setEndDate(date);
+
+    };
+
     const [filterValue, setFilterValue] = useState('');
     const handleFilterChange = (event) => {
         setFilterValue(event.target.value);
@@ -98,6 +132,7 @@ export default function Report({ materials, rebajos, aumentos }) {
 
         return description.includes(filterValueLowerCase) || name.includes(filterValueLowerCase) || id == filterValue;
     });
+    
 
     const exportCurrentjsPDF = (items) => {
         const doc = new jsPDF('p', 'pt', 'letter');
@@ -177,15 +212,15 @@ export default function Report({ materials, rebajos, aumentos }) {
 
         doc.save(`Reporte_General_De_Materiales_${formattedDate}.pdf`);
     }
-    const exportReportsAndMovimientosjsPDF = (rebajos, aumentos) => {
+    const exportReportsAndMovimientosjsPDF = (filteredRebajos, filteredAumentos) => {
         const doc = new jsPDF('p', 'pt', 'letter');
 
         const fontSize = 16;
         const tableFontSize = 12; // Ajusta el tamaño de la fuente de la tabla según sea necesario
         doc.setFontSize(tableFontSize);
         const title = "PLATAFORMA ADMINISTRATIVA UNA";
-        const rebajoTitle="Rebajos";
-        const aumentoTitle="Aumentos";
+        const rebajoTitle = "Rebajos";
+        const aumentoTitle = "Aumentos";
         const subTitle = "Área de Reporte Generales de Rebajos y Aumentos";
         const currentDate = new Date();
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -239,7 +274,7 @@ export default function Report({ materials, rebajos, aumentos }) {
             "Material",
         ];
 
-        const tableDataRebajos = rebajos && rebajos.map((rebajo) => [
+        const tableDataRebajos = filteredRebajos && filteredRebajos.map((rebajo) => [
             rebajo.MO_identificador,
             rebajo.MO_fecha,
             rebajo.MO_cantidad,
@@ -247,13 +282,13 @@ export default function Report({ materials, rebajos, aumentos }) {
             rebajo.DO_nombre
         ]);
 
-        const tableDataAumentos = aumentos && aumentos.map((aumento) => [
+        const tableDataAumentos = filteredAumentos && filteredAumentos.map((aumento) => [
             aumento.MA_identificador,
             aumento.MA_fecha,
             aumento.MA_cantidad,
             aumento.ML_descripcion
         ]);
-        const totalCantidad = rebajos.reduce((total, rebajo) => total + rebajo.MO_cantidad, 0);
+        const totalCantidad = filteredRebajos.reduce((total, rebajo) => total + rebajo.MO_cantidad, 0);
 
         // Adjust the startY position based on your title and subtitle
         const tableStartYPositionR = Math.max(titleYPosition, dateYPosition) + 30;
@@ -261,7 +296,7 @@ export default function Report({ materials, rebajos, aumentos }) {
 
         // Etiqueta para la tabla de rebajos
         doc.text("Rebajos", rebajoXPosition, tableStartYPositionR - 5);
-        
+
 
 
         doc.autoTable({
@@ -271,7 +306,7 @@ export default function Report({ materials, rebajos, aumentos }) {
             styles: { fontSize: tableFontSize },
         });
         const tableStartYPositionAumentos = doc.autoTable.previous.finalY + 20;
-        doc.text("Aumentos", aumentoXPosition, tableStartYPositionAumentos -5);
+        doc.text("Aumentos", aumentoXPosition, tableStartYPositionAumentos - 5);
         doc.autoTable({
             head: [tableColumns2],
             body: tableDataAumentos,
@@ -364,7 +399,32 @@ export default function Report({ materials, rebajos, aumentos }) {
                 {showMovimientos && (
                     <Container className="rounded" style={{ backgroundColor: '#212529', color: 'white' }}>
                         {<Container style={{ marginTop: '0.6rem', padding: '2rem', marginRight: '0.8rem' }}>
-                            
+                            <Container>
+                                <Form style={{ fontSize: '1.1rem' }}>
+                                <Container>
+                                    <Row>
+                                        <Col>
+                                            <Form.Group>
+                                                <Form.Label>Fecha de inicio: </Form.Label>
+                                                <Form.Control type="date" value={startDate.toISOString().split('T')[0]} onChange={(e) => handleStartDateChange(e.target.value)} style={{
+                                                    backgroundColor: '#041a34', fontSize: '1.1rem', color: 'white', padding: '1rem', WebkitTextFillColor: 'white',
+                                                }}>
+                                                </Form.Control>
+                                            </Form.Group>
+                                        </Col>
+                                        <Col>
+                                            <Form.Group>
+                                                <Form.Label>Fecha de fin: </Form.Label>
+                                                <Form.Control type="date" value={endDate.toISOString().split('T')[0]} onChange={(e) =>handleEndDateChange(e.target.value)} style={{
+                                                    backgroundColor: '#041a34', fontSize: '1.1rem', color: 'white', padding: '1rem', WebkitTextFillColor: 'white',
+                                                }}>
+                                                </Form.Control>
+                                            </Form.Group>
+                                        </Col>
+                                    </Row>
+                                    </Container>
+                                </Form>
+                            </Container>
                             <Container style={{ maxHeight: '400px', overflowY: 'auto' }}>
                                 <Table variant="dark" striped bordered hover style={{ fontSize: '1.1rem' }}>
                                     <thead>
@@ -378,7 +438,7 @@ export default function Report({ materials, rebajos, aumentos }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {rebajos.map((rebajo) => (
+                                        {filteredRebajos && filteredRebajos.map((rebajo) => (
                                             <tr key={rebajo.MO_identificador}>
                                                 <td>{rebajo.MO_identificador}</td>
                                                 <td>{formatDate(rebajo.MO_fecha)}</td>
@@ -388,7 +448,7 @@ export default function Report({ materials, rebajos, aumentos }) {
                                                 <td>Rebajo</td>
                                             </tr>
                                         ))}
-                                        {aumentos && aumentos.map((aumento) => (
+                                        {filteredAumentos && filteredAumentos.map((aumento) => (
                                             <tr key={aumento.MA_identificador}>
                                                 <td>{aumento.MA_identificador}</td>
                                                 <td>{formatDate(aumento.MA_fecha)}</td>
@@ -402,7 +462,7 @@ export default function Report({ materials, rebajos, aumentos }) {
                                 </Table>
                             </Container>
                             <Button className="" variant="primary" type="submit" style={{ padding: '1rem', fontSize: '1.1rem', marginTop: '1rem' }}
-                                onClick={() => exportReportsAndMovimientosjsPDF(rebajos, aumentos)} >
+                                onClick={() => exportReportsAndMovimientosjsPDF(filteredRebajos, filteredAumentos)} >
                                 Generar
                             </Button>
                         </Container>}
@@ -415,7 +475,7 @@ export default function Report({ materials, rebajos, aumentos }) {
 export const getServerSideProps = async (context) => {
     try {
         const { data } = await axios.get(
-            process.env.LINK+"/api/material/mov"
+            process.env.LINK + "/api/material/mov"
         );
         const { materials, rebajos, aumentos } = data;
         return {
@@ -429,9 +489,9 @@ export const getServerSideProps = async (context) => {
         console.error("Error fetching data:");
         return {
             props: {
-                materials:[],
-                rebajos:[],
-                aumentos:[]
+                materials: [],
+                rebajos: [],
+                aumentos: []
             },
         };
     }

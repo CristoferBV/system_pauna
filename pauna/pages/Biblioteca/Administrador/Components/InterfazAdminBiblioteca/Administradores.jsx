@@ -7,14 +7,13 @@ export default function Administradores({ Administrador }) {
   const [searchText, setSearchText] = useState("");
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [selectedAdminstrador, setSelectedAdministrador] = useState(null);
+  const [selectedAdministrador, setSelectedAdministrador] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-
   const [administradorState, setAdministradorState] = useState([]);
-
   const [roles, setRoles] = useState([]);
-
+  
   const [editedValues, setEditedValues] = useState({
+    UO_identificador_correo: '',
     UO_primer_nombre: '',
     UO_primer_apellido: '',
     UO_segundo_apellido: '',
@@ -44,6 +43,9 @@ export default function Administradores({ Administrador }) {
 if (Array.isArray(Administrador.Admins)) {
   filteredAdministrador = Administrador.Admins.filter((admin) => {
     return (
+     (admin.UO_identificador_correo || "")
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
       (admin.UO_primer_nombre || "")
         .toLowerCase()
         .includes(searchText.toLowerCase()) ||
@@ -74,13 +76,47 @@ if (Array.isArray(Administrador.Admins)) {
   );
 }
 
-  const confirmDeleteAdministrador = (admin) => {
-    // Configura el estudiante seleccionado para eliminar
-    setSelectedAdministrador(admin);
-    // Muestra el formulario de confirmación de eliminación
-    setShowDeleteConfirmation(true);
-  };
+const handleDeleteAdministrador = async (admin) => {
+    console.log("Datos de administrador:", admin);
+    console.log("UO_identificador:", admin.UO_identificador);
+    console.log("UO_identificador_correo:", admin.CE_correoElectronico);
 
+    try {
+      if (!admin.UO_identificador || !admin.CE_correoElectronico) {
+        console.error('Faltan datos necesarios para la eliminación');
+        return;
+      }
+  
+      // Enviar solicitud para eliminar el administrador seleccionado
+      await axios.delete("/api/config/BibliotecaAdministradores", {
+        data: {
+          UO_identificador: admin.UO_identificador,
+          UO_identificador_correo: admin.CE_correoElectronico
+        }
+      });
+  
+      // Mostrar alerta de SweetAlert2 si el usuario se elimina correctamente
+      Swal.fire({
+        icon: 'success',
+        title: 'Éxito',
+        text: 'Usuario eliminado correctamente'
+      }).then(() => {
+        // Recargar la página para reflejar los cambios
+        window.location.reload();
+      });
+  
+    } catch (error) {
+      // Manejar errores
+      console.error("Error al eliminar el administrador:", error);
+      // Mostrar alerta de SweetAlert2 para errores
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un error al eliminar el usuario. Por favor, intenta de nuevo.'
+      });
+    }
+  };
+  
   const updateAdministrador = async (updateAdministrador) => {
     try {
       // Realiza una solicitud HTTP (por ejemplo, con Axios) para actualizar el estudiante en el servidor
@@ -98,7 +134,6 @@ if (Array.isArray(Administrador.Admins)) {
     try {
       // Validar campos en blanco
       if (Object.values(newAdministrador).some(value => !value.trim())) {
-        // Mostrar alerta de SweetAlert2 si hay campos en blanco
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -109,8 +144,6 @@ if (Array.isArray(Administrador.Admins)) {
   
       // Enviar solicitud para crear el administrador
       await axios.post("/api/config/BibliotecaAdministradores", newAdministrador);
-  
-      // Mostrar alerta de SweetAlert2 si el usuario se crea correctamente
       Swal.fire({
         icon: 'success',
         title: 'Éxito',
@@ -120,9 +153,8 @@ if (Array.isArray(Administrador.Admins)) {
         window.location.reload();
       });
   
-      setShowCreateForm(false); // Cierra el modal después de crear el Administrador
+      setShowCreateForm(false);
     } catch (error) {
-      // Manejar errores
       console.error("Error al crear el estudiante:", error);
       // Mostrar alerta de SweetAlert2 para errores
       Swal.fire({
@@ -243,7 +275,7 @@ if (Array.isArray(Administrador.Admins)) {
                   <td className="text-center">
                     <Button
                       variant="primary"
-                      onClick={() => handleEditAdministrador(admin)}
+                      onClick={() => handleDeleteAdministrador(admin)}
                       style={buttonStyle}
                       onMouseEnter={(e) => {
                         e.target.style.backgroundColor =
@@ -259,9 +291,7 @@ if (Array.isArray(Administrador.Admins)) {
                     <Button
                       className="ml-2"
                       variant="danger"
-                      onClick={() =>
-                        handleDeleteActivo(device.AO_identificador)
-                      }
+                      onClick={() => handleDeleteAdministrador(admin)}
                       style={buttonStyle}
                       onMouseEnter={(e) => {
                         e.target.style.backgroundColor =
@@ -349,6 +379,7 @@ if (Array.isArray(Administrador.Admins)) {
                   setEditedValues({
                     ...editedValues,
                     CE_correoElectronico: e.target.value,
+                    UO_identificador_correo: e.target.value,
                   })
                 }
               />
@@ -537,44 +568,6 @@ if (Array.isArray(Administrador.Admins)) {
           </Button>
         </Modal.Footer>
       </Modal> */}
-
-      <Modal
-        show={showDeleteConfirmation}
-        onHide={() => setShowDeleteConfirmation(false)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmar eliminación</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          ¿Estás seguro de que deseas eliminar a este estudiante?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            onClick={() => setShowDeleteConfirmation(false)}
-            style={buttonStyle}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = buttonStyle.backgroundColor;
-            }}
-          >
-            Cancelar
-          </Button>
-          <Button
-            onClick={confirmDeleteAdministrador}
-            style={buttonStyle}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = buttonStyle.backgroundColor;
-            }}
-          >
-            Eliminar
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 }

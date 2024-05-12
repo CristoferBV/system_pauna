@@ -53,7 +53,6 @@ export default function Inventary({ materials, colors, brands, ubications, types
   const today = new Date();
   const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
   const router = useRouter();
-  //console.log({ materials })
   const [showAlert, setShowAlert] = useState(false);
   const [showFormState, setShowFormState] = useState({
     material: false,
@@ -68,11 +67,9 @@ export default function Inventary({ materials, colors, brands, ubications, types
 
 
   const handleSubmit = async (data) => {
-    //console.log("hola");
     const res = await axios
       .post("/api/material/view", data)
       .then(function (response) {
-        //console.log(response);
         Swal.fire({
           icon: "success",
           title: "Ingreso",
@@ -80,23 +77,31 @@ export default function Inventary({ materials, colors, brands, ubications, types
         });
       })
       .catch(function (error) {
-        //console.log(error);
         Swal.fire({
           icon: "error",
           title: "Error",
           text: error.response.data,
         });
       });
-    //console.log(res)
     reloadPage();
   };
-
+  const [updatedMLCantidad, setUpdatedMLCantidad] = useState("");
+  const handleMLCantidadChange = (event) => {
+    setUpdatedMLCantidad(event.target.value);
+  };
   const handleUpdate = async (data,name) => {
-    //console.log("hola");
+    const isEmpty = Object.values(data).some(value => value === "");
+    if (isEmpty) {
+      Swal.fire({
+        icon: "warning",
+        title: "Atención",
+        text: "Existen campos incompletos",
+      });
+      return;
+    }
     const res = await axios
       .put("/api/material/view", data)
       .then(function (response) {
-        //console.log(response);
         Swal.fire({
           icon: "success",
           title: "Ingreso",
@@ -104,37 +109,17 @@ export default function Inventary({ materials, colors, brands, ubications, types
         });
       })
       .catch(function (error) {
-        //console.log(error);
         Swal.fire({
           icon: "error",
           title: "Error",
           text: error.response.data,
         });
       });
-    //console.log(res)
     handleCloseForm(name);
     reloadPage();
   };
 
-  const handleDeleteMaterial = async (materialID) => {
-    const res = await axios
-      .delete("/api/material/view", { data: { tipo: "Material", ML_identificador: materialID } })
-      .then(function (response) {
-        //console.log(response);
-      })
-      .catch(function (error) {
-        //console.log(error);
-      });
-    //console.log(res)
-    reloadPage();
-  };
 
-  const [lowMaterial, setLowMaterial] = useState({
-    ML_identificador: "",
-    ML_descripcion: "",
-    ML_cantidad: "",
-  })
-  
   const [material, setMaterial] = useState(initialState);
   const [color, setColor] = useState(initialColorState);
   const [brand, setBrand] = useState(initialBrandState);
@@ -173,6 +158,15 @@ export default function Inventary({ materials, colors, brands, ubications, types
   };
 
   const handleSave = (object, name) => {  
+    const isEmpty = Object.values(object).some(value => value === "");
+    if (isEmpty) {
+      Swal.fire({
+        icon: "warning",
+        title: "Atención",
+        text: "Existen campos incompletos",
+      });
+      return;
+    }
     handleSubmit(object);
     handleCloseForm(name);
     reloadPage();
@@ -482,7 +476,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
             </Form.Group>
             <Form.Group controlId="formCantMaterialUpd">
               <Form.Label>Cantidad a ingresar</Form.Label>
-              <Form.Control name="ML_cantidad" onChange={handleChange} type="text" placeholder="Ingrese la descripción si desea" />
+              <Form.Control name="ML_cantidad" onChange={handleMLCantidadChange} type="text" placeholder="Ingrese la descripción si desea" />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -492,7 +486,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
           </Button>
           <Button type="submit" variant="primary" onClick={() => handleUpdate({
             ML_identificador: material.ML_identificador,
-            ML_cantidad: material.ML_cantidad
+            ML_cantidad: updatedMLCantidad
           },'moreMaterial')} disabled={!material.ML_cantidad || material.ML_cantidad <= 0}>
             Guardar
           </Button>

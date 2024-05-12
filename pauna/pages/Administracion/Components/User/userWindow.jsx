@@ -9,7 +9,15 @@ export default function UserWindow({ userAdmins, rols }) {
   const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("hola");
+    const isEmpty = Object.values(user).some(value => value === "");
+    if (isEmpty) {
+      Swal.fire({
+        icon: "warning",
+        title: "Atención",
+        text: "Existen campos incompletos",
+      });
+      return;
+    }
     const res = await axios
       .post("/api/config/admin", user)
       .then(function (response) {

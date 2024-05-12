@@ -9,7 +9,6 @@ export default function Administradores({ Administrador }) {
   const [editedValues, setEditedValues] = useState({});
   const [selectedAdminstrador, setSelectedAdministrador] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [rol, setRol] = useState([]);
 
   const filteredAdministrador = Administrador.filter((admin) => {
     return (
@@ -277,21 +276,15 @@ export default function Administradores({ Administrador }) {
             <Form.Group>
               <Form.Label>Tipo de Rol</Form.Label>
               <Form.Control
-                as="select"
-                onChange={""}
-                name="LP_identificador"
-              >
-                <option>-Seleccionar-</option>
-                {rol.map((admin) => (
-                  <option
-                    key={admin.RL_identificador}
-                    value={admin.RL_identificador}
-                  >
-                    Roles:{" "}
-                    {`${rol.RL_nombre} - Descripción: ${rol.RL_descripcion}`}
-                  </option>
-                ))}
-              </Form.Control>
+                type="text"
+                value={editedValues.RL_identificador}
+                onChange={(e) =>
+                  setEditedValues({
+                    ...editedValues,
+                    ["TO-numero"]: e.target.value,
+                  })
+                }
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -309,7 +302,7 @@ export default function Administradores({ Administrador }) {
             Cerrar
           </Button>
           <Button
-            onClick={createAdministrador}
+            onClick={handleSaveEditEstudiante}
             style={buttonStyle}
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;

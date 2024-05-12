@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import {
-  Table,
-  Button,
-  Card,
-  InputGroup,
-  FormControl,
-  Modal,
-  Form,
-} from "react-bootstrap";
+  Table,Button, Card, InputGroup, FormControl, Modal, Form,} from "react-bootstrap";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 
@@ -67,18 +60,31 @@ export default function Horario({ Horarios }) {
   };
 
   const handleSubmit = async (data) => {
-    console.log("hola");
-    const res = await axios
-      .post("/api/config/BibliotecaHorario", data)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
+    // Verificar si los campos están vacíos
+    if (!data.HO_fecha || !data.HO_hora || !data.HO_estado) {
+      // Mostrar alerta si algún campo está vacío
+      Swal.fire({
+        title: "Error",
+        text: "No puedes crear un horario con espacios vacíos",
+        icon: "error",
+        timer: 3000,
+        timerProgressBar: true,
       });
-    console.log(res);
-    showAlert("Horario añadido correctamente");
+    } else {
+      // Si todos los campos están llenos, proceder con la solicitud
+      const res = await axios
+        .post("/api/config/BibliotecaHorario", data)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      console.log(res);
+      showAlert("Horario añadido correctamente");
+    }
   };
+  
 
   const handleSave = (object) => {
     handleSubmit(object);
@@ -138,7 +144,7 @@ export default function Horario({ Horarios }) {
 
   const showAlert = (message) => {
     Swal.fire({
-      title: "éxito",
+      title: "Éxito",
       text: message,
       icon: "success",
       timer: 3000,

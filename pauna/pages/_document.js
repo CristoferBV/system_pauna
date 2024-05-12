@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* Agrega la referencia al icono Favicon aquí */}
+        {/* Icono de la universidad */}
         <link rel="icon" href="/Logo-UNA-Rojo_HD.png" />
       </Head>
       <body>

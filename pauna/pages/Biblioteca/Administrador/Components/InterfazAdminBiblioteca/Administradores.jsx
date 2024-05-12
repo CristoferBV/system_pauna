@@ -10,8 +10,6 @@ export default function Administradores({ Administrador }) {
   const [selectedAdminstrador, setSelectedAdministrador] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
-  const [rol, seRol] = useState([]);
-
   const filteredAdministrador = Administrador.filter((admin) => {
     return (
       (admin.UO_primer_nombre || "")
@@ -288,15 +286,9 @@ export default function Administradores({ Administrador }) {
                     }
                 >
                     <option value="">-Seleccionar-</option>
-                    {rol.map((Rol) => (
-                  <option
-                    key={Rol.RL_identificador}
-                    value={Rol.RL_identificador}
-                  >
-                    Roles:{" "}
-                    {`${Rol.RL_nombre} - Descripción: ${Rol.RL_descripcion}`}
-                  </option>
-                ))}
+                    <option value="rol1">Rol 1</option>
+                    <option value="rol2">Rol 2</option>
+                    {/* Agrega más opciones de rol aquí */}
                 </Form.Control>
                 </Form.Group>
           </Form>

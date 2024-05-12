@@ -10,6 +10,8 @@ export default function Administradores({ Administrador }) {
   const [selectedAdminstrador, setSelectedAdministrador] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
+  const [rol, seRol] = useState([]);
+
   const filteredAdministrador = Administrador.filter((admin) => {
     return (
       (admin.UO_primer_nombre || "")
@@ -274,18 +276,29 @@ export default function Administradores({ Administrador }) {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Tipo de Rol</Form.Label>
-              <Form.Control
-                type="text"
-                value={editedValues.RL_identificador}
-                onChange={(e) =>
-                  setEditedValues({
-                    ...editedValues,
-                    ["TO-numero"]: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
+                <Form.Label>Tipo de Rol</Form.Label>
+                <Form.Control
+                    as="select"
+                    value={editedValues.RL_identificador}
+                    onChange={(e) =>
+                    setEditedValues({
+                        ...editedValues,
+                        RL_identificador: e.target.value,
+                    })
+                    }
+                >
+                    <option value="">-Seleccionar-</option>
+                    {rol.map((Rol) => (
+                  <option
+                    key={Rol.RL_identificador}
+                    value={Rol.RL_identificador}
+                  >
+                    Roles:{" "}
+                    {`${Rol.RL_nombre} - Descripción: ${Rol.RL_descripcion}`}
+                  </option>
+                ))}
+                </Form.Control>
+                </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>

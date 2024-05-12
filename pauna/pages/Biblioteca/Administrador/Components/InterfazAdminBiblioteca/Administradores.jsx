@@ -27,7 +27,7 @@ export default function Administradores({ Administrador }) {
       (CE_correoElectronico || "")
         .toLowerCase()
         .includes(searchText.toLowerCase()) ||
-      (admin.UO_contrasena || "")
+      (admin.RL_nombre || "")
         .toLowerCase()
         .includes(searchText.toLowerCase()) ||
       (admin.RL_descripcion || "")
@@ -156,7 +156,7 @@ export default function Administradores({ Administrador }) {
                   Correo
                 </th>
                 <th className="text-center" style={{ color: "#293659" }}>
-                  Contraseña
+                  Tipo de Rol
                 </th>
                 <th className="text-center" style={{ color: "#293659" }}>
                   Descripción Rol
@@ -172,7 +172,7 @@ export default function Administradores({ Administrador }) {
                   <td className="text-center">{admin.UO_segundo_apellido}</td>
                   <td className="text-center">{admin.UO_identificador}</td>
                   <td className="text-center">{admin.CE_correoElectronico}</td>
-                  <td className="text-center">{admin.UO_contrasena}</td>
+                  <td className="text-center">{admin.RL_nombre}</td>
                   <td className="text-center">{admin.RL_descripcion}</td>
                   <td className="text-center">
                     <Button

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {Table,Card,FormControl,InputGroup,Button,Modal,Form,} from "react-bootstrap";
+import {Table,Card,FormControl,InputGroup,Button,Modal,Form} from "react-bootstrap";
 
 export default function Administradores({ Administrador }) {
   const [searchText, setSearchText] = useState("");
@@ -9,35 +9,44 @@ export default function Administradores({ Administrador }) {
   const [editedValues, setEditedValues] = useState({});
   const [selectedAdminstrador, setSelectedAdministrador] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  console.log(Administrador);
 
-  const [rol, seRol] = useState([]);
+  const [administradorState, setAdministradorState] = useState([]);
+  const [roles, setRoles] = useState([]);
 
-  const filteredAdministrador = Administrador.filter((admin) => {
-    return (
-      (admin.UO_primer_nombre || "")
-        .toLowerCase()
-        .includes(searchText.toLowerCase()) ||
-      (admin.UO_primer_apellido || "")
-        .toLowerCase()
-        .includes(searchText.toLowerCase()) ||
-      (UO_segundo_apellido || "")
-        .toLowerCase()
-        .includes(searchText.toLowerCase()) ||
-      (admin.UO_identificador || "")
-        .toLowerCase()
-        .includes(searchText.toLowerCase()) ||
-      (CE_correoElectronico || "")
-        .toLowerCase()
-        .includes(searchText.toLowerCase()) ||
-      (admin.RL_nombre || "")
-        .toLowerCase()
-        .includes(searchText.toLowerCase()) ||
-      (admin.RL_descripcion || "")
-        .toLowerCase()
-        .includes(searchText.toLowerCase())
+  let filteredAdministrador = [];
+  if (Array.isArray(Administrador.Administradores)) {
+    filteredAdministrador = Administrador.Administradores.filter((admin) => {
+      return (
+        (admin.UO_primer_nombre || "")
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        (admin.UO_primer_apellido || "")
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        (admin.UO_segundo_apellido || "")
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        (admin.UO_identificador || "")
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        (admin.CE_correoElectronico || "")
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        (admin.RL_nombre || "")
+          .toLowerCase()
+          .includes(searchText.toLowerCase()) ||
+        (admin.RL_descripcion || "")
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+      );
+    });
+  } else {
+    console.error(
+      "Administrador.Administradores no es un array:",
+      Administrador.Administradores
     );
-  });
-  
+  }
 
   const confirmDeleteAdministrador = (admin) => {
     // Configura el estudiante seleccionado para eliminar
@@ -58,8 +67,6 @@ export default function Administradores({ Administrador }) {
       console.error("Error al actualizar el estudiante:", error);
     }
   };
-
-  
 
   const createAdministrador = async (newAdministrador) => {
     try {
@@ -145,15 +152,31 @@ export default function Administradores({ Administrador }) {
           <Table striped bordered hover responsive>
             <thead>
               <tr>
-                <th className="text-center" style={{ color: "#293659" }}>Nombre</th>
-                <th className="text-center" style={{ color: "#293659" }}>Primer Apellido</th>
-                <th className="text-center" style={{ color: "#293659" }}>Segundo Apellido</th>
-                <th className="text-center" style={{ color: "#293659" }}>Cédula</th>
-                <th className="text-center" style={{ color: "#293659" }}>Correo</th>
-                <th className="text-center" style={{ color: "#293659" }}>Tipo de Rol</th>
-                <th className="text-center" style={{ color: "#293659" }}>Descripción Rol</th>
-                <th className="text-center" style={{ color: "#293659" }}>Administrar</th>
-             </tr>
+                <th className="text-center" style={{ color: "#293659" }}>
+                  Nombre
+                </th>
+                <th className="text-center" style={{ color: "#293659" }}>
+                  Primer Apellido
+                </th>
+                <th className="text-center" style={{ color: "#293659" }}>
+                  Segundo Apellido
+                </th>
+                <th className="text-center" style={{ color: "#293659" }}>
+                  Cédula
+                </th>
+                <th className="text-center" style={{ color: "#293659" }}>
+                  Correo
+                </th>
+                <th className="text-center" style={{ color: "#293659" }}>
+                  Tipo de Rol
+                </th>
+                <th className="text-center" style={{ color: "#293659" }}>
+                  Descripción Rol
+                </th>
+                <th className="text-center" style={{ color: "#293659" }}>
+                  Administrar
+                </th>
+              </tr>
             </thead>
             <tbody>
               {filteredAdministrador.map((admin, index) => (
@@ -245,7 +268,10 @@ export default function Administradores({ Administrador }) {
                 type="text"
                 value={editedValues.UO_segundo_apellido}
                 onChange={(e) =>
-                  setEditedValues({ ...editedValues, UO_segundo_apellido: e.target.value })
+                  setEditedValues({
+                    ...editedValues,
+                    UO_segundo_apellido: e.target.value,
+                  })
                 }
               />
             </Form.Group>
@@ -276,29 +302,29 @@ export default function Administradores({ Administrador }) {
               />
             </Form.Group>
             <Form.Group>
-                <Form.Label>Tipo de Rol</Form.Label>
-                <Form.Control
-                    as="select"
-                    value={editedValues.RL_identificador}
-                    onChange={(e) =>
-                    setEditedValues({
-                        ...editedValues,
-                        RL_identificador: e.target.value,
-                    })
-                    }
-                >
-                    <option value="">-Seleccionar-</option>
-                    {rol.map((Rol) => (
+              <Form.Label>Tipo de Rol</Form.Label>
+              <Form.Control
+                as="select"
+                value={editedValues.RL_identificador}
+                onChange={(e) =>
+                  setEditedValues({
+                    ...editedValues,
+                    RL_identificador: e.target.value,
+                  })
+                }
+              >
+                <option value="">-Seleccionar-</option>
+                {roles.map((rol) => (
                   <option
-                    key={Rol.RL_identificador}
-                    value={Rol.RL_identificador}
+                    key={rol.RL_identificador}
+                    value={rol.RL_identificador}
                   >
                     Roles:{" "}
-                    {`${Rol.RL_nombre} - Descripción: ${Rol.RL_descripcion}`}
+                    {`${rol.RL_nombre} - Descripción: ${rol.RL_descripcion}`}
                   </option>
                 ))}
-                </Form.Control>
-                </Form.Group>
+              </Form.Control>
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -328,7 +354,6 @@ export default function Administradores({ Administrador }) {
           </Button>
         </Modal.Footer>
       </Modal>
-
 
       <Modal show={showEditForm} onHide={() => setShowEditForm(false)}>
         <Modal.Header closeButton>
@@ -491,7 +516,7 @@ export default function Administradores({ Administrador }) {
 export const getServerSideProps = async (context) => {
   try {
     const { data: Administrador } = await axios.get(
-      process.env.LINK +"/api/config/BibliotecaAdministradores"
+      process.env.LINK + "/api/config/BibliotecaAdministradores"
     );
     return {
       props: {

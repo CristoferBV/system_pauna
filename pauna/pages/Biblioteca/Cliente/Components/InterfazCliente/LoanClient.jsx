@@ -10,32 +10,8 @@ import Swal from "sweetalert2";
 import React from "react";
 import { useRouter } from "next/router";
 
-const LoanClient = () => {
+export default function LoanClient () {
   const router = useRouter();
-
-  const reloadPage = () => {
-    router.push("/Biblioteca/Cliente/Components/InterfazCliente/LoanClient");
-  };
-
-  //Datos de solicitud
-  const [loanData, setLoanData] = useState([]);
-
-  useEffect(() => {
-    // Realizar una solicitud GET a la API para obtener los préstamos
-    Axios.get("/api/libraryClient/loan")
-      .then((response) => {
-        // Al recibir la respuesta, actualizar el estado con los datos de los préstamos
-        setLoanData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener los préstamos", error);
-      });
-  }, []);
-
-  const [active, setActive] = useState("");
-  const [cedula, setCedula] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [device, setDevice] = useState("");
 
   const navigation = [
     { name: "Inicio", section: "HomeClient", current: false },
@@ -43,13 +19,26 @@ const LoanClient = () => {
     { name: "Devolución", section: "DevolutionClient", current: false },
   ];
 
-  // Estados para llenar selects
+  const [active, setActive] = useState("");
+  const [cedula, setCedula] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [device, setDevice] = useState("");
+  const [loanData, setLoanData] = useState([]);
   const [carreras, setCarreras] = useState([]);
   const [horarios, setHorarios] = useState([]);
   const [deviceData, setDeviceData] = useState([]);
 
-  // Carreras
   useEffect(() => {
+    // Realizar una solicitud GET a la API para obtener los préstamos
+    Axios.get("/api/libraryClient/loan")
+      .then((response) => {
+        // Al recibir la respuesta, actualizar el estado con los datos de la solicitud de préstamo
+        setLoanData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los préstamos", error);
+      });
+
     // Realiza una solicitud GET a tu API para obtener las opciones de carrera
     Axios.get("/api/fillSelectsLoan/career")
       .then((response) => {
@@ -59,10 +48,8 @@ const LoanClient = () => {
       .catch((error) => {
         console.error("Error al obtener las opciones de carrera", error);
       });
-  }, []);
 
-  ///Dispositivos
-  useEffect(() => {
+    // Realiza una solicitud GET a tu API para obtener las opciones de dispositivos
     Axios.get("/api/fillSelectsLoan/device")
       .then((response) => {
         // Al recibir la respuesta, actualiza el estado con los datos de dispositivos
@@ -71,10 +58,7 @@ const LoanClient = () => {
       .catch((error) => {
         console.error("Error al obtener las opciones de dispositivos", error);
       });
-  }, []);
 
-  // Horarios
-  useEffect(() => {
     // Realiza una solicitud GET a tu API para obtener las opciones de carrera
     Axios.get("/api/fillSelectsLoan/deadline")
       .then((response) => {
@@ -105,7 +89,17 @@ const LoanClient = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      reloadPage();
+
+      // Recargar los préstamos después de enviar el formulario
+      Axios.get("/api/libraryClient/loan")
+        .then((response) => {
+          // Al recibir la respuesta, actualizar el estado con los datos de la solicitud de préstamo
+          setLoanData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error al obtener los préstamos", error);
+        });
+        reloadPage();
     } catch (error) {
       console.error("Error al enviar la solicitud:", error);
       Swal.fire({
@@ -116,6 +110,10 @@ const LoanClient = () => {
         timer: 1500,
       });
     }
+  };
+
+  const reloadPage = () => {
+    router.push("/Biblioteca/Cliente/Components/InterfazCliente/LoanClient");
   };
 
   return (
@@ -278,7 +276,6 @@ const LoanClient = () => {
                     </Form.Control>
                   </Form.Group>
 
-                  {/*ARREGLAR ESTO PARA QUE SOLO TOME TABLET O LAPTOP Y ENVIE EL ID A LA API LOAN */}
                   <Form.Group className="mb-3">
                     <label htmlFor="dispositivos" className="font-semibold">Dispositivos</label>
                     <Form.Control id="dispositivos" name="dispositivos" as="select" onChange={(e) => {
@@ -360,13 +357,13 @@ const LoanClient = () => {
                   </tr>
                 </thead>
                 <tbody> 
-                  {loanData.map((loan, index) => {
+                  {Array.isArray(loanData) && loanData.map((loan) => {
                       const cedulaMatches = cedula === loan.UO_identificador;
 
                       // Retornar la fila solo si cedulaMatches es true
                       if (cedulaMatches) {
                         return (
-                          <tr key={`${loan.UO_identificador}-${index}`}>
+                          <tr key={loan.UO_identificador}>
                             <td>{loan.UO_primer_nombre}</td>
                             <td>{loan.UO_segundo_nombre}</td>
                             <td>{loan.UO_primer_apellido}</td>
@@ -415,4 +412,27 @@ const LoanClient = () => {
   );
 };
 
-export default LoanClient;
+//export default LoanClient;
+
+export const getServerSideProps = async (context) => {
+  try {
+    const { data } = await Axios.get(
+      process.env.LINK+"/api/libraryClient/loan"
+    )
+    const {loanData} = data;
+    return {
+      props: {
+        loanData,
+        rols,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching data:");
+        return {
+            props: {
+              loanData : [],
+              rols: []
+            },
+        };
+  }
+};

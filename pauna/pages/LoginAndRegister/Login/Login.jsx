@@ -36,8 +36,6 @@ const Login = () => {
             router.push("/Administracion/Components/User/landing");
         }
         
-      }else {
-        //console.log("Error en la contraseña");
       }
 
     } catch (error) {

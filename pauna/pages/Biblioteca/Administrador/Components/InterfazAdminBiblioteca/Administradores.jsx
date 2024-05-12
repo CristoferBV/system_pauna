@@ -1,18 +1,44 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {Table,Card,FormControl,InputGroup,Button,Modal,Form} from "react-bootstrap";
+import Swal from "sweetalert2";
 
 export default function Administradores({ Administrador }) {
   const [searchText, setSearchText] = useState("");
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [editedValues, setEditedValues] = useState({});
   const [selectedAdminstrador, setSelectedAdministrador] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  console.log(Administrador);
 
   const [administradorState, setAdministradorState] = useState([]);
+
   const [roles, setRoles] = useState([]);
+
+  const [editedValues, setEditedValues] = useState({
+    UO_primer_nombre: '',
+    UO_primer_apellido: '',
+    UO_segundo_apellido: '',
+    UO_identificador: '',
+    CE_correoElectronico: '',
+    UO_contrasena: '',
+    RL_identificador: '',
+  });
+  
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await axios.get('/api/config/BibliotecaAdministradores');
+        setRoles(response.data.Roles);
+      } catch (error) {
+        console.error('Hubo un error al obtener los roles:', error);
+      }
+    };
+  
+    fetchRoles();
+  }, []);
+  
+
 
   let filteredAdministrador = [];
 if (Array.isArray(Administrador.Admins)) {
@@ -48,7 +74,6 @@ if (Array.isArray(Administrador.Admins)) {
   );
 }
 
-
   const confirmDeleteAdministrador = (admin) => {
     // Configura el estudiante seleccionado para eliminar
     setSelectedAdministrador(admin);
@@ -71,17 +96,43 @@ if (Array.isArray(Administrador.Admins)) {
 
   const createAdministrador = async (newAdministrador) => {
     try {
-      // Realiza una solicitud HTTP (por ejemplo, con Axios) para crear un nuevo estudiante en el servidor
-      await axios.post(
-        "/api/config/BibliotecaAdminiatradores",
-        newAdministrador
-      );
-      // Lógica adicional, como actualizar el estado local con los nuevos datos si es necesario
-      setShowCreateForm(false); // Cierra el modal después de crear el estudiante
+      // Validar campos en blanco
+      if (Object.values(newAdministrador).some(value => !value.trim())) {
+        // Mostrar alerta de SweetAlert2 si hay campos en blanco
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No puedes crear un usuario con espacios en blanco'
+        });
+        return; // Detener la ejecución si hay campos en blanco
+      }
+  
+      // Enviar solicitud para crear el administrador
+      await axios.post("/api/config/BibliotecaAdministradores", newAdministrador);
+  
+      // Mostrar alerta de SweetAlert2 si el usuario se crea correctamente
+      Swal.fire({
+        icon: 'success',
+        title: 'Éxito',
+        text: 'Usuario creado correctamente'
+      }).then(() => {
+        // Recargar la página para mostrar los cambios
+        window.location.reload();
+      });
+  
+      setShowCreateForm(false); // Cierra el modal después de crear el Administrador
     } catch (error) {
+      // Manejar errores
       console.error("Error al crear el estudiante:", error);
+      // Mostrar alerta de SweetAlert2 para errores
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un error al crear el usuario. Por favor, intenta de nuevo.'
+      });
     }
   };
+  
 
   // Función para abrir el formulario de edición
   const handleEditAdministrador = (admin) => {
@@ -241,7 +292,7 @@ if (Array.isArray(Administrador.Admins)) {
               <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
-                value={editedValues.UO_primer_nombre}
+                value={editedValues.UO_primer_nombre || ''}
                 onChange={(e) =>
                   setEditedValues({
                     ...editedValues,
@@ -254,7 +305,7 @@ if (Array.isArray(Administrador.Admins)) {
               <Form.Label>Primer Apellido</Form.Label>
               <Form.Control
                 type="text"
-                value={editedValues.UO_primer_apellido}
+                value={editedValues.UO_primer_apellido || ''}
                 onChange={(e) =>
                   setEditedValues({
                     ...editedValues,
@@ -267,7 +318,7 @@ if (Array.isArray(Administrador.Admins)) {
               <Form.Label>Segundo Apellido</Form.Label>
               <Form.Control
                 type="text"
-                value={editedValues.UO_segundo_apellido}
+                value={editedValues.UO_segundo_apellido || ''}
                 onChange={(e) =>
                   setEditedValues({
                     ...editedValues,
@@ -280,7 +331,7 @@ if (Array.isArray(Administrador.Admins)) {
               <Form.Label>Cédula</Form.Label>
               <Form.Control
                 type="text"
-                value={editedValues.UO_identificador}
+                value={editedValues.UO_identificador || ''}
                 onChange={(e) =>
                   setEditedValues({
                     ...editedValues,
@@ -293,7 +344,7 @@ if (Array.isArray(Administrador.Admins)) {
               <Form.Label>Correo Electrónico</Form.Label>
               <Form.Control
                 type="text"
-                value={editedValues.CE_correoElectronico}
+                value={editedValues.CE_correoElectronico || ''}
                 onChange={(e) =>
                   setEditedValues({
                     ...editedValues,
@@ -303,28 +354,41 @@ if (Array.isArray(Administrador.Admins)) {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Tipo de Rol</Form.Label>
+              <Form.Label>Contraseña</Form.Label>
               <Form.Control
-                as="select"
-                value={editedValues.RL_identificador}
+                type="text"
+                value={editedValues.UO_contrasena || ''}
                 onChange={(e) =>
                   setEditedValues({
                     ...editedValues,
-                    RL_identificador: e.target.value,
+                    UO_contrasena: e.target.value,
                   })
                 }
-              >
+              />
+            </Form.Group>
+        <Form.Group>
+            <Form.Label>Tipo de Rol</Form.Label>
+            <Form.Control
+                as="select"
+                value={editedValues.RL_identificador || ''}
+                onChange={(e) =>
+                setEditedValues({
+                    ...editedValues,
+                    RL_identificador: e.target.value,
+                })
+                }
+            >
                 <option value="">-Seleccionar-</option>
-                {roles.map((rol) => (
-                  <option
+                {Array.isArray(roles) && roles.map((rol) => (
+                <option
                     key={rol.RL_identificador}
                     value={rol.RL_identificador}
-                  >
+                >
                     Roles:{" "}
                     {`${rol.RL_nombre} - Descripción: ${rol.RL_descripcion}`}
-                  </option>
+                </option>
                 ))}
-              </Form.Control>
+            </Form.Control>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -342,21 +406,22 @@ if (Array.isArray(Administrador.Admins)) {
             Cerrar
           </Button>
           <Button
-            onClick={handleSaveEditEstudiante}
+            onClick={() => createAdministrador(editedValues)}
             style={buttonStyle}
             onMouseEnter={(e) => {
-              e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                e.target.style.backgroundColor = buttonStyle.backgroundColor;
             }}
-          >
+            >
             Guardar
-          </Button>
+         </Button>
+
         </Modal.Footer>
       </Modal>
 
-      <Modal show={showEditForm} onHide={() => setShowEditForm(false)}>
+      {/* <Modal show={showEditForm} onHide={() => setShowEditForm(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Editar Estudiante</Modal.Title>
         </Modal.Header>
@@ -471,7 +536,7 @@ if (Array.isArray(Administrador.Admins)) {
             Guardar
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
 
       <Modal
         show={showDeleteConfirmation}

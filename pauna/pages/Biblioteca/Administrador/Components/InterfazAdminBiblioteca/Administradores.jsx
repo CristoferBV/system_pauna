@@ -15,38 +15,39 @@ export default function Administradores({ Administrador }) {
   const [roles, setRoles] = useState([]);
 
   let filteredAdministrador = [];
-  if (Array.isArray(Administrador.Administradores)) {
-    filteredAdministrador = Administrador.Administradores.filter((admin) => {
-      return (
-        (admin.UO_primer_nombre || "")
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        (admin.UO_primer_apellido || "")
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        (admin.UO_segundo_apellido || "")
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        (admin.UO_identificador || "")
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        (admin.CE_correoElectronico || "")
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        (admin.RL_nombre || "")
-          .toLowerCase()
-          .includes(searchText.toLowerCase()) ||
-        (admin.RL_descripcion || "")
-          .toLowerCase()
-          .includes(searchText.toLowerCase())
-      );
-    });
-  } else {
-    console.error(
-      "Administrador.Administradores no es un array:",
-      Administrador.Administradores
+if (Array.isArray(Administrador.Admins)) {
+  filteredAdministrador = Administrador.Admins.filter((admin) => {
+    return (
+      (admin.UO_primer_nombre || "")
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
+      (admin.UO_primer_apellido || "")
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
+      (admin.UO_segundo_apellido || "")
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
+      (admin.UO_identificador || "")
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
+      (admin.CE_correoElectronico || "")
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
+      (admin.RL_nombre || "")
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
+      (admin.RL_descripcion || "")
+        .toLowerCase()
+        .includes(searchText.toLowerCase())
     );
-  }
+  });
+} else {
+  console.error(
+    "Administrador.Admins no es un array:",
+    Administrador.Admins
+  );
+}
+
 
   const confirmDeleteAdministrador = (admin) => {
     // Configura el estudiante seleccionado para eliminar

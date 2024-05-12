@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {Table,Card,FormControl,InputGroup,Button,Modal,Form,} from "react-bootstrap";
+import {Table,Card,FormControl,InputGroup,Button,Modal,Form} from "react-bootstrap";
 
 export default function Administradores({ Administrador }) {
   const [searchText, setSearchText] = useState("");
@@ -9,8 +9,14 @@ export default function Administradores({ Administrador }) {
   const [editedValues, setEditedValues] = useState({});
   const [selectedAdminstrador, setSelectedAdministrador] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  console.log(Administrador);
 
-  const filteredAdministrador = Administrador.filter((admin) => {
+  const [administradorState, setAdministradorState] = useState([]);
+  const [roles, setRoles] = useState([]);
+
+  let filteredAdministrador = [];
+if (Array.isArray(Administrador.Admins)) {
+  filteredAdministrador = Administrador.Admins.filter((admin) => {
     return (
       (admin.UO_primer_nombre || "")
         .toLowerCase()
@@ -18,13 +24,13 @@ export default function Administradores({ Administrador }) {
       (admin.UO_primer_apellido || "")
         .toLowerCase()
         .includes(searchText.toLowerCase()) ||
-      (UO_segundo_apellido || "")
+      (admin.UO_segundo_apellido || "")
         .toLowerCase()
         .includes(searchText.toLowerCase()) ||
       (admin.UO_identificador || "")
         .toLowerCase()
         .includes(searchText.toLowerCase()) ||
-      (CE_correoElectronico || "")
+      (admin.CE_correoElectronico || "")
         .toLowerCase()
         .includes(searchText.toLowerCase()) ||
       (admin.RL_nombre || "")
@@ -35,6 +41,13 @@ export default function Administradores({ Administrador }) {
         .includes(searchText.toLowerCase())
     );
   });
+} else {
+  console.error(
+    "Administrador.Admins no es un array:",
+    Administrador.Admins
+  );
+}
+
 
   const confirmDeleteAdministrador = (admin) => {
     // Configura el estudiante seleccionado para eliminar
@@ -56,12 +69,12 @@ export default function Administradores({ Administrador }) {
     }
   };
 
-  const createAdministrador = async (newAdminstrador) => {
+  const createAdministrador = async (newAdministrador) => {
     try {
       // Realiza una solicitud HTTP (por ejemplo, con Axios) para crear un nuevo estudiante en el servidor
       await axios.post(
         "/api/config/BibliotecaAdminiatradores",
-        newAdminstrador
+        newAdministrador
       );
       // Lógica adicional, como actualizar el estado local con los nuevos datos si es necesario
       setShowCreateForm(false); // Cierra el modal después de crear el estudiante
@@ -147,7 +160,7 @@ export default function Administradores({ Administrador }) {
                   Primer Apellido
                 </th>
                 <th className="text-center" style={{ color: "#293659" }}>
-                Segundo Apellido
+                  Segundo Apellido
                 </th>
                 <th className="text-center" style={{ color: "#293659" }}>
                   Cédula
@@ -161,7 +174,9 @@ export default function Administradores({ Administrador }) {
                 <th className="text-center" style={{ color: "#293659" }}>
                   Descripción Rol
                 </th>
-                <th className="text-center">Adminstrar</th>
+                <th className="text-center" style={{ color: "#293659" }}>
+                  Administrar
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -177,7 +192,7 @@ export default function Administradores({ Administrador }) {
                   <td className="text-center">
                     <Button
                       variant="primary"
-                      onClick={() => handleEditDevice(device)}
+                      onClick={() => handleEditAdministrador(admin)}
                       style={buttonStyle}
                       onMouseEnter={(e) => {
                         e.target.style.backgroundColor =
@@ -215,6 +230,132 @@ export default function Administradores({ Administrador }) {
           </Table>
         </Card.Body>
       </Card>
+
+      <Modal show={showCreateForm} onHide={() => setShowCreateForm(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Crear Administrador</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedValues.UO_primer_nombre}
+                onChange={(e) =>
+                  setEditedValues({
+                    ...editedValues,
+                    UO_primer_nombre: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Primer Apellido</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedValues.UO_primer_apellido}
+                onChange={(e) =>
+                  setEditedValues({
+                    ...editedValues,
+                    UO_primer_apellido: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Segundo Apellido</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedValues.UO_segundo_apellido}
+                onChange={(e) =>
+                  setEditedValues({
+                    ...editedValues,
+                    UO_segundo_apellido: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Cédula</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedValues.UO_identificador}
+                onChange={(e) =>
+                  setEditedValues({
+                    ...editedValues,
+                    UO_identificador: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Correo Electrónico</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedValues.CE_correoElectronico}
+                onChange={(e) =>
+                  setEditedValues({
+                    ...editedValues,
+                    CE_correoElectronico: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Tipo de Rol</Form.Label>
+              <Form.Control
+                as="select"
+                value={editedValues.RL_identificador}
+                onChange={(e) =>
+                  setEditedValues({
+                    ...editedValues,
+                    RL_identificador: e.target.value,
+                  })
+                }
+              >
+                <option value="">-Seleccionar-</option>
+                {roles.map((rol) => (
+                  <option
+                    key={rol.RL_identificador}
+                    value={rol.RL_identificador}
+                  >
+                    Roles:{" "}
+                    {`${rol.RL_nombre} - Descripción: ${rol.RL_descripcion}`}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            onClick={() => setShowEditForm(false)}
+            style={buttonStyle}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = buttonStyle.backgroundColor;
+            }}
+          >
+            Cerrar
+          </Button>
+          <Button
+            onClick={handleSaveEditEstudiante}
+            style={buttonStyle}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = buttonStyle.backgroundColor;
+            }}
+          >
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <Modal show={showEditForm} onHide={() => setShowEditForm(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Editar Estudiante</Modal.Title>
@@ -331,6 +472,7 @@ export default function Administradores({ Administrador }) {
           </Button>
         </Modal.Footer>
       </Modal>
+
       <Modal
         show={showDeleteConfirmation}
         onHide={() => setShowDeleteConfirmation(false)}
@@ -375,7 +517,7 @@ export default function Administradores({ Administrador }) {
 export const getServerSideProps = async (context) => {
   try {
     const { data: Administrador } = await axios.get(
-      process.env.LINK +"/api/config/BibliotecaAdministradores"
+      process.env.LINK + "/api/config/BibliotecaAdministradores"
     );
     return {
       props: {

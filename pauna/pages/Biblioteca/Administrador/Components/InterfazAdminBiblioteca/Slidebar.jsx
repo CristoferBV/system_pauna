@@ -515,6 +515,7 @@
             </Button>
           </Modal.Footer>
         </Modal>
+        
         <Modal show={showTipoForm} onHide={() => setShowTipoForm(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Crear Tipo</Modal.Title>

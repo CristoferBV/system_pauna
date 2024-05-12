@@ -49,6 +49,9 @@ function NavbarAdminBiblioteca() {
               <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarPerifericos" style={customDropdownStyle}>Perifericos</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title={<span style={customDropdownTitleStyle}>Usuarios</span>} id="collapsible-nav-dropdown" style={customDropdownTitleStyle}>
+            <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/Administradores" style={customDropdownStyle}>
+                Administradores
+              </NavDropdown.Item>
             <NavDropdown.Item href="/Biblioteca/Administrador/Components/InterfazAdminBiblioteca/SidebarEstudiantes" style={customDropdownStyle}>
                 Estudiantes
               </NavDropdown.Item>

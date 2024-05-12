@@ -389,7 +389,7 @@
                   <th className="text-center" style={{ color: "#293659" }}>Dispositivo</th>
                   <th className="text-center" style={{ color: "#293659" }}>Descripción</th>
                   <th className="text-center" style={{ color: "#293659" }}>Estado</th>
-                  <th className="text-center" style={{ color: "#293659" }}>Acciones</th>
+                  <th className="text-center" style={{ color: "#293659" }}>Administrar</th>
                 </tr>
               </thead>
               <tbody>

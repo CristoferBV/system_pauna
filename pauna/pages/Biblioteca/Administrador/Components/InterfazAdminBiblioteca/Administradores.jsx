@@ -113,19 +113,35 @@ const handleDeleteAdministrador = async (admin) => {
       });
     }
   };
+
+//   const updateAdministrador = async (updatedAdministrador) => {
+//     try {
+//       const response = await axios.put(
+//         "/api/config/BibliotecaAdministradores",
+//         updatedAdministrador
+//       );
+//       // Ahora puedes usar 'response' para acceder a los datos de la respuesta
+//       console.log(response.data);
+//     } catch (error) {
+//       console.error("Error al actualizar el administrador:", error);
+//     }
+//   };
   
-  const updateAdministrador = async (updateAdministrador) => {
-    try {
-      // Realiza una solicitud HTTP (por ejemplo, con Axios) para actualizar el estudiante en el servidor
-      await axios.put(
-        "/api/config/BibliotecaAdminiatradores",
-        updateAdministrador
-      );
-      // Lógica adicional, como actualizar el estado local con los nuevos datos si es necesario
-    } catch (error) {
-      console.error("Error al actualizar el estudiante:", error);
-    }
-  };
+
+//   const handleEditAdministrador = (admin) => {
+//     setShowEditForm(true);
+//     setEditedValues({
+//       UO_identificador_correo: admin.CE_correoElectronico || '',
+//       UO_primer_nombre: admin.UO_primer_nombre || '',
+//       UO_primer_apellido: admin.UO_primer_apellido || '',
+//       UO_segundo_apellido: admin.UO_segundo_apellido || '',
+//       UO_identificador: admin.UO_identificador || '',
+//       CE_correoElectronico: admin.CE_correoElectronico || '',
+//       UO_contrasena: admin.UO_contrasena || '',
+//       RL_identificador: admin.RL_identificador || '',
+//     });
+//     setSelectedAdministrador(admin);
+//   };
 
   const createAdministrador = async (newAdministrador) => {
     try {
@@ -160,21 +176,6 @@ const handleDeleteAdministrador = async (admin) => {
         text: 'Hubo un error al crear el usuario. Por favor, intenta de nuevo.'
       });
     }
-  };
-  
-
-  // Función para abrir el formulario de edición
-  const handleEditAdministrador = (admin) => {
-    setSelectedAdministrador(admin);
-    setEditedValues({ ...admin });
-    setShowEditForm(true);
-  };
-
-  // Función para guardar cambios en la edición del administrador
-  const handleSaveEditEstudiante = () => {
-    // Lógica para guardar los cambios del administrador (usar 'updateAdministrador' aquí)
-    updateAdministrador(editedValues);
-    setShowEditForm(false);
   };
 
   const buttonStyle = {
@@ -270,9 +271,9 @@ const handleDeleteAdministrador = async (admin) => {
                   <td className="text-center">{admin.RL_nombre}</td>
                   <td className="text-center">{admin.RL_descripcion}</td>
                   <td className="text-center">
-                    <Button
+                    {/* <Button
                       variant="primary"
-                      onClick={() => handleDeleteAdministrador(admin)}
+                      onClick={() => handleEditAdministrador(admin)}
                       style={buttonStyle}
                       onMouseEnter={(e) => {
                         e.target.style.backgroundColor =
@@ -284,7 +285,7 @@ const handleDeleteAdministrador = async (admin) => {
                       }}
                     >
                       Editar
-                    </Button>
+                    </Button> */}
                     <Button
                       className="ml-2"
                       variant="danger"
@@ -445,13 +446,12 @@ const handleDeleteAdministrador = async (admin) => {
             >
             Guardar
          </Button>
-
         </Modal.Footer>
       </Modal>
 
       {/* <Modal show={showEditForm} onHide={() => setShowEditForm(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Editar Estudiante</Modal.Title>
+          <Modal.Title>Crear Administrador</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -459,8 +459,7 @@ const handleDeleteAdministrador = async (admin) => {
               <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Nombre del estudiante"
-                value={editedValues.UO_primer_nombre}
+                value={editedValues.UO_primer_nombre || ''}
                 onChange={(e) =>
                   setEditedValues({
                     ...editedValues,
@@ -470,11 +469,36 @@ const handleDeleteAdministrador = async (admin) => {
               />
             </Form.Group>
             <Form.Group>
+              <Form.Label>Primer Apellido</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedValues.UO_primer_apellido || ''}
+                onChange={(e) =>
+                  setEditedValues({
+                    ...editedValues,
+                    UO_primer_apellido: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Segundo Apellido</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedValues.UO_segundo_apellido || ''}
+                onChange={(e) =>
+                  setEditedValues({
+                    ...editedValues,
+                    UO_segundo_apellido: e.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
               <Form.Label>Cédula</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Cédula del estudiante"
-                value={editedValues.UO_identificador}
+                value={editedValues.UO_identificador || ''}
                 onChange={(e) =>
                   setEditedValues({
                     ...editedValues,
@@ -484,54 +508,15 @@ const handleDeleteAdministrador = async (admin) => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Nivel</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Nivel del estudiante"
-                value={editedValues.EE_nivel}
-                onChange={(e) =>
-                  setEditedValues({ ...editedValues, EE_nivel: e.target.value })
-                }
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Otro Campus</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Campus"
-                value={editedValues.EE_campus}
-                onChange={(e) =>
-                  setEditedValues({
-                    ...editedValues,
-                    EE_campus: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-            <Form.Group>
               <Form.Label>Correo Electrónico</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Correo Electrónico del estudiante"
-                value={editedValues["CE-correoElectronico"]}
+                value={editedValues.CE_correoElectronico || ''}
                 onChange={(e) =>
                   setEditedValues({
                     ...editedValues,
-                    ["CE-correoElectronico"]: e.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Teléfono</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Teléfono del estudiante"
-                value={editedValues["TO-numero"]}
-                onChange={(e) =>
-                  setEditedValues({
-                    ...editedValues,
-                    ["TO-numero"]: e.target.value,
+                    CE_correoElectronico: e.target.value,
+                    UO_identificador_correo: e.target.value,
                   })
                 }
               />
@@ -552,17 +537,17 @@ const handleDeleteAdministrador = async (admin) => {
             Cerrar
           </Button>
           <Button
-            onClick={handleSaveEditEstudiante}
+            onClick={() => updateAdministrador(editedValues)}
             style={buttonStyle}
             onMouseEnter={(e) => {
-              e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
+                e.target.style.backgroundColor = buttonHoverStyle.backgroundColor;
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = buttonStyle.backgroundColor;
+                e.target.style.backgroundColor = buttonStyle.backgroundColor;
             }}
-          >
+            >
             Guardar
-          </Button>
+         </Button>
         </Modal.Footer>
       </Modal> */}
     </div>

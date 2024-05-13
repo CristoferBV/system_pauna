@@ -8,8 +8,8 @@ export default async function handler(req, res) {
             return await getAllAdministradores(req, res);
         case "POST":
             return await crearAdmin(req, res);
-        // case "PUT":
-        //     return await updateAdmin(req, res)
+        case "PUT":
+            return await actualizarAdmin(req, res)
         case "DELETE":
             return await eliminarAdmin(req, res)
     }
@@ -105,3 +105,37 @@ const eliminarAdmin = async (req, res) => {
     }
   };
   
+
+//   const actualizarAdmin = async (req, res) => {
+//     try {
+//         const { UO_primer_nombre, UO_primer_apellido, UO_segundo_apellido, UO_identificador, CE_correoElectronico, UO_identificador_correo } = req.body;
+
+//         // Imprimir cada uno de los datos
+//         console.log('UO_primer_nombre:', UO_primer_nombre);
+//         console.log('UO_primer_apellido:', UO_primer_apellido);
+//         console.log('UO_segundo_apellido:', UO_segundo_apellido);
+//         console.log('UO_identificador:', UO_identificador);
+//         console.log('CE_correoElectronico:', CE_correoElectronico);
+//         console.log('UO_identificador_correo:', UO_identificador_correo);
+
+//         // Actualizar la tabla pau_gnl_usuario
+//         const [usuarioResult] = await pool.query(`UPDATE pau_gnl_usuario SET UO_primer_nombre = ?, UO_primer_apellido = ?, UO_segundo_apellido = ?, UO_identificador = ? WHERE UO_identificador_correo = ?`, [UO_primer_nombre, UO_primer_apellido, UO_segundo_apellido, UO_identificador, UO_identificador_correo]);
+//         console.log('Resultado de la actualización de usuario:', usuarioResult);
+
+//         // Actualizar la tabla pau_gnl_tbl_correoelectronico
+//         const [correoResult] = await pool.query(`UPDATE pau_gnl_tbl_correoelectronico SET CE_correoElectronico = ? WHERE CE_idCorreo = ?`, [CE_correoElectronico, UO_identificador_correo]);
+//         console.log('Resultado de la actualización de correo:', correoResult);
+
+//         res.status(200).json("Datos actualizados correctamente");
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json("Error interno del servidor");
+//     }
+// };
+
+
+
+
+
+
+

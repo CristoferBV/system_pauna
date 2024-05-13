@@ -300,7 +300,7 @@ export default function LoanClient () {
                       const selectedDate = e.target.options[e.target.selectedIndex].getAttribute("data-date");
                       console.log("Fecha original:", selectedDate);
                       const fecha = selectedDate.split(" - ")[0];
-                      const [mes, dia, año] = fecha.split("/");
+                      const [dia, mes, año] = fecha.split("/");
                       //const fechaFormateada = `${año}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`; ESTE FUNCIONA EL FORMATO SOLO DE MANERA LOCAL osea si se usa "npm run dev" no si esta en vercel
                       const fechaFormateada = `${mes.padStart(2, '0')}-${dia.padStart(2, '0')}-${año}`;
                       setSelectedDate(fechaFormateada);                      

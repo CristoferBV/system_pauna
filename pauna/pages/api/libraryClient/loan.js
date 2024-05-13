@@ -12,8 +12,10 @@ export default async function handler(req, res) {
 
 const saveLoan = async (req, res) => {
   console.log("Body:", req.body);
+  
   try {
     const { cedula, selectedDate, device, comprobanteBecaBlob, comprobanteMatriculaBlob } = req.body;
+    console.log("Fecha de api", selectedDate)
 
     // Desactivar llaves foráneas
     await pool.query("SET foreign_key_checks = 0");

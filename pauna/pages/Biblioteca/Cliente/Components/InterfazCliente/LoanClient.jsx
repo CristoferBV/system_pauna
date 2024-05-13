@@ -73,7 +73,7 @@ export default function LoanClient () {
   const handleAceptarClick = async () => {
     try {
       //const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
-
+      console.log("Fecha al enviar solicitud", selectedDate)
       // Enviar los datos al servidor
       const { data } = await Axios.post("/api/libraryClient/loan", {
         cedula,

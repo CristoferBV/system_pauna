@@ -14,7 +14,7 @@ const getDeadLine = async (req, res) => {
 
         const options = result.map((row) => ({
             value: row['HO_identificador'], // Valor a enviar cuando se seleccione la opción
-            label: `${new Date(row['HO_fecha']).toLocaleDateString()} - ${row['HO_hora']}` // Concatenación de fecha y hora
+            label: `${new Date(row['HO_fecha']).toLocaleDateString()} - Hora: ${row['HO_hora']}` // Concatenación de fecha y hora
         }));
 
         return res.status(200).json(options);

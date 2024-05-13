@@ -302,12 +302,12 @@ export default function LoanClient () {
                       const [dia, mes, año] = fecha.split("/");
                       const fechaFormateada = `${año}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
                       setSelectedDate(fechaFormateada);                      
-                      console.log("fechas:",fechaFormateada);
+                      console.log("fecha:",fechaFormateada);
                   }}>
                       <option value="">-Seleccionar opción-</option>
                       {horarios.map((horario) => (
                           <option key={horario.value} value={horario.value} data-date={horario.label}>
-                              {horario.label}
+                              {"Fecha: " + horario.label}
                           </option>
                       ))}
                   </Form.Control>

@@ -298,6 +298,7 @@ export default function LoanClient () {
                   <label htmlFor="fechasCitas" className="font-semibold">Fechas de citas</label>
                   <Form.Control id="fechasCitas" name="fechasCitas" as="select" onChange={(e) => {
                       const selectedDate = e.target.options[e.target.selectedIndex].getAttribute("data-date");
+                      console.log("Fecha original:", selectedDate);
                       const fecha = selectedDate.split(" - ")[0];
                       const [dia, mes, año] = fecha.split("/");
                       const fechaFormateada = `${año}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;

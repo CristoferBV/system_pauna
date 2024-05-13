@@ -301,7 +301,8 @@ export default function LoanClient () {
                       console.log("Fecha original:", selectedDate);
                       const fecha = selectedDate.split(" - ")[0];
                       const [dia, mes, año] = fecha.split("/");
-                      const fechaFormateada = `${año}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+                      //const fechaFormateada = `${año}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+                      const fechaFormateada = `${mes.padStart(2, '0')}-${dia.padStart(2, '0')}-${año}`;
                       setSelectedDate(fechaFormateada);                      
                       console.log("fecha:",fechaFormateada);
                   }}>

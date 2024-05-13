@@ -75,7 +75,7 @@ export default function LoanClient () {
       //const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
       console.log("Fecha al enviar solicitud", selectedDate)
       // Enviar los datos al servidor
-      const { data } = await Axios.post(process.env.LINK+"/api/libraryClient/loan", {
+      const { data } = await Axios.post("/api/libraryClient/loan", {
         cedula,
         selectedDate,
         device,
@@ -302,7 +302,7 @@ export default function LoanClient () {
                       const fecha = selectedDate.split(" - ")[0];
                       const [dia, mes, año] = fecha.split("/");
                       //const fechaFormateada = `${año}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`; ESTE FUNCIONA EL FORMATO SOLO DE MANERA LOCAL osea si se usa "npm run dev" no si esta en vercel
-                      const fechaFormateada = `${año.padStart(2, '0')}-${dia.padStart(2, '0')}-${mes}`;
+                      const fechaFormateada = `${año}-${dia.padStart(2, '0')}-${mes.padStart(2, '0')}`;
                       setSelectedDate(fechaFormateada);                      
                       console.log("fecha:",fechaFormateada);
                   }}>

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Form, Row, Col, Button, Table, Container, Alert } from 'react-bootstrap';
 import Swal from "sweetalert2";
+import InactivityTimer from "../InactivityTime";
 
 export default function UserWindow({ userAdmins, rols }) {
   const router = useRouter();

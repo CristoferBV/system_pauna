@@ -6,6 +6,7 @@ import "jspdf-autotable";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import InactivityTimer from "../InactivityTime";
 
 export default function Report({ materials, rebajos, aumentos }) {
     const [showReportes, setShowReportes] = useState(false);

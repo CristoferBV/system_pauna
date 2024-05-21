@@ -78,11 +78,21 @@ export default function Inventary({ materials, colors, brands, ubications, types
         });
       })
       .catch(function (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: error.response.data,
-        });
+        if(error.response.status == 400){
+          Swal.fire({
+            icon: "warning",
+            title: "Atención",
+            text: "Existen campos incompletos",
+          });
+          return;
+        }
+        if(error.response.status == 409){
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: error.response.data,
+          });
+        }
       });
     reloadPage();
   };
@@ -159,15 +169,15 @@ export default function Inventary({ materials, colors, brands, ubications, types
   };
 
   const handleSave = (object, name) => {  
-    const isEmpty = Object.values(object).some(value => value === "");
-    if (isEmpty) {
+    //const isEmpty = Object.values(object).some(value => value === "");
+    /*if (isEmpty) {
       Swal.fire({
         icon: "warning",
         title: "Atención",
         text: "Existen campos incompletos",
       });
       return;
-    }
+    }*/
     handleSubmit(object);
     handleCloseForm(name);
     reloadPage();

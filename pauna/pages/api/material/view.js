@@ -18,9 +18,12 @@ export default async function handler(req, res) {
                     return await saveType(req, res);
                 case "Material":
                     try{
-                        await saveMaterial(req, res);
-                        await saveMaterialXBrand(req, res);
-                        await saveMaterialXColor(req, res);
+                        const number = await saveMaterial(req, res);
+                        if(number != -1){
+                            console.log(number)
+                            await saveMaterialXBrand(req, res);
+                            await saveMaterialXColor(req, res);
+                        }
                     }catch (error) {
                         return res.status(500).send('Ya existe el material ingresado');
                     }
@@ -41,9 +44,9 @@ export default async function handler(req, res) {
 
 const updateMaterial = async (req, res) => {
     const { ML_identificador, ML_cantidad } = req.body;
-    console.log("ML_cantidad:", ML_identificador);
-    console.log("ML_cantidad:", ML_cantidad);
-    if (!ML_cantidad) {
+    //console.log("ML_cantidad:", ML_identificador);
+    //console.log("ML_cantidad:", ML_cantidad);
+    if (!ML_cantidad.trim()) {
         res.status(400).send('Los campos vacios');
         return;
     }
@@ -100,12 +103,12 @@ const getAllMaterial = async (req, res) => {
 
 const saveData = async (table, data, res) => {
     try {
-        console.log(data);
+        //console.log(data);
         const result = await pool.query(`INSERT INTO ${table} SET ?`, data);
-        console.log(result);
+        //console.log(result);
         return res.status(200).json(result);
     } catch (error) {
-        console.log(error);
+        //console.log(error);
         return res.status(500).json({ error: 'Error al guardar los datos.' });
     }
 };
@@ -113,6 +116,12 @@ const saveData = async (table, data, res) => {
 const saveMaterial = async (req, res) => {
     //console.log(req.body);
     const { ML_identificador, ML_descripcion, ML_observacion, ML_cantidad, ML_identificador_ubicacion, MO_identificador_tipo } = req.body;
+    if (!ML_identificador.trim() || !ML_descripcion.trim() || !ML_cantidad.trim() || !ML_identificador_ubicacion.trim() || 
+        !MO_identificador_tipo.trim()) {
+        res.status(400).send('Los campos vacios');
+        //console.log('Buyenas')
+        return -1;
+    }
     const data = { ML_identificador, ML_descripcion, ML_observacion, ML_cantidad, ML_identificador_ubicacion, MO_identificador_tipo }
     //console.log(data)
     const { result } = saveData('pau_adm_tbl_material', data, res);
@@ -134,25 +143,25 @@ const saveMaterialXBrand = async (req, res) => {
 const saveMaterialXColor = async (req, res) => {
     const disableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 0";
     await pool.query(disableForeignKeyCheckQuery);
-    console.log(req.body);
+    //console.log(req.body);
     const { ML_identificador, CR_identificador } = req.body;
     const data = { ML_identificador, CR_identificador }
     const { result } = saveData('pau_adm_tbl_material_x_tbl_color', data, res);
-    console.log(result)
+    //console.log(result)
     const enableForeignKeyCheckQuery = "SET FOREIGN_KEY_CHECKS = 1";
     await pool.query(enableForeignKeyCheckQuery);
 };
 
 const saveColor = async (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     const { tipo, CR_identificador, CR_nombre } = req.body;
     console.log(CR_nombre)
-    if (!CR_nombre) {
+    if (!CR_nombre.trim()) {
         res.status(400).send('Los campos vacios');
         return;
     }
     const data = { CR_nombre }
-    console.log(data)
+    //console.log(data)
     if (await locationExists('pau_adm_tbl_color', 'CR_nombre',CR_nombre)){
         res.status(409).send('El color ya existe');
         return;
@@ -161,9 +170,10 @@ const saveColor = async (req, res) => {
 };
 
 const saveUbication = async (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     const { tipo, UN_lugar, UN_descripcion } = req.body;
-    if (!UN_lugar || !UN_descripcion) {
+    //|| !UN_descripcion
+    if (!UN_lugar.trim()) {
         res.status(400).send('Los campos vacios');
         return;
     }
@@ -176,9 +186,10 @@ const saveUbication = async (req, res) => {
 };
 
 const saveBrand = async (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     const { tipo, MC_nombre, MC_descripcion } = req.body;
-    if (!MC_nombre || !MC_descripcion) {
+    // || !MC_descripcion.trim()
+    if (!MC_nombre.trim()) {
         res.status(400).send('Los campos vacios');
         return;
     }
@@ -192,7 +203,7 @@ const saveBrand = async (req, res) => {
 
 const saveType = async (req, res) => {//
     const { tipo, TP_nombre, TP_descripcion } = req.body;
-    if (!TP_nombre) {
+    if (!TP_nombre.trim() || !TP_descripcion.trim()) {
         res.status(400).send('Los campos vacios');
         return;
     }
@@ -205,13 +216,13 @@ const saveType = async (req, res) => {//
 };
 
 const saveRebajo = async (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
     const { tipo,
         MO_cantidad,
         MO_fecha,
         ML_identificador,
         DO_identificador }= req.body;
-    if (!MO_cantidad || !DO_identificador) {
+    if (!MO_cantidad.trim() || !DO_identificador.trim()) {
         res.status(400).send('Los campos vacios');
         return;
     }
@@ -222,13 +233,13 @@ const saveRebajo = async (req, res) => {
     return saveData('pau_adm_movimiento_rebajo',data,res);
 }
 const saveAumentos = async (req, res) => {
-    console.log(req.body.ML_identificador);
-    console.log(req.body.MA_cantidad);
+    //console.log(req.body.ML_identificador);
+    //console.log(req.body.MA_cantidad);
     const { tipo,
         MA_cantidad,
         MA_fecha, 
         ML_identificador}= req.body;
-    if (!MA_cantidad) {
+    if (!MA_cantidad.trim()) {
         res.status(400).send('Los campos vacios');
         return;
     }
@@ -239,12 +250,12 @@ const saveAumentos = async (req, res) => {
 
 const locationExists = async (table,name,data) => {
     const result = await pool.query(`SELECT * FROM ?? WHERE ${name} = ?`, [table, data]);
-    console.log(result[0].length);
-    console.log(result);
+    //console.log(result[0].length);
+    //console.log(result);
     if (result[0].length > 0) {
-        console.log("entre");
+        //console.log("entre");
         return true; 
     }
-    console.log("es dalso");
+    //console.log("es dalso");
     return false; 
 }

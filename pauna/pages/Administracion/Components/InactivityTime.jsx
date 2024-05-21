@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
 const InactivityTimer = ({ logoutFunction }) => {
-  const inactivityTime = 30000; // Tiempo de inactividad en milisegundos (30 segundos)
+  const inactivityTime = 300000; // Tiempo de inactividad en milisegundos (30 segundos)
   let inactivityTimer;
 
   const resetTimer = () => {

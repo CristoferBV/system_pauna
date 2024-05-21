@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { Row, Col, Container, Button, Form, Table, Modal, Alert } from "react-bootstrap"
 import { FaEdit, FaClipboardList } from "react-icons/fa";
 import Swal from "sweetalert2";
+import InactivityTimer from "../InactivityTime";
 
 const initialState = {
   ML_identificador: "",
@@ -211,9 +212,13 @@ export default function Inventary({ materials, colors, brands, ubications, types
     setDepartments(initialDeparmentState);
     router.push("/Administracion/Components/Inventary/Inventory");
   }
+  const handleLogout = () => {
+    router.push("/LoginAndRegister/Login/Login");
+  };
 
   return (
     <>
+    <InactivityTimer logoutFunction={handleLogout} />
       <Modal show={showFormState.material} onHide={() => handleCloseForm('material')}>
         <Modal.Header closeButton>
           <Modal.Title>Materiales</Modal.Title>

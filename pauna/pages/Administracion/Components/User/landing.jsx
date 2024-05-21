@@ -2,6 +2,7 @@
 
 import React from "react"
 import { Image, Container, Row, Col } from "react-bootstrap"
+import InactivityTimer from "../InactivityTime";
 
 
 export default function Landing() {
@@ -24,9 +25,13 @@ export default function Landing() {
         fontSize: '30px',
         color: 'black',
     };
+    const handleLogout = () => {
+        router.push("/LoginAndRegister/Login/Login");
+    };
 
     return (
         <>
+        <InactivityTimer logoutFunction={handleLogout} />
             <div style={imageContainerStyle}>
                 <Image src="/landing.jpg" style={imageStyle} />
 

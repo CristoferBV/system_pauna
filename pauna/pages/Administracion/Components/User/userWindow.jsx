@@ -98,6 +98,9 @@ export default function UserWindow({ userAdmins, rols }) {
     });
     router.push("/Administracion/Components/User/userWindow");
   }
+  const handleLogout = () => {
+    router.push("/LoginAndRegister/Login/Login");
+  };
   
 
   return (

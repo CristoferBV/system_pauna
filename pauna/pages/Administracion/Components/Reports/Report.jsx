@@ -324,6 +324,9 @@ export default function Report({ materials, rebajos, aumentos }) {
 
         doc.save(`Reporte_General_De_Movimientos_${formattedDate}.pdf`);
     }
+    const handleLogout = () => {
+        router.push("/LoginAndRegister/Login/Login");
+    };
 
     return (
         <div>

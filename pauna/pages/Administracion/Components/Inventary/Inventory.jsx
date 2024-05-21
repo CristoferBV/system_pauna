@@ -391,7 +391,7 @@ export default function Inventary({ materials, colors, brands, ubications, types
             <Form.Group controlId="formNameBrand">
               <Form.Label>Nombre</Form.Label>
               <Form.Control name="MC_nombre" value={brand.MC_nombre} onChange={handleChange} type="text" placeholder="Ingrese el nombre de la marca" />
-            </Form.Group>.
+            </Form.Group>
             <Form.Group controlId="formDescBrand">
               <Form.Label>Descripción</Form.Label>
               <Form.Control name="MC_descripcion" value={brand.MC_descripcion} onChange={handleChange} type="text" placeholder="Ingrese la descripción si desea" />

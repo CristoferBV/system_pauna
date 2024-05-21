@@ -101,6 +101,7 @@ export default function UserWindow({ userAdmins, rols }) {
 
   return (
     <>
+    <InactivityTimer logoutFunction={handleLogout} />
       <div className="rounded" style={{ backgroundColor: '#212529', color: 'white', height: '100%', width: '100%', marginTop: '8rem', marginBottom: '8rem' }}>
 
 

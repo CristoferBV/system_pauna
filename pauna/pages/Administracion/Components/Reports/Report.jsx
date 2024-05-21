@@ -326,6 +326,7 @@ export default function Report({ materials, rebajos, aumentos }) {
 
     return (
         <div>
+            <InactivityTimer logoutFunction={handleLogout} />
             <Container style={{ marginTop: '8rem', marginBottom: '8rem' }}>
                 <Container style={{ padding: '2rem', marginRight: '0.8rem' }}>
                     <h1 className="text-center">Reportes y Movimientos</h1>

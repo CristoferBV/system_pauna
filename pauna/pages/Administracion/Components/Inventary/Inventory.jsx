@@ -93,6 +93,13 @@ export default function Inventary({ materials, colors, brands, ubications, types
             text: error.response.data,
           });
         }
+        if(error.response.status == 500){
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: error.response.data,
+          });
+        }
       });
     reloadPage();
   };

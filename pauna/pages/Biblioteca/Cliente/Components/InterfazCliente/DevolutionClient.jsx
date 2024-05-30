@@ -20,7 +20,7 @@ export default function DevolutionClient({ Devolution }) {
 
   const navigation = [
     { name: "Inicio", section: "HomeClient", current: false },
-    { name: "Préstamo", section: "LoanClient", current: false },
+    { name: "Solicitud", section: "LoanClient", current: false },
     { name: "Devolución", section: "DevolutionClient", current: false },
   ];
 

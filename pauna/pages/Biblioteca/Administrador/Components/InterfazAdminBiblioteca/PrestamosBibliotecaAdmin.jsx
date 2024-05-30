@@ -118,7 +118,7 @@ export default function PrestamosBibliotecaAdmin({ Dispositivo, Periferico }) {
               />
             </Form.Group>
             <Form.Group as={Col} xs={12} md={6}>
-              <Form.Label className=" text-[#293659] font-semibold">Fecha de Préstamo</Form.Label>
+              <Form.Label className=" text-[#293659] font-semibold">Fecha de Devolución</Form.Label>
               <Form.Control
                 type="date"
                 value={prestamo.LP_fechaDevolucion}

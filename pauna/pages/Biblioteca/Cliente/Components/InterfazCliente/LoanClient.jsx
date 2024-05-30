@@ -15,7 +15,7 @@ export default function LoanClient () {
 
   const navigation = [
     { name: "Inicio", section: "HomeClient", current: false },
-    { name: "Préstamo", section: "LoanClient", current: false },
+    { name: "Solicitud", section: "LoanClient", current: false },
     { name: "Devolución", section: "DevolutionClient", current: false },
   ];
 
@@ -85,7 +85,7 @@ export default function LoanClient () {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Su préstamo ha sido realizado",
+        title: "Su solicitud ha sido realizada",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -105,7 +105,7 @@ export default function LoanClient () {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Su préstamo no ha sido realizado",
+        title: "Su solicitud no ha sido realizada",
         showConfirmButton: false,
         timer: 1500,
       });
